@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 1.7",
+  "name": "짐픽 PRO 1.8",
   "short_name": "짐픽 PRO",
-  "description": "업체별 고객·견적을 Supabase 서버에 저장하고 불러오는 AI 이사견적 앱",
+  "description": "큰 사진촬영 버튼과 AI 자동품목 인식 흐름을 강화한 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

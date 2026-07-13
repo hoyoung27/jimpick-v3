@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 1.7</title>
+<title>짐픽 PRO 1.8</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 1.7 최소판매형 ===== */
+/* ===== 짐픽 PRO 1.8 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -1694,7 +1694,7 @@ body{font-size:18px}
 }
 
 
-/* ===== PRO 1.1 자동견적 결과 ===== */
+/* ===== PRO 1.1 AI 자동견적 결과 ===== */
 .pro-estimate-summary{max-width:820px;margin:0 auto 16px}
 .pro-estimate-grid{
   display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
@@ -1847,6 +1847,53 @@ body{font-size:18px}
 @media(max-width:640px){
   .cloud-quote-actions{grid-template-columns:1fr}
   .cloud-quote-item-meta{grid-template-columns:1fr}
+}
+
+
+/* ===== PRO 1.8 AI 자동 품목 인식 간편화 ===== */
+.ai-simple-card{max-width:820px;margin:0 auto 16px}
+.ai-simple-steps{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0;
+}
+.ai-simple-steps div{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  min-height:58px;border-radius:15px;background:#F3F6FA;
+  border:1px solid #DCE5EE;font-weight:900;color:#102A43;
+}
+.ai-simple-steps strong{
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:#FF6B35;color:#fff;font-size:15px;
+}
+.ai-simple-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.big-camera-btn,.big-gallery-btn,.big-analyze-btn{
+  min-height:72px;border:0;border-radius:17px;
+  font-size:21px;font-weight:900;cursor:pointer;
+}
+.big-camera-btn{background:#FF6B35;color:#fff}
+.big-gallery-btn{background:#102A43;color:#fff}
+.big-analyze-btn{
+  width:100%;margin-top:12px;background:#16A36A;color:#fff;
+}
+.big-analyze-btn:disabled{background:#B8C4CF;color:#fff;cursor:not-allowed}
+.big-photo-count{
+  margin-top:10px;padding:12px;border-radius:12px;
+  background:#EEF5FF;color:#174A7E;text-align:center;
+  font-size:16px;font-weight:900;
+}
+#cameraPhotoInput,#mediaInput{display:none!important}
+.simple-ai-upload-row,
+.simple-ai-main-actions,
+#analyzeBtn{
+  display:none!important;
+}
+.ai-result-highlight{
+  margin:12px 0;padding:14px;border-radius:14px;
+  background:#EAF7F0;color:#16794B;font-weight:900;text-align:center;
+}
+@media(max-width:640px){
+  .ai-simple-actions{grid-template-columns:1fr}
+  .ai-simple-steps{grid-template-columns:1fr}
 }
 
 </style>
@@ -2091,7 +2138,7 @@ body{font-size:18px}
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-1.7</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-1.8</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -2170,13 +2217,30 @@ body{font-size:18px}
       </div>
 
 <button type="button" class="mvp-next-btn" id="mvpGoPhoto">
-        다음: 사진 찍기 →
+        다음: 사진 자동견적 →
       </button>
     </div>
   </section>
 
   <!-- ============ STEP 3. AI 사진 자동분석 ============ -->
   <section class="panel" id="step3">
+    <div class="card ai-simple-card">
+      <h2><span class="eyebrow">2단계</span> 사진으로 자동견적</h2>
+      <div class="ai-simple-steps">
+        <div><strong>1</strong><span>사진 찍기</span></div>
+        <div><strong>2</strong><span>AI 분석</span></div>
+        <div><strong>3</strong><span>품목 확인</span></div>
+      </div>
+      <div class="ai-simple-actions">
+        <button type="button" id="bigCameraBtn" class="big-camera-btn">📷 지금 사진 찍기</button>
+        <button type="button" id="bigGalleryBtn" class="big-gallery-btn">🖼 사진 여러 장 선택</button>
+      </div>
+      <button type="button" id="bigAnalyzeBtn" class="big-analyze-btn" disabled>
+        🤖 AI 자동분석 시작
+      </button>
+      <div id="bigPhotoCount" class="big-photo-count">선택된 사진 0장</div>
+    </div>
+
     <div class="card simple-ai-card">
       <h2><span class="eyebrow">STEP 3</span>사진으로 품목 자동선택</h2>
 
@@ -2289,7 +2353,7 @@ body{font-size:18px}
   <!-- ============ STEP 5. 견적 확정 ============ -->
   <section class="panel" id="step5">
     <div class="card pro-estimate-summary">
-      <h2><span class="eyebrow">4단계</span> 자동견적 결과</h2>
+      <h2><span class="eyebrow">4단계</span> AI 자동견적 결과</h2>
       <div class="pro-estimate-grid pro-estimate-grid-five">
         <div><span>1톤 차량</span><strong id="proTruck1Result">0대</strong></div>
         <div><span>5톤 차량</span><strong id="proTruck5Result">0대</strong></div>
@@ -2741,7 +2805,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-1.7';
+const BUILD_VERSION = 'JIMPICK-PRO-1.8';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -6122,6 +6186,41 @@ async function callGeminiVision(imageParts){
   return data;
 }
 
+
+function refreshBigPhotoUi(){
+  const count=(State?.photos?.length||0);
+  const countEl=document.getElementById('bigPhotoCount');
+  const analyzeBtn=document.getElementById('bigAnalyzeBtn');
+  if(countEl)countEl.textContent=`선택된 사진 ${count}장`;
+  if(analyzeBtn)analyzeBtn.disabled=count===0;
+}
+
+function openCameraFromBigButton(){
+  document.getElementById('cameraPhotoInput')?.click();
+}
+function openGalleryFromBigButton(){
+  document.getElementById('mediaInput')?.click();
+}
+async function runBigAiAnalysis(){
+  const btn=document.getElementById('bigAnalyzeBtn');
+  const original=btn?.textContent||'🤖 AI 자동분석 시작';
+  if(btn){
+    btn.disabled=true;
+    btn.textContent='AI가 사진을 분석 중입니다…';
+  }
+  try{
+    await runAutoAIAnalysis();
+    const count=Object.values(State?.items||{}).filter(item=>Number(item?.qty||item?.quantity||0)>0).length;
+    const result=document.createElement('div');
+    result.className='ai-result-highlight';
+    result.textContent=`품목 ${count}종을 자동으로 찾았습니다. 확인해주세요.`;
+    document.querySelector('#step4 .card')?.prepend(result);
+  }finally{
+    refreshBigPhotoUi();
+    if(btn)btn.textContent=original;
+  }
+}
+
 async function runAutoAIAnalysis(){
   if(State.media.length===0){alert('먼저 사진을 촬영하거나 선택해주세요.');return;}
 const btn=document.getElementById('analyzeBtn');
@@ -6730,6 +6829,10 @@ ${msg || '-'}`;
     document.getElementById('completeSignupBtn')?.addEventListener('click',authCompleteSignup);
     document.getElementById('forgotPasswordBtn')?.addEventListener('click',authForgotPassword);
     document.getElementById('logoutBtn')?.addEventListener('click',authLogout);
+    document.getElementById('bigCameraBtn')?.addEventListener('click',openCameraFromBigButton);
+    document.getElementById('bigGalleryBtn')?.addEventListener('click',openGalleryFromBigButton);
+    document.getElementById('bigAnalyzeBtn')?.addEventListener('click',runBigAiAnalysis);
+    refreshBigPhotoUi();
     document.getElementById('saveCloudQuoteBtn')?.addEventListener('click',saveQuoteToCloud);
     document.getElementById('openCloudQuotesBtn')?.addEventListener('click',openCloudQuotes);
     document.getElementById('closeCloudQuotesBtn')?.addEventListener('click',closeCloudQuotes);
