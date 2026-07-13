@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 V3.0 AI 이사견적",
-  "short_name": "짐픽 V3.0",
-  "description": "이사 업체용 AI 이사견적 프로그램 (짐픽 V2)",
+  "name": "짐픽 V3.1 AI 이사견적",
+  "short_name": "짐픽 V3.1",
+  "description": "이사 업체용 AI 이사견적 프로그램 (짐픽 V3.1)",
   "start_url": "./index.html",
   "scope": "./",
   "display": "fullscreen",
