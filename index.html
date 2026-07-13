@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 V3.8 AI 이사견적</title>
+<title>짐픽 V3.9 AI 이사견적</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1085,6 +1085,66 @@ button:active{transform:scale(0.96);}
   .profit-input-grid,.profit-summary{grid-template-columns:1fr}
 }
 
+
+/* ===== V3.9 고객·견적 기록 ===== */
+.crm-card{
+  margin-top:16px;
+  border:1px solid rgba(15,42,67,.12);
+  border-radius:20px;
+  background:linear-gradient(145deg,#FFFFFF,#F7FAFC);
+  box-shadow:0 12px 28px rgba(15,42,67,.08);
+  overflow:hidden;
+}
+.crm-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 18px;cursor:pointer;font-weight:900;color:#102A43;
+}
+.crm-head small{display:block;margin-top:4px;font-size:12px;font-weight:600;color:#6B7C8F}
+.crm-toggle{
+  width:38px;height:38px;border:0;border-radius:12px;
+  background:#102A43;color:#fff;font-size:18px;cursor:pointer;
+}
+.crm-body{display:none;padding:0 18px 18px}
+.crm-body.open{display:block}
+.crm-top-actions{display:flex;gap:10px;flex-wrap:wrap}
+.crm-top-actions .btn{flex:1;min-width:150px}
+.crm-summary{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;margin-top:12px;
+}
+.crm-summary-box{
+  padding:14px;border-radius:15px;background:#102A43;color:#fff;
+}
+.crm-summary-box span{display:block;font-size:11px;opacity:.75;font-weight:700}
+.crm-summary-box strong{display:block;margin-top:5px;font-size:20px;font-weight:900}
+.crm-search{
+  width:100%;margin-top:12px;border:1px solid #D9E2EC;
+  border-radius:12px;padding:11px 13px;font-size:14px;
+}
+.crm-list{display:grid;gap:10px;margin-top:12px}
+.crm-empty{
+  padding:18px;text-align:center;border-radius:14px;
+  background:#F3F6FA;color:#718096;font-size:13px;
+}
+.crm-item{
+  border:1px solid #E3EAF2;border-radius:15px;background:#fff;
+  padding:14px;box-shadow:0 5px 14px rgba(15,42,67,.05);
+}
+.crm-item-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.crm-item-name{font-size:16px;font-weight:900;color:#102A43}
+.crm-item-date{font-size:12px;color:#718096;margin-top:3px}
+.crm-item-amount{font-size:16px;font-weight:900;color:#E6532F;white-space:nowrap}
+.crm-item-meta{margin-top:9px;font-size:12px;line-height:1.6;color:#52667A}
+.crm-item-actions{display:flex;gap:8px;margin-top:11px}
+.crm-item-actions button{
+  flex:1;border:0;border-radius:10px;padding:9px 8px;font-weight:800;cursor:pointer;
+}
+.crm-load{background:#102A43;color:#fff}
+.crm-delete{background:#FFF0ED;color:#B42318}
+@media(max-width:640px){
+  .crm-summary{grid-template-columns:1fr}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1627,6 +1687,40 @@ button:active{transform:scale(0.96);}
         </div>
       </div>
 
+
+      <div class="crm-card">
+        <div class="crm-head" id="crmHead">
+          <div>
+            👥 고객·견적 기록
+            <small>견적을 저장하고 나중에 다시 불러올 수 있습니다.</small>
+          </div>
+          <button type="button" class="crm-toggle" id="crmToggle">▼</button>
+        </div>
+        <div class="crm-body" id="crmBody">
+          <div class="crm-top-actions">
+            <button type="button" class="btn btn-accent" id="crmSaveQuote">💾 현재 견적 저장</button>
+            <button type="button" class="btn btn-outline" id="crmExport">📥 기록 백업</button>
+          </div>
+
+          <div class="crm-summary">
+            <div class="crm-summary-box">
+              <span>이번 달 저장 건수</span>
+              <strong id="crmMonthCount">0건</strong>
+            </div>
+            <div class="crm-summary-box">
+              <span>이번 달 총 견적금액</span>
+              <strong id="crmMonthTotal">0원</strong>
+            </div>
+          </div>
+
+          <input class="crm-search" id="crmSearch" placeholder="고객명 또는 연락처 검색">
+
+          <div class="crm-list" id="crmList">
+            <div class="crm-empty">저장된 견적이 없습니다.</div>
+          </div>
+        </div>
+      </div>
+
       <div class="cost-entry-list" id="costEntryList">
         <div class="cost-row cost-row-draggable">
           <span class="drag-handle" title="눌러서 위/아래로 순서 변경">⠿</span>
@@ -1889,7 +1983,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'V3.8-B38';
+const BUILD_VERSION = 'V3.9-B39';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -1940,6 +2034,11 @@ const ITEM_OPTIONS = {
 
 /* ---------------------- 3. UTILS ---------------------- */
 const Utils = {
+  escapeHtml(v){
+    return String(v ?? '').replace(/[&<>"']/g, c=>({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
+    }[c]));
+  },
   won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; },
   round10k(n){ return Math.round(n/10000)*10000; },
   todayStr(){
@@ -3324,6 +3423,163 @@ function calculateProfitAnalysis(){
   };
 }
 
+
+const CRM_STORAGE_KEY = 'jimpick_v39_quotes';
+
+function crmRead(){
+  try{
+    const raw = localStorage.getItem(CRM_STORAGE_KEY);
+    const data = raw ? JSON.parse(raw) : [];
+    return Array.isArray(data) ? data : [];
+  }catch(e){
+    console.warn('CRM 기록 읽기 실패', e);
+    return [];
+  }
+}
+
+function crmWrite(records){
+  localStorage.setItem(CRM_STORAGE_KEY, JSON.stringify(records));
+}
+
+function crmCurrentFormData(){
+  const q = State.lastQuote || {};
+  return {
+    id: 'Q' + Date.now(),
+    savedAt: new Date().toISOString(),
+    customerName: document.getElementById('custName')?.value?.trim() || '이름 없음',
+    customerPhone: document.getElementById('custPhone')?.value?.trim() || '',
+    moveDate: document.getElementById('moveDate')?.value || '',
+    moveStartTime: document.getElementById('moveStartTime')?.value || '',
+    moveType: document.getElementById('moveType')?.value || '',
+    fromAddress: document.getElementById('fromAddress')?.value || '',
+    fromDetail: document.getElementById('fromDetail')?.value || '',
+    toAddress: document.getElementById('toAddress')?.value || '',
+    toDetail: document.getElementById('toDetail')?.value || '',
+    specialNotes: document.getElementById('specialNotes')?.value || '',
+    total: Number(q.total) || 0,
+    truckLabel: q.truckLabel || '-',
+    workers: Number(q.workers) || 0,
+    maleCount: Number(q.maleCount) || 0,
+    kitchenCount: Number(q.kitchenCount) || 0,
+    estimatedHours: Number(q.estimatedHours) || 0,
+    difficulty: q.difficulty || '보통',
+    smsText: document.getElementById('smsText')?.value || ''
+  };
+}
+
+function crmSaveCurrent(){
+  Calc.run();
+  const record = crmCurrentFormData();
+
+  if(!record.customerName || record.customerName === '이름 없음'){
+    alert('고객명을 먼저 입력해주세요.');
+    return;
+  }
+
+  const records = crmRead();
+  records.unshift(record);
+  crmWrite(records.slice(0, 300));
+  crmRender();
+  alert('현재 견적을 저장했습니다.');
+}
+
+function crmLoadRecord(id){
+  const record = crmRead().find(r=>r.id===id);
+  if(!record) return;
+
+  const set = (id, value)=>{
+    const el = document.getElementById(id);
+    if(el) el.value = value ?? '';
+  };
+
+  set('custName', record.customerName);
+  set('custPhone', record.customerPhone);
+  set('moveDate', record.moveDate);
+  set('moveStartTime', record.moveStartTime);
+  set('moveType', record.moveType);
+  set('fromAddress', record.fromAddress);
+  set('fromDetail', record.fromDetail);
+  set('toAddress', record.toAddress);
+  set('toDetail', record.toDetail);
+  set('specialNotes', record.specialNotes);
+
+  if(record.smsText){
+    set('smsText', record.smsText);
+    State.smsManuallyEdited = true;
+  }
+
+  Calc.run();
+  DraftService.save();
+  alert(`${record.customerName} 고객의 견적을 불러왔습니다.`);
+  UI.goStep(1);
+}
+
+function crmDeleteRecord(id){
+  if(!confirm('이 견적 기록을 삭제할까요?')) return;
+  const records = crmRead().filter(r=>r.id!==id);
+  crmWrite(records);
+  crmRender();
+}
+
+function crmRender(){
+  const listEl = document.getElementById('crmList');
+  if(!listEl) return;
+
+  const keyword = (document.getElementById('crmSearch')?.value || '').trim().toLowerCase();
+  const all = crmRead();
+  const filtered = all.filter(r=>{
+    if(!keyword) return true;
+    return String(r.customerName||'').toLowerCase().includes(keyword)
+      || String(r.customerPhone||'').toLowerCase().includes(keyword);
+  });
+
+  if(filtered.length===0){
+    listEl.innerHTML = '<div class="crm-empty">검색 결과 또는 저장된 견적이 없습니다.</div>';
+  }else{
+    listEl.innerHTML = filtered.map(r=>`
+      <div class="crm-item">
+        <div class="crm-item-head">
+          <div>
+            <div class="crm-item-name">${Utils.escapeHtml(r.customerName || '이름 없음')}</div>
+            <div class="crm-item-date">이사일 ${Utils.escapeHtml(r.moveDate || '미정')} · 저장 ${new Date(r.savedAt).toLocaleDateString('ko-KR')}</div>
+          </div>
+          <div class="crm-item-amount">${Utils.won(Number(r.total)||0)}</div>
+        </div>
+        <div class="crm-item-meta">
+          연락처: ${Utils.escapeHtml(r.customerPhone || '-')}<br>
+          차량: ${Utils.escapeHtml(r.truckLabel || '-')} · 인원: ${Number(r.workers)||0}명
+        </div>
+        <div class="crm-item-actions">
+          <button type="button" class="crm-load" data-crm-load="${r.id}">불러오기</button>
+          <button type="button" class="crm-delete" data-crm-delete="${r.id}">삭제</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  const now = new Date();
+  const monthRecords = all.filter(r=>{
+    const d = new Date(r.savedAt);
+    return d.getFullYear()===now.getFullYear() && d.getMonth()===now.getMonth();
+  });
+
+  const monthCount = document.getElementById('crmMonthCount');
+  const monthTotal = document.getElementById('crmMonthTotal');
+  if(monthCount) monthCount.textContent = `${monthRecords.length}건`;
+  if(monthTotal) monthTotal.textContent = Utils.won(monthRecords.reduce((s,r)=>s+(Number(r.total)||0),0));
+}
+
+function crmExport(){
+  const records = crmRead();
+  const blob = new Blob([JSON.stringify(records, null, 2)], {type:'application/json;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `짐픽_견적기록_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+}
+
 /* ---------------------- 12. SMS 문구 생성 ---------------------- */
 UI.renderSMS = function(){
   const q = State.lastQuote;
@@ -4245,6 +4501,28 @@ ${msg || '-'}`;
 
     // 재계산 버튼
     document.getElementById('recalcBtn').addEventListener('click', ()=>Calc.run());
+
+    // V3.9 고객·견적 기록
+    const crmHead = document.getElementById('crmHead');
+    const crmBody = document.getElementById('crmBody');
+    const crmToggle = document.getElementById('crmToggle');
+    if(crmHead && crmBody && crmToggle){
+      crmHead.addEventListener('click', ()=>{
+        const open = crmBody.classList.toggle('open');
+        crmToggle.textContent = open ? '▲' : '▼';
+        if(open) crmRender();
+      });
+    }
+
+    document.getElementById('crmSaveQuote')?.addEventListener('click', crmSaveCurrent);
+    document.getElementById('crmExport')?.addEventListener('click', crmExport);
+    document.getElementById('crmSearch')?.addEventListener('input', crmRender);
+    document.getElementById('crmList')?.addEventListener('click', (e)=>{
+      const loadBtn = e.target.closest('[data-crm-load]');
+      const delBtn = e.target.closest('[data-crm-delete]');
+      if(loadBtn) crmLoadRecord(loadBtn.dataset.crmLoad);
+      if(delBtn) crmDeleteRecord(delBtn.dataset.crmDelete);
+    });
 
     // V3.8 수익분석 열기/닫기
     const profitHead = document.getElementById('profitHead');
