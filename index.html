@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 3.1</title>
+<title>짐픽 PRO 3.2</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 3.1 최소판매형 ===== */
+/* ===== 짐픽 PRO 3.2 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -2406,6 +2406,79 @@ body.simple-mode .panel{
   .simple-five-steps button{min-height:105px}
 }
 
+
+/* ===== PRO 3.2 견적서 공유·출력 ===== */
+.customer-consent-box{
+  margin-top:14px;padding:14px;border-radius:14px;
+  background:#FFF8E8;border:1px solid #F3D6A1;
+}
+.customer-consent-box label{
+  display:flex;align-items:flex-start;gap:10px;
+  color:#6D4910;font-size:15px;font-weight:900;line-height:1.5;
+}
+.customer-consent-box input{width:24px;height:24px;flex:0 0 auto}
+.customer-consent-box small{
+  display:block;margin:8px 0 0 34px;color:#82621D;line-height:1.5;
+}
+.quote-share-card{max-width:900px;margin:0 auto 16px}
+.quote-share-guide{
+  margin:0 0 14px;padding:12px 14px;border-radius:13px;
+  background:#EEF5FF;color:#174A7E;font-size:15px;font-weight:900;
+}
+.quote-share-preview{
+  display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;
+}
+.quote-share-preview div{
+  padding:13px 8px;border-radius:14px;background:#F3F6FA;
+  border:1px solid #DCE5EE;text-align:center;
+}
+.quote-share-preview span{display:block;font-size:11px;color:#65798C;font-weight:900}
+.quote-share-preview strong{display:block;margin-top:5px;font-size:17px;color:#102A43}
+.quote-share-preview .price{background:#FFF1E8;border-color:#FFD0B8}
+.quote-share-preview .price strong{color:#E6532F;font-size:20px}
+.quote-share-actions{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:13px;
+}
+.quote-share-actions button{
+  min-height:58px;border:0;border-radius:14px;
+  font-size:16px;font-weight:900;cursor:pointer;
+}
+#shareEstimateBtn{background:#16A36A;color:#fff}
+#printEstimateBtn{background:#102A43;color:#fff}
+#copyEstimateBtn{background:#E8EEF5;color:#102A43}
+.print-estimate-sheet{display:none}
+@media(max-width:850px){
+  .quote-share-preview{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:560px){
+  .quote-share-preview{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .quote-share-actions{grid-template-columns:1fr}
+}
+@media print{
+  body *{visibility:hidden!important}
+  #printEstimateSheet,#printEstimateSheet *{visibility:visible!important}
+  #printEstimateSheet{
+    display:block!important;position:absolute;left:0;top:0;width:100%;
+    padding:24px;font-family:Arial,"Noto Sans KR",sans-serif;color:#111;
+  }
+  .print-estimate-head{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    border-bottom:3px solid #111;padding-bottom:12px;margin-bottom:18px;
+  }
+  .print-estimate-head h1{margin:0;font-size:30px}
+  .print-estimate-head div{font-size:18px;font-weight:700}
+  .print-estimate-sheet table{width:100%;border-collapse:collapse}
+  .print-estimate-sheet th,.print-estimate-sheet td{
+    border:1px solid #999;padding:12px;text-align:left;font-size:15px;
+  }
+  .print-estimate-sheet th{width:25%;background:#f2f2f2}
+  .print-estimate-sheet .total th,.print-estimate-sheet .total td{
+    font-size:20px;font-weight:800;background:#fff4ea;
+  }
+  .print-note{margin-top:18px;line-height:1.6;font-size:13px}
+  .print-sign{display:flex;justify-content:space-between;margin-top:35px;font-size:14px}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2676,7 +2749,7 @@ body.simple-mode .panel{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-3.1</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-3.2</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><button type="button" id="launchMenuBtn">출시점검</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -2793,6 +2866,15 @@ body.simple-mode .panel{
       <div class="cloud-quote-actions">
         <button type="button" id="saveCloudQuoteBtn" class="cloud-quote-save">☁️ 견적 서버 저장</button>
         <button type="button" id="openCloudQuotesBtn" class="cloud-quote-list">📋 저장한 견적</button>
+      </div>
+
+
+      <div class="customer-consent-box">
+        <label>
+          <input type="checkbox" id="customerPrivacyConsent">
+          <span>고객에게 견적 작성과 사진 AI 분석을 위한 개인정보·사진 사용 동의를 받았습니다.</span>
+        </label>
+        <small>고객명, 연락처, 주소와 촬영 사진은 견적 작성 목적으로만 사용합니다.</small>
       </div>
 
 <button type="button" class="mvp-next-btn" id="mvpGoPhoto">
@@ -3043,6 +3125,26 @@ body.simple-mode .panel{
 
   <!-- ============ STEP 5. 견적 확정 ============ -->
   <section class="panel" id="step5">
+<div class="card quote-share-card">
+  <h2><span class="eyebrow">견적서</span> 저장·공유·출력</h2>
+  <p class="quote-share-guide">견적을 확인한 뒤 원하는 버튼을 누르세요.</p>
+
+  <div class="quote-share-preview" id="quoteSharePreview">
+    <div><span>업체명</span><strong id="shareCompany">짐픽</strong></div>
+    <div><span>고객명</span><strong id="shareCustomer">-</strong></div>
+    <div><span>이사일</span><strong id="shareMoveDate">-</strong></div>
+    <div><span>차량</span><strong id="shareTrucks">-</strong></div>
+    <div><span>인원·시간</span><strong id="shareWorkersHours">-</strong></div>
+    <div class="price"><span>견적금액</span><strong id="sharePrice">0원</strong></div>
+  </div>
+
+  <div class="quote-share-actions">
+    <button type="button" id="shareEstimateBtn">📤 견적서 공유</button>
+    <button type="button" id="printEstimateBtn">🖨 인쇄·PDF 저장</button>
+    <button type="button" id="copyEstimateBtn">📋 견적서 복사</button>
+  </div>
+</div>
+
 <div class="card training-card">
   <h2><span class="eyebrow">맞춤학습</span> 실제 현장 결과 입력</h2>
   <p class="training-guide">
@@ -3564,7 +3666,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-3.1';
+const BUILD_VERSION = 'JIMPICK-PRO-3.2';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -6472,6 +6574,11 @@ async function runSystemCheck(){
 
 
 function mvpGoToPhoto(){
+  const consent=document.getElementById('customerPrivacyConsent');
+  if(!consent?.checked){
+    alert('고객의 개인정보·사진 사용 동의를 확인해주세요.');
+    return;
+  }
   const name=document.getElementById('customerName')?.value?.trim()||'';
   const phone=(document.getElementById('customerPhone')?.value||'').replace(/\D/g,'');
   const date=document.getElementById('moveDate')?.value||'';
@@ -6506,6 +6613,115 @@ function updateFinishSummary(){
   set('finishHours',`${Number(document.getElementById('workHours')?.value)||0}시간`);
   set('finishPrice',getFinalEstimateText());
 }
+
+
+function getEstimateShareData(){
+  const value=id=>document.getElementById(id)?.value?.trim()||'';
+  const company=document.getElementById('loggedCompanyName')?.textContent?.trim()||'짐픽';
+  const truck1=Number(document.getElementById('truck1Count')?.value)||0;
+  const truck5=Number(document.getElementById('truck5Count')?.value)||0;
+  const workers=Number(document.getElementById('workerCount')?.value)||0;
+  const hours=Number(document.getElementById('workHours')?.value)||0;
+  const price=getFinalEstimateText();
+  const truckParts=[];
+  if(truck5>0)truckParts.push(`5톤 ${truck5}대`);
+  if(truck1>0)truckParts.push(`1톤 ${truck1}대`);
+
+  return {
+    company,
+    customer:value('customerName')||'-',
+    phone:value('customerPhone')||'-',
+    moveDate:value('moveDate')||'-',
+    from:value('fromAddress')||'-',
+    to:value('toAddress')||'-',
+    trucks:truckParts.length?truckParts.join(' + '):'차량 미정',
+    workers,
+    hours,
+    price,
+    createdDate:new Date().toLocaleDateString('ko-KR')
+  };
+}
+
+function makeEstimateShareText(){
+  const d=getEstimateShareData();
+  return `[${d.company} 이사 견적서]
+고객명: ${d.customer}
+연락처: ${d.phone}
+이사일: ${d.moveDate}
+출발지: ${d.from}
+도착지: ${d.to}
+추천 차량: ${d.trucks}
+작업 인원: ${d.workers}명
+예상 시간: ${d.hours}시간
+예상 견적: ${d.price}
+
+※ 실제 짐량과 현장 상황에 따라 최종 금액이 달라질 수 있습니다.`;
+}
+
+function updateEstimateSharePreview(){
+  const d=getEstimateShareData();
+  const set=(id,text)=>{const el=document.getElementById(id);if(el)el.textContent=text;};
+
+  set('shareCompany',d.company);
+  set('shareCustomer',d.customer);
+  set('shareMoveDate',d.moveDate);
+  set('shareTrucks',d.trucks);
+  set('shareWorkersHours',`${d.workers}명 · ${d.hours}시간`);
+  set('sharePrice',d.price);
+
+  set('printCompanyName',d.company);
+  set('printCustomerName',d.customer);
+  set('printCustomerPhone',d.phone);
+  set('printMoveDate',d.moveDate);
+  set('printFromAddress',d.from);
+  set('printToAddress',d.to);
+  set('printTrucks',d.trucks);
+  set('printWorkers',`${d.workers}명`);
+  set('printHours',`${d.hours}시간`);
+  set('printPrice',d.price);
+  set('printCreatedDate',d.createdDate);
+}
+
+async function shareEstimate(){
+  updateEstimateSharePreview();
+  const d=getEstimateShareData();
+  const text=makeEstimateShareText();
+
+  if(navigator.share){
+    try{
+      await navigator.share({
+        title:`${d.company} 이사 견적서`,
+        text
+      });
+      return;
+    }catch(error){
+      if(error?.name==='AbortError')return;
+    }
+  }
+
+  try{
+    await navigator.clipboard.writeText(text);
+    alert('견적서 내용이 복사되었습니다.');
+  }catch{
+    prompt('아래 견적서를 복사해주세요.',text);
+  }
+}
+
+function printEstimate(){
+  updateEstimateSharePreview();
+  window.print();
+}
+
+async function copyEstimate(){
+  const text=makeEstimateShareText();
+  try{
+    await navigator.clipboard.writeText(text);
+    alert('견적서가 복사되었습니다.');
+  }catch{
+    prompt('아래 견적서를 복사해주세요.',text);
+  }
+}
+
 
 function makeCustomerSmsText(){
   const name=document.getElementById('customerName')?.value?.trim()||'고객';
@@ -6813,6 +7029,7 @@ function applyMovingEstimateEngine(){
   if(typeof Calc!=='undefined')Calc.run();
   updateProEstimateSummary();
   updateFinishSummary();
+  updateEstimateSharePreview();
   updateFieldTestSummary(
     `전용 견적 엔진 적용 완료: ${result.totalTon.toFixed(1)}톤 · 1톤 ${result.truck1}대 · 5톤 ${result.truck5}대`,
     'ok'
@@ -8886,6 +9103,12 @@ ${msg || '-'}`;
     document.getElementById('completeSignupBtn')?.addEventListener('click',authCompleteSignup);
     document.getElementById('forgotPasswordBtn')?.addEventListener('click',authForgotPassword);
     document.getElementById('logoutBtn')?.addEventListener('click',authLogout);
+    document.getElementById('shareEstimateBtn')?.addEventListener('click',shareEstimate);
+    document.getElementById('printEstimateBtn')?.addEventListener('click',printEstimate);
+    document.getElementById('copyEstimateBtn')?.addEventListener('click',copyEstimate);
+    document.querySelectorAll('[data-step="5"]').forEach(el=>{
+      el.addEventListener('click',()=>setTimeout(updateEstimateSharePreview,80));
+    });
     document.getElementById('simpleHomeBtn')?.addEventListener('click',showSimpleHome);
     document.getElementById('simpleStartBtn')?.addEventListener('click',startSimpleQuote);
     document.getElementById('simpleAutoEstimateBtn')?.addEventListener('click',runSimpleAutoEstimate);
@@ -9468,6 +9691,33 @@ document.addEventListener('DOMContentLoaded', App.init);
       <button type="button" id="closePolicyModalBtn">✕</button>
     </div>
     <div id="policyBody" class="policy-body"></div>
+  </div>
+</div>
+
+
+<div id="printEstimateSheet" class="print-estimate-sheet">
+  <div class="print-estimate-head">
+    <h1>이사 견적서</h1>
+    <div id="printCompanyName">짐픽</div>
+  </div>
+  <table>
+    <tr><th>고객명</th><td id="printCustomerName">-</td></tr>
+    <tr><th>연락처</th><td id="printCustomerPhone">-</td></tr>
+    <tr><th>이사 날짜</th><td id="printMoveDate">-</td></tr>
+    <tr><th>출발지</th><td id="printFromAddress">-</td></tr>
+    <tr><th>도착지</th><td id="printToAddress">-</td></tr>
+    <tr><th>추천 차량</th><td id="printTrucks">-</td></tr>
+    <tr><th>작업 인원</th><td id="printWorkers">-</td></tr>
+    <tr><th>예상 시간</th><td id="printHours">-</td></tr>
+    <tr class="total"><th>예상 견적금액</th><td id="printPrice">0원</td></tr>
+  </table>
+  <p class="print-note">
+    본 견적은 입력정보와 사진 AI 분석을 기반으로 한 예상 견적입니다.
+    실제 짐량과 현장 상황에 따라 최종 금액이 달라질 수 있습니다.
+  </p>
+  <div class="print-sign">
+    <span>견적일: <b id="printCreatedDate">-</b></span>
+    <span>업체 확인: __________________</span>
   </div>
 </div>
 
