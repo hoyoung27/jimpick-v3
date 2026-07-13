@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 V3.3 AI 이사견적</title>
+<title>짐픽 V3.4 AI 이사견적</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -868,6 +868,20 @@ button:active{transform:scale(0.96);}
   .ai-report-grid{grid-template-columns:1fr}
 }
 
+
+/* ===== V3.4 사진 분석 도우미 ===== */
+.photo-helper{margin-top:14px;padding:16px;border-radius:18px;border:1px solid rgba(15,42,67,.12);background:linear-gradient(145deg,#F8FBFF,#EEF5FF);box-shadow:0 10px 24px rgba(15,42,67,.08)}
+.photo-helper-title{font-size:18px;font-weight:900;color:#102A43}
+.photo-helper-sub{font-size:12px;color:#6B7C8F;margin-top:4px}
+.photo-helper-chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:14px}
+.photo-chip{position:relative;border:1px solid rgba(15,42,67,.12);background:#fff;border-radius:14px;min-height:54px;padding:9px 8px;font-weight:800;color:#102A43;cursor:pointer;box-shadow:0 4px 10px rgba(15,42,67,.05)}
+.photo-chip.active{border-color:#FF6B35;background:#FFF3EC;color:#A63B12}
+.photo-chip .count{position:absolute;top:-7px;right:-6px;min-width:22px;height:22px;padding:0 6px;display:none;align-items:center;justify-content:center;border-radius:999px;background:#FF5A36;color:#fff;font-size:12px;font-weight:900}
+.photo-chip.active .count{display:flex}
+.photo-helper-actions{display:flex;gap:10px;margin-top:14px}
+.photo-helper-actions .btn{flex:1}
+@media(max-width:640px){.photo-helper-chips{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1148,9 +1162,9 @@ button:active{transform:scale(0.96);}
   <!-- ============ STEP 3. 사진/동영상 AI 분석 ============ -->
   <section class="panel" id="step3">
     <div class="card">
-      <h2><span class="eyebrow">STEP 3</span>사진 · 동영상 업로드 (AI 짐 분석)</h2>
+      <h2><span class="eyebrow">STEP 3</span>사진 · 동영상 업로드 (사진 분석 도우미)</h2>
       <div class="upload-box">
-        <div>📷 현장에서 바로 촬영하거나, 찍어둔 사진/동영상을 업로드하면 AI가 품목을 자동으로 인식합니다.</div>
+        <div>📷 사진을 보면서 빠른 품목 버튼을 누르면 품목확인과 자동견적에 바로 반영됩니다.</div>
         <div class="upload-btn-row">
           <label class="upload-btn camera" for="cameraPhotoInput">📷 지금 사진 촬영</label>
           <label class="upload-btn camera" for="cameraVideoInput">🎥 지금 동영상 촬영</label>
@@ -1161,14 +1175,21 @@ button:active{transform:scale(0.96);}
         <input type="file" id="cameraVideoInput" accept="video/*" capture="environment">
       </div>
       <div class="preview-grid" id="mediaPreview"></div>
-      <button class="btn btn-navy" id="analyzeBtn" style="margin-top:14px;">🤖 AI 분석하기 (데모)</button>
+      <button class="btn btn-navy" id="analyzeBtn" style="margin-top:14px;">🧠 사진 분석 도우미 열기</button>
+      
+      <div class="photo-helper" id="photoHelper" style="display:none;">
+        <div class="photo-helper-title">사진에 보이는 품목을 눌러주세요</div>
+        <div class="photo-helper-sub">한 번 누르면 1개가 추가되고, 다시 누르면 수량이 올라갑니다.</div>
+        <div class="photo-helper-chips" id="photoHelperChips"></div>
+        <div class="photo-helper-actions">
+          <button type="button" class="btn btn-outline" id="photoHelperReset">선택 초기화</button>
+          <button type="button" class="btn btn-accent" id="photoHelperApply">품목에 반영</button>
+        </div>
+      </div>
       <div id="aiResultWrap"></div>
       <div class="arch-note">
-        🔧 <b>연동 안내</b>: 지금은 데모 시뮬레이션입니다. 실제 서비스 단계에서는 서버(백엔드)의
-        <code>/api/analyze-media</code> 엔드포인트가 사진/동영상을 Vision AI 모델로 분석하여
-        <code>{items:[{name, qty, confidence}]}</code> 형태로 결과를 반환하도록 교체하면 됩니다.
-        (AIService.analyzeMedia 함수만 교체) 사진을 찍거나 올리면 자동으로 분석되어 해당 품목이 바로 체크되고,
-        우리 목록에 없는 물건은 자동으로 "기타" 항목에 체크되면서 무엇인지 메모로 기록됩니다.
+        🔧 <b>안내</b>: 현재 버전은 사진을 보면서 빠른 품목 버튼으로 정확하게 반영하는 현장용 도우미입니다.
+        사진 속 물건을 완전히 자동 인식하려면 별도의 Vision AI 서버와 인증키 연결이 필요합니다.
       </div>
     </div>
   </section>
@@ -1570,7 +1591,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'V3.3-B33';
+const BUILD_VERSION = 'V3.4-B34';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -3102,39 +3123,66 @@ function applyAIResultsToItems(results){
   Calc.updateAllSubtotals();
 }
 
-// 업로드된 사진/동영상을 분석하고, 감지된 품목을 자동으로 체크까지 완료하는 통합 함수
-async function runAutoAIAnalysis(){
-  if(State.media.length===0) return;
-  const btn = document.getElementById('analyzeBtn');
-  const originalLabel = btn.textContent;
-  btn.textContent = '🤖 자동 분석 중...';
-  btn.disabled = true;
 
-  const results = await AIService.analyzeMedia(State.media);
-  applyAIResultsToItems(results);
+const PHOTO_HELPER_ITEMS = [
+  ['침대','🛏️'],['매트리스','🧱'],['장롱','🚪'],['옷장','👔'],
+  ['서랍장','🗄️'],['책상','🪑'],['책장','📚'],['의자','🪑'],
+  ['소파','🛋️'],['TV','📺'],['거실장','📦'],['안마의자','💺'],
+  ['냉장고','🧊'],['김치냉장고','🥬'],['식탁','🍽️'],['전자레인지','♨️'],
+  ['밥솥','🍚'],['정수기','💧'],['세탁기','🧺'],['건조기','🌬️'],
+  ['에어컨','❄️'],['컴퓨터','🖥️'],['박스','📦'],['기타','➕']
+];
+const PhotoHelperState = {};
 
-  btn.textContent = originalLabel;
-  btn.disabled = false;
+function renderPhotoHelper(){
+  const wrap = document.getElementById('photoHelperChips');
+  if(!wrap) return;
+  wrap.innerHTML = PHOTO_HELPER_ITEMS.map(([name,icon])=>{
+    const qty = PhotoHelperState[name] || 0;
+    return `<button type="button" class="photo-chip ${qty>0?'active':''}" data-photo-item="${name}">
+      <span>${icon} ${name}</span><span class="count">${qty}</span>
+    </button>`;
+  }).join('');
+}
+
+function applyPhotoHelperItems(){
+  const selected = Object.entries(PhotoHelperState)
+    .filter(([,qty])=>qty>0)
+    .map(([name,qty])=>({
+      name, qty, size:'확인필요', confidence:1,
+      disassembly_required:false, heavy_item:false, special_handling:false
+    }));
+
+  if(selected.length===0){
+    alert('사진에 보이는 품목을 먼저 선택해주세요.');
+    return;
+  }
+  applyAIResultsToItems(selected);
+  Calc.run();
+  DraftService.save();
 
   const wrap = document.getElementById('aiResultWrap');
   wrap.innerHTML = `
-    <div class="ai-banner">⚠ 데모 결과입니다. 사진/동영상을 기반으로 아래 품목이 STEP 3·4에 자동으로 체크되었습니다.</div>
+    <div class="ai-banner">✅ 선택한 품목이 품목확인과 자동견적에 반영되었습니다.</div>
     <div style="margin-top:10px;">
-      ${results.map(r=>{
-        const badges = [];
-        if(r.size) badges.push(r.size);
-        if(r.disassembly_required) badges.push('분해필요');
-        if(r.heavy_item) badges.push('무거움');
-        if(r.special_handling) badges.push('특수포장');
-        return `
-        <div class="ai-result-row">
-          <span>✅ ${r.name} × ${r.qty}${badges.length ? ` <span class="ai-badges">(${badges.join(' · ')})</span>` : ''}</span>
-          <span class="conf">신뢰도 ${Math.round(r.confidence*100)}%</span>
-        </div>`;
-      }).join('')}
+      ${selected.map(r=>`<div class="ai-result-row"><span>✅ ${r.name} × ${r.qty}</span><span class="conf">직접 확인</span></div>`).join('')}
     </div>
-    <div class="hint">STEP 3·4로 이동해 자동 체크된 항목과 수량을 확인하고, 다르면 직접 수정하세요.</div>
-  `;
+    <div class="hint">STEP 4 품목확인에서 수량과 크기를 최종 확인해주세요.</div>`;
+}
+
+
+// 업로드된 사진/동영상을 분석하고, 감지된 품목을 자동으로 체크까지 완료하는 통합 함수
+async function runAutoAIAnalysis(){
+  if(State.media.length===0){
+    alert('먼저 사진이나 동영상을 추가해주세요.');
+    return;
+  }
+  const helper = document.getElementById('photoHelper');
+  const btn = document.getElementById('analyzeBtn');
+  const isOpen = helper.style.display !== 'none';
+  helper.style.display = isOpen ? 'none' : 'block';
+  btn.textContent = isOpen ? '🧠 사진 분석 도우미 열기' : '▲ 사진 분석 도우미 닫기';
+  if(!isOpen) renderPhotoHelper();
 }
 
 /* ---------------------- 15. 이벤트 바인딩 & 초기화 ---------------------- */
@@ -3605,7 +3653,9 @@ ${msg || '-'}`;
         State.media.push({file, url: URL.createObjectURL(file), type: file.type});
       });
       renderMediaPreview();
-      runAutoAIAnalysis();
+      const helper = document.getElementById('photoHelper');
+      if(helper) helper.style.display = 'none';
+      document.getElementById('analyzeBtn').textContent = '🧠 사진 분석 도우미 열기';
       e.target.value = ''; // 같은 파일을 다시 찍어도 change 이벤트가 또 발생하도록 초기화
     };
     document.getElementById('mediaInput').addEventListener('change', handleMediaFiles);
@@ -3616,11 +3666,21 @@ ${msg || '-'}`;
       if(rm){ State.media.splice(Number(rm.dataset.idx),1); renderMediaPreview(); }
     });
 
-    // AI 분석(데모) - 수동으로 다시 실행하고 싶을 때 사용
-    document.getElementById('analyzeBtn').addEventListener('click', ()=>{
-      if(State.media.length===0){ alert('먼저 사진 또는 동영상을 업로드해주세요.'); return; }
-      runAutoAIAnalysis();
+    // 사진 분석 도우미
+    document.getElementById('analyzeBtn').addEventListener('click', runAutoAIAnalysis);
+    document.getElementById('photoHelperChips').addEventListener('click', (e)=>{
+      const chip = e.target.closest('.photo-chip');
+      if(!chip) return;
+      const name = chip.dataset.photoItem;
+      PhotoHelperState[name] = (PhotoHelperState[name] || 0) + 1;
+      renderPhotoHelper();
     });
+    document.getElementById('photoHelperReset').addEventListener('click', ()=>{
+      Object.keys(PhotoHelperState).forEach(k=>delete PhotoHelperState[k]);
+      renderPhotoHelper();
+      document.getElementById('aiResultWrap').innerHTML = '';
+    });
+    document.getElementById('photoHelperApply').addEventListener('click', applyPhotoHelperItems);
 
     // 재계산 버튼
     document.getElementById('recalcBtn').addEventListener('click', ()=>Calc.run());
