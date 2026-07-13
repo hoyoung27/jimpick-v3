@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 V4.2 AI 이사견적</title>
+<title>짐픽 V4.3 AI 이사견적</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1299,6 +1299,35 @@ button:active{transform:scale(0.96);}
   .resource-summary{grid-template-columns:1fr}
 }
 
+
+/* ===== V4.3 자동 배차표 ===== */
+.dispatch-title-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.dispatch-print-day{
+  border:0;border-radius:11px;padding:10px 13px;background:#0B7A53;color:#fff;
+  font-weight:900;cursor:pointer;white-space:nowrap;
+}
+.dispatch-item.unassigned{border-color:#F5A623;background:#FFFBF2}
+.dispatch-alert{
+  margin-top:8px;padding:8px 10px;border-radius:10px;background:#FFF0D6;
+  color:#8A4B00;font-size:12px;font-weight:800;
+}
+.dispatch-auto{
+  margin-top:10px;width:100%;border:0;border-radius:11px;padding:10px;
+  background:#E6532F;color:#fff;font-weight:900;cursor:pointer;
+}
+.dispatch-assigned{
+  margin-top:10px;padding:10px 12px;border-radius:12px;background:#EEF7F2;
+  color:#195B3B;font-size:12px;line-height:1.65;font-weight:700;
+}
+.dispatch-field select[multiple]{
+  min-height:92px;padding:7px;
+}
+.dispatch-field .field-help{margin-top:4px;font-size:10px;color:#718096}
+@media(max-width:650px){
+  .dispatch-title-row{align-items:flex-start;flex-direction:column}
+  .dispatch-print-day{width:100%}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2192,7 +2221,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'V4.2-B42';
+const BUILD_VERSION = 'V4.3-B43';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -3667,6 +3696,7 @@ function crmCurrentFormData(){
     specialNotes: document.getElementById('specialNotes')?.value || '',
     total: Number(q.total) || 0,
     truckLabel: q.truckLabel || '-',
+    truck1Count: Number(q.truck1Count) || 0,
     workers: Number(q.workers) || 0,
     maleCount: Number(q.maleCount) || 0,
     kitchenCount: Number(q.kitchenCount) || 0,
@@ -3931,6 +3961,8 @@ function renderDispatchList(dateKey){
 
   if(dateEl)dateEl.textContent=`${dateKey} 일정`;
   const records=crmRead().filter(r=>r.moveDate===dateKey);
+  const trucks=resourceRead(RESOURCE_TRUCK_KEY);
+  const workers=resourceRead(RESOURCE_WORKER_KEY);
 
   if(records.length===0){
     list.innerHTML='<div class="dispatch-empty">이 날짜에 저장된 견적이 없습니다.</div>';
@@ -3938,9 +3970,34 @@ function renderDispatchList(dateKey){
   }
 
   list.innerHTML=records.map(r=>{
-    const dispatch=r.dispatch||{truckCount:0,driverName:'',workerNames:'',status:'미배정'};
+    const dispatch=r.dispatch||{};
+    const selectedTruckIds=Array.isArray(dispatch.truckIds)?dispatch.truckIds:[];
+    const selectedWorkerIds=Array.isArray(dispatch.workerIds)?dispatch.workerIds:[];
+    const isAssigned=dispatch.status==='배정완료';
+
+    const truckOptions=trucks.map(t=>`
+      <option value="${t.id}" ${selectedTruckIds.includes(t.id)?'selected':''}>
+        ${Utils.escapeHtml(t.number)}${t.driver?' · '+Utils.escapeHtml(t.driver):''} (${Utils.escapeHtml(t.status||'사용가능')})
+      </option>`).join('');
+
+    const workerOptions=workers.map(w=>`
+      <option value="${w.id}" ${selectedWorkerIds.includes(w.id)?'selected':''}>
+        ${Utils.escapeHtml(w.name)} · ${Utils.escapeHtml(w.role||'작업자')}
+      </option>`).join('');
+
+    const assignedTruckNames=trucks.filter(t=>selectedTruckIds.includes(t.id))
+      .map(t=>`${t.number}${t.driver?'('+t.driver+')':''}`).join(', ');
+    const assignedWorkerNames=workers.filter(w=>selectedWorkerIds.includes(w.id))
+      .map(w=>`${w.name}(${w.role||'작업자'})`).join(', ');
+
+    const recommendedTruckCount=Math.max(
+      1,
+      Number(r.truck1Count)||Number(dispatch.truckCount)||1
+    );
+    const recommendedWorkers=Math.max(1,Number(r.workers)||1);
+
     return `
-      <div class="dispatch-item">
+      <div class="dispatch-item ${isAssigned?'':'unassigned'}">
         <div class="dispatch-item-head">
           <div>
             <b>${Utils.escapeHtml(r.customerName||'이름 없음')}</b>
@@ -3949,31 +4006,64 @@ function renderDispatchList(dateKey){
           <strong>${Utils.won(Number(r.total)||0)}</strong>
         </div>
 
+        ${isAssigned?'':`<div class="dispatch-alert">⚠️ 아직 차량과 작업자가 완전히 배정되지 않았습니다.</div>`}
+
         <div class="dispatch-form">
           <div class="dispatch-field">
-            <label>1톤 차량 대수</label>
-            <input type="number" min="0" max="20" value="${Number(dispatch.truckCount)||0}" data-dispatch-truck="${r.id}">
+            <label>작업 구분</label>
+            <select data-dispatch-period="${r.id}">
+              <option ${dispatch.period==='오전'?'selected':''}>오전</option>
+              <option ${dispatch.period==='오후'?'selected':''}>오후</option>
+              <option ${dispatch.period==='종일'?'selected':''}>종일</option>
+            </select>
           </div>
           <div class="dispatch-field">
-            <label>기사 이름</label>
-            <input value="${Utils.escapeHtml(dispatch.driverName||'')}" data-dispatch-driver="${r.id}" placeholder="예: 김기사">
+            <label>팀 이름</label>
+            <input value="${Utils.escapeHtml(dispatch.teamName||'')}" data-dispatch-team="${r.id}" placeholder="예: 1팀">
           </div>
           <div class="dispatch-field">
-            <label>작업자 이름</label>
-            <input value="${Utils.escapeHtml(dispatch.workerNames||'')}" data-dispatch-workers="${r.id}" placeholder="예: 홍길동, 박철수">
+            <label>차량 선택 · 권장 ${recommendedTruckCount}대</label>
+            <select multiple data-dispatch-truck-select="${r.id}">
+              ${truckOptions||'<option disabled>등록 차량 없음</option>'}
+            </select>
+            <div class="field-help">Ctrl 키를 누른 채 여러 대 선택</div>
+          </div>
+          <div class="dispatch-field">
+            <label>직원 선택 · 권장 ${recommendedWorkers}명</label>
+            <select multiple data-dispatch-worker-select="${r.id}">
+              ${workerOptions||'<option disabled>등록 직원 없음</option>'}
+            </select>
+            <div class="field-help">Ctrl 키를 누른 채 여러 명 선택</div>
           </div>
           <div class="dispatch-field">
             <label>배차 상태</label>
             <select data-dispatch-status="${r.id}">
-              <option ${dispatch.status==='미배정'?'selected':''}>미배정</option>
+              <option ${dispatch.status!=='배정완료'?'selected':''}>미배정</option>
               <option ${dispatch.status==='배정완료'?'selected':''}>배정완료</option>
             </select>
           </div>
         </div>
-        <button type="button" class="dispatch-save" data-dispatch-save="${r.id}">배차정보 저장</button>
+
+        <button type="button" class="dispatch-auto" data-dispatch-auto="${r.id}">
+          ⚡ 등록 차량·직원 자동 배정
+        </button>
+        <button type="button" class="dispatch-save" data-dispatch-save="${r.id}">
+          배차정보 저장
+        </button>
+
+        ${(assignedTruckNames||assignedWorkerNames)?`
+          <div class="dispatch-assigned">
+            🚚 차량: ${Utils.escapeHtml(assignedTruckNames||'미배정')}<br>
+            👷 직원: ${Utils.escapeHtml(assignedWorkerNames||'미배정')}
+          </div>`:''}
       </div>
     `;
   }).join('');
+}
+
+function getMultiSelectValues(selector){
+  const el=document.querySelector(selector);
+  return el?Array.from(el.selectedOptions).map(o=>o.value):[];
 }
 
 function saveDispatchRecord(id){
@@ -3981,21 +4071,127 @@ function saveDispatchRecord(id){
   const index=records.findIndex(r=>r.id===id);
   if(index<0)return;
 
-  const truck=document.querySelector(`[data-dispatch-truck="${id}"]`);
-  const driver=document.querySelector(`[data-dispatch-driver="${id}"]`);
-  const workers=document.querySelector(`[data-dispatch-workers="${id}"]`);
-  const status=document.querySelector(`[data-dispatch-status="${id}"]`);
+  const truckIds=getMultiSelectValues(`[data-dispatch-truck-select="${id}"]`);
+  const workerIds=getMultiSelectValues(`[data-dispatch-worker-select="${id}"]`);
+  const status=document.querySelector(`[data-dispatch-status="${id}"]`)?.value||'미배정';
 
   records[index].dispatch={
-    truckCount:Number(truck?.value)||0,
-    driverName:driver?.value?.trim()||'',
-    workerNames:workers?.value?.trim()||'',
-    status:status?.value||'미배정'
+    truckCount:truckIds.length,
+    truckIds,
+    workerIds,
+    driverName:'',
+    workerNames:'',
+    period:document.querySelector(`[data-dispatch-period="${id}"]`)?.value||'오전',
+    teamName:document.querySelector(`[data-dispatch-team="${id}"]`)?.value?.trim()||'',
+    status
   };
 
   crmWrite(records);
   renderDispatchList(calendarSelectedDate);
   alert('배차정보를 저장했습니다.');
+}
+
+function autoAssignDispatch(id){
+  const records=crmRead();
+  const index=records.findIndex(r=>r.id===id);
+  if(index<0)return;
+
+  const record=records[index];
+  const trucks=resourceRead(RESOURCE_TRUCK_KEY).filter(t=>(t.status||'사용가능')!=='정비중');
+  const workers=resourceRead(RESOURCE_WORKER_KEY);
+
+  if(trucks.length===0){
+    alert('먼저 차량·직원 탭에서 차량을 등록해주세요.');
+    return;
+  }
+  if(workers.length===0){
+    alert('먼저 차량·직원 탭에서 직원을 등록해주세요.');
+    return;
+  }
+
+  const truckNeed=Math.max(1,Number(record.truck1Count)||1);
+  const workerNeed=Math.max(1,Number(record.workers)||1);
+
+  const selectedTrucks=trucks.slice(0,truckNeed);
+  const drivers=workers.filter(w=>w.role==='기사');
+  const otherWorkers=workers.filter(w=>w.role!=='기사');
+  const selectedWorkers=[
+    ...drivers.slice(0,Math.min(selectedTrucks.length,drivers.length)),
+    ...otherWorkers
+  ].slice(0,workerNeed);
+
+  record.dispatch={
+    truckCount:selectedTrucks.length,
+    truckIds:selectedTrucks.map(t=>t.id),
+    workerIds:selectedWorkers.map(w=>w.id),
+    period:(record.moveStartTime||'07:00')<'12:00'?'오전':'오후',
+    teamName:record.dispatch?.teamName||'1팀',
+    status:(selectedTrucks.length>=truckNeed && selectedWorkers.length>=workerNeed)
+      ?'배정완료':'미배정'
+  };
+
+  crmWrite(records);
+  renderDispatchList(calendarSelectedDate);
+}
+
+function printDispatchDay(){
+  if(!calendarSelectedDate){
+    alert('먼저 캘린더에서 날짜를 선택해주세요.');
+    return;
+  }
+
+  const records=crmRead().filter(r=>r.moveDate===calendarSelectedDate);
+  if(records.length===0){
+    alert('선택 날짜에 일정이 없습니다.');
+    return;
+  }
+
+  const trucks=resourceRead(RESOURCE_TRUCK_KEY);
+  const workers=resourceRead(RESOURCE_WORKER_KEY);
+
+  const rows=records.map((r,i)=>{
+    const d=r.dispatch||{};
+    const truckNames=trucks.filter(t=>(d.truckIds||[]).includes(t.id))
+      .map(t=>`${t.number}${t.driver?' / '+t.driver:''}`).join(', ')||'미배정';
+    const workerNames=workers.filter(w=>(d.workerIds||[]).includes(w.id))
+      .map(w=>`${w.name}(${w.role||'작업자'})`).join(', ')||'미배정';
+
+    return `<tr>
+      <td>${i+1}</td>
+      <td>${Utils.escapeHtml(d.period||'-')}</td>
+      <td>${Utils.escapeHtml(r.moveStartTime||'-')}</td>
+      <td>${Utils.escapeHtml(r.customerName||'-')}<br>${Utils.escapeHtml(r.customerPhone||'')}</td>
+      <td>${Utils.escapeHtml(r.fromAddress||'-')}<br>→ ${Utils.escapeHtml(r.toAddress||'-')}</td>
+      <td>${Utils.escapeHtml(truckNames)}</td>
+      <td>${Utils.escapeHtml(workerNames)}</td>
+      <td>${Utils.escapeHtml(d.teamName||'-')}</td>
+      <td>${Utils.escapeHtml(d.status||'미배정')}</td>
+    </tr>`;
+  }).join('');
+
+  const w=window.open('','_blank','width=1200,height=800');
+  if(!w)return;
+  w.document.write(`<!doctype html><html lang="ko"><head><meta charset="utf-8">
+    <title>${calendarSelectedDate} 배차표</title>
+    <style>
+      body{font-family:Arial,"Noto Sans KR",sans-serif;padding:24px;color:#111}
+      h1{margin:0 0 8px}p{margin:0 0 18px;color:#555}
+      table{width:100%;border-collapse:collapse;font-size:12px}
+      th,td{border:1px solid #999;padding:8px;vertical-align:top}
+      th{background:#102A43;color:#fff}
+      .foot{margin-top:18px;font-size:11px;color:#666}
+      @media print{button{display:none}}
+    </style></head><body>
+    <h1>짐픽 일일 배차표</h1>
+    <p>작업일: ${calendarSelectedDate} · 총 ${records.length}건</p>
+    <table><thead><tr>
+      <th>순번</th><th>구분</th><th>시간</th><th>고객</th><th>구간</th>
+      <th>차량·기사</th><th>작업자</th><th>팀</th><th>상태</th>
+    </tr></thead><tbody>${rows}</tbody></table>
+    <div class="foot">짐픽 V4.3 자동 배차표</div>
+    <script>window.onload=()=>window.print();<\/script>
+    </body></html>`);
+  w.document.close();
 }
 
 
@@ -4876,9 +5072,12 @@ ${msg || '-'}`;
     });
 
     document.getElementById('dispatchList')?.addEventListener('click',(e)=>{
-      const btn=e.target.closest('[data-dispatch-save]');
-      if(btn)saveDispatchRecord(btn.dataset.dispatchSave);
+      const saveBtn=e.target.closest('[data-dispatch-save]');
+      const autoBtn=e.target.closest('[data-dispatch-auto]');
+      if(saveBtn)saveDispatchRecord(saveBtn.dataset.dispatchSave);
+      if(autoBtn)autoAssignDispatch(autoBtn.dataset.dispatchAuto);
     });
+    document.getElementById('printDispatchDay')?.addEventListener('click',printDispatchDay);
     document.getElementById('dashboardClose')?.addEventListener('click', closeOwnerDashboard);
     document.getElementById('dashboardBackup')?.addEventListener('click', crmExport);
     document.getElementById('dashboardModal')?.addEventListener('click', (e)=>{
@@ -5453,8 +5652,13 @@ document.addEventListener('DOMContentLoaded', App.init);
       <div class="calendar-grid" id="calendarGrid"></div>
 
       <div class="dispatch-panel">
-        <h3>🚚 선택 날짜 일정·배차</h3>
-        <div class="dispatch-date" id="dispatchSelectedDate">날짜를 선택하세요.</div>
+        <div class="dispatch-title-row">
+          <div>
+            <h3>🚚 선택 날짜 일정·배차</h3>
+            <div class="dispatch-date" id="dispatchSelectedDate">날짜를 선택하세요.</div>
+          </div>
+          <button type="button" class="dispatch-print-day" id="printDispatchDay">🖨️ 배차표 인쇄</button>
+        </div>
         <div id="dispatchList" class="dispatch-list"></div>
       </div>
     </div>
