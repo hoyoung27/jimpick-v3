@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 V4.4 AI 이사견적</title>
+<title>짐픽 V4.5 AI 이사견적</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1352,6 +1352,18 @@ button:active{transform:scale(0.96);}
   .dispatch-action-row{grid-template-columns:1fr}
 }
 
+
+/* ===== V4.5 계약상태·오늘 업무현황 ===== */
+.crm-status-row{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  margin-top:10px;padding:9px 10px;border-radius:11px;background:#F3F6FA;
+}
+.crm-status-row label{font-size:12px;font-weight:900;color:#52667A}
+.crm-status-row select{
+  border:1px solid #D9E2EC;border-radius:9px;padding:7px 9px;
+  font-size:12px;font-weight:800;background:#fff;
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2245,7 +2257,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'V4.4-B44';
+const BUILD_VERSION = 'V4.5-B45';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -3734,6 +3746,7 @@ function crmCurrentFormData(){
       workerNames: '',
       status: '미배정'
     },
+    customerStatus: '견적중',
     workStatus: '예약',
     payment: {
       deposit: 0,
@@ -3797,6 +3810,24 @@ function crmDeleteRecord(id){
   crmRender();
 }
 
+function crmUpdateStatus(id, status){
+  const records = crmRead();
+  const index = records.findIndex(r=>r.id===id);
+  if(index < 0) return;
+
+  records[index].customerStatus = status;
+
+  if(status === '작업완료'){
+    records[index].workStatus = '작업완료';
+  }else if(status === '계약완료' && (!records[index].workStatus || records[index].workStatus === '예약')){
+    records[index].workStatus = '예약';
+  }
+
+  crmWrite(records);
+  crmRender();
+  renderOwnerDashboard();
+}
+
 function crmRender(){
   const listEl = document.getElementById('crmList');
   if(!listEl) return;
@@ -3824,6 +3855,16 @@ function crmRender(){
         <div class="crm-item-meta">
           연락처: ${Utils.escapeHtml(r.customerPhone || '-')}<br>
           차량: ${Utils.escapeHtml(r.truckLabel || '-')} · 인원: ${Number(r.workers)||0}명
+        </div>
+        <div class="crm-status-row">
+          <label>고객 상태</label>
+          <select data-crm-status="${r.id}">
+            <option ${(!r.customerStatus || r.customerStatus==='문의')?'selected':''}>문의</option>
+            <option ${r.customerStatus==='견적중'?'selected':''}>견적중</option>
+            <option ${r.customerStatus==='계약완료'?'selected':''}>계약완료</option>
+            <option ${r.customerStatus==='작업완료'?'selected':''}>작업완료</option>
+            <option ${r.customerStatus==='취소'?'selected':''}>취소</option>
+          </select>
         </div>
         <div class="crm-item-actions">
           <button type="button" class="crm-load" data-crm-load="${r.id}">불러오기</button>
@@ -3867,10 +3908,8 @@ function renderOwnerDashboard(){
   const records = crmRead();
   const now = new Date();
 
-  const todayRecords = records.filter(r=>{
-    const d = new Date(r.savedAt);
-    return !isNaN(d) && dashboardSameDate(d, now);
-  });
+  const todayKey = ymd(now);
+  const todayRecords = records.filter(r=>r.moveDate===todayKey);
 
   const monthRecords = records.filter(r=>{
     const d = new Date(r.savedAt);
@@ -3883,7 +3922,14 @@ function renderOwnerDashboard(){
     const paid = Number(r.payment?.paidAmount)||0;
     return s + Math.max(0,(Number(r.total)||0)-paid);
   },0);
-  const completedCount = records.filter(r=>r.workStatus==='작업완료').length;
+  const completedCount = records.filter(r=>r.workStatus==='작업완료' || r.customerStatus==='작업완료').length;
+  const contractCount = records.filter(r=>r.customerStatus==='계약완료').length;
+  const cancelCount = records.filter(r=>r.customerStatus==='취소').length;
+  const todaySales = todayRecords.reduce((s,r)=>s+(Number(r.total)||0),0);
+  const todayDue = todayRecords.reduce((s,r)=>{
+    const paid = Number(r.payment?.paidAmount)||0;
+    return s + Math.max(0,(Number(r.total)||0)-paid);
+  },0);
 
   const setText=(id,text)=>{const el=document.getElementById(id);if(el)el.textContent=text;};
   setText('dashTodayCount',`${todayRecords.length}건`);
@@ -3892,6 +3938,10 @@ function renderOwnerDashboard(){
   setText('dashMonthProfit',Utils.won(monthProfit));
   setText('dashReceivable',Utils.won(totalReceivable));
   setText('dashCompletedCount',`${completedCount}건`);
+  setText('dashContractCount',`${contractCount}건`);
+  setText('dashCancelCount',`${cancelCount}건`);
+  setText('dashTodaySales',Utils.won(todaySales));
+  setText('dashTodayDue',Utils.won(todayDue));
 
   const list=document.getElementById('dashboardRecentList');
   if(!list)return;
@@ -3907,6 +3957,7 @@ function renderOwnerDashboard(){
       <div>
         <b>${Utils.escapeHtml(r.customerName||'이름 없음')}</b>
         <small>${Utils.escapeHtml(r.moveDate||'이사일 미정')} · ${Utils.escapeHtml(r.customerPhone||'연락처 없음')}</small>
+        <small>상태: ${Utils.escapeHtml(r.customerStatus||'문의')}</small>
       </div>
       <div class="dashboard-recent-amount">${Utils.won(Number(r.total)||0)}</div>
     </div>
@@ -5419,6 +5470,10 @@ ${msg || '-'}`;
       if(loadBtn) crmLoadRecord(loadBtn.dataset.crmLoad);
       if(delBtn) crmDeleteRecord(delBtn.dataset.crmDelete);
     });
+    document.getElementById('crmList')?.addEventListener('change', (e)=>{
+      const statusSelect = e.target.closest('[data-crm-status]');
+      if(statusSelect) crmUpdateStatus(statusSelect.dataset.crmStatus, statusSelect.value);
+    });
 
     // V3.8 수익분석 열기/닫기
     const profitHead = document.getElementById('profitHead');
@@ -5755,6 +5810,10 @@ document.addEventListener('DOMContentLoaded', App.init);
       <div class="dashboard-stat"><span>이번 달 예상 순이익</span><strong id="dashMonthProfit">0원</strong></div>
       <div class="dashboard-stat"><span>전체 미수금</span><strong id="dashReceivable">0원</strong></div>
       <div class="dashboard-stat"><span>작업완료 건수</span><strong id="dashCompletedCount">0건</strong></div>
+      <div class="dashboard-stat"><span>계약완료 고객</span><strong id="dashContractCount">0건</strong></div>
+      <div class="dashboard-stat"><span>취소 고객</span><strong id="dashCancelCount">0건</strong></div>
+      <div class="dashboard-stat"><span>오늘 예상 매출</span><strong id="dashTodaySales">0원</strong></div>
+      <div class="dashboard-stat"><span>오늘 미수금</span><strong id="dashTodayDue">0원</strong></div>
     </div>
 
     <div class="dashboard-section">
