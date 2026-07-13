@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 2.3",
+  "name": "짐픽 PRO 2.4",
   "short_name": "짐픽 PRO",
-  "description": "품목별 짐량과 작업난이도를 반영해 차량·인원·시간·금액을 자동 계산하는 이사업체 전용 견적 앱",
+  "description": "사진 촬영 후 AI 품목 인식부터 차량·인원·시간·금액까지 한 번에 계산하는 완전자동 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
