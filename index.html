@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 V3.2 AI 이사견적</title>
+<title>짐픽 V3.3 AI 이사견적</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -796,6 +796,78 @@ button:active{transform:scale(0.96);}
   color:#fff!important;
 }
 
+
+/* ===== V3.3 자동견적 리포트 ===== */
+.ai-estimate-card{
+  margin-top:16px;
+  border:1px solid rgba(15,42,67,.12);
+  border-radius:20px;
+  background:linear-gradient(145deg,#F8FBFF,#EEF5FF);
+  box-shadow:0 12px 28px rgba(15,42,67,.08);
+  overflow:hidden;
+}
+.ai-estimate-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:16px 18px;
+  cursor:pointer;
+  font-weight:900;
+  color:#0F2A43;
+}
+.ai-estimate-head small{
+  display:block;
+  margin-top:4px;
+  font-size:12px;
+  font-weight:600;
+  color:#66788A;
+}
+.ai-estimate-toggle{
+  width:38px;height:38px;border:0;border-radius:12px;
+  background:#0F2A43;color:#fff;font-size:18px;cursor:pointer;
+}
+.ai-estimate-body{
+  display:none;
+  padding:0 18px 18px;
+}
+.ai-estimate-body.open{display:block}
+.ai-report-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+.ai-report-box{
+  background:#fff;
+  border:1px solid rgba(15,42,67,.09);
+  border-radius:15px;
+  padding:14px;
+}
+.ai-report-box .k{font-size:12px;color:#6B7C8F;font-weight:700}
+.ai-report-box .v{font-size:20px;color:#102A43;font-weight:900;margin-top:5px}
+.ai-report-note{
+  margin-top:12px;
+  padding:13px 14px;
+  border-radius:14px;
+  background:#102A43;
+  color:#fff;
+  font-size:13px;
+  line-height:1.65;
+}
+.ai-report-warning{
+  margin-top:10px;
+  padding:12px 14px;
+  border-radius:14px;
+  background:#FFF3E8;
+  color:#8A3B12;
+  font-size:13px;
+  font-weight:700;
+  line-height:1.6;
+}
+@media(max-width:640px){
+  .ai-report-grid{grid-template-columns:1fr}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1201,6 +1273,41 @@ button:active{transform:scale(0.96);}
           </div>
         </div>
       </div>
+
+      <div class="ai-estimate-card">
+        <div class="ai-estimate-head" id="aiEstimateHead">
+          <div>
+            🤖 자동견적 리포트
+            <small>선택한 품목과 현장정보를 기준으로 계산합니다.</small>
+          </div>
+          <button type="button" class="ai-estimate-toggle" id="aiEstimateToggle">▼</button>
+        </div>
+        <div class="ai-estimate-body" id="aiEstimateBody">
+          <div class="ai-report-grid">
+            <div class="ai-report-box">
+              <div class="k">선택 품목 작업량</div>
+              <div class="v" id="aiPointsReport">0점</div>
+            </div>
+            <div class="ai-report-box">
+              <div class="k">예상 짐의 양</div>
+              <div class="v" id="aiTonnageReport">0톤</div>
+            </div>
+            <div class="ai-report-box">
+              <div class="k">추천 차량</div>
+              <div class="v" id="aiTruckReport">-</div>
+            </div>
+            <div class="ai-report-box">
+              <div class="k">추천 인원</div>
+              <div class="v" id="aiWorkerReport">-</div>
+            </div>
+          </div>
+          <div class="ai-report-note" id="aiReasonReport">
+            품목을 선택하면 계산 근거가 표시됩니다.
+          </div>
+          <div class="ai-report-warning" id="aiRiskReport" style="display:none;"></div>
+        </div>
+      </div>
+
       <div class="cost-entry-list" id="costEntryList">
         <div class="cost-row cost-row-draggable">
           <span class="drag-handle" title="눌러서 위/아래로 순서 변경">⠿</span>
@@ -1463,7 +1570,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'V3.2-B32';
+const BUILD_VERSION = 'V3.3-B33';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -1655,7 +1762,7 @@ const DraftService = {
 
     // 방 개수/이름 복원
     if(data.roomCount){
-      State.roomCount = Math.max(1, Math.min(4, data.roomCount));
+      State.roomCount = Math.max(1, Math.min(5, data.roomCount));
       UI.renderRooms();
       document.querySelectorAll('.room-panel').forEach((panel, i)=>{
         if(data.roomNames && data.roomNames[i]) panel.querySelector('.room-name-input').value = data.roomNames[i];
@@ -2712,6 +2819,44 @@ const Calc = {
       truckLabel, truckTotalCount, truck1Count, truck5Count
     };
 
+    // V3.3 자동견적 리포트
+    const pointsEl = document.getElementById('aiPointsReport');
+    const tonnageEl = document.getElementById('aiTonnageReport');
+    const truckEl = document.getElementById('aiTruckReport');
+    const workerEl = document.getElementById('aiWorkerReport');
+    const reasonEl = document.getElementById('aiReasonReport');
+    const riskEl = document.getElementById('aiRiskReport');
+
+    if(pointsEl){
+      const estimatedTons = totalPoints > 0 ? Math.max(0.5, totalPoints / truckCapacity) : 0;
+      pointsEl.textContent = totalPoints + '점';
+      tonnageEl.textContent = estimatedTons ? estimatedTons.toFixed(1) + '톤 상당' : '0톤';
+      truckEl.textContent = truckLabel;
+      workerEl.textContent = workers + '명';
+
+      const reasonParts = [
+        `선택한 품목의 작업량은 총 ${totalPoints}점입니다.`,
+        `1톤 차량 1대 기준 작업량 ${truckCapacity}점, 작업자 1명 기준 ${workerCapacity}점으로 계산했습니다.`,
+        `추천 결과는 ${truckLabel}, 작업자 ${workers}명입니다.`
+      ];
+      reasonEl.textContent = reasonParts.join(' ');
+
+      const risks = [];
+      if(fromStairsOn) risks.push(`출발지 수작업 ${fromStairsFloor}층`);
+      if(toStairsOn) risks.push(`도착지 수작업 ${toStairsFloor}층`);
+      if(document.getElementById('fromLadder').checked) risks.push('출발지 사다리차');
+      if(document.getElementById('toLadder').checked) risks.push('도착지 사다리차');
+      if(totalPoints >= truckCapacity * 5) risks.push('대형 이사 물량');
+
+      if(risks.length){
+        riskEl.style.display = 'block';
+        riskEl.textContent = '현장 확인 필요: ' + risks.join(' · ');
+      }else{
+        riskEl.style.display = 'none';
+        riskEl.textContent = '';
+      }
+    }
+
     // 상단/하단 실시간 표시
     document.getElementById('topTotal').textContent = Utils.won(total);
     document.getElementById('footTotal').textContent = Utils.won(total);
@@ -3479,6 +3624,18 @@ ${msg || '-'}`;
 
     // 재계산 버튼
     document.getElementById('recalcBtn').addEventListener('click', ()=>Calc.run());
+
+    // 자동견적 리포트 열기/닫기
+    const aiHead = document.getElementById('aiEstimateHead');
+    const aiBody = document.getElementById('aiEstimateBody');
+    const aiToggle = document.getElementById('aiEstimateToggle');
+    if(aiHead && aiBody && aiToggle){
+      aiHead.addEventListener('click', ()=>{
+        const open = aiBody.classList.toggle('open');
+        aiToggle.textContent = open ? '▲' : '▼';
+        Calc.run();
+      });
+    }
 
     // 견적 금액 직접 수정
     const finalPriceInput = document.getElementById('finalPriceInput');
