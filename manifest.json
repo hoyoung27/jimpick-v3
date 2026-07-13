@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 1.9",
+  "name": "짐픽 PRO 2.0",
   "short_name": "짐픽 PRO",
-  "description": "최대 24장 사진 배치분석과 신뢰도 판정을 적용한 AI 이사견적 앱",
+  "description": "사진 AI 분석부터 자동견적 저장과 고객 문자 발송까지 한 번에 끝내는 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
