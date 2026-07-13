@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 1.3",
+  "name": "짐픽 PRO 1.4",
   "short_name": "짐픽 PRO",
-  "description": "업체별 로그인과 업체별 견적자료 분리가 적용된 AI 이사견적 앱",
+  "description": "7일 무료체험과 월 22,000원 구독 잠금 구조가 적용된 AI 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

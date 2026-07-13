@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 1.3</title>
+<title>짐픽 PRO 1.4</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 1.3 최소판매형 ===== */
+/* ===== 짐픽 PRO 1.4 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -1735,6 +1735,50 @@ body{font-size:18px}
 }
 @media(max-width:640px){.company-private-badge{display:none}}
 
+
+/* ===== PRO 1.4 구독 잠금 ===== */
+.subscription-gate{
+  position:fixed;inset:0;z-index:21000;
+  display:flex;align-items:center;justify-content:center;
+  padding:18px;background:linear-gradient(160deg,#0F2A43,#1F4D70);
+  overflow:auto;
+}
+.subscription-card{
+  width:min(480px,100%);
+  padding:28px 24px;border-radius:28px;background:#fff;
+  box-shadow:0 28px 80px rgba(0,0,0,.3);text-align:center;
+}
+.subscription-icon{font-size:58px}
+.subscription-card h1{margin:6px 0 0;font-size:30px;color:#102A43}
+.subscription-price{margin:14px 0 0;font-size:38px;font-weight:900;color:#FF6B35}
+.subscription-vat{margin:2px 0 18px;color:#60758A;font-weight:700}
+.trial-box{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px;border-radius:14px;background:#EEF5FF;
+  color:#174A7E;font-weight:900;
+}
+.trial-box strong{font-size:20px}
+.subscription-benefits{
+  display:grid;gap:9px;margin:18px 0;text-align:left;
+  padding:15px;border-radius:15px;background:#F7F9FC;
+  color:#102A43;font-size:16px;font-weight:800;
+}
+.subscription-main-btn,.subscription-pay-btn,.subscription-logout-btn{
+  width:100%;min-height:60px;border:0;border-radius:15px;
+  font-size:18px;font-weight:900;cursor:pointer;
+}
+.subscription-main-btn{background:#102A43;color:#fff}
+.subscription-pay-btn{margin-top:10px;background:#FF6B35;color:#fff}
+.subscription-logout-btn{margin-top:10px;background:#E8EEF5;color:#102A43}
+.subscription-note{margin:14px 0 0;font-size:12px;color:#718096}
+.subscription-status-badge{
+  padding:5px 8px;border-radius:999px;background:#FFF4E8;
+  color:#A65312;font-size:11px;font-weight:900;white-space:nowrap;
+}
+.subscription-status-badge.active{background:#EAF7F0;color:#16794B}
+.subscription-status-badge.expired{background:#FFF0ED;color:#B42318}
+@media(max-width:640px){.subscription-status-badge{display:none}}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1746,6 +1790,41 @@ body{font-size:18px}
 <meta name="theme-color" content="#0F2A43">
 </head>
 <body>
+<div id="subscriptionGate" class="subscription-gate" style="display:none;">
+  <div class="subscription-card">
+    <div class="subscription-icon">💳</div>
+    <h1>짐픽 PRO 구독</h1>
+    <p class="subscription-price">월 22,000원</p>
+    <p class="subscription-vat">부가세 포함 · 매월 자동결제</p>
+
+    <div class="trial-box">
+      <span>무료체험</span>
+      <strong id="trialDaysLeft">7일 남음</strong>
+    </div>
+
+    <div class="subscription-benefits">
+      <div>✅ 사진 AI 품목 자동선택</div>
+      <div>✅ 1톤·5톤 차량 자동견적</div>
+      <div>✅ 작업인원·예상시간 자동계산</div>
+      <div>✅ 고객 문자 발송</div>
+    </div>
+
+    <button type="button" id="continueTrialBtn" class="subscription-main-btn">
+      무료체험 계속 사용
+    </button>
+    <button type="button" id="startSubscriptionBtn" class="subscription-pay-btn">
+      월 22,000원 구독 시작
+    </button>
+    <button type="button" id="subscriptionLogoutBtn" class="subscription-logout-btn">
+      다른 계정으로 로그인
+    </button>
+
+    <p class="subscription-note">
+      카드결제는 Google Play 결제상품 등록 후 연결됩니다.
+    </p>
+  </div>
+</div>
+
 <div id="authScreen" class="auth-screen">
   <div class="auth-card">
     <div class="auth-logo">🚚</div>
@@ -1942,10 +2021,10 @@ body{font-size:18px}
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-1.3</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-1.4</div>
     </div>
   </div>
-  <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
+  <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
     <div class="amt" id="topTotal">0원</div>
     <div class="lbl">예상 견적금액</div>
   </div>
@@ -2594,7 +2673,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-1.3';
+const BUILD_VERSION = 'JIMPICK-PRO-1.4';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -5194,12 +5273,12 @@ function authShowApp(u){document.getElementById('authScreen').style.display='non
   },100);
 }
 function authShowLogin(){document.getElementById('authScreen').style.display='flex';document.getElementById('appShell').style.display='none';authShowPanel('loginPanel')}
-function authLogin(){const id=authNormalizeId(document.getElementById('loginIdInput')?.value),pw=document.getElementById('loginPasswordInput')?.value||'';if(!id||!pw){alert('휴대전화 또는 이메일과 비밀번호를 입력해주세요.');return}const u=authReadUsers().find(x=>(authNormalizeId(x.phone)===id||authNormalizeId(x.email)===id)&&x.password===pw);if(!u){alert('가입정보가 맞지 않습니다. 다시 확인해주세요.');return}authSetSession(u);authShowApp(u)}
+function authLogin(){const id=authNormalizeId(document.getElementById('loginIdInput')?.value),pw=document.getElementById('loginPasswordInput')?.value||'';if(!id||!pw){alert('휴대전화 또는 이메일과 비밀번호를 입력해주세요.');return}const u=authReadUsers().find(x=>(authNormalizeId(x.phone)===id||authNormalizeId(x.email)===id)&&x.password===pw);if(!u){alert('가입정보가 맞지 않습니다. 다시 확인해주세요.');return}authSetSession(u);authShowApp(u);setTimeout(updateSubscriptionUi,100)}
 function authGoCompany(){const o=document.getElementById('signupOwnerName')?.value?.trim()||'',p=authNormalizeId(document.getElementById('signupPhone')?.value),e=authNormalizeId(document.getElementById('signupEmail')?.value),w=document.getElementById('signupPassword')?.value||'';if(!o){alert('대표자 이름을 입력해주세요.');return}if(p.length<10){alert('휴대전화 번호를 정확히 입력해주세요.');return}if(!e.includes('@')){alert('이메일을 정확히 입력해주세요.');return}if(w.length<6){alert('비밀번호는 6자리 이상으로 입력해주세요.');return}authShowPanel('companyPanel')}
-function authCompleteSignup(){const c=document.getElementById('companyNameInput')?.value?.trim()||'',cp=authNormalizeId(document.getElementById('companyPhoneInput')?.value);if(!c){alert('업체명을 입력해주세요.');return}if(cp.length<10){alert('업체 전화번호를 정확히 입력해주세요.');return}if(!document.getElementById('agreeTerms')?.checked){alert('이용약관과 개인정보처리방침에 동의해주세요.');return}const p=authNormalizeId(document.getElementById('signupPhone')?.value),e=authNormalizeId(document.getElementById('signupEmail')?.value),users=authReadUsers();if(users.some(u=>authNormalizeId(u.phone)===p||authNormalizeId(u.email)===e)){alert('이미 가입된 휴대전화 또는 이메일입니다.');authShowPanel('loginPanel');return}const u={id:'U'+Date.now(),ownerName:document.getElementById('signupOwnerName')?.value?.trim()||'',phone:p,email:e,password:document.getElementById('signupPassword')?.value||'',companyName:c,companyPhone:cp,businessNumber:authNormalizeId(document.getElementById('businessNumberInput')?.value),plan:'trial',subscriptionStatus:'trial',createdAt:new Date().toISOString()};users.push(u);authWriteUsers(users);authSetSession(u);alert('회원가입이 완료되었습니다.');authShowApp(u)}
+function authCompleteSignup(){const c=document.getElementById('companyNameInput')?.value?.trim()||'',cp=authNormalizeId(document.getElementById('companyPhoneInput')?.value);if(!c){alert('업체명을 입력해주세요.');return}if(cp.length<10){alert('업체 전화번호를 정확히 입력해주세요.');return}if(!document.getElementById('agreeTerms')?.checked){alert('이용약관과 개인정보처리방침에 동의해주세요.');return}const p=authNormalizeId(document.getElementById('signupPhone')?.value),e=authNormalizeId(document.getElementById('signupEmail')?.value),users=authReadUsers();if(users.some(u=>authNormalizeId(u.phone)===p||authNormalizeId(u.email)===e)){alert('이미 가입된 휴대전화 또는 이메일입니다.');authShowPanel('loginPanel');return}const u={id:'U'+Date.now(),ownerName:document.getElementById('signupOwnerName')?.value?.trim()||'',phone:p,email:e,password:document.getElementById('signupPassword')?.value||'',companyName:c,companyPhone:cp,businessNumber:authNormalizeId(document.getElementById('businessNumberInput')?.value),plan:'trial',subscriptionStatus:'trial',createdAt:new Date().toISOString()};users.push(u);authWriteUsers(users);authSetSession(u);alert('회원가입이 완료되었습니다. 7일 무료체험이 시작됩니다.');authShowApp(u);setTimeout(updateSubscriptionUi,100)}
 function authForgotPassword(){alert('정식 출시 버전에서는 휴대전화 또는 이메일로 비밀번호 재설정 안내를 보내드립니다.')}
 function authLogout(){if(!confirm('로그아웃하시겠습니까?'))return;authClearSession();authShowLogin()}
-function authInit(){const s=authGetSession();s?authShowApp(s):authShowLogin()}
+function authInit(){const s=authGetSession();if(s){authShowApp(s);setTimeout(updateSubscriptionUi,100)}else{authShowLogin()}}
 
 function mvpGoToPhoto(){
   const name=document.getElementById('customerName')?.value?.trim()||'';
@@ -5237,6 +5316,95 @@ function updateProEstimateSummary(){
   set('proWorkerResult',`${workers}명`);
   set('proHourResult',`${hours}시간`);
   set('proPriceResult',totalText);
+}
+
+const SUBSCRIPTION_TRIAL_DAYS = 7;
+
+function currentSessionUser(){
+  try{
+    const raw=localStorage.getItem('jimpick_commercial_session');
+    return raw?JSON.parse(raw):null;
+  }catch(e){return null}
+}
+
+function subscriptionInfo(){
+  const user=currentSessionUser();
+  if(!user)return {status:'none',daysLeft:0};
+
+  const created=new Date(user.createdAt||Date.now());
+  const now=new Date();
+  const elapsed=Math.floor((now-created)/(1000*60*60*24));
+  const daysLeft=Math.max(0,SUBSCRIPTION_TRIAL_DAYS-elapsed);
+
+  if(user.subscriptionStatus==='active'){
+    return {status:'active',daysLeft:0};
+  }
+  if(daysLeft>0){
+    return {status:'trial',daysLeft};
+  }
+  return {status:'expired',daysLeft:0};
+}
+
+function updateSubscriptionUi(){
+  const info=subscriptionInfo();
+  const gate=document.getElementById('subscriptionGate');
+  const app=document.getElementById('appShell');
+  const badge=document.getElementById('subscriptionStatusBadge');
+  const days=document.getElementById('trialDaysLeft');
+  const continueBtn=document.getElementById('continueTrialBtn');
+
+  if(days)days.textContent=info.status==='trial'?`${info.daysLeft}일 남음`:'체험 종료';
+
+  if(badge){
+    badge.classList.remove('active','expired');
+    if(info.status==='active'){
+      badge.textContent='구독중';
+      badge.classList.add('active');
+    }else if(info.status==='trial'){
+      badge.textContent=`체험 ${info.daysLeft}일`;
+    }else{
+      badge.textContent='구독 필요';
+      badge.classList.add('expired');
+    }
+  }
+
+  if(info.status==='expired'){
+    if(gate)gate.style.display='flex';
+    if(app)app.style.display='none';
+    if(continueBtn)continueBtn.style.display='none';
+  }else{
+    if(gate)gate.style.display='none';
+    if(app && currentSessionUser())app.style.display='block';
+    if(continueBtn)continueBtn.style.display='block';
+  }
+}
+
+function showSubscriptionGate(){
+  const gate=document.getElementById('subscriptionGate');
+  if(gate)gate.style.display='flex';
+  const info=subscriptionInfo();
+  const days=document.getElementById('trialDaysLeft');
+  if(days)days.textContent=info.status==='trial'?`${info.daysLeft}일 남음`:'체험 종료';
+}
+
+function continueTrial(){
+  const info=subscriptionInfo();
+  if(info.status==='expired'){
+    alert('무료체험이 종료되었습니다. 구독 후 이용해주세요.');
+    return;
+  }
+  document.getElementById('subscriptionGate').style.display='none';
+  document.getElementById('appShell').style.display='block';
+}
+
+function startMonthlySubscription(){
+  alert('다음 단계에서 Google Play 월 22,000원 카드결제를 연결합니다.');
+}
+
+function subscriptionLogout(){
+  authClearSession();
+  document.getElementById('subscriptionGate').style.display='none';
+  authShowLogin();
 }
 /* ---------------------- 12. SMS 문구 생성 ---------------------- */
 UI.renderSMS = function(){
@@ -6309,6 +6477,10 @@ ${msg || '-'}`;
     document.getElementById('completeSignupBtn')?.addEventListener('click',authCompleteSignup);
     document.getElementById('forgotPasswordBtn')?.addEventListener('click',authForgotPassword);
     document.getElementById('logoutBtn')?.addEventListener('click',authLogout);
+    document.getElementById('continueTrialBtn')?.addEventListener('click',continueTrial);
+    document.getElementById('startSubscriptionBtn')?.addEventListener('click',startMonthlySubscription);
+    document.getElementById('subscriptionLogoutBtn')?.addEventListener('click',subscriptionLogout);
+    document.getElementById('subscriptionStatusBadge')?.addEventListener('click',showSubscriptionGate);
     document.querySelectorAll('[data-step="5"]').forEach(btn=>{
       btn.addEventListener('click',()=>setTimeout(updateProEstimateSummary,50));
     });
