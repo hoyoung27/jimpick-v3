@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 V4.8 AI 이사견적</title>
+<title>짐픽 상용앱 1.1 간편판</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1542,6 +1542,95 @@ body{
   .sales-export-btn{width:100%}
 }
 
+
+/* ===== V5.0 간편형 ===== */
+#openDashboardBtn,.dashboard-modal,.crm-card,.profit-card,
+.account-bar,#accountBar,.install-banner,#installBanner,
+.cloud-save-card,#cloudSaveCard,#adminNavBtn{display:none!important}
+#truck5Count,#profitTruck5Cost,.truck-qty-item:has(#truck5Count){display:none!important}
+.truck-qty-row{grid-template-columns:1fr!important}
+.simple-ai-card{max-width:900px;margin:0 auto}
+.simple-ai-guide{display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;background:#F3F7FB;margin-bottom:14px}
+.simple-ai-number{width:40px;height:40px;border-radius:50%;background:#0F2A43;color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;flex:0 0 auto}
+.simple-ai-guide b{font-size:17px;color:#102A43}
+.simple-ai-guide p{margin:4px 0 0;color:#6B7C8F;font-size:13px}
+.big-action{min-height:64px!important;font-size:17px!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.simple-ai-key-box{margin-top:14px;padding:14px;border-radius:16px;background:#FFF8E8;border:1px solid #F2D18C}
+.simple-ai-key-title{font-weight:900;color:#6D4910}
+.simple-ai-key-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:9px}
+.simple-ai-key-row input{min-width:0;border:1px solid #D9C08C;border-radius:11px;padding:11px;font-size:14px}
+.simple-ai-key-row button{border:0;border-radius:11px;padding:0 16px;background:#0F2A43;color:#fff;font-weight:900;cursor:pointer}
+.simple-ai-key-help{font-size:11px;color:#7A633A;margin-top:7px}
+.simple-ai-analyze{width:100%;min-height:68px;margin-top:14px;font-size:20px!important;font-weight:900!important}
+.simple-ai-progress{margin-top:14px;padding:18px;border-radius:16px;background:#EEF5FF;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;color:#174A7E}
+.simple-ai-spinner{width:38px;height:38px;border:5px solid #CFE0F5;border-top-color:#174A7E;border-radius:50%;animation:simpleSpin .9s linear infinite}
+@keyframes simpleSpin{to{transform:rotate(360deg)}}
+.simple-ai-success{margin-top:14px;padding:16px;border-radius:16px;background:#EAF7F0;border:1px solid #BDE6CE;color:#195B3B}
+.simple-ai-success h3{margin:0 0 8px}
+.simple-ai-items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:10px}
+.simple-ai-item{padding:9px 10px;border-radius:11px;background:#fff;border:1px solid #CFE7DA;font-size:13px;font-weight:800}
+.simple-ai-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.simple-ai-actions button{border:0;border-radius:11px;padding:11px;font-weight:900;cursor:pointer}
+.simple-ai-check{background:#0F2A43;color:#fff}.simple-ai-fix{background:#FFF1E8;color:#A63B12}
+.simple-ai-error{margin-top:14px;padding:15px;border-radius:14px;background:#FFF0ED;border:1px solid #FFC9BE;color:#9C291F;font-weight:700;line-height:1.6}
+@media(max-width:640px){.simple-ai-key-row,.simple-ai-items,.simple-ai-actions{grid-template-columns:1fr}.simple-ai-key-row button{min-height:46px}}
+
+
+.auth-screen{position:fixed;inset:0;z-index:20000;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:18px;background:linear-gradient(160deg,#0F2A43,#1F4D70);overflow:auto}
+.auth-card{width:min(480px,100%);background:#fff;border-radius:28px;padding:28px 24px;box-shadow:0 30px 80px rgba(0,0,0,.28)}
+.auth-logo{width:88px;height:88px;margin:0 auto 12px;border-radius:24px;background:#FFF3E8;display:flex;align-items:center;justify-content:center;font-size:48px}
+.auth-card h1{margin:0;text-align:center;font-size:38px;color:#102A43}.auth-sub{text-align:center;font-size:19px;line-height:1.5;color:#52667A;font-weight:800;margin:10px 0 24px}
+.auth-panel{display:none}.auth-panel.active{display:block}.auth-step-title{margin-bottom:18px;padding:14px;border-radius:14px;background:#EEF5FF;color:#174A7E;font-size:18px;font-weight:900;text-align:center}
+.auth-label{display:block;margin:14px 0 7px;font-size:17px;font-weight:900;color:#102A43}.auth-input{width:100%;height:58px;border:2px solid #D9E2EC;border-radius:14px;padding:0 16px;font-size:18px;background:#fff}
+.auth-input:focus{outline:none;border-color:#FF6B35;box-shadow:0 0 0 4px rgba(255,107,53,.12)}
+.auth-main-btn,.auth-sub-btn,.auth-link-btn{width:100%;border:0;border-radius:15px;min-height:58px;font-size:18px;font-weight:900;cursor:pointer}
+.auth-main-btn{margin-top:22px;background:#FF6B35;color:#fff}.auth-sub-btn{margin-top:10px;background:#102A43;color:#fff}.auth-link-btn{margin-top:8px;background:#EEF3F8;color:#52667A}
+.auth-agree-box{margin-top:18px;padding:14px;border-radius:14px;background:#F7F9FC;color:#52667A;font-size:14px}.auth-agree-box input{width:22px;height:22px;vertical-align:middle;margin-right:8px}
+.auth-help{margin-top:20px;padding:14px;border-radius:14px;background:#FFF8E8;color:#6D4910;text-align:center;font-size:14px;line-height:1.6}
+.user-box{display:flex;align-items:center;gap:8px;margin-left:auto;margin-right:12px}.user-company{max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff;font-size:13px;font-weight:900}
+.user-box button{border:1px solid rgba(255,255,255,.35);border-radius:9px;padding:7px 9px;background:rgba(255,255,255,.12);color:#fff;font-weight:800;cursor:pointer}
+@media(max-width:640px){.auth-card{padding:24px 18px;border-radius:22px}.auth-card h1{font-size:34px}.auth-input{font-size:17px}.user-company{display:none}.user-box{margin-right:6px}}
+
+
+/* ===== 상용앱 1.1 MVP 간편화 ===== */
+#openDashboardBtn,.dashboard-modal,.crm-card,.profit-card,
+.account-bar,#accountBar,.install-banner,#installBanner,
+.cloud-save-card,#cloudSaveCard,#adminNavBtn,
+#step2 .advanced-box,#step2 .optional-box{
+  display:none!important;
+}
+.mvp-card{max-width:760px;margin:0 auto}
+.mvp-guide{
+  margin:0 0 18px;padding:14px;border-radius:14px;
+  background:#EEF5FF;color:#174A7E;font-size:17px;font-weight:800;
+}
+.mvp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.mvp-field{display:block}
+.mvp-field.full{grid-column:1/-1}
+.mvp-field span{
+  display:block;margin-bottom:7px;font-size:18px;font-weight:900;color:#102A43;
+}
+.mvp-field input{
+  width:100%;height:62px;border:2px solid #D9E2EC;
+  border-radius:15px;padding:0 16px;font-size:19px;background:#fff;
+}
+.mvp-field input:focus{
+  outline:none;border-color:#FF6B35;
+  box-shadow:0 0 0 4px rgba(255,107,53,.12);
+}
+.mvp-next-btn{
+  width:100%;min-height:68px;margin-top:20px;
+  border:0;border-radius:16px;background:#FF6B35;color:#fff;
+  font-size:21px;font-weight:900;cursor:pointer;
+}
+.route-step{min-width:108px}
+.route-step .label{font-size:14px!important;font-weight:900!important}
+@media(max-width:640px){
+  .mvp-grid{grid-template-columns:1fr}
+  .mvp-field.full{grid-column:auto}
+  .mvp-field input{font-size:18px}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1553,6 +1642,49 @@ body{
 <meta name="theme-color" content="#0F2A43">
 </head>
 <body>
+<div id="authScreen" class="auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">🚚</div>
+    <h1>짐픽</h1>
+    <p class="auth-sub">이사업체 대표님 전용<br>AI 이사견적 앱</p>
+    <div id="loginPanel" class="auth-panel active">
+      <label class="auth-label">휴대전화 또는 이메일</label>
+      <input id="loginIdInput" class="auth-input" placeholder="예: 01012345678">
+      <label class="auth-label">비밀번호</label>
+      <input id="loginPasswordInput" class="auth-input" type="password" placeholder="비밀번호 입력">
+      <button id="loginBtn" class="auth-main-btn">로그인</button>
+      <button id="goSignupBtn" class="auth-sub-btn">처음 사용하시나요? 회원가입</button>
+      <button id="forgotPasswordBtn" class="auth-link-btn">비밀번호를 잊으셨나요?</button>
+    </div>
+    <div id="signupPanel" class="auth-panel">
+      <div class="auth-step-title">1. 대표님 정보를 입력해주세요</div>
+      <label class="auth-label">대표자 이름</label>
+      <input id="signupOwnerName" class="auth-input" placeholder="예: 김호영">
+      <label class="auth-label">휴대전화</label>
+      <input id="signupPhone" class="auth-input" inputmode="numeric" placeholder="예: 01012345678">
+      <label class="auth-label">이메일</label>
+      <input id="signupEmail" class="auth-input" type="email" placeholder="예: jimpick@email.com">
+      <label class="auth-label">비밀번호</label>
+      <input id="signupPassword" class="auth-input" type="password" placeholder="6자리 이상">
+      <button id="goCompanyBtn" class="auth-main-btn">다음</button>
+      <button id="backLoginBtn" class="auth-sub-btn">로그인 화면으로</button>
+    </div>
+    <div id="companyPanel" class="auth-panel">
+      <div class="auth-step-title">2. 업체 정보를 입력해주세요</div>
+      <label class="auth-label">업체명</label>
+      <input id="companyNameInput" class="auth-input" placeholder="예: 짐픽이사">
+      <label class="auth-label">업체 전화번호</label>
+      <input id="companyPhoneInput" class="auth-input" inputmode="numeric" placeholder="예: 01012345678">
+      <label class="auth-label">사업자등록번호</label>
+      <input id="businessNumberInput" class="auth-input" inputmode="numeric" placeholder="선택 입력">
+      <div class="auth-agree-box"><label><input type="checkbox" id="agreeTerms"> 이용약관과 개인정보처리방침에 동의합니다.</label></div>
+      <button id="completeSignupBtn" class="auth-main-btn">회원가입 완료</button>
+      <button id="backSignupBtn" class="auth-sub-btn">이전으로</button>
+    </div>
+    <div class="auth-help">어려우시면 고객센터로 연락하세요.<br><b>짐픽 고객센터: 준비 중</b></div>
+  </div>
+</div>
+
 
 <!-- ============ 로그인 화면 (Supabase 연결 시에만 사용) ============ -->
 <div class="login-gate" id="loginGate" style="display:none;">
@@ -1691,7 +1823,7 @@ body{
         </div>
 
         <div class="dashboard-note">
-          매출통계는 고객·견적 기록에 저장된 금액을 기준으로 계산합니다. 정확한 순이익을 보려면 견적확정 화면에서 인건비·차량비·기타비용을 입력한 뒤 견적을 저장하세요.
+          매출통계는 고객·견적 기록에 저장된 금액을 기준으로 계산합니다. 정확한 순이익을 보려면 견적완료 화면에서 인건비·차량비·기타비용을 입력한 뒤 견적을 저장하세요.
         </div>
       </div>
     </div>
@@ -1699,16 +1831,17 @@ body{
 </div>
 
 
+<div id="appShell" style="display:none;">
 <!-- ============ 상단바 ============ -->
 <div class="topbar no-print">
   <div class="brand">
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build V4.8-B48</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build COMMERCIAL-1.1-MVP</div>
     </div>
   </div>
-  <div class="quick-total">
+  <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
     <div class="amt" id="topTotal">0원</div>
     <div class="lbl">예상 견적금액</div>
   </div>
@@ -1736,81 +1869,51 @@ body{
 <!-- ============ 진행 경로 네비 ============ -->
 <div class="route-nav no-print" id="routeNav">
   <div class="route-step active" data-step="1"><div class="dot">1</div><div class="lbl">고객정보</div></div>
-  <div class="route-step" data-step="2"><div class="dot">2</div><div class="lbl">현장정보</div></div>
-  <div class="route-step" data-step="3"><div class="dot">3</div><div class="lbl">사진AI</div></div>
+  <div class="route-step" data-step="2"><div class="dot">2</div><div class="lbl">사진촬영</div></div>
+  <div class="route-step" data-step="3"><div class="dot">3</div><div class="lbl">AI분석</div></div>
   <div class="route-step" data-step="4"><div class="dot">4</div><div class="lbl">품목확인</div></div>
   <div class="route-step" data-step="5"><div class="dot">5</div><div class="lbl">견적확정</div></div>
-  <div class="route-step" data-step="6"><div class="dot">6</div><div class="lbl">발송</div></div>
+  <div class="route-step" data-step="6"><div class="dot">6</div><div class="lbl">문자발송</div></div>
 </div>
 
 <div class="container">
 
   <!-- ============ STEP 1. 고객정보 ============ -->
   <section class="panel active" id="step1">
-    <div class="card">
-      <h2><span class="eyebrow">STEP 1</span>고객 정보</h2>
-      <div class="btn-row" style="margin-bottom:14px;">
-        <button type="button" class="btn btn-ghost" id="tempSaveBtn" style="font-size:13px;">💾 임시저장</button>
-        <button type="button" class="btn btn-ghost" id="tempLoadBtn" style="font-size:13px;">📂 불러오기</button>
+    <div class="card mvp-card">
+      <h2><span class="eyebrow">1단계</span> 고객정보</h2>
+      <p class="mvp-guide">고객에게 물어본 내용만 간단히 입력하세요.</p>
+
+      <div class="mvp-grid">
+        <label class="mvp-field">
+          <span>고객명</span>
+          <input id="customerName" placeholder="예: 김철수">
+        </label>
+
+        <label class="mvp-field">
+          <span>연락처</span>
+          <input id="customerPhone" inputmode="numeric" placeholder="예: 01012345678">
+        </label>
+
+        <label class="mvp-field">
+          <span>이사 날짜</span>
+          <input id="moveDate" type="date">
+        </label>
+
+        <label class="mvp-field full">
+          <span>출발지</span>
+          <input id="fromAddress" placeholder="예: 대구 수성구 범어동">
+        </label>
+
+        <label class="mvp-field full">
+          <span>도착지</span>
+          <input id="toAddress" placeholder="예: 대구 달서구 월성동">
+        </label>
       </div>
-      <div class="btn-row" style="margin-bottom:14px;">
-        <button type="button" class="btn btn-outline" id="newQuoteBtn" style="font-size:13px;">🆕 새 견적 시작</button>
-        <button type="button" class="btn btn-navy" id="openDashboardBtn" style="font-size:13px;">📊 사장님 대시보드</button>
-        <button type="button" class="btn btn-ghost" id="resetAllBtn" style="font-size:13px;color:var(--danger);">🗑️ 전체 초기화</button>
-      </div>
-      <div class="field">
-        <label>고객명</label>
-        <input type="text" id="custName" placeholder="예) 김철수">
-      </div>
-      <div class="field">
-        <label>연락처</label>
-        <input type="tel" id="custPhone" placeholder="010-0000-0000">
-      </div>
-      <div class="row2">
-        <div class="field">
-          <label>이사 날짜</label>
-          <input type="date" id="moveDate">
-        </div>
-        <div class="field">
-          <label>이사 시작 시간</label>
-          <input type="time" id="moveStartTime">
-        </div>
-      </div>
-      <div class="field">
-        <label>이사 종류</label>
-        <select id="moveType">
-          <option value="포장이사">포장이사</option>
-          <option value="반포장이사">반포장이사</option>
-          <option value="일반이사" selected>일반이사</option>
-          <option value="원룸이사">원룸이사</option>
-          <option value="사무실이사">사무실이사</option>
-          <option value="보관이사">보관이사</option>
-          <option value="기타">기타(직접입력)</option>
-        </select>
-      </div>
-      <div class="field" id="moveTypeEtcWrap" style="display:none;">
-        <label>이사 종류 직접입력</label>
-        <input type="text" id="moveTypeEtc" placeholder="예) 단순운송">
-      </div>
-      <div class="row2">
-        <div class="field">
-          <label>상담 담당자</label>
-          <input type="text" id="consultantName" placeholder="예) 김대표">
-        </div>
-        <div class="field">
-          <label>계약 상태</label>
-          <select id="contractStatus">
-            <option value="상담중" selected>상담중</option>
-            <option value="계약완료">계약완료</option>
-            <option value="보류">보류</option>
-            <option value="취소">취소</option>
-          </select>
-        </div>
-      </div>
-      <div class="field">
-        <label>고객 요청사항</label>
-        <textarea id="custRequest" placeholder="예) 오전 9시 이전 도착 희망, 반려동물 있음 등"></textarea>
-      </div>
+
+      <button type="button" class="mvp-next-btn" id="mvpGoPhoto">
+        다음: 사진 찍기 →
+      </button>
     </div>
   </section>
 
@@ -1950,74 +2053,75 @@ body{
     </div>
   </section>
 
-  <!-- ============ STEP 3. 사진/동영상 AI 분석 ============ -->
+  <!-- ============ STEP 3. AI 사진 자동분석 ============ -->
   <section class="panel" id="step3">
-    <div class="card">
-      <h2><span class="eyebrow">STEP 3</span>사진 · 동영상 업로드 (사진 분석 도우미)</h2>
-      <div class="upload-box">
-        <div>📷 사진을 보면서 빠른 품목 버튼을 누르면 품목확인과 자동견적에 바로 반영됩니다.</div>
+    <div class="card simple-ai-card">
+      <h2><span class="eyebrow">STEP 3</span>사진으로 품목 자동선택</h2>
+
+      <div class="simple-ai-guide">
+        <div class="simple-ai-number">1</div>
+        <div>
+          <b>방·거실·부엌 사진을 찍어주세요.</b>
+          <p>한 공간씩 넓게 촬영하면 더 정확합니다.</p>
+        </div>
+      </div>
+
+      <div class="upload-box simple-upload-box">
         <div class="upload-btn-row">
-          <label class="upload-btn camera" for="cameraPhotoInput">📷 지금 사진 촬영</label>
-          <label class="upload-btn camera" for="cameraVideoInput">🎥 지금 동영상 촬영</label>
-          <label class="upload-btn" for="mediaInput">🖼️ 사진/동영상 선택</label>
+          <label class="upload-btn camera big-action" for="cameraPhotoInput">📷 지금 사진 촬영</label>
+          <label class="upload-btn big-action" for="mediaInput">🖼️ 사진 선택</label>
         </div>
-        <input type="file" id="mediaInput" accept="image/*,video/*" multiple>
-        <div class="media-count-line">
-          <span>업로드 현황</span>
-          <b id="mediaCountText">0 / 50개</b>
-        </div>
+        <input type="file" id="mediaInput" accept="image/*" multiple>
         <input type="file" id="cameraPhotoInput" accept="image/*" capture="environment">
-        <input type="file" id="cameraVideoInput" accept="video/*" capture="environment">
+        <input type="file" id="cameraVideoInput" accept="video/*" capture="environment" style="display:none;">
+        <div class="media-count-line">
+          <span>선택한 사진</span>
+          <b id="mediaCountText">0 / 8개</b>
+        </div>
       </div>
+
       <div class="preview-grid" id="mediaPreview"></div>
-      <button class="btn btn-navy" id="analyzeBtn" style="margin-top:14px;">🧠 사진 분석 도우미 열기</button>
-      
-      <div class="photo-helper" id="photoHelper" style="display:none;">
-        <div class="photo-helper-title">사진에 보이는 품목 수량을 입력하세요</div>
-        <div class="photo-helper-sub">＋와 − 버튼으로 수량을 조절하면 차량과 인원이 바로 계산됩니다.</div>
 
-        <div class="photo-helper-chips" id="photoHelperChips"></div>
-
-        <div class="photo-auto-summary">
-          <div class="photo-auto-box">
-            <span>예상 작업량</span>
-            <strong id="photoAutoPoints">0점</strong>
-          </div>
-          <div class="photo-auto-box">
-            <span>예상 짐의 양</span>
-            <strong id="photoAutoTons">0톤</strong>
-          </div>
-          <div class="photo-auto-box">
-            <span>추천 차량</span>
-            <strong id="photoAutoTruck">-</strong>
-          </div>
-          <div class="photo-auto-box">
-            <span>추천 인원</span>
-            <strong id="photoAutoWorkers">-</strong>
-          </div>
-          <div class="photo-auto-box">
-            <span>예상 작업시간</span>
-            <strong id="photoAutoHours">-</strong>
-          </div>
-          <div class="photo-auto-box">
-            <span>현장 난이도</span>
-            <strong id="photoAutoDifficulty">-</strong>
-          </div>
+      <div class="simple-ai-key-box" id="simpleAiKeyBox">
+        <div class="simple-ai-key-title">🔑 AI 연결키 — 처음 한 번만 입력</div>
+        <div class="simple-ai-key-row">
+          <input type="password" id="geminiApiKeyInput" placeholder="Gemini API 키 붙여넣기">
+          <button type="button" id="saveGeminiApiKey">저장</button>
         </div>
-
-        <div class="photo-auto-reason" id="photoAutoReason">
-          품목 수량을 입력하면 계산 결과가 표시됩니다.
-        </div>
-
-        <div class="photo-helper-actions">
-          <button type="button" class="btn btn-outline" id="photoHelperReset">선택 초기화</button>
-          <button type="button" class="btn btn-accent" id="photoHelperApply">품목에 반영</button>
+        <div class="simple-ai-key-help">
+          입력한 키는 이 기기 안에만 저장됩니다. 다른 사람에게 보여주지 마세요.
         </div>
       </div>
+
+      <button class="btn btn-accent simple-ai-analyze" id="analyzeBtn">
+        🤖 AI로 품목 자동선택
+      </button>
+
+      <div class="simple-ai-progress" id="simpleAiProgress" style="display:none;">
+        <div class="simple-ai-spinner"></div>
+        <b>AI가 사진 속 가구·가전을 찾고 있습니다…</b>
+        <span>사진 수에 따라 잠시 걸릴 수 있습니다.</span>
+      </div>
+
       <div id="aiResultWrap"></div>
-      <div class="arch-note">
-        🔧 <b>안내</b>: 현재 버전은 사진을 보면서 빠른 품목 버튼으로 정확하게 반영하는 현장용 도우미입니다.
-        사진 속 물건을 완전히 자동 인식하려면 별도의 Vision AI 서버와 인증키 연결이 필요합니다.
+
+      <div class="photo-helper" id="photoHelper" style="display:none;">
+        <div class="photo-helper-title">AI 결과 간단 수정</div>
+        <div class="photo-helper-sub">빠진 품목만 ＋ 버튼으로 추가하세요.</div>
+        <div class="photo-helper-chips" id="photoHelperChips"></div>
+        <div class="photo-auto-summary" style="display:none;">
+          <strong id="photoAutoPoints">0점</strong>
+          <strong id="photoAutoTons">0톤</strong>
+          <strong id="photoAutoTruck">-</strong>
+          <strong id="photoAutoWorkers">-</strong>
+          <strong id="photoAutoHours">-</strong>
+          <strong id="photoAutoDifficulty">-</strong>
+        </div>
+        <div id="photoAutoReason" style="display:none;"></div>
+        <div class="photo-helper-actions">
+          <button type="button" class="btn btn-outline" id="photoHelperReset">수정 초기화</button>
+          <button type="button" class="btn btn-accent" id="photoHelperApply">수정 내용 반영</button>
+        </div>
       </div>
     </div>
   </section>
@@ -2511,7 +2615,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'V4.8-B48';
+const BUILD_VERSION = 'COMMERCIAL-1.1-MVP';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -3678,26 +3782,21 @@ const Calc = {
     const autoWorkers = Math.max(baseWorkers, Math.ceil(totalPoints / workerCapacity));
     const autoTrucks = Math.max(baseTrucks, Math.ceil(totalPoints / truckCapacity));
 
-    // 선택한 짐의 양을 1톤 환산량으로 계산한 뒤 5톤과 1톤 차량으로 나눕니다.
-    // 예: 7톤 분량이면 5톤 1대 + 1톤 2대로 추천합니다.
+    // V5.0 간편형: 1톤 차량만 추천
     const truck1Input = document.getElementById('truck1Count');
     const truck5Input = document.getElementById('truck5Count');
     let truck1Count = Number(truck1Input.value) || 0;
-    let truck5Count = Number(truck5Input.value) || 0;
+    let truck5Count = 0;
 
     if(!State.truckManual){
-      truck5Count = Math.floor(autoTrucks / 5);
-      truck1Count = autoTrucks % 5;
+      truck1Count = autoTrucks;
       truck1Input.value = truck1Count;
-      truck5Input.value = truck5Count;
     }
+    if(truck5Input) truck5Input.value = 0;
 
-    const trucks = truck1Count + (truck5Count * 5);
-    const truckParts = [];
-    if(truck5Count > 0) truckParts.push(`5톤(${truck5Count}대)`);
-    if(truck1Count > 0) truckParts.push(`1톤(${truck1Count}대)`);
-    const truckLabel = truckParts.length ? truckParts.join(' + ') : '차량 미입력';
-    const truckTotalCount = truck1Count + truck5Count;
+    const trucks = truck1Count;
+    const truckLabel = truck1Count > 0 ? `1톤(${truck1Count}대)` : '차량 미입력';
+    const truckTotalCount = truck1Count;
 
     // 남자/주방이모 인원 직접 입력(수동)이 있으면 그 값을 우선 사용, 없으면 자동 추천 인원 사용
     const maleInput = document.getElementById('maleCount');
@@ -3846,10 +3945,7 @@ const Calc = {
     document.getElementById('recWorkers').textContent = workers + '명';
     const recTrucksEl = document.getElementById('recTrucks');
     if(recTrucksEl){
-      const parts = [];
-      if(truck5Count > 0) parts.push(`5톤 ${truck5Count}대`);
-      if(truck1Count > 0) parts.push(`1톤 ${truck1Count}대`);
-      recTrucksEl.textContent = parts.length ? parts.join(' + ') : '0대';
+      recTrucksEl.textContent = truck1Count > 0 ? `1톤 ${truck1Count}대` : '0대';
     }
     document.getElementById('finalCostDisplay').textContent = Utils.won(total);
 
@@ -5069,6 +5165,40 @@ function exportSalesCsv(){
   setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 
+
+const AUTH_USER_KEY='jimpick_commercial_users',AUTH_SESSION_KEY='jimpick_commercial_session';
+function authReadUsers(){try{const r=localStorage.getItem(AUTH_USER_KEY);const d=r?JSON.parse(r):[];return Array.isArray(d)?d:[]}catch(e){return[]}}
+function authWriteUsers(u){localStorage.setItem(AUTH_USER_KEY,JSON.stringify(u))}
+function authGetSession(){try{const r=localStorage.getItem(AUTH_SESSION_KEY);return r?JSON.parse(r):null}catch(e){return null}}
+function authSetSession(u){localStorage.setItem(AUTH_SESSION_KEY,JSON.stringify(u))}
+function authClearSession(){localStorage.removeItem(AUTH_SESSION_KEY)}
+function authNormalizeId(v){return String(v||'').trim().toLowerCase().replace(/\s+/g,'')}
+function authShowPanel(id){document.querySelectorAll('.auth-panel').forEach(p=>p.classList.remove('active'));document.getElementById(id)?.classList.add('active')}
+function authShowApp(u){document.getElementById('authScreen').style.display='none';document.getElementById('appShell').style.display='block';const c=document.getElementById('loggedCompanyName');if(c)c.textContent=u.companyName||'업체명';const d=document.getElementById('companyNameDisplay');if(d)d.textContent=`${u.companyName||'짐픽'} ✏️`;if(typeof State!=='undefined'&&State.settings){State.settings.companyName=u.companyName||State.settings.companyName;State.settings.companyPhone=u.companyPhone||State.settings.companyPhone}}
+function authShowLogin(){document.getElementById('authScreen').style.display='flex';document.getElementById('appShell').style.display='none';authShowPanel('loginPanel')}
+function authLogin(){const id=authNormalizeId(document.getElementById('loginIdInput')?.value),pw=document.getElementById('loginPasswordInput')?.value||'';if(!id||!pw){alert('휴대전화 또는 이메일과 비밀번호를 입력해주세요.');return}const u=authReadUsers().find(x=>(authNormalizeId(x.phone)===id||authNormalizeId(x.email)===id)&&x.password===pw);if(!u){alert('가입정보가 맞지 않습니다. 다시 확인해주세요.');return}authSetSession(u);authShowApp(u)}
+function authGoCompany(){const o=document.getElementById('signupOwnerName')?.value?.trim()||'',p=authNormalizeId(document.getElementById('signupPhone')?.value),e=authNormalizeId(document.getElementById('signupEmail')?.value),w=document.getElementById('signupPassword')?.value||'';if(!o){alert('대표자 이름을 입력해주세요.');return}if(p.length<10){alert('휴대전화 번호를 정확히 입력해주세요.');return}if(!e.includes('@')){alert('이메일을 정확히 입력해주세요.');return}if(w.length<6){alert('비밀번호는 6자리 이상으로 입력해주세요.');return}authShowPanel('companyPanel')}
+function authCompleteSignup(){const c=document.getElementById('companyNameInput')?.value?.trim()||'',cp=authNormalizeId(document.getElementById('companyPhoneInput')?.value);if(!c){alert('업체명을 입력해주세요.');return}if(cp.length<10){alert('업체 전화번호를 정확히 입력해주세요.');return}if(!document.getElementById('agreeTerms')?.checked){alert('이용약관과 개인정보처리방침에 동의해주세요.');return}const p=authNormalizeId(document.getElementById('signupPhone')?.value),e=authNormalizeId(document.getElementById('signupEmail')?.value),users=authReadUsers();if(users.some(u=>authNormalizeId(u.phone)===p||authNormalizeId(u.email)===e)){alert('이미 가입된 휴대전화 또는 이메일입니다.');authShowPanel('loginPanel');return}const u={id:'U'+Date.now(),ownerName:document.getElementById('signupOwnerName')?.value?.trim()||'',phone:p,email:e,password:document.getElementById('signupPassword')?.value||'',companyName:c,companyPhone:cp,businessNumber:authNormalizeId(document.getElementById('businessNumberInput')?.value),plan:'trial',subscriptionStatus:'trial',createdAt:new Date().toISOString()};users.push(u);authWriteUsers(users);authSetSession(u);alert('회원가입이 완료되었습니다.');authShowApp(u)}
+function authForgotPassword(){alert('정식 출시 버전에서는 휴대전화 또는 이메일로 비밀번호 재설정 안내를 보내드립니다.')}
+function authLogout(){if(!confirm('로그아웃하시겠습니까?'))return;authClearSession();authShowLogin()}
+function authInit(){const s=authGetSession();s?authShowApp(s):authShowLogin()}
+
+function mvpGoToPhoto(){
+  const name=document.getElementById('customerName')?.value?.trim()||'';
+  const phone=(document.getElementById('customerPhone')?.value||'').replace(/\D/g,'');
+  const date=document.getElementById('moveDate')?.value||'';
+  const from=document.getElementById('fromAddress')?.value?.trim()||'';
+  const to=document.getElementById('toAddress')?.value?.trim()||'';
+
+  if(!name){alert('고객명을 입력해주세요.');return;}
+  if(phone.length<10){alert('연락처를 정확히 입력해주세요.');return;}
+  if(!date){alert('이사 날짜를 선택해주세요.');return;}
+  if(!from){alert('출발지를 입력해주세요.');return;}
+  if(!to){alert('도착지를 입력해주세요.');return;}
+
+  DraftService.save();
+  UI.goStep(3);
+}
 /* ---------------------- 12. SMS 문구 생성 ---------------------- */
 UI.renderSMS = function(){
   const q = State.lastQuote;
@@ -5449,18 +5579,117 @@ function applyPhotoHelperItems(){
 }
 
 
-// 업로드된 사진/동영상을 분석하고, 감지된 품목을 자동으로 체크까지 완료하는 통합 함수
-async function runAutoAIAnalysis(){
-  if(State.media.length===0){
-    alert('먼저 사진이나 동영상을 추가해주세요.');
-    return;
+// 사진을 Gemini API용으로 축소 변환
+async function prepareImageForGemini(file){
+  const dataUrl=await new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=()=>resolve(reader.result);
+    reader.onerror=()=>reject(new Error('사진을 읽지 못했습니다.'));
+    reader.readAsDataURL(file);
+  });
+  const image=await new Promise((resolve,reject)=>{
+    const img=new Image();
+    img.onload=()=>resolve(img);
+    img.onerror=()=>reject(new Error('사진을 열지 못했습니다.'));
+    img.src=dataUrl;
+  });
+  const maxSide=1280;
+  const scale=Math.min(1,maxSide/Math.max(image.width,image.height));
+  const canvas=document.createElement('canvas');
+  canvas.width=Math.max(1,Math.round(image.width*scale));
+  canvas.height=Math.max(1,Math.round(image.height*scale));
+  canvas.getContext('2d').drawImage(image,0,0,canvas.width,canvas.height);
+  const resized=canvas.toDataURL('image/jpeg',0.76);
+  return {mimeType:'image/jpeg',data:resized.split(',')[1]};
+}
+
+function getGeminiApiKey(){return localStorage.getItem('jimpick_gemini_api_key')||'';}
+function saveGeminiApiKey(){
+  const input=document.getElementById('geminiApiKeyInput');
+  const key=input?.value?.trim()||'';
+  if(!key){alert('Gemini API 키를 입력해주세요.');return;}
+  localStorage.setItem('jimpick_gemini_api_key',key);
+  input.value='';
+  document.querySelector('.simple-ai-key-title').textContent='✅ AI 연결키 저장됨';
+  alert('AI 연결키를 저장했습니다.');
+}
+function extractGeminiText(data){
+  return data?.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('').trim()||'';
+}
+function cleanJsonText(text){
+  return String(text||'').replace(/^```json\s*/i,'').replace(/^```\s*/,'').replace(/\s*```$/,'').trim();
+}
+function normalizeAiItems(items){
+  const allowed=new Set(['침대','옷장','서랍장','책상','책장','의자','화장대','컴퓨터','TV','에어컨','스타일러','행거','선풍기','박스','바구니','기타','소파','거실장','TV스탠드','안마의자','공기청정기','테이블','러닝머신','장식장','화분','스피커','냉장고','김치냉장고','식탁','전자레인지','에어프라이어','밥솥','정수기','식기세척기','가스레인지','수납장','세탁기','건조기','빨래건조대']);
+  const alias={'장롱':'옷장','장농':'옷장','매트리스':'침대','텔레비전':'TV','티비':'TV','쇼파':'소파','김치 냉장고':'김치냉장고','모니터':'컴퓨터','탁자':'테이블','옷걸이':'행거'};
+  const merged={};
+  (Array.isArray(items)?items:[]).forEach(item=>{
+    let name=String(item?.name||'').trim();
+    name=alias[name]||name;
+    if(!allowed.has(name))name='기타';
+    const qty=Math.max(1,Math.min(99,Math.round(Number(item?.qty)||1)));
+    merged[name]=(merged[name]||0)+qty;
+  });
+  return Object.entries(merged).map(([name,qty])=>({name,qty,confidence:1,size:'확인필요',disassembly_required:false,heavy_item:false,special_handling:false}));
+}
+
+async function callGeminiVision(apiKey,imageParts){
+  const names=['침대','옷장','서랍장','책상','책장','의자','화장대','컴퓨터','TV','에어컨','스타일러','행거','선풍기','박스','바구니','기타','소파','거실장','TV스탠드','안마의자','공기청정기','테이블','러닝머신','장식장','화분','스피커','냉장고','김치냉장고','식탁','전자레인지','에어프라이어','밥솥','정수기','식기세척기','가스레인지','수납장','세탁기','건조기','빨래건조대'];
+  const prompt=`한국 이사업체의 견적 사진 분석입니다. 사진에 보이는 이삿짐을 세고 JSON만 반환하세요.
+같은 물건이 여러 사진에 중복되면 한 번만 계산합니다.
+확실히 보이는 품목만 계산하고 작은 생활용품은 박스 수량으로 추정합니다.
+품목명은 반드시 다음 목록에서만 선택합니다:
+${names.join(', ')}
+반환 형식: {"items":[{"name":"냉장고","qty":1}],"summary":"짧은 설명"}`;
+
+  const body={contents:[{role:'user',parts:[{text:prompt},...imageParts.map(img=>({inlineData:{mimeType:img.mimeType,data:img.data}}))]}],generationConfig:{temperature:0.1,responseMimeType:'application/json',responseSchema:{type:'OBJECT',properties:{items:{type:'ARRAY',items:{type:'OBJECT',properties:{name:{type:'STRING'},qty:{type:'INTEGER'}},required:['name','qty']}},summary:{type:'STRING'}},required:['items']}}};
+
+  const models=['gemini-2.5-flash','gemini-2.0-flash'];
+  let lastError='';
+  for(const model of models){
+    const response=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},body:JSON.stringify(body)});
+    if(response.ok){
+      const data=await response.json();
+      return JSON.parse(cleanJsonText(extractGeminiText(data)));
+    }
+    lastError=`${response.status} ${await response.text()}`;
+    if(response.status!==404)break;
   }
-  const helper = document.getElementById('photoHelper');
-  const btn = document.getElementById('analyzeBtn');
-  const isOpen = helper.style.display !== 'none';
-  helper.style.display = isOpen ? 'none' : 'block';
-  btn.textContent = isOpen ? '🧠 사진 분석 도우미 열기' : '▲ 사진 분석 도우미 닫기';
-  if(!isOpen) renderPhotoHelper();
+  throw new Error(lastError||'AI 서버 응답이 없습니다.');
+}
+
+async function runAutoAIAnalysis(){
+  if(State.media.length===0){alert('먼저 사진을 촬영하거나 선택해주세요.');return;}
+  const apiKey=getGeminiApiKey();
+  if(!apiKey){document.getElementById('simpleAiKeyBox')?.scrollIntoView({behavior:'smooth'});alert('처음 한 번만 Gemini API 키를 입력하고 저장해주세요.');return;}
+
+  const btn=document.getElementById('analyzeBtn');
+  const progress=document.getElementById('simpleAiProgress');
+  const resultWrap=document.getElementById('aiResultWrap');
+  btn.disabled=true;btn.textContent='분석 중…';progress.style.display='flex';resultWrap.innerHTML='';
+
+  try{
+    const files=State.media.map(m=>m.file).filter(f=>f?.type?.startsWith('image/')).slice(0,8);
+    const imageParts=[];
+    for(const file of files)imageParts.push(await prepareImageForGemini(file));
+    const aiData=await callGeminiVision(apiKey,imageParts);
+    const items=normalizeAiItems(aiData.items);
+    if(!items.length)throw new Error('품목을 찾지 못했습니다.');
+
+    applyAIResultsToItems(items);
+    Object.keys(PhotoHelperState).forEach(k=>delete PhotoHelperState[k]);
+    items.forEach(item=>PhotoHelperState[item.name]=item.qty);
+    renderPhotoHelper();
+    Calc.run();DraftService.save();
+
+    resultWrap.innerHTML=`<div class="simple-ai-success"><h3>✅ AI가 품목을 자동 선택했습니다.</h3><div>${Utils.escapeHtml(aiData.summary||'사진 속 품목을 자동 반영했습니다.')}</div><div class="simple-ai-items">${items.map(i=>`<div class="simple-ai-item">${Utils.escapeHtml(i.name)} × ${i.qty}</div>`).join('')}</div><div class="simple-ai-actions"><button type="button" class="simple-ai-check" onclick="UI.goStep(4)">선택된 품목 확인</button><button type="button" class="simple-ai-fix" onclick="document.getElementById('photoHelper').style.display='block';renderPhotoHelper();">빠진 품목 수정</button></div></div>`;
+    setTimeout(()=>UI.goStep(4),700);
+  }catch(error){
+    console.error(error);
+    resultWrap.innerHTML=`<div class="simple-ai-error"><b>AI 분석을 완료하지 못했습니다.</b><br>API 키, 인터넷 연결 또는 사진을 확인해주세요.<div style="margin-top:10px"><button type="button" class="btn btn-outline" onclick="document.getElementById('photoHelper').style.display='block';renderPhotoHelper();">직접 간단히 선택하기</button></div></div>`;
+  }finally{
+    btn.disabled=false;btn.textContent='🤖 AI로 품목 자동선택';progress.style.display='none';
+  }
 }
 
 /* ---------------------- 15. 이벤트 바인딩 & 초기화 ---------------------- */
@@ -5998,11 +6227,11 @@ ${msg || '-'}`;
 
     // 미디어 업로드 → 업로드하는 즉시 자동으로 AI 분석 + 품목 자동 체크까지 진행
     const handleMediaFiles = (e)=>{
-      const incoming = Array.from(e.target.files || []);
-      const remain = Math.max(0, 50 - State.media.length);
+      const incoming = Array.from(e.target.files || []).filter(file=>file.type.startsWith('image/'));
+      const remain = Math.max(0, 8 - State.media.length);
 
       if(remain === 0){
-        alert('사진과 동영상은 최대 50개까지 올릴 수 있습니다.');
+        alert('사진은 최대 8장까지 선택할 수 있습니다.');
         e.target.value = '';
         return;
       }
@@ -6013,7 +6242,7 @@ ${msg || '-'}`;
       });
 
       if(incoming.length > remain){
-        alert(`최대 50개까지만 저장되어 ${accepted.length}개만 추가했습니다.`);
+        alert(`사진은 최대 8장까지 가능해 ${accepted.length}장만 추가했습니다.`);
       }
 
       renderMediaPreview();
@@ -6030,8 +6259,23 @@ ${msg || '-'}`;
       if(rm){ State.media.splice(Number(rm.dataset.idx),1); renderMediaPreview(); }
     });
 
-    // 사진 분석 도우미
+    // AI 사진 자동분석
     document.getElementById('analyzeBtn').addEventListener('click', runAutoAIAnalysis);
+    document.getElementById('saveGeminiApiKey')?.addEventListener('click', saveGeminiApiKey);
+    document.getElementById('loginBtn')?.addEventListener('click',authLogin);
+    document.getElementById('goSignupBtn')?.addEventListener('click',()=>authShowPanel('signupPanel'));
+    document.getElementById('backLoginBtn')?.addEventListener('click',()=>authShowPanel('loginPanel'));
+    document.getElementById('goCompanyBtn')?.addEventListener('click',authGoCompany);
+    document.getElementById('backSignupBtn')?.addEventListener('click',()=>authShowPanel('signupPanel'));
+    document.getElementById('completeSignupBtn')?.addEventListener('click',authCompleteSignup);
+    document.getElementById('forgotPasswordBtn')?.addEventListener('click',authForgotPassword);
+    document.getElementById('logoutBtn')?.addEventListener('click',authLogout);
+    document.getElementById('mvpGoPhoto')?.addEventListener('click',mvpGoToPhoto);
+    authInit();
+    if(getGeminiApiKey()){
+      const title=document.querySelector('.simple-ai-key-title');
+      if(title)title.textContent='✅ AI 연결키 저장됨';
+    }
     document.getElementById('photoHelperChips').addEventListener('click', (e)=>{
       const btn = e.target.closest('.photo-qty-btn');
       const chip = e.target.closest('.photo-chip');
@@ -6469,5 +6713,7 @@ document.addEventListener('DOMContentLoaded', App.init);
   </div>
 </div>
 
+
+</div>
 </body>
 </html>
