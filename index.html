@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 V3.5 AI 이사견적</title>
+<title>짐픽 V3.6 AI 이사견적</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -981,6 +981,11 @@ button:active{transform:scale(0.96);}
   .photo-auto-summary{grid-template-columns:1fr}
 }
 
+
+/* ===== V3.6 작업시간·현장난이도 ===== */
+.difficulty-normal{color:#137333!important}
+.difficulty-caution{color:#B06000!important}
+.difficulty-hard{color:#C62828!important}
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1303,6 +1308,14 @@ button:active{transform:scale(0.96);}
             <span>추천 인원</span>
             <strong id="photoAutoWorkers">-</strong>
           </div>
+          <div class="photo-auto-box">
+            <span>예상 작업시간</span>
+            <strong id="photoAutoHours">-</strong>
+          </div>
+          <div class="photo-auto-box">
+            <span>현장 난이도</span>
+            <strong id="photoAutoDifficulty">-</strong>
+          </div>
         </div>
 
         <div class="photo-auto-reason" id="photoAutoReason">
@@ -1448,6 +1461,14 @@ button:active{transform:scale(0.96);}
             <div class="ai-report-box">
               <div class="k">추천 인원</div>
               <div class="v" id="aiWorkerReport">-</div>
+            </div>
+            <div class="ai-report-box">
+              <div class="k">예상 작업시간</div>
+              <div class="v" id="aiHoursReport">-</div>
+            </div>
+            <div class="ai-report-box">
+              <div class="k">현장 난이도</div>
+              <div class="v" id="aiDifficultyReport">-</div>
             </div>
           </div>
           <div class="ai-report-note" id="aiReasonReport">
@@ -1719,7 +1740,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'V3.5-B35';
+const BUILD_VERSION = 'V3.6-B36';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -2973,6 +2994,8 @@ const Calc = {
     const tonnageEl = document.getElementById('aiTonnageReport');
     const truckEl = document.getElementById('aiTruckReport');
     const workerEl = document.getElementById('aiWorkerReport');
+    const hoursEl = document.getElementById('aiHoursReport');
+    const difficultyEl = document.getElementById('aiDifficultyReport');
     const reasonEl = document.getElementById('aiReasonReport');
     const riskEl = document.getElementById('aiRiskReport');
 
@@ -2983,10 +3006,35 @@ const Calc = {
       truckEl.textContent = truckLabel;
       workerEl.textContent = workers + '명';
 
+      let difficultyScore = 0;
+      if(fromStairsOn) difficultyScore += 2;
+      if(toStairsOn) difficultyScore += 2;
+      if(document.getElementById('fromLadder').checked) difficultyScore += 1;
+      if(document.getElementById('toLadder').checked) difficultyScore += 1;
+      if(totalPoints >= truckCapacity * 5) difficultyScore += 2;
+      else if(totalPoints >= truckCapacity * 3) difficultyScore += 1;
+
+      let estimatedHours = totalPoints > 0
+        ? Math.max(2, Math.ceil((totalPoints / (Math.max(1, workers) * 5)) * 2) / 2)
+        : 0;
+      if(difficultyScore >= 3) estimatedHours += 1.5;
+      else if(difficultyScore >= 1) estimatedHours += 0.5;
+
+      const difficulty = difficultyScore >= 4 ? '고난도' : difficultyScore >= 2 ? '주의' : '보통';
+
+      if(hoursEl) hoursEl.textContent = estimatedHours ? `약 ${estimatedHours}시간` : '-';
+      if(difficultyEl){
+        difficultyEl.textContent = difficulty;
+        difficultyEl.className = 'v';
+        if(difficulty === '고난도') difficultyEl.classList.add('difficulty-hard');
+        else if(difficulty === '주의') difficultyEl.classList.add('difficulty-caution');
+        else difficultyEl.classList.add('difficulty-normal');
+      }
+
       const reasonParts = [
         `선택한 품목의 작업량은 총 ${totalPoints}점입니다.`,
         `1톤 차량 1대 기준 작업량 ${truckCapacity}점, 작업자 1명 기준 ${workerCapacity}점으로 계산했습니다.`,
-        `추천 결과는 ${truckLabel}, 작업자 ${workers}명입니다.`
+        `추천 결과는 ${truckLabel}, 작업자 ${workers}명, 예상 작업시간 약 ${estimatedHours}시간이며 현장 난이도는 ${difficulty}입니다.`
       ];
       reasonEl.textContent = reasonParts.join(' ');
 
@@ -3304,12 +3352,37 @@ function getPhotoHelperRecommendation(){
     ? Math.max(baseWorkers, Math.ceil(totalPoints / workerCapacity))
     : 0;
 
+  const activeWorkers = Math.max(1, workers);
+  let estimatedHours = totalPoints > 0
+    ? Math.max(2, Math.ceil((totalPoints / (activeWorkers * 5)) * 2) / 2)
+    : 0;
+
+  let difficultyScore = 0;
+  const fromStairs = document.getElementById('fromStairs');
+  const toStairs = document.getElementById('toStairs');
+  const fromLadder = document.getElementById('fromLadder');
+  const toLadder = document.getElementById('toLadder');
+
+  if(fromStairs && fromStairs.checked) difficultyScore += 2;
+  if(toStairs && toStairs.checked) difficultyScore += 2;
+  if(fromLadder && fromLadder.checked) difficultyScore += 1;
+  if(toLadder && toLadder.checked) difficultyScore += 1;
+  if(totalPoints >= truckCapacity * 5) difficultyScore += 2;
+  else if(totalPoints >= truckCapacity * 3) difficultyScore += 1;
+
+  if(difficultyScore >= 3) estimatedHours += 1.5;
+  else if(difficultyScore >= 1) estimatedHours += 0.5;
+
+  const difficulty = difficultyScore >= 4 ? '고난도' : difficultyScore >= 2 ? '주의' : '보통';
+
   return {
     totalPoints,
     totalQty,
     estimatedTons,
     truckLabel: parts.length ? parts.join(' + ') : '-',
-    workers
+    workers,
+    estimatedHours,
+    difficulty
   };
 }
 
@@ -3320,16 +3393,27 @@ function updatePhotoHelperRecommendation(){
   const tonsEl = document.getElementById('photoAutoTons');
   const truckEl = document.getElementById('photoAutoTruck');
   const workersEl = document.getElementById('photoAutoWorkers');
+  const hoursEl = document.getElementById('photoAutoHours');
+  const difficultyEl = document.getElementById('photoAutoDifficulty');
   const reasonEl = document.getElementById('photoAutoReason');
 
   if(pointsEl) pointsEl.textContent = `${r.totalPoints}점`;
   if(tonsEl) tonsEl.textContent = r.estimatedTons ? `${r.estimatedTons.toFixed(1)}톤 상당` : '0톤';
   if(truckEl) truckEl.textContent = r.truckLabel;
   if(workersEl) workersEl.textContent = r.workers ? `${r.workers}명` : '-';
+  if(hoursEl) hoursEl.textContent = r.estimatedHours ? `약 ${r.estimatedHours}시간` : '-';
+
+  if(difficultyEl){
+    difficultyEl.textContent = r.difficulty || '-';
+    difficultyEl.className = '';
+    if(r.difficulty === '고난도') difficultyEl.classList.add('difficulty-hard');
+    else if(r.difficulty === '주의') difficultyEl.classList.add('difficulty-caution');
+    else if(r.difficulty === '보통') difficultyEl.classList.add('difficulty-normal');
+  }
 
   if(reasonEl){
     reasonEl.textContent = r.totalQty > 0
-      ? `선택 품목 ${r.totalQty}개 · 총 작업량 ${r.totalPoints}점 기준으로 ${r.truckLabel}, 작업자 ${r.workers}명을 추천합니다. 현장 구조와 잔짐 양에 따라 최종 조정하세요.`
+      ? `선택 품목 ${r.totalQty}개 · 총 작업량 ${r.totalPoints}점 기준으로 ${r.truckLabel}, 작업자 ${r.workers}명, 예상 작업시간 약 ${r.estimatedHours}시간을 추천합니다. 현장 난이도는 ${r.difficulty}입니다.`
       : '품목 수량을 입력하면 계산 결과가 표시됩니다.';
   }
 }
