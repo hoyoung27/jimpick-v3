@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 3.0</title>
+<title>짐픽 PRO 3.1</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 3.0 최소판매형 ===== */
+/* ===== 짐픽 PRO 3.1 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -2345,6 +2345,67 @@ body{font-size:18px}
   .launch-actions,.launch-links{grid-template-columns:1fr}
 }
 
+
+/* ===== PRO 3.1 초간단 5단계 ===== */
+.simple-home{
+  display:none;max-width:900px;margin:0 auto;padding:18px 14px 4px;
+}
+.simple-home.active{display:block}
+.simple-home-card{
+  padding:24px;border-radius:26px;background:#fff;
+  box-shadow:0 14px 40px rgba(15,42,67,.12);
+  border:1px solid #DCE5EE;
+}
+.simple-home-title{
+  text-align:center;font-size:31px;font-weight:900;color:#102A43;
+}
+.simple-home-subtitle{
+  margin-top:7px;text-align:center;color:#68798A;font-size:17px;font-weight:800;
+}
+.simple-five-steps{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:11px;margin-top:20px;
+}
+.simple-five-steps button{
+  min-height:145px;padding:14px 10px;border:0;border-radius:18px;
+  background:#F3F6FA;color:#102A43;cursor:pointer;
+  box-shadow:inset 0 0 0 1px #DCE5EE;
+}
+.simple-five-steps button:hover{transform:translateY(-2px)}
+.simple-five-steps strong{
+  width:40px;height:40px;margin:0 auto 9px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:#FF6B35;color:#fff;font-size:18px;
+}
+.simple-five-steps span{
+  display:block;font-size:20px;font-weight:900;
+}
+.simple-five-steps small{
+  display:block;margin-top:7px;color:#68798A;font-size:13px;font-weight:800;
+}
+.simple-start-btn{
+  width:100%;min-height:70px;margin-top:18px;border:0;border-radius:17px;
+  background:#16A36A;color:#fff;font-size:22px;font-weight:900;cursor:pointer;
+}
+body.simple-mode .route-nav,
+body.simple-mode .sticky-footer{
+  display:none!important;
+}
+body.simple-mode .container{
+  padding-top:8px;
+}
+body.simple-mode .panel{
+  max-width:900px;margin:0 auto;
+}
+@media(max-width:900px){
+  .simple-five-steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:560px){
+  .simple-home-title{font-size:26px}
+  .simple-five-steps{grid-template-columns:1fr}
+  .simple-five-steps button{min-height:105px}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2615,10 +2676,10 @@ body{font-size:18px}
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-3.0</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-3.1</div>
     </div>
   </div>
-  <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><button type="button" id="launchMenuBtn">출시점검</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
+  <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><button type="button" id="launchMenuBtn">출시점검</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
     <div class="amt" id="topTotal">0원</div>
     <div class="lbl">예상 견적금액</div>
   </div>
@@ -2650,6 +2711,36 @@ body{font-size:18px}
   <div class="route-step" data-step="4"><div class="dot">3</div><div class="lbl">품목확인</div></div>
   <div class="route-step" data-step="5"><div class="dot">4</div><div class="lbl">자동견적</div></div>
   <div class="route-step" data-step="6"><div class="dot">5</div><div class="lbl">문자발송</div></div>
+</div>
+
+
+<div id="simpleHome" class="simple-home">
+  <div class="simple-home-card">
+    <div class="simple-home-title">사진만 찍으면 견적 끝</div>
+    <div class="simple-home-subtitle">아래 순서대로 큰 버튼만 누르세요.</div>
+
+    <div class="simple-five-steps">
+      <button type="button" data-simple-step="1">
+        <strong>1</strong><span>고객정보</span><small>이름·연락처·주소</small>
+      </button>
+      <button type="button" data-simple-step="3">
+        <strong>2</strong><span>사진찍기</span><small>거실·방·주방 촬영</small>
+      </button>
+      <button type="button" id="simpleAutoEstimateBtn">
+        <strong>3</strong><span>AI 자동견적</span><small>품목·차량·인원 계산</small>
+      </button>
+      <button type="button" data-simple-step="5">
+        <strong>4</strong><span>견적확인</span><small>금액 최종 확인</small>
+      </button>
+      <button type="button" id="simpleSendBtn">
+        <strong>5</strong><span>고객에게 보내기</span><small>문자 앱으로 전송</small>
+      </button>
+    </div>
+
+    <button type="button" id="simpleStartBtn" class="simple-start-btn">
+      새 견적 시작
+    </button>
+  </div>
 </div>
 
 <div class="container">
@@ -3473,7 +3564,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-3.0';
+const BUILD_VERSION = 'JIMPICK-PRO-3.1';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -6053,7 +6144,8 @@ async function initCloudAuth(){try{const c=await loadCloudConfig();supabaseClien
 function authShowPanel(id){document.querySelectorAll('.auth-panel').forEach(p=>p.classList.remove('active'));document.getElementById(id)?.classList.add('active')}
 function authShowLogin(){document.getElementById('authScreen').style.display='flex';document.getElementById('appShell').style.display='none';document.getElementById('subscriptionGate').style.display='none';authShowPanel('loginPanel')}
 async function authLoadProfile(u){if(!supabaseClient||!u)return null;const {data}=await supabaseClient.from('profiles').select('*').eq('id',u.id).maybeSingle();if(data)localStorage.setItem('jimpick_cloud_profile_cache',JSON.stringify(data));return data||null}
-async function authShowApp(u){if(u?.id)localStorage.setItem('jimpick_last_cloud_user',u.id);document.getElementById('authScreen').style.display='none';document.getElementById('serverSetupGate').style.display='none';document.getElementById('appShell').style.display='block';const p=cloudAuthReady?await authLoadProfile(u):null;const n=p?.company_name||u?.user_metadata?.company_name||'짐픽';document.getElementById('loggedCompanyName').textContent=n;document.getElementById('companyNameDisplay').textContent=`${n} ✏️`;setTimeout(async()=>{try{await DraftService.load();await SettingsService.load();Calc.run();updateSubscriptionUi()}catch(e){}},100)}
+async function authShowApp(u){if(u?.id)localStorage.setItem('jimpick_last_cloud_user',u.id);document.getElementById('authScreen').style.display='none';document.getElementById('serverSetupGate').style.display='none';document.getElementById('appShell').style.display='block';
+  setTimeout(showSimpleHome,150);const p=cloudAuthReady?await authLoadProfile(u):null;const n=p?.company_name||u?.user_metadata?.company_name||'짐픽';document.getElementById('loggedCompanyName').textContent=n;document.getElementById('companyNameDisplay').textContent=`${n} ✏️`;setTimeout(async()=>{try{await DraftService.load();await SettingsService.load();Calc.run();updateSubscriptionUi()}catch(e){}},100)}
 async function authLogin(){const email=document.getElementById('loginIdInput')?.value?.trim()||'',password=document.getElementById('loginPasswordInput')?.value||'';if(!email||!password){alert('이메일과 비밀번호를 입력해주세요.');return}if(localPreviewMode){await authShowApp({id:'preview',user_metadata:{company_name:'시험 업체'}});return}if(!cloudAuthReady){alert('클라우드 연결을 먼저 완료해주세요.');return}const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});if(error){alert('로그인 정보를 확인해주세요.');return}await authShowApp(data.user)}
 function authGoCompany(){const o=document.getElementById('signupOwnerName')?.value?.trim()||'',p=(document.getElementById('signupPhone')?.value||'').replace(/\D/g,''),e=document.getElementById('signupEmail')?.value?.trim()||'',w=document.getElementById('signupPassword')?.value||'';if(!o||p.length<10||!e.includes('@')||w.length<6){alert('입력 내용을 다시 확인해주세요.');return}authShowPanel('companyPanel')}
 async function authCompleteSignup(){const o=document.getElementById('signupOwnerName')?.value?.trim()||'',p=(document.getElementById('signupPhone')?.value||'').replace(/\D/g,''),e=document.getElementById('signupEmail')?.value?.trim()||'',w=document.getElementById('signupPassword')?.value||'',c=document.getElementById('companyNameInput')?.value?.trim()||'',cp=(document.getElementById('companyPhoneInput')?.value||'').replace(/\D/g,''),b=(document.getElementById('businessNumberInput')?.value||'').replace(/\D/g,'');if(!c||cp.length<10||!document.getElementById('agreeTerms')?.checked){alert('업체정보와 약관동의를 확인해주세요.');return}if(localPreviewMode){alert('시험 모드에서는 가입이 저장되지 않습니다.');return}const {data,error}=await supabaseClient.auth.signUp({email:e,password:w,options:{data:{owner_name:o,phone:p,company_name:c,company_phone:cp,business_number:b}}});if(error){alert(error.message);return}if(data.user)await supabaseClient.from('profiles').upsert({id:data.user.id,owner_name:o,phone:p,email:e,company_name:c,company_phone:cp,business_number:b,subscription_status:'trial',trial_started_at:new Date().toISOString()});alert('회원가입 완료. 이메일 확인 후 로그인해주세요.');authShowPanel('loginPanel')}
@@ -7032,6 +7124,61 @@ async function installJimpickApp(){
   await deferredInstallPrompt.userChoice;
   deferredInstallPrompt=null;
 }
+
+
+function showSimpleHome(){
+  document.body.classList.add('simple-mode');
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  const home=document.getElementById('simpleHome');
+  if(home)home.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function hideSimpleHome(){
+  const home=document.getElementById('simpleHome');
+  if(home)home.classList.remove('active');
+}
+
+function goSimpleStep(step){
+  hideSimpleHome();
+  document.body.classList.add('simple-mode');
+  if(typeof UI!=='undefined')UI.goStep(Number(step));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function startSimpleQuote(){
+  if(typeof UI!=='undefined' && typeof UI.reset==='function'){
+    try{UI.reset();}catch(e){}
+  }
+  goSimpleStep(1);
+}
+
+async function runSimpleAutoEstimate(){
+  hideSimpleHome();
+  document.body.classList.add('simple-mode');
+  if(typeof UI!=='undefined')UI.goStep(3);
+
+  const count=State?.media?.length||State?.photos?.length||0;
+  if(count===0){
+    alert('사진을 먼저 찍어주세요.');
+    return;
+  }
+
+  if(typeof runFullAutoEstimate==='function'){
+    await runFullAutoEstimate();
+  }else if(typeof runAutoAIAnalysis==='function'){
+    await runAutoAIAnalysis();
+  }
+}
+
+async function simpleSendCustomer(){
+  if(typeof sendFinalSms==='function'){
+    await sendFinalSms();
+  }else{
+    alert('문자 보내기 기능을 찾지 못했습니다.');
+  }
+}
+
 
 function openLaunchModal(){
   document.getElementById('launchModal').style.display='flex';
@@ -8739,6 +8886,13 @@ ${msg || '-'}`;
     document.getElementById('completeSignupBtn')?.addEventListener('click',authCompleteSignup);
     document.getElementById('forgotPasswordBtn')?.addEventListener('click',authForgotPassword);
     document.getElementById('logoutBtn')?.addEventListener('click',authLogout);
+    document.getElementById('simpleHomeBtn')?.addEventListener('click',showSimpleHome);
+    document.getElementById('simpleStartBtn')?.addEventListener('click',startSimpleQuote);
+    document.getElementById('simpleAutoEstimateBtn')?.addEventListener('click',runSimpleAutoEstimate);
+    document.getElementById('simpleSendBtn')?.addEventListener('click',simpleSendCustomer);
+    document.querySelectorAll('[data-simple-step]').forEach(btn=>{
+      btn.addEventListener('click',()=>goSimpleStep(btn.dataset.simpleStep));
+    });
     document.getElementById('launchMenuBtn')?.addEventListener('click',()=>{loadLaunchChecks();openLaunchModal();});
     document.getElementById('closeLaunchModalBtn')?.addEventListener('click',closeLaunchModal);
     document.getElementById('launchModal')?.addEventListener('click',(e)=>{if(e.target.id==='launchModal')closeLaunchModal();});

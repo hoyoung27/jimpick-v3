@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 3.0",
+  "name": "짐픽 PRO 3.1",
   "short_name": "짐픽 PRO",
-  "description": "설치·자동업데이트·개인정보처리방침·이용약관·출시점검 기능을 갖춘 AI 이사견적 앱",
+  "description": "고객정보·사진·AI견적·확인·발송 5단계만 보여주는 초간단 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
