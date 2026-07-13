@@ -1,4 +1,4 @@
-const CACHE_NAME='jimpick-pro-1-8-ai-simple-flow';
+const CACHE_NAME='jimpick-pro-1-9-ai-engine';
 const FILES=['./','./index.html','./manifest.json','./icon.svg'];
 self.addEventListener('install',e=>{
   e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(FILES)));

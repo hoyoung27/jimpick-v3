@@ -59,7 +59,7 @@ exports.handler = async (event) => {
     return json(400, { error: '요청 형식이 올바르지 않습니다.' });
   }
 
-  const images = Array.isArray(payload.images) ? payload.images.slice(0, 8) : [];
+  const images = Array.isArray(payload.images) ? payload.images.slice(0, 6) : [];
   if (!images.length) {
     return json(400, { error: '분석할 사진이 없습니다.' });
   }
@@ -86,9 +86,13 @@ exports.handler = async (event) => {
 4. 품목명은 반드시 아래 목록 중 하나만 사용하세요.
 ${ALLOWED_ITEMS.join(', ')}
 5. 장롱/장농은 옷장, 매트리스는 침대, 티비는 TV, 쇼파는 소파로 처리하세요.
+6. 각 품목에 confidence를 0~1 숫자로 넣으세요.
+7. 사진에 가려졌거나 확실하지 않은 품목은 confidence를 0.55 미만으로 넣으세요.
+8. 같은 물건을 여러 각도로 찍은 사진은 중복 계산하지 마세요.
+9. 박스 수량은 보이는 박스와 수납된 잔짐을 함께 고려하되 과장하지 마세요.
 
 반환 형식:
-{"items":[{"name":"냉장고","qty":1},{"name":"소파","qty":1}],"summary":"짧은 한국어 설명"}`;
+{"items":[{"name":"냉장고","qty":1,"confidence":0.95},{"name":"소파","qty":1,"confidence":0.9}],"summary":"짧은 한국어 설명"}`;
 
   const body = {
     contents: [
@@ -118,8 +122,9 @@ ${ALLOWED_ITEMS.join(', ')}
               properties: {
                 name: { type: 'STRING' },
                 qty: { type: 'INTEGER' },
+                confidence: { type: 'NUMBER' },
               },
-              required: ['name', 'qty'],
+              required: ['name', 'qty', 'confidence'],
             },
           },
           summary: { type: 'STRING' },
