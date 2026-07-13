@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 1.6</title>
+<title>짐픽 PRO 1.7</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 1.6 최소판매형 ===== */
+/* ===== 짐픽 PRO 1.7 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -1787,6 +1787,68 @@ body{font-size:18px}
 }
 
 .server-setup-gate{position:fixed;inset:0;z-index:22000;align-items:center;justify-content:center;padding:18px;background:linear-gradient(160deg,#0F2A43,#1F4D70)}.server-setup-card{width:min(480px,100%);padding:28px 24px;border-radius:28px;background:#fff;text-align:center}.server-setup-icon{font-size:60px}.server-setup-card h1{font-size:28px;color:#102A43}.server-setup-error{margin:15px 0;padding:13px;border-radius:13px;background:#FFF0ED;color:#B42318;font-weight:800}.server-setup-card button{width:100%;min-height:58px;border:0;border-radius:14px;font-size:17px;font-weight:900}.server-setup-card button:first-of-type{background:#102A43;color:#fff}#localPreviewBtn{margin-top:10px;background:#E8EEF5;color:#102A43}.cloud-login-badge{padding:5px 8px;border-radius:999px;background:#EAF7F0;color:#16794B;font-size:11px;font-weight:900}
+
+/* ===== PRO 1.7 업체별 클라우드 견적 저장 ===== */
+.cloud-quote-actions{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;
+}
+.cloud-quote-actions button{
+  min-height:58px;border:0;border-radius:14px;
+  font-size:17px;font-weight:900;cursor:pointer;
+}
+.cloud-quote-save{background:#0F2A43;color:#fff}
+.cloud-quote-list{background:#E8EEF5;color:#102A43}
+.cloud-quotes-modal{
+  position:fixed;inset:0;z-index:23000;
+  align-items:center;justify-content:center;padding:18px;
+  background:rgba(8,24,40,.74);
+}
+.cloud-quotes-card{
+  width:min(760px,100%);max-height:86vh;overflow:auto;
+  background:#fff;border-radius:24px;padding:22px;
+}
+.cloud-quotes-head{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+}
+.cloud-quotes-head h2{margin:0;color:#102A43;font-size:26px}
+.cloud-quotes-head p{margin:5px 0 0;color:#68798A;font-size:13px}
+.cloud-quotes-head button{
+  width:44px;height:44px;border:0;border-radius:12px;
+  background:#E8EEF5;color:#102A43;font-size:20px;cursor:pointer;
+}
+.cloud-quotes-loading{
+  margin-top:15px;padding:15px;border-radius:13px;background:#EEF5FF;
+  color:#174A7E;text-align:center;font-weight:900;
+}
+.cloud-quotes-list{display:grid;gap:10px;margin-top:15px}
+.cloud-quote-item{
+  padding:15px;border:1px solid #DCE5EE;border-radius:16px;background:#FAFCFE;
+}
+.cloud-quote-item-head{
+  display:flex;justify-content:space-between;gap:12px;align-items:flex-start;
+}
+.cloud-quote-item-name{font-size:19px;font-weight:900;color:#102A43}
+.cloud-quote-item-date{font-size:12px;color:#68798A}
+.cloud-quote-item-meta{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:6px;margin-top:10px;color:#4C6275;font-size:14px;
+}
+.cloud-quote-item-actions{
+  display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:12px;
+}
+.cloud-quote-load,.cloud-quote-delete{
+  min-height:44px;border:0;border-radius:11px;font-weight:900;cursor:pointer;
+}
+.cloud-quote-load{background:#0F2A43;color:#fff}
+.cloud-quote-delete{padding:0 14px;background:#FFF0ED;color:#B42318}
+.cloud-quotes-empty{
+  padding:28px 15px;text-align:center;color:#718096;font-weight:800;
+}
+@media(max-width:640px){
+  .cloud-quote-actions{grid-template-columns:1fr}
+  .cloud-quote-item-meta{grid-template-columns:1fr}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2029,7 +2091,7 @@ body{font-size:18px}
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-1.6</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-1.7</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -2101,7 +2163,13 @@ body{font-size:18px}
         </label>
       </div>
 
-      <button type="button" class="mvp-next-btn" id="mvpGoPhoto">
+      
+      <div class="cloud-quote-actions">
+        <button type="button" id="saveCloudQuoteBtn" class="cloud-quote-save">☁️ 견적 서버 저장</button>
+        <button type="button" id="openCloudQuotesBtn" class="cloud-quote-list">📋 저장한 견적</button>
+      </div>
+
+<button type="button" class="mvp-next-btn" id="mvpGoPhoto">
         다음: 사진 찍기 →
       </button>
     </div>
@@ -2673,7 +2741,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-1.6';
+const BUILD_VERSION = 'JIMPICK-PRO-1.7';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -5262,6 +5330,227 @@ async function authLogout(){if(!confirm('로그아웃하시겠습니까?'))retur
 function authClearSession(){if(supabaseClient&&!localPreviewMode)supabaseClient.auth.signOut()}
 async function authInit(){const ok=await initCloudAuth();if(!ok)return;const {data}=await supabaseClient.auth.getSession();if(data?.session?.user)await authShowApp(data.session.user);else authShowLogin();supabaseClient.auth.onAuthStateChange(async(e,s)=>{if(e==='SIGNED_IN'&&s?.user)await authShowApp(s.user);if(e==='SIGNED_OUT')authShowLogin()})}
 
+
+function collectCurrentQuoteData(){
+  const get=(id)=>document.getElementById(id)?.value||'';
+  const text=(id)=>document.getElementById(id)?.textContent||'';
+  const selectedItems={};
+
+  if(typeof State!=='undefined' && State.items){
+    Object.entries(State.items).forEach(([name,item])=>{
+      const qty=Number(item?.qty||item?.quantity||0);
+      if(qty>0)selectedItems[name]=qty;
+    });
+  }
+
+  return {
+    customer_name:get('customerName').trim(),
+    customer_phone:get('customerPhone').replace(/\D/g,''),
+    move_date:get('moveDate')||null,
+    from_address:get('fromAddress').trim(),
+    to_address:get('toAddress').trim(),
+    quote_data:{
+      items:selectedItems,
+      truck1:Number(document.getElementById('truck1Count')?.value)||0,
+      truck5:Number(document.getElementById('truck5Count')?.value)||0,
+      workers:Number(document.getElementById('workerCount')?.value)||0,
+      hours:Number(document.getElementById('workHours')?.value)||0,
+      total:text('finalTotal')||text('quickTotal')||'0원',
+      saved_at:new Date().toISOString()
+    }
+  };
+}
+
+function validateQuoteForCloud(quote){
+  if(!quote.customer_name){alert('고객명을 입력해주세요.');return false}
+  if((quote.customer_phone||'').length<10){alert('연락처를 정확히 입력해주세요.');return false}
+  if(!quote.move_date){alert('이사 날짜를 선택해주세요.');return false}
+  if(!quote.from_address){alert('출발지를 입력해주세요.');return false}
+  if(!quote.to_address){alert('도착지를 입력해주세요.');return false}
+  return true;
+}
+
+async function saveQuoteToCloud(){
+  if(localPreviewMode){
+    alert('화면 시험 모드에서는 서버 저장이 되지 않습니다.');
+    return;
+  }
+  if(!supabaseClient||!cloudAuthReady){
+    alert('클라우드 로그인이 필요합니다.');
+    return;
+  }
+
+  const user=await currentCloudUser();
+  if(!user){alert('다시 로그인해주세요.');return}
+
+  const quote=collectCurrentQuoteData();
+  if(!validateQuoteForCloud(quote))return;
+
+  const btn=document.getElementById('saveCloudQuoteBtn');
+  const original=btn.textContent;
+  btn.disabled=true;
+  btn.textContent='저장 중…';
+
+  try{
+    const {error}=await supabaseClient.from('quotes').insert({
+      user_id:user.id,
+      customer_name:quote.customer_name,
+      customer_phone:quote.customer_phone,
+      move_date:quote.move_date,
+      from_address:quote.from_address,
+      to_address:quote.to_address,
+      quote_data:quote.quote_data
+    });
+    if(error)throw error;
+    alert('견적을 서버에 저장했습니다.');
+  }catch(error){
+    console.error(error);
+    alert(`저장하지 못했습니다: ${error.message||error}`);
+  }finally{
+    btn.disabled=false;
+    btn.textContent=original;
+  }
+}
+
+function escapeCloudText(value){
+  return String(value??'')
+    .replaceAll('&','&amp;')
+    .replaceAll('<','&lt;')
+    .replaceAll('>','&gt;')
+    .replaceAll('"','&quot;')
+    .replaceAll("'",'&#039;');
+}
+
+async function openCloudQuotes(){
+  const modal=document.getElementById('cloudQuotesModal');
+  modal.style.display='flex';
+  await loadCloudQuotes();
+}
+
+function closeCloudQuotes(){
+  document.getElementById('cloudQuotesModal').style.display='none';
+}
+
+async function loadCloudQuotes(){
+  const list=document.getElementById('cloudQuotesList');
+  const loading=document.getElementById('cloudQuotesLoading');
+  list.innerHTML='';
+  loading.style.display='block';
+
+  if(localPreviewMode||!supabaseClient){
+    loading.style.display='none';
+    list.innerHTML='<div class="cloud-quotes-empty">실제 로그인 후 서버 견적을 확인할 수 있습니다.</div>';
+    return;
+  }
+
+  try{
+    const {data,error}=await supabaseClient
+      .from('quotes')
+      .select('*')
+      .order('created_at',{ascending:false})
+      .limit(100);
+
+    if(error)throw error;
+
+    loading.style.display='none';
+
+    if(!data?.length){
+      list.innerHTML='<div class="cloud-quotes-empty">저장한 견적이 없습니다.</div>';
+      return;
+    }
+
+    list.innerHTML=data.map(row=>{
+      const q=row.quote_data||{};
+      const created=new Date(row.created_at).toLocaleString('ko-KR');
+      return `<div class="cloud-quote-item">
+        <div class="cloud-quote-item-head">
+          <div>
+            <div class="cloud-quote-item-name">${escapeCloudText(row.customer_name||'이름 없음')}</div>
+            <div class="cloud-quote-item-date">${escapeCloudText(created)}</div>
+          </div>
+          <strong>${escapeCloudText(q.total||'0원')}</strong>
+        </div>
+        <div class="cloud-quote-item-meta">
+          <div>☎ ${escapeCloudText(row.customer_phone||'-')}</div>
+          <div>📅 ${escapeCloudText(row.move_date||'-')}</div>
+          <div>출발: ${escapeCloudText(row.from_address||'-')}</div>
+          <div>도착: ${escapeCloudText(row.to_address||'-')}</div>
+          <div>1톤 ${Number(q.truck1)||0}대 · 5톤 ${Number(q.truck5)||0}대</div>
+          <div>인원 ${Number(q.workers)||0}명 · ${Number(q.hours)||0}시간</div>
+        </div>
+        <div class="cloud-quote-item-actions">
+          <button class="cloud-quote-load" data-load-quote="${row.id}">불러오기</button>
+          <button class="cloud-quote-delete" data-delete-quote="${row.id}">삭제</button>
+        </div>
+      </div>`;
+    }).join('');
+
+    list.querySelectorAll('[data-load-quote]').forEach(btn=>{
+      btn.addEventListener('click',()=>loadQuoteFromCloud(btn.dataset.loadQuote,data));
+    });
+    list.querySelectorAll('[data-delete-quote]').forEach(btn=>{
+      btn.addEventListener('click',()=>deleteCloudQuote(btn.dataset.deleteQuote));
+    });
+  }catch(error){
+    console.error(error);
+    loading.style.display='none';
+    list.innerHTML=`<div class="cloud-quotes-empty">불러오지 못했습니다.<br>${escapeCloudText(error.message||error)}</div>`;
+  }
+}
+
+function setFieldValue(id,value){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.value=value??'';
+  el.dispatchEvent(new Event('input',{bubbles:true}));
+  el.dispatchEvent(new Event('change',{bubbles:true}));
+}
+
+function loadQuoteFromCloud(id,rows){
+  const row=rows.find(item=>String(item.id)===String(id));
+  if(!row)return;
+  const q=row.quote_data||{};
+
+  setFieldValue('customerName',row.customer_name);
+  setFieldValue('customerPhone',row.customer_phone);
+  setFieldValue('moveDate',row.move_date);
+  setFieldValue('fromAddress',row.from_address);
+  setFieldValue('toAddress',row.to_address);
+  setFieldValue('truck1Count',Number(q.truck1)||0);
+  setFieldValue('truck5Count',Number(q.truck5)||0);
+  setFieldValue('workerCount',Number(q.workers)||0);
+  setFieldValue('workHours',Number(q.hours)||0);
+
+  if(typeof State!=='undefined' && State.items && q.items){
+    Object.keys(State.items).forEach(name=>{
+      if(State.items[name])State.items[name].qty=0;
+    });
+    Object.entries(q.items).forEach(([name,qty])=>{
+      if(State.items[name])State.items[name].qty=Number(qty)||0;
+    });
+  }
+
+  if(typeof Calc!=='undefined')Calc.run();
+  if(typeof renderItems==='function')renderItems();
+  if(typeof DraftService!=='undefined')DraftService.save();
+
+  closeCloudQuotes();
+  UI.goStep(1);
+  alert('저장한 견적을 불러왔습니다.');
+}
+
+async function deleteCloudQuote(id){
+  if(!confirm('이 견적을 삭제하시겠습니까?'))return;
+  try{
+    const {error}=await supabaseClient.from('quotes').delete().eq('id',id);
+    if(error)throw error;
+    await loadCloudQuotes();
+  }catch(error){
+    alert(`삭제하지 못했습니다: ${error.message||error}`);
+  }
+}
+
+
 function mvpGoToPhoto(){
   const name=document.getElementById('customerName')?.value?.trim()||'';
   const phone=(document.getElementById('customerPhone')?.value||'').replace(/\D/g,'');
@@ -6441,6 +6730,12 @@ ${msg || '-'}`;
     document.getElementById('completeSignupBtn')?.addEventListener('click',authCompleteSignup);
     document.getElementById('forgotPasswordBtn')?.addEventListener('click',authForgotPassword);
     document.getElementById('logoutBtn')?.addEventListener('click',authLogout);
+    document.getElementById('saveCloudQuoteBtn')?.addEventListener('click',saveQuoteToCloud);
+    document.getElementById('openCloudQuotesBtn')?.addEventListener('click',openCloudQuotes);
+    document.getElementById('closeCloudQuotesBtn')?.addEventListener('click',closeCloudQuotes);
+    document.getElementById('cloudQuotesModal')?.addEventListener('click',(e)=>{
+      if(e.target.id==='cloudQuotesModal')closeCloudQuotes();
+    });
     document.getElementById('retryServerSetupBtn')?.addEventListener('click',async()=>{document.getElementById('serverSetupGate').style.display='none';await authInit();});
     document.getElementById('localPreviewBtn')?.addEventListener('click',()=>{localPreviewMode=true;document.getElementById('serverSetupGate').style.display='none';authShowLogin();});
     document.getElementById('continueTrialBtn')?.addEventListener('click',continueTrial);
@@ -6895,5 +7190,20 @@ document.addEventListener('DOMContentLoaded', App.init);
 
 
 </div>
+
+<div id="cloudQuotesModal" class="cloud-quotes-modal" style="display:none;">
+  <div class="cloud-quotes-card">
+    <div class="cloud-quotes-head">
+      <div>
+        <h2>저장한 견적</h2>
+        <p>현재 로그인한 업체 자료만 표시됩니다.</p>
+      </div>
+      <button type="button" id="closeCloudQuotesBtn">✕</button>
+    </div>
+    <div class="cloud-quotes-loading" id="cloudQuotesLoading" style="display:none;">불러오는 중…</div>
+    <div id="cloudQuotesList" class="cloud-quotes-list"></div>
+  </div>
+</div>
+
 </body>
 </html>

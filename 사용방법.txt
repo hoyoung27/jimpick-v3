@@ -1,13 +1,33 @@
-짐픽 PRO 1.6 실제 서버 로그인
+짐픽 PRO 1.7 - 업체별 클라우드 견적 저장
 
-1. Supabase 새 프로젝트 생성
-2. SQL Editor에서 supabase/setup.sql 실행
-3. Netlify 환경변수 등록
-- SUPABASE_URL
-- SUPABASE_ANON_KEY
-- GEMINI_API_KEY
-4. GitHub에 netlify 폴더와 supabase 폴더를 포함한 전체 파일 업로드
-5. 캐시 없이 재배포
+이번 핵심 작업
+- 로그인한 업체의 견적을 Supabase 서버에 저장
+- 저장한 견적 목록 확인
+- 저장 견적 불러오기
+- 저장 견적 삭제
+- 고객명, 연락처, 이사날짜, 출발지, 도착지 저장
+- 품목, 1톤·5톤 차량, 작업인원, 작업시간, 금액 저장
+- Supabase RLS로 자기 업체 자료만 조회·수정·삭제
 
-설정 전에는 '화면만 시험하기'로 화면 확인이 가능합니다.
-정상 표시: build JIMPICK-PRO-1.6
+반드시 할 일
+1. Supabase → SQL Editor
+2. supabase/setup.sql 전체 실행
+3. Netlify 환경변수 확인
+   - SUPABASE_URL
+   - SUPABASE_ANON_KEY
+   - GEMINI_API_KEY
+4. GitHub에 전체 파일과 폴더 업로드
+5. Netlify에서 캐시 없이 재배포
+
+업로드에 포함할 폴더
+- netlify
+- supabase
+
+정상 표시
+build JIMPICK-PRO-1.7
+
+사용법
+- 로그인
+- 고객정보 입력
+- '견적 서버 저장' 클릭
+- '저장한 견적'에서 불러오기 또는 삭제

@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 1.6",
+  "name": "짐픽 PRO 1.7",
   "short_name": "짐픽 PRO",
-  "description": "Supabase 실제 서버 로그인과 업체별 클라우드 계정",
+  "description": "업체별 고객·견적을 Supabase 서버에 저장하고 불러오는 AI 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
