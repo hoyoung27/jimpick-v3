@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 2.6</title>
+<title>짐픽 PRO 2.7</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 2.6 최소판매형 ===== */
+/* ===== 짐픽 PRO 2.7 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -2214,6 +2214,17 @@ body{font-size:18px}
 }
 .subscription-pay-btn.loading{opacity:.65;pointer-events:none}
 
+
+.ai-detail-card{max-width:900px;margin:0 auto 16px}
+.ai-detail-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.ai-detail-grid div{padding:14px 10px;border-radius:14px;background:#F3F6FA;border:1px solid #DCE5EE;text-align:center}
+.ai-detail-grid span{display:block;font-size:12px;color:#65798C;font-weight:900}
+.ai-detail-grid strong{display:block;margin-top:5px;font-size:18px;color:#102A43}
+.ai-confidence-summary{margin-top:10px;padding:12px;border-radius:12px;background:#FFF8E8;color:#6D4910;font-size:14px;font-weight:800;line-height:1.6}
+.ai-confidence-list{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.ai-confidence-badge{padding:7px 10px;border-radius:999px;background:#fff;border:1px solid #E7C988;font-size:13px;font-weight:900}
+@media(max-width:700px){.ai-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2476,7 +2487,7 @@ body{font-size:18px}
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-2.6</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-2.7</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -2573,6 +2584,17 @@ body{font-size:18px}
 
   <!-- ============ STEP 3. AI 사진 자동분석 ============ -->
   <section class="panel" id="step3">
+<div class="card ai-detail-card">
+  <h2><span class="eyebrow">AI 판단</span> 공간·잔짐·난이도</h2>
+  <div class="ai-detail-grid">
+    <div><span>공간</span><strong id="aiRoomResult">분석 전</strong></div>
+    <div><span>잔짐</span><strong id="aiClutterResult">분석 전</strong></div>
+    <div><span>이사 종류</span><strong id="aiMoveTypeResult">분석 전</strong></div>
+    <div><span>작업 난이도</span><strong id="aiDifficultyResult">분석 전</strong></div>
+  </div>
+  <div id="aiConfidenceSummary" class="ai-confidence-summary">품목별 신뢰도는 분석 후 표시됩니다.</div>
+</div>
+
     <div class="card full-auto-card">
       <h2><span class="eyebrow">완전자동</span> 사진만 찍으면 견적완료</h2>
       <p class="full-auto-guide">
@@ -3292,7 +3314,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-2.6';
+const BUILD_VERSION = 'JIMPICK-PRO-2.7';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -6475,11 +6497,14 @@ function calculateMovingEstimateEngine(){
   const confirmedSpecialCost=Object.values(SmartAnswerState.special).filter(Boolean).length*40000;
   const ladderCost=SmartAnswerState.ladder?250000:0;
 
-  let price=truckCost+workerCost+heavyCost+disassemblyCost+specialCost+timeCost+confirmedDisassemblyCost+confirmedSpecialCost+ladderCost;
+  const sceneAdjust=calculateSceneAdjustments();
+  const adjustedWorkers=Math.min(20,workers+sceneAdjust.workerExtra);
+  const adjustedHours=Math.min(24,hours+sceneAdjust.hourExtra);
+  let price=truckCost+(adjustedWorkers*110000)+heavyCost+disassemblyCost+specialCost+timeCost+confirmedDisassemblyCost+confirmedSpecialCost+ladderCost+sceneAdjust.priceExtra;
   price=Math.ceil(price/10000)*10000;
 
   lastEngineResult={
-    totalTon,truck1,truck5,workers,hours,price,
+    totalTon,truck1,truck5,workers:adjustedWorkers,hours:adjustedHours,price,
     heavyCount,disassemblyCount,specialCount,truckCapacity,ladderCost,confirmedDisassemblyCost,confirmedSpecialCost
   };
   return lastEngineResult;
@@ -7335,6 +7360,47 @@ function mergeAiBatchItems(batchResults){
 }
 
 
+
+let lastAiSceneAnalysis={rooms:[],clutter:'분석 전',moveType:'분석 전',difficulty:'분석 전',notes:''};
+
+function updateAiSceneSummary(data){
+  const rooms=Array.isArray(data?.rooms)?data.rooms:[];
+  lastAiSceneAnalysis={
+    rooms,
+    clutter:data?.clutter||'보통',
+    moveType:data?.moveType||'포장이사',
+    difficulty:data?.difficulty||'보통',
+    notes:data?.notes||''
+  };
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+  set('aiRoomResult',rooms.length?rooms.join(' · '):'공간 미확인');
+  set('aiClutterResult',lastAiSceneAnalysis.clutter);
+  set('aiMoveTypeResult',lastAiSceneAnalysis.moveType);
+  set('aiDifficultyResult',lastAiSceneAnalysis.difficulty);
+}
+
+function updateAiConfidenceSummary(items){
+  const el=document.getElementById('aiConfidenceSummary');
+  if(!el)return;
+  if(!items?.length){el.textContent='인식된 품목이 없습니다.';return;}
+  const sorted=[...items].sort((a,b)=>(b.confidence||0)-(a.confidence||0));
+  el.innerHTML=`품목별 AI 신뢰도<div class="ai-confidence-list">${
+    sorted.slice(0,12).map(i=>`<span class="ai-confidence-badge">${Utils.escapeHtml(i.name)} ${Math.round((i.confidence||0)*100)}%</span>`).join('')
+  }</div>`;
+}
+
+function calculateSceneAdjustments(){
+  let workerExtra=0,hourExtra=0,priceExtra=0;
+  if(lastAiSceneAnalysis.clutter==='많음'){workerExtra+=1;hourExtra+=2;priceExtra+=150000;}
+  else if(lastAiSceneAnalysis.clutter==='보통'){hourExtra+=1;priceExtra+=70000;}
+  if(lastAiSceneAnalysis.difficulty==='높음'){workerExtra+=1;hourExtra+=2;priceExtra+=180000;}
+  else if(lastAiSceneAnalysis.difficulty==='매우 높음'){workerExtra+=2;hourExtra+=3;priceExtra+=300000;}
+  if(lastAiSceneAnalysis.moveType==='포장이사')priceExtra+=120000;
+  else if(lastAiSceneAnalysis.moveType==='반포장이사')priceExtra+=60000;
+  return {workerExtra,hourExtra,priceExtra};
+}
+
+
 function setFullAutoStatus(message,type=''){
   const el=document.getElementById('fullAutoStatus');
   if(!el)return;
@@ -7446,6 +7512,7 @@ async function runAutoAIAnalysis(){
 
     const allBatchItems=[];
     const summaries=[];
+    const sceneResults=[];
 
     for(let index=0;index<batches.length;index++){
       setAiBatchProgress(
@@ -7469,6 +7536,7 @@ async function runAutoAIAnalysis(){
       const items=normalizeAiItems(aiData.items);
       allBatchItems.push(items);
       if(aiData.summary)summaries.push(aiData.summary);
+      if(aiData.scene)sceneResults.push(aiData.scene);
 
       setAiBatchProgress(
         index+1,
@@ -7478,8 +7546,23 @@ async function runAutoAIAnalysis(){
     }
 
     const merged=mergeAiBatchItems(allBatchItems);
+    
+    const roomSet=new Set();
+    const clutterRank={'적음':1,'보통':2,'많음':3};
+    const difficultyRank={'낮음':1,'보통':2,'높음':3,'매우 높음':4};
+    let clutter='적음',difficulty='낮음',moveType='일반이사';
+    sceneResults.forEach(scene=>{
+      (scene?.rooms||[]).forEach(r=>roomSet.add(r));
+      if((clutterRank[scene?.clutter]||0)>(clutterRank[clutter]||0))clutter=scene.clutter;
+      if((difficultyRank[scene?.difficulty]||0)>(difficultyRank[difficulty]||0))difficulty=scene.difficulty;
+      if(scene?.moveType==='포장이사')moveType='포장이사';
+      else if(scene?.moveType==='반포장이사'&&moveType!=='포장이사')moveType='반포장이사';
+    });
+    updateAiSceneSummary({rooms:[...roomSet],clutter,moveType,difficulty});
+
     const confident=merged.filter(item=>(item.confidence??0)>=0.55);
     const uncertain=merged.filter(item=>(item.confidence??0)<0.55);
+    updateAiConfidenceSummary(merged);
 
     if(!confident.length && !uncertain.length){
       throw new Error('품목을 찾지 못했습니다.');

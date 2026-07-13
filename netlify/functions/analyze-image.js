@@ -97,8 +97,15 @@ ${ALLOWED_ITEMS.join(', ')}
 13. 피아노, 금고, 돌침대, 양문형냉장고, 대형 TV를 일반 품목과 구분하세요.
 14. 확실하지 않은 크기는 일반 품목명으로 반환하세요.
 
+추가로 사진의 공간과 작업 난이도를 판단하세요.
+- rooms: 거실, 안방, 작은방, 주방, 베란다, 욕실, 사무실 중 보이는 공간
+- clutter: 적음, 보통, 많음 중 하나
+- moveType: 일반이사, 반포장이사, 포장이사 중 추천
+- difficulty: 낮음, 보통, 높음, 매우 높음 중 하나
+- notes: 판단 이유를 짧게 한국어로 작성
+
 반환 형식:
-{"items":[{"name":"냉장고","qty":1,"confidence":0.95},{"name":"소파","qty":1,"confidence":0.9}],"summary":"짧은 한국어 설명"}`;
+{"items":[{"name":"냉장고","qty":1,"confidence":0.95}],"summary":"짧은 설명","scene":{"rooms":["거실"],"clutter":"보통","moveType":"포장이사","difficulty":"보통","notes":"짧은 이유"}}`;
 
   const body = {
     contents: [
@@ -134,8 +141,19 @@ ${ALLOWED_ITEMS.join(', ')}
             },
           },
           summary: { type: 'STRING' },
+          scene: {
+            type: 'OBJECT',
+            properties: {
+              rooms: { type: 'ARRAY', items: { type: 'STRING' } },
+              clutter: { type: 'STRING' },
+              moveType: { type: 'STRING' },
+              difficulty: { type: 'STRING' },
+              notes: { type: 'STRING' },
+            },
+            required: ['rooms','clutter','moveType','difficulty','notes'],
+          },
         },
-        required: ['items'],
+        required: ['items','scene'],
       },
     },
   };
