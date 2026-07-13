@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 V3.9 AI 이사견적</title>
+<title>짐픽 V4.0 AI 이사견적</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1145,6 +1145,27 @@ button:active{transform:scale(0.96);}
   .crm-summary{grid-template-columns:1fr}
 }
 
+
+/* ===== V4.0 사장님 대시보드 ===== */
+.dashboard-modal{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(7,22,38,.72)}
+.dashboard-modal.open{display:flex}
+.dashboard-panel{width:min(920px,96vw);max-height:90vh;overflow:auto;background:#F7FAFC;border-radius:24px;box-shadow:0 28px 80px rgba(0,0,0,.35)}
+.dashboard-panel-head{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 22px;background:#102A43;color:#fff}
+.dashboard-panel-head h2{margin:0;font-size:24px}.dashboard-panel-head p{margin:5px 0 0;font-size:13px;opacity:.78}
+.dashboard-close{width:42px;height:42px;border:0;border-radius:13px;background:rgba(255,255,255,.15);color:#fff;font-size:19px;cursor:pointer}
+.dashboard-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding:20px}
+.dashboard-stat{padding:18px;border-radius:18px;background:#fff;border:1px solid #E3EAF2;box-shadow:0 8px 20px rgba(15,42,67,.06)}
+.dashboard-stat span{display:block;font-size:12px;color:#718096;font-weight:800}.dashboard-stat strong{display:block;margin-top:7px;font-size:22px;color:#102A43}
+.dashboard-section{padding:0 20px 20px}.dashboard-section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.dashboard-section-title h3{margin:0;color:#102A43}.dashboard-recent-list{display:grid;gap:10px}
+.dashboard-recent-item{display:grid;grid-template-columns:1fr auto;gap:12px;padding:14px;border-radius:15px;background:#fff;border:1px solid #E3EAF2}
+.dashboard-recent-item b{color:#102A43}.dashboard-recent-item small{display:block;margin-top:4px;color:#718096}
+.dashboard-recent-amount{font-weight:900;color:#E6532F;white-space:nowrap}
+.dashboard-empty{padding:22px;text-align:center;border-radius:15px;background:#EEF3F8;color:#718096}
+.dashboard-note{margin:0 20px 20px;padding:13px 15px;border-radius:14px;background:#FFF4E8;color:#8A4B16;font-size:13px;line-height:1.6;font-weight:700}
+@media(max-width:760px){.dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.dashboard-grid{grid-template-columns:1fr}.dashboard-panel-head h2{font-size:20px}}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1228,6 +1249,7 @@ button:active{transform:scale(0.96);}
       </div>
       <div class="btn-row" style="margin-bottom:14px;">
         <button type="button" class="btn btn-outline" id="newQuoteBtn" style="font-size:13px;">🆕 새 견적 시작</button>
+        <button type="button" class="btn btn-navy" id="openDashboardBtn" style="font-size:13px;">📊 사장님 대시보드</button>
         <button type="button" class="btn btn-ghost" id="resetAllBtn" style="font-size:13px;color:var(--danger);">🗑️ 전체 초기화</button>
       </div>
       <div class="field">
@@ -1983,7 +2005,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'V3.9-B39';
+const BUILD_VERSION = 'V4.0-B40';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -3463,7 +3485,8 @@ function crmCurrentFormData(){
     kitchenCount: Number(q.kitchenCount) || 0,
     estimatedHours: Number(q.estimatedHours) || 0,
     difficulty: q.difficulty || '보통',
-    smsText: document.getElementById('smsText')?.value || ''
+    smsText: document.getElementById('smsText')?.value || '',
+    profitAnalysis: State.profitAnalysis || null
   };
 }
 
@@ -3578,6 +3601,66 @@ function crmExport(){
   a.download = `짐픽_견적기록_${new Date().toISOString().slice(0,10)}.json`;
   a.click();
   setTimeout(()=>URL.revokeObjectURL(url), 1000);
+}
+
+
+function dashboardSameDate(a,b){
+  return a.getFullYear()===b.getFullYear()
+    && a.getMonth()===b.getMonth()
+    && a.getDate()===b.getDate();
+}
+
+function renderOwnerDashboard(){
+  const records = crmRead();
+  const now = new Date();
+
+  const todayRecords = records.filter(r=>{
+    const d = new Date(r.savedAt);
+    return !isNaN(d) && dashboardSameDate(d, now);
+  });
+
+  const monthRecords = records.filter(r=>{
+    const d = new Date(r.savedAt);
+    return !isNaN(d) && d.getFullYear()===now.getFullYear() && d.getMonth()===now.getMonth();
+  });
+
+  const monthTotal = monthRecords.reduce((s,r)=>s+(Number(r.total)||0),0);
+  const monthProfit = monthRecords.reduce((s,r)=>s+(Number(r.profitAnalysis?.netProfit)||0),0);
+
+  const setText=(id,text)=>{const el=document.getElementById(id);if(el)el.textContent=text;};
+  setText('dashTodayCount',`${todayRecords.length}건`);
+  setText('dashMonthCount',`${monthRecords.length}건`);
+  setText('dashMonthTotal',Utils.won(monthTotal));
+  setText('dashMonthProfit',Utils.won(monthProfit));
+
+  const list=document.getElementById('dashboardRecentList');
+  if(!list)return;
+
+  const recent=records.slice(0,5);
+  if(recent.length===0){
+    list.innerHTML='<div class="dashboard-empty">아직 저장된 견적이 없습니다.</div>';
+    return;
+  }
+
+  list.innerHTML=recent.map(r=>`
+    <div class="dashboard-recent-item">
+      <div>
+        <b>${Utils.escapeHtml(r.customerName||'이름 없음')}</b>
+        <small>${Utils.escapeHtml(r.moveDate||'이사일 미정')} · ${Utils.escapeHtml(r.customerPhone||'연락처 없음')}</small>
+      </div>
+      <div class="dashboard-recent-amount">${Utils.won(Number(r.total)||0)}</div>
+    </div>
+  `).join('');
+}
+
+function openOwnerDashboard(){
+  renderOwnerDashboard();
+  const modal=document.getElementById('dashboardModal');
+  if(modal){modal.classList.add('open');modal.setAttribute('aria-hidden','false');}
+}
+function closeOwnerDashboard(){
+  const modal=document.getElementById('dashboardModal');
+  if(modal){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');}
 }
 
 /* ---------------------- 12. SMS 문구 생성 ---------------------- */
@@ -4320,6 +4403,16 @@ ${msg || '-'}`;
       const ok = await DraftService.restore();
       alert(ok ? '저장된 내용을 불러왔습니다.' : '불러올 저장 내용이 없습니다.');
     });
+    document.getElementById('openDashboardBtn')?.addEventListener('click', openOwnerDashboard);
+    document.getElementById('dashboardClose')?.addEventListener('click', closeOwnerDashboard);
+    document.getElementById('dashboardBackup')?.addEventListener('click', crmExport);
+    document.getElementById('dashboardModal')?.addEventListener('click', (e)=>{
+      if(e.target.id==='dashboardModal') closeOwnerDashboard();
+    });
+    document.addEventListener('keydown',(e)=>{
+      if(e.key==='Escape') closeOwnerDashboard();
+    });
+
     document.getElementById('newQuoteBtn').addEventListener('click', ()=>{
       if(confirm('현재 화면 내용을 지우고 새 견적을 시작할까요?')){
         localStorage.removeItem(CloudService.KEY_DRAFT);
@@ -4834,5 +4927,37 @@ ${msg || '-'}`;
 
 document.addEventListener('DOMContentLoaded', App.init);
 </script>
+
+<div class="dashboard-modal" id="dashboardModal" aria-hidden="true">
+  <div class="dashboard-panel">
+    <div class="dashboard-panel-head">
+      <div>
+        <h2>📊 사장님 대시보드</h2>
+        <p>저장된 고객·견적 기록을 한눈에 확인합니다.</p>
+      </div>
+      <button type="button" class="dashboard-close" id="dashboardClose">✕</button>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="dashboard-stat"><span>오늘 견적</span><strong id="dashTodayCount">0건</strong></div>
+      <div class="dashboard-stat"><span>이번 달 견적</span><strong id="dashMonthCount">0건</strong></div>
+      <div class="dashboard-stat"><span>이번 달 총 견적금액</span><strong id="dashMonthTotal">0원</strong></div>
+      <div class="dashboard-stat"><span>이번 달 예상 순이익</span><strong id="dashMonthProfit">0원</strong></div>
+    </div>
+
+    <div class="dashboard-section">
+      <div class="dashboard-section-title">
+        <h3>최근 견적 5건</h3>
+        <button type="button" class="btn btn-outline" id="dashboardBackup">📥 기록 백업</button>
+      </div>
+      <div id="dashboardRecentList" class="dashboard-recent-list"></div>
+    </div>
+
+    <div class="dashboard-note">
+      현재 기록은 이 컴퓨터의 브라우저에 저장됩니다. 휴대폰·태블릿과 같은 데이터를 사용하려면 다음 단계에서 클라우드 DB 연결이 필요합니다.
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
