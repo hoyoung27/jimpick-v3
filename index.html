@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 V4.7.1 AI 이사견적</title>
+<title>짐픽 V4.8 AI 이사견적</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1462,6 +1462,86 @@ body{
   }
 }
 
+
+/* ===== V4.8 매출·순이익 통계 ===== */
+.sales-wrap{padding:20px}
+.sales-toolbar{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:14px;margin-bottom:14px;
+}
+.sales-toolbar h3{margin:0;color:#102A43}
+.sales-toolbar p{margin:5px 0 0;color:#718096;font-size:12px}
+.sales-export-btn{
+  border:0;border-radius:11px;padding:10px 13px;
+  background:#0B7A53;color:#fff;font-weight:900;cursor:pointer;
+}
+.sales-filter-row{
+  display:flex;align-items:flex-end;gap:10px;margin-bottom:14px;
+}
+.sales-filter-row label{
+  flex:1;font-size:12px;color:#52667A;font-weight:900;
+}
+.sales-filter-row input{
+  display:block;width:100%;margin-top:5px;border:1px solid #D9E2EC;
+  border-radius:10px;padding:10px;font-size:14px;
+}
+.sales-filter-row button{
+  border:0;border-radius:10px;padding:10px 14px;
+  background:#102A43;color:#fff;font-weight:900;cursor:pointer;
+}
+.sales-summary-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+}
+.sales-stat{
+  padding:15px;border-radius:16px;background:#102A43;color:#fff;
+}
+.sales-stat.warning{background:#B06000}
+.sales-stat.positive{background:#0B7A53}
+.sales-stat span{display:block;font-size:11px;opacity:.76;font-weight:800}
+.sales-stat strong{display:block;margin-top:5px;font-size:20px}
+.sales-status-grid{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:8px;margin-top:10px;
+}
+.sales-status-grid div{
+  padding:12px;border-radius:13px;background:#fff;border:1px solid #E3EAF2;
+}
+.sales-status-grid span{display:block;font-size:11px;color:#718096;font-weight:800}
+.sales-status-grid strong{display:block;margin-top:4px;color:#102A43}
+.sales-section{
+  margin-top:16px;padding:15px;border-radius:17px;background:#fff;
+  border:1px solid #E3EAF2;
+}
+.sales-section h3{margin:0 0 12px;color:#102A43;font-size:16px}
+.sales-table-wrap{overflow-x:auto}
+.sales-table{width:100%;border-collapse:collapse;min-width:680px}
+.sales-table th,.sales-table td{
+  border-bottom:1px solid #E7EDF3;padding:10px 8px;text-align:right;font-size:12px;
+}
+.sales-table th:first-child,.sales-table td:first-child{text-align:left}
+.sales-table th{background:#F3F6FA;color:#52667A}
+.sales-detail-list{display:grid;gap:9px}
+.sales-detail-item{
+  display:grid;grid-template-columns:1fr auto;gap:12px;
+  padding:12px;border-radius:13px;background:#F8FAFC;border:1px solid #E3EAF2;
+}
+.sales-detail-item b{color:#102A43}
+.sales-detail-item small{display:block;margin-top:4px;color:#718096}
+.sales-detail-amount{text-align:right;font-weight:900;color:#E6532F}
+.sales-empty{
+  padding:18px;text-align:center;border-radius:13px;background:#EEF3F8;color:#718096;
+}
+@media(max-width:760px){
+  .sales-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sales-status-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:480px){
+  .sales-summary-grid{grid-template-columns:1fr}
+  .sales-toolbar{align-items:flex-start;flex-direction:column}
+  .sales-export-btn{width:100%}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1538,6 +1618,82 @@ body{
           차량·직원 정보는 현재 이 기기의 브라우저에 저장됩니다. 클라우드 동기화는 다음 단계에서 연결합니다.
         </div>
       </div>
+
+    </div>
+
+    <div class="dashboard-tab-panel" id="dashPanelSales">
+      <div class="sales-wrap">
+        <div class="sales-toolbar">
+          <div>
+            <h3>📈 매출·순이익 통계</h3>
+            <p>저장된 고객·견적 기록을 기준으로 계산합니다.</p>
+          </div>
+          <button type="button" class="sales-export-btn" id="salesExportCsv">📥 CSV 다운로드</button>
+        </div>
+
+        <div class="sales-filter-row">
+          <label>
+            기준 월
+            <input type="month" id="salesMonthFilter">
+          </label>
+          <button type="button" id="salesThisMonth">이번 달</button>
+        </div>
+
+        <div class="sales-summary-grid">
+          <div class="sales-stat">
+            <span>총 견적금액</span>
+            <strong id="salesQuoteTotal">0원</strong>
+          </div>
+          <div class="sales-stat">
+            <span>총 입금액</span>
+            <strong id="salesPaidTotal">0원</strong>
+          </div>
+          <div class="sales-stat warning">
+            <span>총 미수금</span>
+            <strong id="salesDueTotal">0원</strong>
+          </div>
+          <div class="sales-stat positive">
+            <span>예상 순이익</span>
+            <strong id="salesProfitTotal">0원</strong>
+          </div>
+        </div>
+
+        <div class="sales-status-grid">
+          <div><span>문의</span><strong id="salesStatusInquiry">0건</strong></div>
+          <div><span>견적중</span><strong id="salesStatusQuote">0건</strong></div>
+          <div><span>계약완료</span><strong id="salesStatusContract">0건</strong></div>
+          <div><span>작업완료</span><strong id="salesStatusComplete">0건</strong></div>
+          <div><span>취소</span><strong id="salesStatusCancel">0건</strong></div>
+        </div>
+
+        <div class="sales-section">
+          <h3>최근 6개월 실적</h3>
+          <div class="sales-table-wrap">
+            <table class="sales-table">
+              <thead>
+                <tr>
+                  <th>월</th>
+                  <th>견적 건수</th>
+                  <th>견적금액</th>
+                  <th>입금액</th>
+                  <th>미수금</th>
+                  <th>예상 순이익</th>
+                </tr>
+              </thead>
+              <tbody id="salesSixMonthBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="sales-section">
+          <h3>선택 월 상세 내역</h3>
+          <div id="salesDetailList" class="sales-detail-list"></div>
+        </div>
+
+        <div class="dashboard-note">
+          매출통계는 고객·견적 기록에 저장된 금액을 기준으로 계산합니다. 정확한 순이익을 보려면 견적확정 화면에서 인건비·차량비·기타비용을 입력한 뒤 견적을 저장하세요.
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -1549,7 +1705,7 @@ body{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build V4.7.1-B47H</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build V4.8-B48</div>
     </div>
   </div>
   <div class="quick-total">
@@ -2355,7 +2511,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'V4.7.1-B47H';
+const BUILD_VERSION = 'V4.8-B48';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -4091,8 +4247,10 @@ function dashboardSwitchTab(name){
   document.getElementById('dashPanelSummary')?.classList.toggle('active',name==='summary');
   document.getElementById('dashPanelCalendar')?.classList.toggle('active',name==='calendar');
   document.getElementById('dashPanelResources')?.classList.toggle('active',name==='resources');
+  document.getElementById('dashPanelSales')?.classList.toggle('active',name==='sales');
   if(name==='calendar') renderCalendar();
   if(name==='resources') renderResources();
+  if(name==='sales') renderSalesDashboard();
 }
 
 
@@ -4742,6 +4900,173 @@ function deleteWorker(id){
   if(!confirm('이 직원을 삭제할까요?'))return;
   resourceWrite(RESOURCE_WORKER_KEY,resourceRead(RESOURCE_WORKER_KEY).filter(x=>x.id!==id));
   renderResources();
+}
+
+
+function salesMonthKey(date){
+  const d = date instanceof Date ? date : new Date(date);
+  if(isNaN(d)) return '';
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+}
+
+function salesRecordMonth(record){
+  if(record.moveDate && /^\d{4}-\d{2}/.test(record.moveDate)){
+    return record.moveDate.slice(0,7);
+  }
+  return salesMonthKey(record.savedAt);
+}
+
+function salesFilteredRecords(monthKey){
+  return crmRead().filter(r=>salesRecordMonth(r)===monthKey);
+}
+
+function salesRecordPaid(record){
+  return Number(record.payment?.paidAmount)||0;
+}
+
+function salesRecordDue(record){
+  return Math.max(0,(Number(record.total)||0)-salesRecordPaid(record));
+}
+
+function salesRecordProfit(record){
+  if(record.profitAnalysis && Number.isFinite(Number(record.profitAnalysis.netProfit))){
+    return Number(record.profitAnalysis.netProfit);
+  }
+  return 0;
+}
+
+function salesMonthSummary(monthKey){
+  const records=salesFilteredRecords(monthKey);
+  return {
+    monthKey,
+    count:records.length,
+    quoteTotal:records.reduce((s,r)=>s+(Number(r.total)||0),0),
+    paidTotal:records.reduce((s,r)=>s+salesRecordPaid(r),0),
+    dueTotal:records.reduce((s,r)=>s+salesRecordDue(r),0),
+    profitTotal:records.reduce((s,r)=>s+salesRecordProfit(r),0),
+    records
+  };
+}
+
+function salesLastMonths(count=6){
+  const result=[];
+  const now=new Date();
+  for(let i=count-1;i>=0;i--){
+    const d=new Date(now.getFullYear(),now.getMonth()-i,1);
+    result.push(salesMonthKey(d));
+  }
+  return result;
+}
+
+function renderSalesDashboard(){
+  const input=document.getElementById('salesMonthFilter');
+  if(!input)return;
+
+  if(!input.value){
+    input.value=salesMonthKey(new Date());
+  }
+
+  const summary=salesMonthSummary(input.value);
+  const set=(id,text)=>{
+    const el=document.getElementById(id);
+    if(el)el.textContent=text;
+  };
+
+  set('salesQuoteTotal',Utils.won(summary.quoteTotal));
+  set('salesPaidTotal',Utils.won(summary.paidTotal));
+  set('salesDueTotal',Utils.won(summary.dueTotal));
+  set('salesProfitTotal',Utils.won(summary.profitTotal));
+
+  const statuses={
+    '문의':0,'견적중':0,'계약완료':0,'작업완료':0,'취소':0
+  };
+
+  summary.records.forEach(r=>{
+    const status=r.customerStatus||'문의';
+    if(statuses[status]!==undefined)statuses[status]++;
+  });
+
+  set('salesStatusInquiry',`${statuses['문의']}건`);
+  set('salesStatusQuote',`${statuses['견적중']}건`);
+  set('salesStatusContract',`${statuses['계약완료']}건`);
+  set('salesStatusComplete',`${statuses['작업완료']}건`);
+  set('salesStatusCancel',`${statuses['취소']}건`);
+
+  const body=document.getElementById('salesSixMonthBody');
+  if(body){
+    body.innerHTML=salesLastMonths(6).map(month=>{
+      const m=salesMonthSummary(month);
+      return `<tr>
+        <td>${month}</td>
+        <td>${m.count}건</td>
+        <td>${Utils.won(m.quoteTotal)}</td>
+        <td>${Utils.won(m.paidTotal)}</td>
+        <td>${Utils.won(m.dueTotal)}</td>
+        <td>${Utils.won(m.profitTotal)}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  const detail=document.getElementById('salesDetailList');
+  if(detail){
+    if(summary.records.length===0){
+      detail.innerHTML='<div class="sales-empty">선택한 달의 저장 기록이 없습니다.</div>';
+    }else{
+      detail.innerHTML=summary.records
+        .slice()
+        .sort((a,b)=>String(a.moveDate||'').localeCompare(String(b.moveDate||'')))
+        .map(r=>`
+          <div class="sales-detail-item">
+            <div>
+              <b>${Utils.escapeHtml(r.customerName||'이름 없음')}</b>
+              <small>${Utils.escapeHtml(r.moveDate||'날짜 미정')} · ${Utils.escapeHtml(r.customerStatus||'문의')} · 입금 ${Utils.won(salesRecordPaid(r))}</small>
+            </div>
+            <div class="sales-detail-amount">
+              ${Utils.won(Number(r.total)||0)}
+              <small>미수 ${Utils.won(salesRecordDue(r))}</small>
+            </div>
+          </div>
+        `).join('');
+    }
+  }
+}
+
+function salesCsvEscape(value){
+  const text=String(value??'');
+  return `"${text.replace(/"/g,'""')}"`;
+}
+
+function exportSalesCsv(){
+  const month=document.getElementById('salesMonthFilter')?.value||salesMonthKey(new Date());
+  const records=salesFilteredRecords(month);
+
+  const rows=[
+    ['고객명','연락처','이사일','고객상태','총견적금액','입금액','미수금','예상순이익','출발지','도착지']
+  ];
+
+  records.forEach(r=>{
+    rows.push([
+      r.customerName||'',
+      r.customerPhone||'',
+      r.moveDate||'',
+      r.customerStatus||'문의',
+      Number(r.total)||0,
+      salesRecordPaid(r),
+      salesRecordDue(r),
+      salesRecordProfit(r),
+      `${r.fromAddress||''} ${r.fromDetail||''}`.trim(),
+      `${r.toAddress||''} ${r.toDetail||''}`.trim()
+    ]);
+  });
+
+  const csv='\uFEFF'+rows.map(row=>row.map(salesCsvEscape).join(',')).join('\r\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=`짐픽_매출통계_${month}.csv`;
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 
 /* ---------------------- 12. SMS 문구 생성 ---------------------- */
@@ -5541,6 +5866,13 @@ ${msg || '-'}`;
     document.getElementById('printDispatchDay')?.addEventListener('click',printDispatchDay);
     document.getElementById('dashboardClose')?.addEventListener('click', closeOwnerDashboard);
     document.getElementById('dashboardBackup')?.addEventListener('click', crmExport);
+    document.getElementById('salesMonthFilter')?.addEventListener('change', renderSalesDashboard);
+    document.getElementById('salesThisMonth')?.addEventListener('click', ()=>{
+      const input=document.getElementById('salesMonthFilter');
+      if(input)input.value=salesMonthKey(new Date());
+      renderSalesDashboard();
+    });
+    document.getElementById('salesExportCsv')?.addEventListener('click', exportSalesCsv);
     document.getElementById('dashboardModal')?.addEventListener('click', (e)=>{
       if(e.target.id==='dashboardModal') closeOwnerDashboard();
     });
@@ -6081,6 +6413,7 @@ document.addEventListener('DOMContentLoaded', App.init);
       <button type="button" class="dashboard-tab active" data-dash-tab="summary">요약</button>
       <button type="button" class="dashboard-tab" data-dash-tab="calendar">일정·배차</button>
       <button type="button" class="dashboard-tab" data-dash-tab="resources">차량·직원</button>
+      <button type="button" class="dashboard-tab" data-dash-tab="sales">매출통계</button>
     </div>
 
     <div class="dashboard-tab-panel active" id="dashPanelSummary">

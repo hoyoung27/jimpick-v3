@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 V4.7.1 AI 이사견적",
+  "name": "짐픽 V4.8 AI 이사견적",
   "short_name": "짐픽",
-  "description": "클릭 기능 복구 긴급수정본",
+  "description": "견적·고객·배차·매출통계 통합 프로그램",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

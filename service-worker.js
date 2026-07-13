@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jimpick-v4-7-1-b47h-clickfix';
+const CACHE_NAME = 'jimpick-v4-8-b48-sales';
 
 const APP_FILES = [
   './',
