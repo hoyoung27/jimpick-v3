@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 V4.0 AI 이사견적</title>
+<title>짐픽 V4.1 AI 이사견적</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1166,6 +1166,91 @@ button:active{transform:scale(0.96);}
 @media(max-width:760px){.dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:480px){.dashboard-grid{grid-template-columns:1fr}.dashboard-panel-head h2{font-size:20px}}
 
+
+/* ===== V4.1 캘린더·배차관리 ===== */
+.dashboard-tabs{
+  display:flex;gap:8px;padding:14px 20px 0;background:#F7FAFC;
+}
+.dashboard-tab{
+  flex:1;border:0;border-radius:12px;padding:11px 12px;
+  background:#E7EDF4;color:#52667A;font-weight:900;cursor:pointer;
+}
+.dashboard-tab.active{background:#102A43;color:#fff}
+.dashboard-tab-panel{display:none}
+.dashboard-tab-panel.active{display:block}
+
+.calendar-toolbar{
+  display:flex;align-items:center;justify-content:center;gap:16px;
+  padding:18px 20px 12px;
+}
+.calendar-toolbar button{
+  width:40px;height:40px;border:0;border-radius:12px;
+  background:#102A43;color:#fff;font-size:18px;cursor:pointer;
+}
+.calendar-toolbar h3{margin:0;min-width:160px;text-align:center;color:#102A43}
+.calendar-week,.calendar-grid{
+  display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
+  gap:8px;padding:0 20px;
+}
+.calendar-week span{
+  text-align:center;font-size:12px;font-weight:900;color:#718096;
+}
+.calendar-grid{padding-top:8px}
+.calendar-day{
+  min-height:82px;border:1px solid #E3EAF2;border-radius:14px;
+  background:#fff;padding:8px;cursor:pointer;
+  display:flex;flex-direction:column;gap:5px;
+}
+.calendar-day:hover{border-color:#102A43}
+.calendar-day.empty{background:transparent;border-color:transparent;cursor:default}
+.calendar-day.selected{outline:3px solid #FF6B35}
+.calendar-day.today{background:#FFF7F2}
+.calendar-date-num{font-size:13px;font-weight:900;color:#102A43}
+.calendar-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:22px;height:22px;padding:0 6px;border-radius:999px;
+  background:#102A43;color:#fff;font-size:11px;font-weight:900;
+}
+.calendar-mini{
+  font-size:10px;line-height:1.35;color:#52667A;overflow:hidden;
+  white-space:nowrap;text-overflow:ellipsis;
+}
+.dispatch-panel{padding:20px}
+.dispatch-panel h3{margin:0;color:#102A43}
+.dispatch-date{margin-top:6px;color:#718096;font-size:13px}
+.dispatch-list{display:grid;gap:12px;margin-top:12px}
+.dispatch-empty{
+  padding:18px;text-align:center;border-radius:14px;background:#EEF3F8;color:#718096;
+}
+.dispatch-item{
+  border:1px solid #E3EAF2;border-radius:16px;background:#fff;padding:14px;
+}
+.dispatch-item-head{
+  display:flex;justify-content:space-between;gap:12px;align-items:flex-start;
+}
+.dispatch-item-head b{color:#102A43}
+.dispatch-item-head strong{color:#E6532F}
+.dispatch-form{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;margin-top:12px;
+}
+.dispatch-field label{
+  display:block;font-size:11px;color:#718096;font-weight:800;margin-bottom:5px;
+}
+.dispatch-field input,.dispatch-field select{
+  width:100%;border:1px solid #D9E2EC;border-radius:10px;
+  padding:9px 10px;font-size:13px;
+}
+.dispatch-save{
+  margin-top:10px;width:100%;border:0;border-radius:11px;
+  padding:10px;background:#102A43;color:#fff;font-weight:900;cursor:pointer;
+}
+@media(max-width:650px){
+  .calendar-day{min-height:68px;padding:6px}
+  .calendar-mini{display:none}
+  .dispatch-form{grid-template-columns:1fr}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2005,7 +2090,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'V4.0-B40';
+const BUILD_VERSION = 'V4.1-B41';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -3486,7 +3571,13 @@ function crmCurrentFormData(){
     estimatedHours: Number(q.estimatedHours) || 0,
     difficulty: q.difficulty || '보통',
     smsText: document.getElementById('smsText')?.value || '',
-    profitAnalysis: State.profitAnalysis || null
+    profitAnalysis: State.profitAnalysis || null,
+    dispatch: {
+      truckCount: 0,
+      driverName: '',
+      workerNames: '',
+      status: '미배정'
+    }
   };
 }
 
@@ -3655,12 +3746,152 @@ function renderOwnerDashboard(){
 
 function openOwnerDashboard(){
   renderOwnerDashboard();
+  calendarViewDate = new Date();
   const modal=document.getElementById('dashboardModal');
   if(modal){modal.classList.add('open');modal.setAttribute('aria-hidden','false');}
 }
 function closeOwnerDashboard(){
   const modal=document.getElementById('dashboardModal');
   if(modal){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');}
+}
+
+
+let calendarViewDate = new Date();
+let calendarSelectedDate = '';
+
+function ymd(date){
+  const y=date.getFullYear();
+  const m=String(date.getMonth()+1).padStart(2,'0');
+  const d=String(date.getDate()).padStart(2,'0');
+  return `${y}-${m}-${d}`;
+}
+
+function dashboardSwitchTab(name){
+  document.querySelectorAll('.dashboard-tab').forEach(btn=>{
+    btn.classList.toggle('active',btn.dataset.dashTab===name);
+  });
+  document.getElementById('dashPanelSummary')?.classList.toggle('active',name==='summary');
+  document.getElementById('dashPanelCalendar')?.classList.toggle('active',name==='calendar');
+  if(name==='calendar') renderCalendar();
+}
+
+function renderCalendar(){
+  const grid=document.getElementById('calendarGrid');
+  const title=document.getElementById('calendarTitle');
+  if(!grid||!title)return;
+
+  const year=calendarViewDate.getFullYear();
+  const month=calendarViewDate.getMonth();
+  title.textContent=`${year}년 ${month+1}월`;
+
+  const firstDay=new Date(year,month,1);
+  const lastDay=new Date(year,month+1,0);
+  const records=crmRead();
+
+  const cells=[];
+  for(let i=0;i<firstDay.getDay();i++){
+    cells.push('<div class="calendar-day empty"></div>');
+  }
+
+  const todayKey=ymd(new Date());
+
+  for(let day=1;day<=lastDay.getDate();day++){
+    const date=new Date(year,month,day);
+    const key=ymd(date);
+    const dayRecords=records.filter(r=>r.moveDate===key);
+    const names=dayRecords.slice(0,2).map(r=>Utils.escapeHtml(r.customerName||'이름없음')).join(', ');
+
+    cells.push(`
+      <button type="button" class="calendar-day ${key===todayKey?'today':''} ${key===calendarSelectedDate?'selected':''}" data-calendar-date="${key}">
+        <span class="calendar-date-num">${day}</span>
+        ${dayRecords.length?`<span class="calendar-badge">${dayRecords.length}건</span>`:''}
+        ${names?`<span class="calendar-mini">${names}</span>`:''}
+      </button>
+    `);
+  }
+
+  grid.innerHTML=cells.join('');
+  renderDispatchList(calendarSelectedDate);
+}
+
+function renderDispatchList(dateKey){
+  const dateEl=document.getElementById('dispatchSelectedDate');
+  const list=document.getElementById('dispatchList');
+  if(!list)return;
+
+  if(!dateKey){
+    if(dateEl)dateEl.textContent='날짜를 선택하세요.';
+    list.innerHTML='<div class="dispatch-empty">캘린더에서 날짜를 눌러주세요.</div>';
+    return;
+  }
+
+  if(dateEl)dateEl.textContent=`${dateKey} 일정`;
+  const records=crmRead().filter(r=>r.moveDate===dateKey);
+
+  if(records.length===0){
+    list.innerHTML='<div class="dispatch-empty">이 날짜에 저장된 견적이 없습니다.</div>';
+    return;
+  }
+
+  list.innerHTML=records.map(r=>{
+    const dispatch=r.dispatch||{truckCount:0,driverName:'',workerNames:'',status:'미배정'};
+    return `
+      <div class="dispatch-item">
+        <div class="dispatch-item-head">
+          <div>
+            <b>${Utils.escapeHtml(r.customerName||'이름 없음')}</b>
+            <div class="crm-item-date">${Utils.escapeHtml(r.moveStartTime||'시간 미정')} · ${Utils.escapeHtml(r.customerPhone||'')}</div>
+          </div>
+          <strong>${Utils.won(Number(r.total)||0)}</strong>
+        </div>
+
+        <div class="dispatch-form">
+          <div class="dispatch-field">
+            <label>1톤 차량 대수</label>
+            <input type="number" min="0" max="20" value="${Number(dispatch.truckCount)||0}" data-dispatch-truck="${r.id}">
+          </div>
+          <div class="dispatch-field">
+            <label>기사 이름</label>
+            <input value="${Utils.escapeHtml(dispatch.driverName||'')}" data-dispatch-driver="${r.id}" placeholder="예: 김기사">
+          </div>
+          <div class="dispatch-field">
+            <label>작업자 이름</label>
+            <input value="${Utils.escapeHtml(dispatch.workerNames||'')}" data-dispatch-workers="${r.id}" placeholder="예: 홍길동, 박철수">
+          </div>
+          <div class="dispatch-field">
+            <label>배차 상태</label>
+            <select data-dispatch-status="${r.id}">
+              <option ${dispatch.status==='미배정'?'selected':''}>미배정</option>
+              <option ${dispatch.status==='배정완료'?'selected':''}>배정완료</option>
+            </select>
+          </div>
+        </div>
+        <button type="button" class="dispatch-save" data-dispatch-save="${r.id}">배차정보 저장</button>
+      </div>
+    `;
+  }).join('');
+}
+
+function saveDispatchRecord(id){
+  const records=crmRead();
+  const index=records.findIndex(r=>r.id===id);
+  if(index<0)return;
+
+  const truck=document.querySelector(`[data-dispatch-truck="${id}"]`);
+  const driver=document.querySelector(`[data-dispatch-driver="${id}"]`);
+  const workers=document.querySelector(`[data-dispatch-workers="${id}"]`);
+  const status=document.querySelector(`[data-dispatch-status="${id}"]`);
+
+  records[index].dispatch={
+    truckCount:Number(truck?.value)||0,
+    driverName:driver?.value?.trim()||'',
+    workerNames:workers?.value?.trim()||'',
+    status:status?.value||'미배정'
+  };
+
+  crmWrite(records);
+  renderDispatchList(calendarSelectedDate);
+  alert('배차정보를 저장했습니다.');
 }
 
 /* ---------------------- 12. SMS 문구 생성 ---------------------- */
@@ -4404,6 +4635,27 @@ ${msg || '-'}`;
       alert(ok ? '저장된 내용을 불러왔습니다.' : '불러올 저장 내용이 없습니다.');
     });
     document.getElementById('openDashboardBtn')?.addEventListener('click', openOwnerDashboard);
+    document.querySelectorAll('.dashboard-tab').forEach(btn=>{
+      btn.addEventListener('click',()=>dashboardSwitchTab(btn.dataset.dashTab));
+    });
+    document.getElementById('calendarPrev')?.addEventListener('click',()=>{
+      calendarViewDate=new Date(calendarViewDate.getFullYear(),calendarViewDate.getMonth()-1,1);
+      renderCalendar();
+    });
+    document.getElementById('calendarNext')?.addEventListener('click',()=>{
+      calendarViewDate=new Date(calendarViewDate.getFullYear(),calendarViewDate.getMonth()+1,1);
+      renderCalendar();
+    });
+    document.getElementById('calendarGrid')?.addEventListener('click',(e)=>{
+      const day=e.target.closest('[data-calendar-date]');
+      if(!day)return;
+      calendarSelectedDate=day.dataset.calendarDate;
+      renderCalendar();
+    });
+    document.getElementById('dispatchList')?.addEventListener('click',(e)=>{
+      const btn=e.target.closest('[data-dispatch-save]');
+      if(btn)saveDispatchRecord(btn.dataset.dispatchSave);
+    });
     document.getElementById('dashboardClose')?.addEventListener('click', closeOwnerDashboard);
     document.getElementById('dashboardBackup')?.addEventListener('click', crmExport);
     document.getElementById('dashboardModal')?.addEventListener('click', (e)=>{
@@ -4933,11 +5185,17 @@ document.addEventListener('DOMContentLoaded', App.init);
     <div class="dashboard-panel-head">
       <div>
         <h2>📊 사장님 대시보드</h2>
-        <p>저장된 고객·견적 기록을 한눈에 확인합니다.</p>
+        <p>견적, 일정, 배차정보를 한눈에 확인합니다.</p>
       </div>
       <button type="button" class="dashboard-close" id="dashboardClose">✕</button>
     </div>
 
+    <div class="dashboard-tabs">
+      <button type="button" class="dashboard-tab active" data-dash-tab="summary">요약</button>
+      <button type="button" class="dashboard-tab" data-dash-tab="calendar">일정·배차</button>
+    </div>
+
+    <div class="dashboard-tab-panel active" id="dashPanelSummary">
     <div class="dashboard-grid">
       <div class="dashboard-stat"><span>오늘 견적</span><strong id="dashTodayCount">0건</strong></div>
       <div class="dashboard-stat"><span>이번 달 견적</span><strong id="dashMonthCount">0건</strong></div>
@@ -4955,6 +5213,26 @@ document.addEventListener('DOMContentLoaded', App.init);
 
     <div class="dashboard-note">
       현재 기록은 이 컴퓨터의 브라우저에 저장됩니다. 휴대폰·태블릿과 같은 데이터를 사용하려면 다음 단계에서 클라우드 DB 연결이 필요합니다.
+    </div>
+    </div>
+
+    <div class="dashboard-tab-panel" id="dashPanelCalendar">
+      <div class="calendar-toolbar">
+        <button type="button" id="calendarPrev">◀</button>
+        <h3 id="calendarTitle">-</h3>
+        <button type="button" id="calendarNext">▶</button>
+      </div>
+
+      <div class="calendar-week">
+        <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+      </div>
+      <div class="calendar-grid" id="calendarGrid"></div>
+
+      <div class="dispatch-panel">
+        <h3>🚚 선택 날짜 일정·배차</h3>
+        <div class="dispatch-date" id="dispatchSelectedDate">날짜를 선택하세요.</div>
+        <div id="dispatchList" class="dispatch-list"></div>
+      </div>
     </div>
   </div>
 </div>
