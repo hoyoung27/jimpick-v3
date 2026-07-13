@@ -1,4 +1,4 @@
-const CACHE_NAME='jimpick-pro-2-9-subscription-renewal';
+const CACHE_NAME='jimpick-pro-3-0-launch-ready';
 const FILES=['./','./index.html','./manifest.json','./icon.svg'];
 self.addEventListener('install',e=>{
   e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(FILES)));
@@ -19,4 +19,10 @@ self.addEventListener('fetch',e=>{
       return r;
     }).catch(()=>caches.match(e.request).then(r=>r||caches.match('./index.html')))
   );
+});
+
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });

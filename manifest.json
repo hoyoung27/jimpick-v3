@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 2.9",
+  "name": "짐픽 PRO 3.0",
   "short_name": "짐픽 PRO",
-  "description": "월 22,000원 자동갱신·결제실패 처리·구독해지 기능을 적용한 AI 이사견적 앱",
+  "description": "설치·자동업데이트·개인정보처리방침·이용약관·출시점검 기능을 갖춘 AI 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

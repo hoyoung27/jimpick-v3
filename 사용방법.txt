@@ -1,32 +1,32 @@
-짐픽 PRO 2.9 - 구독 자동갱신·해지
+짐픽 PRO 3.0 - 출시 준비판
 
 이번 핵심 작업
-- 매월 22,000원 자동결제 서버 함수
-- 다음 결제일 기준 자동결제 대상 확인
-- 결제 성공 시 다음 결제일 1개월 연장
-- 결제 실패 시 past_due 상태로 변경
-- 사용자 직접 구독 해지
-- 해지 후 다음 자동결제 중단
-- 최근 결제일과 구독상태 표시
-- 결제 성공·실패 기록 저장
+- 앱 설치 버튼
+- 새 버전 자동 감지
+- 사용자 업데이트 안내
+- 개인정보처리방침 초안
+- 이용약관 초안
+- 출시 전 점검 목록
+- 오류 진단정보 복사
+- 운영자·사업자 정보 입력 자리
 
-반드시 할 일
-1. Supabase SQL Editor에서 supabase/setup.sql 다시 실행
-2. Netlify 환경변수 확인
-   - TOSS_CLIENT_KEY
-   - TOSS_SECRET_KEY
-   - SUPABASE_URL
-   - SUPABASE_ANON_KEY
-   - SUPABASE_SERVICE_ROLE_KEY
-   - GEMINI_API_KEY
-   - BILLING_CRON_SECRET
-3. 자동결제설정.txt 확인
-4. GitHub에 전체 파일과 폴더 업로드
-5. Netlify에서 캐시 없이 재배포
+사용법
+1. 로그인 후 상단 '출시점검' 클릭
+2. 앱 설치 시험
+3. 점검 목록 확인
+4. 개인정보처리방침과 이용약관 확인
+5. 오류가 나면 '오류정보 복사' 후 전달
 
 중요
-처음에는 반드시 토스페이먼츠 테스트 키로 시험하세요.
-실제 결제 전에는 토스페이먼츠 자동결제 가맹점 승인이 필요합니다.
+개인정보처리방침과 이용약관은 현재 초안입니다.
+실제 출시 전 운영자 정보와 환불규정을 넣고 법률 검토가 필요합니다.
+
+업로드
+1. 압축 풀기
+2. GitHub에 전체 파일과 netlify, supabase 폴더 업로드
+3. Commit changes
+4. Netlify에서 Deploy project without cache
+5. Ctrl + Shift + R
 
 정상 표시
-build JIMPICK-PRO-2.9
+build JIMPICK-PRO-3.0

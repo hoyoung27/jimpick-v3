@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 2.9</title>
+<title>짐픽 PRO 3.0</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 2.9 최소판매형 ===== */
+/* ===== 짐픽 PRO 3.0 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -2290,6 +2290,61 @@ body{font-size:18px}
   font-size:16px;font-weight:900;cursor:pointer;
 }
 
+
+/* ===== PRO 3.0 출시 준비 ===== */
+.update-banner{
+  position:fixed;left:50%;bottom:18px;z-index:26000;
+  transform:translateX(-50%);display:flex;align-items:center;gap:12px;
+  padding:13px 15px;border-radius:15px;background:#102A43;color:#fff;
+  box-shadow:0 12px 35px rgba(0,0,0,.25);font-weight:900;
+}
+.update-banner button{
+  min-height:40px;border:0;border-radius:10px;padding:0 14px;
+  background:#FF6B35;color:#fff;font-weight:900;cursor:pointer;
+}
+.launch-modal,.policy-modal{
+  position:fixed;inset:0;z-index:25000;
+  align-items:center;justify-content:center;padding:18px;
+  background:rgba(8,24,40,.75);
+}
+.launch-card,.policy-card{
+  width:min(720px,100%);max-height:88vh;overflow:auto;
+  padding:22px;border-radius:24px;background:#fff;
+}
+.launch-head,.policy-head{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+}
+.launch-head h2,.policy-head h2{margin:0;color:#102A43;font-size:26px}
+.launch-head p{margin:4px 0 0;color:#68798A}
+.launch-head button,.policy-head button{
+  width:44px;height:44px;border:0;border-radius:12px;
+  background:#E8EEF5;color:#102A43;font-size:20px;cursor:pointer;
+}
+.launch-actions,.launch-links{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;
+}
+.launch-actions button,.launch-links button{
+  min-height:56px;border:0;border-radius:14px;font-size:16px;font-weight:900;cursor:pointer;
+}
+.launch-actions button:first-child{background:#FF6B35;color:#fff}
+.launch-actions button:last-child{background:#102A43;color:#fff}
+.launch-links button{background:#E8EEF5;color:#102A43}
+.launch-checklist{
+  display:grid;gap:10px;margin-top:16px;padding:15px;border-radius:15px;background:#F7F9FC;
+}
+.launch-checklist label{
+  display:flex;align-items:center;gap:10px;font-size:16px;font-weight:800;color:#102A43;
+}
+.launch-checklist input{width:24px;height:24px}
+.business-info-box{
+  margin-top:16px;padding:15px;border-radius:15px;background:#FFF8E8;color:#6D4910;
+}
+.business-info-box p{margin:5px 0}
+.policy-body{margin-top:14px;line-height:1.8;color:#334E68;white-space:pre-wrap}
+@media(max-width:640px){
+  .launch-actions,.launch-links{grid-template-columns:1fr}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2560,10 +2615,10 @@ body{font-size:18px}
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-2.9</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-3.0</div>
     </div>
   </div>
-  <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
+  <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><button type="button" id="launchMenuBtn">출시점검</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
     <div class="amt" id="topTotal">0원</div>
     <div class="lbl">예상 견적금액</div>
   </div>
@@ -3418,7 +3473,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-2.9';
+const BUILD_VERSION = 'JIMPICK-PRO-3.0';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -6958,6 +7013,151 @@ async function cancelMonthlySubscription(){
   }
 }
 
+
+let deferredInstallPrompt=null;
+
+window.addEventListener('beforeinstallprompt',(event)=>{
+  event.preventDefault();
+  deferredInstallPrompt=event;
+  const btn=document.getElementById('installAppBtn');
+  if(btn)btn.disabled=false;
+});
+
+async function installJimpickApp(){
+  if(!deferredInstallPrompt){
+    alert('이 기기에서는 브라우저 메뉴의 “홈 화면에 추가”를 이용해주세요.');
+    return;
+  }
+  deferredInstallPrompt.prompt();
+  await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt=null;
+}
+
+function openLaunchModal(){
+  document.getElementById('launchModal').style.display='flex';
+}
+function closeLaunchModal(){
+  document.getElementById('launchModal').style.display='none';
+}
+function closePolicyModal(){
+  document.getElementById('policyModal').style.display='none';
+}
+
+const PRIVACY_TEXT=`짐픽 개인정보처리방침(초안)
+
+1. 수집 항목
+- 회원가입 정보: 대표자명, 업체명, 이메일, 휴대전화번호
+- 견적 정보: 고객명, 고객 연락처, 이사일, 출발지, 도착지, 견적 내용
+- 결제 정보: 결제 상태와 결제 식별정보
+- 사진: AI 견적을 위해 사용자가 촬영하거나 선택한 사진
+
+2. 이용 목적
+- 회원 로그인과 업체별 서비스 제공
+- AI 사진 분석과 이사견적 계산
+- 고객 견적 저장 및 발송
+- 구독 결제와 고객 지원
+
+3. 보관과 삭제
+- 회원 탈퇴 또는 이용 목적 달성 시 관계 법령에 따라 삭제합니다.
+- 카드번호는 짐픽이 직접 저장하지 않습니다.
+
+4. 외부 서비스
+- Supabase: 회원과 견적자료 저장
+- Gemini API: 사진 AI 분석
+- 토스페이먼츠: 카드 등록과 결제 처리
+
+정식 출시 전 운영자 정보, 보관기간, 위탁사 정보와 법률 검토가 필요합니다.`;
+
+const TERMS_TEXT=`짐픽 이용약관(초안)
+
+1. 짐픽은 이사업체의 견적 업무를 돕는 서비스입니다.
+2. AI 견적은 사진과 입력정보를 바탕으로 한 추천값이며, 실제 현장 상황에 따라 달라질 수 있습니다.
+3. 최종 견적과 계약 책임은 서비스를 사용하는 이사업체에 있습니다.
+4. 월 구독료는 부가세 포함 22,000원이며, 해지 전까지 자동결제될 수 있습니다.
+5. 이용자는 고객 개인정보를 적법하게 수집하고 사용해야 합니다.
+6. 불법적인 사용, 계정 공유, 시스템 공격은 금지됩니다.
+7. 서비스 장애나 AI 오인식이 발생할 수 있으므로 최종 확인 후 사용해야 합니다.
+
+정식 출시 전 환불규정, 책임범위, 분쟁처리, 운영자 정보를 확정하고 법률 검토가 필요합니다.`;
+
+function openPolicy(type){
+  const title=document.getElementById('policyTitle');
+  const body=document.getElementById('policyBody');
+  if(type==='privacy'){
+    title.textContent='개인정보처리방침';
+    body.textContent=PRIVACY_TEXT;
+  }else{
+    title.textContent='이용약관';
+    body.textContent=TERMS_TEXT;
+  }
+  document.getElementById('policyModal').style.display='flex';
+}
+
+function saveLaunchChecks(){
+  const checks={};
+  document.querySelectorAll('[data-launch-check]').forEach(input=>{
+    checks[input.dataset.launchCheck]=input.checked;
+  });
+  localStorage.setItem('jimpick_launch_checks',JSON.stringify(checks));
+}
+
+function loadLaunchChecks(){
+  let checks={};
+  try{
+    checks=JSON.parse(localStorage.getItem('jimpick_launch_checks')||'{}');
+  }catch(e){}
+  document.querySelectorAll('[data-launch-check]').forEach(input=>{
+    input.checked=Boolean(checks[input.dataset.launchCheck]);
+  });
+}
+
+async function copyDiagnostics(){
+  const profile=currentSessionUser();
+  const diagnostics={
+    build:typeof BUILD_VERSION!=='undefined'?BUILD_VERSION:'unknown',
+    url:location.href,
+    userAgent:navigator.userAgent,
+    online:navigator.onLine,
+    cloudAuthReady,
+    localPreviewMode,
+    subscriptionStatus:profile?.subscription_status||profile?.subscriptionStatus||'unknown',
+    photoCount:State?.media?.length||State?.photos?.length||0,
+    capturedAt:new Date().toISOString()
+  };
+  const text=JSON.stringify(diagnostics,null,2);
+  try{
+    await navigator.clipboard.writeText(text);
+    alert('오류 진단정보가 복사되었습니다.');
+  }catch{
+    prompt('아래 내용을 복사해주세요.',text);
+  }
+}
+
+function setupServiceWorkerUpdate(){
+  if(!('serviceWorker' in navigator))return;
+  navigator.serviceWorker.getRegistration().then(reg=>{
+    if(!reg)return;
+    reg.addEventListener('updatefound',()=>{
+      const worker=reg.installing;
+      if(!worker)return;
+      worker.addEventListener('statechange',()=>{
+        if(worker.state==='installed'&&navigator.serviceWorker.controller){
+          const banner=document.getElementById('updateBanner');
+          if(banner)banner.style.display='flex';
+        }
+      });
+    });
+    setInterval(()=>reg.update(),30*60*1000);
+  });
+}
+
+async function applyAppUpdate(){
+  const reg=await navigator.serviceWorker.getRegistration();
+  if(reg?.waiting)reg.waiting.postMessage({type:'SKIP_WAITING'});
+  location.reload();
+}
+
+
 function updateBillingInfo(){
   const user=currentSessionUser();
   const status=document.getElementById('billingCurrentStatus');
@@ -8539,6 +8739,18 @@ ${msg || '-'}`;
     document.getElementById('completeSignupBtn')?.addEventListener('click',authCompleteSignup);
     document.getElementById('forgotPasswordBtn')?.addEventListener('click',authForgotPassword);
     document.getElementById('logoutBtn')?.addEventListener('click',authLogout);
+    document.getElementById('launchMenuBtn')?.addEventListener('click',()=>{loadLaunchChecks();openLaunchModal();});
+    document.getElementById('closeLaunchModalBtn')?.addEventListener('click',closeLaunchModal);
+    document.getElementById('launchModal')?.addEventListener('click',(e)=>{if(e.target.id==='launchModal')closeLaunchModal();});
+    document.getElementById('installAppBtn')?.addEventListener('click',installJimpickApp);
+    document.getElementById('copyDiagnosticsBtn')?.addEventListener('click',copyDiagnostics);
+    document.getElementById('openPrivacyBtn')?.addEventListener('click',()=>openPolicy('privacy'));
+    document.getElementById('openTermsBtn')?.addEventListener('click',()=>openPolicy('terms'));
+    document.getElementById('closePolicyModalBtn')?.addEventListener('click',closePolicyModal);
+    document.getElementById('policyModal')?.addEventListener('click',(e)=>{if(e.target.id==='policyModal')closePolicyModal();});
+    document.querySelectorAll('[data-launch-check]').forEach(input=>input.addEventListener('change',saveLaunchChecks));
+    document.getElementById('applyUpdateBtn')?.addEventListener('click',applyAppUpdate);
+    setupServiceWorkerUpdate();
     document.getElementById('cancelSubscriptionBtn')?.addEventListener('click',cancelMonthlySubscription);
     document.getElementById('saveTrainingCaseBtn')?.addEventListener('click',saveTrainingCase);
     updateTrainingSummary();
@@ -9047,6 +9259,61 @@ document.addEventListener('DOMContentLoaded', App.init);
     </div>
     <div class="cloud-quotes-loading" id="cloudQuotesLoading" style="display:none;">불러오는 중…</div>
     <div id="cloudQuotesList" class="cloud-quotes-list"></div>
+  </div>
+</div>
+
+
+<div id="updateBanner" class="update-banner" style="display:none;">
+  <span>새 버전이 준비되었습니다.</span>
+  <button type="button" id="applyUpdateBtn">지금 업데이트</button>
+</div>
+
+<div id="launchModal" class="launch-modal" style="display:none;">
+  <div class="launch-card">
+    <div class="launch-head">
+      <div>
+        <h2>짐픽 출시 준비</h2>
+        <p>판매 전에 아래 항목을 확인하세요.</p>
+      </div>
+      <button type="button" id="closeLaunchModalBtn">✕</button>
+    </div>
+
+    <div class="launch-actions">
+      <button type="button" id="installAppBtn">📱 앱으로 설치</button>
+      <button type="button" id="copyDiagnosticsBtn">🛠 오류정보 복사</button>
+    </div>
+
+    <div class="launch-checklist">
+      <label><input type="checkbox" data-launch-check="supabase"> Supabase 실제 로그인 확인</label>
+      <label><input type="checkbox" data-launch-check="gemini"> 사진 AI 분석 확인</label>
+      <label><input type="checkbox" data-launch-check="billing"> 토스페이먼츠 테스트 결제 확인</label>
+      <label><input type="checkbox" data-launch-check="sms"> 고객 문자 발송 확인</label>
+      <label><input type="checkbox" data-launch-check="privacy"> 개인정보처리방침 확인</label>
+      <label><input type="checkbox" data-launch-check="terms"> 이용약관 확인</label>
+    </div>
+
+    <div class="launch-links">
+      <button type="button" id="openPrivacyBtn">개인정보처리방침</button>
+      <button type="button" id="openTermsBtn">이용약관</button>
+    </div>
+
+    <div class="business-info-box">
+      <strong>운영자 정보</strong>
+      <p>상호: 짐픽</p>
+      <p>고객센터: 준비 중</p>
+      <p>이메일: 준비 중</p>
+      <p>사업자등록번호: 준비 중</p>
+    </div>
+  </div>
+</div>
+
+<div id="policyModal" class="policy-modal" style="display:none;">
+  <div class="policy-card">
+    <div class="policy-head">
+      <h2 id="policyTitle">안내</h2>
+      <button type="button" id="closePolicyModalBtn">✕</button>
+    </div>
+    <div id="policyBody" class="policy-body"></div>
   </div>
 </div>
 
