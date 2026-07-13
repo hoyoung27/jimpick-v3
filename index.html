@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 V3.7 AI 이사견적</title>
+<title>짐픽 V3.8 AI 이사견적</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -986,6 +986,105 @@ button:active{transform:scale(0.96);}
 .difficulty-normal{color:#137333!important}
 .difficulty-caution{color:#B06000!important}
 .difficulty-hard{color:#C62828!important}
+
+/* ===== V3.8 수익분석 ===== */
+.profit-card{
+  margin-top:16px;
+  border:1px solid rgba(15,42,67,.12);
+  border-radius:20px;
+  background:linear-gradient(145deg,#FFFFFF,#F6FAFF);
+  box-shadow:0 12px 28px rgba(15,42,67,.08);
+  overflow:hidden;
+}
+.profit-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 18px;
+  cursor:pointer;
+  font-weight:900;
+  color:#102A43;
+}
+.profit-head small{
+  display:block;
+  margin-top:4px;
+  font-size:12px;
+  font-weight:600;
+  color:#6B7C8F;
+}
+.profit-toggle{
+  width:38px;height:38px;border:0;border-radius:12px;
+  background:#102A43;color:#fff;font-size:18px;cursor:pointer;
+}
+.profit-body{display:none;padding:0 18px 18px}
+.profit-body.open{display:block}
+.profit-input-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+.profit-field{
+  background:#fff;
+  border:1px solid rgba(15,42,67,.09);
+  border-radius:14px;
+  padding:12px;
+}
+.profit-field label{
+  display:block;
+  font-size:12px;
+  color:#6B7C8F;
+  font-weight:800;
+  margin-bottom:6px;
+}
+.profit-field input{
+  width:100%;
+  border:1px solid #D9E2EC;
+  border-radius:10px;
+  padding:10px 11px;
+  font-size:15px;
+  font-weight:800;
+}
+.profit-summary{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  margin-top:12px;
+}
+.profit-box{
+  padding:14px;
+  border-radius:15px;
+  background:#102A43;
+  color:#fff;
+}
+.profit-box span{
+  display:block;
+  font-size:11px;
+  opacity:.75;
+  font-weight:700;
+}
+.profit-box strong{
+  display:block;
+  margin-top:5px;
+  font-size:20px;
+  font-weight:900;
+}
+.profit-box.positive{background:#0B7A53}
+.profit-box.warning{background:#B06000}
+.profit-box.negative{background:#B42318}
+.profit-message{
+  margin-top:10px;
+  padding:12px 14px;
+  border-radius:14px;
+  background:#EFF6FF;
+  color:#174A7E;
+  font-size:13px;
+  line-height:1.6;
+  font-weight:700;
+}
+@media(max-width:640px){
+  .profit-input-grid,.profit-summary{grid-template-columns:1fr}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1478,6 +1577,56 @@ button:active{transform:scale(0.96);}
         </div>
       </div>
 
+
+      <div class="profit-card">
+        <div class="profit-head" id="profitHead">
+          <div>
+            📊 예상 수익분석
+            <small>인건비와 차량비를 입력하면 순이익을 자동 계산합니다.</small>
+          </div>
+          <button type="button" class="profit-toggle" id="profitToggle">▼</button>
+        </div>
+        <div class="profit-body" id="profitBody">
+          <div class="profit-input-grid">
+            <div class="profit-field">
+              <label>작업자 1명당 인건비</label>
+              <input type="number" id="profitWorkerCost" value="100000" min="0" step="10000">
+            </div>
+            <div class="profit-field">
+              <label>1톤 차량 1대당 비용</label>
+              <input type="number" id="profitTruck1Cost" value="100000" min="0" step="10000">
+            </div>
+            <div class="profit-field">
+              <label>5톤 차량 1대당 비용</label>
+              <input type="number" id="profitTruck5Cost" value="250000" min="0" step="10000">
+            </div>
+            <div class="profit-field">
+              <label>기타 지출비용</label>
+              <input type="number" id="profitOtherCost" value="0" min="0" step="10000">
+            </div>
+          </div>
+
+          <div class="profit-summary">
+            <div class="profit-box">
+              <span>총 예상비용</span>
+              <strong id="profitTotalCost">0원</strong>
+            </div>
+            <div class="profit-box positive" id="profitNetBox">
+              <span>예상 순이익</span>
+              <strong id="profitNet">0원</strong>
+            </div>
+            <div class="profit-box" id="profitRateBox">
+              <span>예상 순이익률</span>
+              <strong id="profitRate">0%</strong>
+            </div>
+          </div>
+
+          <div class="profit-message" id="profitMessage">
+            견적을 계산하면 예상 수익이 표시됩니다.
+          </div>
+        </div>
+      </div>
+
       <div class="cost-entry-list" id="costEntryList">
         <div class="cost-row cost-row-draggable">
           <span class="drag-handle" title="눌러서 위/아래로 순서 변경">⠿</span>
@@ -1740,7 +1889,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'V3.7-B37';
+const BUILD_VERSION = 'V3.8-B38';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -3112,6 +3261,69 @@ function calculateEstimatedEndTime(startTime, estimatedHours){
   return `${period} ${String(hour12).padStart(2,'0')}:${String(minute).padStart(2,'0')}`;
 }
 
+
+function calculateProfitAnalysis(){
+  const q = State.lastQuote || {};
+  const revenue = Number(q.total) || 0;
+  const workers = Number(q.workers) || 0;
+  const truck1 = Number(q.truck1Count) || 0;
+  const truck5 = Number(q.truck5Count) || 0;
+
+  const workerUnit = Number(document.getElementById('profitWorkerCost')?.value) || 0;
+  const truck1Unit = Number(document.getElementById('profitTruck1Cost')?.value) || 0;
+  const truck5Unit = Number(document.getElementById('profitTruck5Cost')?.value) || 0;
+  const otherCost = Number(document.getElementById('profitOtherCost')?.value) || 0;
+
+  const laborCost = workers * workerUnit;
+  const vehicleCost = (truck1 * truck1Unit) + (truck5 * truck5Unit);
+  const totalCost = laborCost + vehicleCost + otherCost;
+  const netProfit = revenue - totalCost;
+  const profitRate = revenue > 0 ? (netProfit / revenue) * 100 : 0;
+
+  const totalCostEl = document.getElementById('profitTotalCost');
+  const netEl = document.getElementById('profitNet');
+  const rateEl = document.getElementById('profitRate');
+  const netBox = document.getElementById('profitNetBox');
+  const rateBox = document.getElementById('profitRateBox');
+  const messageEl = document.getElementById('profitMessage');
+
+  if(totalCostEl) totalCostEl.textContent = Utils.won(totalCost);
+  if(netEl) netEl.textContent = Utils.won(netProfit);
+  if(rateEl) rateEl.textContent = `${profitRate.toFixed(1)}%`;
+
+  if(netBox){
+    netBox.className = 'profit-box';
+    if(netProfit < 0) netBox.classList.add('negative');
+    else if(profitRate < 15) netBox.classList.add('warning');
+    else netBox.classList.add('positive');
+  }
+
+  if(rateBox){
+    rateBox.className = 'profit-box';
+    if(netProfit < 0) rateBox.classList.add('negative');
+    else if(profitRate < 15) rateBox.classList.add('warning');
+    else rateBox.classList.add('positive');
+  }
+
+  if(messageEl){
+    if(revenue <= 0){
+      messageEl.textContent = '견적금액을 먼저 계산해주세요.';
+    }else if(netProfit < 0){
+      messageEl.textContent = `⚠️ 현재 조건은 약 ${Utils.won(Math.abs(netProfit))} 적자가 예상됩니다. 견적금액이나 비용을 다시 확인하세요.`;
+    }else if(profitRate < 15){
+      messageEl.textContent = `주의: 예상 순이익률이 ${profitRate.toFixed(1)}%로 낮습니다. 현장 추가 작업 가능성을 고려하세요.`;
+    }else{
+      messageEl.textContent = `예상 순이익은 ${Utils.won(netProfit)}, 순이익률은 ${profitRate.toFixed(1)}%입니다.`;
+    }
+  }
+
+  State.profitAnalysis = {
+    revenue, workers, truck1, truck5,
+    workerUnit, truck1Unit, truck5Unit, otherCost,
+    laborCost, vehicleCost, totalCost, netProfit, profitRate
+  };
+}
+
 /* ---------------------- 12. SMS 문구 생성 ---------------------- */
 UI.renderSMS = function(){
   const q = State.lastQuote;
@@ -4033,6 +4245,28 @@ ${msg || '-'}`;
 
     // 재계산 버튼
     document.getElementById('recalcBtn').addEventListener('click', ()=>Calc.run());
+
+    // V3.8 수익분석 열기/닫기
+    const profitHead = document.getElementById('profitHead');
+    const profitBody = document.getElementById('profitBody');
+    const profitToggle = document.getElementById('profitToggle');
+    if(profitHead && profitBody && profitToggle){
+      profitHead.addEventListener('click', ()=>{
+        const open = profitBody.classList.toggle('open');
+        profitToggle.textContent = open ? '▲' : '▼';
+        calculateProfitAnalysis();
+      });
+    }
+
+    ['profitWorkerCost','profitTruck1Cost','profitTruck5Cost','profitOtherCost'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el){
+        el.addEventListener('input', ()=>{
+          calculateProfitAnalysis();
+          DraftService.save();
+        });
+      }
+    });
 
     // 시작시간이 바뀌면 예상 종료시간과 발송 문자를 다시 계산
     const moveStartTimeInput = document.getElementById('moveStartTime');
