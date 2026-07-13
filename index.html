@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 1.2</title>
+<title>짐픽 PRO 1.3</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 1.2 최소판매형 ===== */
+/* ===== 짐픽 PRO 1.3 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -1726,6 +1726,14 @@ body{font-size:18px}
 @media(max-width:640px){
   .pro-estimate-grid-five{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
+
+
+.company-private-badge{
+  padding:5px 8px;border-radius:999px;
+  background:#EAF7F0;color:#16794B;
+  font-size:11px;font-weight:900;white-space:nowrap;
+}
+@media(max-width:640px){.company-private-badge{display:none}}
 
 </style>
 <meta name="mobile-web-app-capable" content="yes">
@@ -1934,10 +1942,10 @@ body{font-size:18px}
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-1.2</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-1.3</div>
     </div>
   </div>
-  <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
+  <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
     <div class="amt" id="topTotal">0원</div>
     <div class="lbl">예상 견적금액</div>
   </div>
@@ -2586,7 +2594,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-1.2';
+const BUILD_VERSION = 'JIMPICK-PRO-1.3';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -2661,6 +2669,22 @@ const Utils = {
   }
 };
 
+
+/* ---------------------- 업체별 데이터 분리 ---------------------- */
+function currentCompanyDataId(){
+  try{
+    const raw=localStorage.getItem('jimpick_commercial_session');
+    const user=raw?JSON.parse(raw):null;
+    return String(user?.id||user?.phone||user?.email||'guest')
+      .replace(/[^a-zA-Z0-9_-]/g,'_');
+  }catch(e){
+    return 'guest';
+  }
+}
+function companyScopedKey(key){
+  return `${key}__${currentCompanyDataId()}`;
+}
+
 /* ---------------------- 4. CLOUD SERVICE (지금: localStorage / 나중: 실서버 API) ---------------------- */
 const CloudService = {
   KEY_DRAFT: 'moving_quote_draft_v1',
@@ -2671,12 +2695,12 @@ const CloudService = {
   //   fetch('https://내서버주소/api/draft', {method:'POST', body: JSON.stringify(data)})
   // 형태로 바꾸면, 나머지 화면 코드는 전혀 수정할 필요가 없습니다.
   async save(key, data){
-    try{ localStorage.setItem(key, JSON.stringify(data)); return true; }
+    try{ localStorage.setItem(companyScopedKey(key), JSON.stringify(data)); return true; }
     catch(e){ console.warn('저장 실패', e); return false; }
   },
   async load(key){
     try{
-      const raw = localStorage.getItem(key);
+      const raw = localStorage.getItem(companyScopedKey(key));
       return raw ? JSON.parse(raw) : null;
     }catch(e){ return null; }
   }
@@ -4037,7 +4061,7 @@ const CRM_STORAGE_KEY = 'jimpick_v39_quotes';
 
 function crmRead(){
   try{
-    const raw = localStorage.getItem(CRM_STORAGE_KEY);
+    const raw = localStorage.getItem(companyScopedKey(CRM_STORAGE_KEY));
     const data = raw ? JSON.parse(raw) : [];
     return Array.isArray(data) ? data : [];
   }catch(e){
@@ -4047,7 +4071,7 @@ function crmRead(){
 }
 
 function crmWrite(records){
-  localStorage.setItem(CRM_STORAGE_KEY, JSON.stringify(records));
+  localStorage.setItem(companyScopedKey(CRM_STORAGE_KEY), JSON.stringify(records));
 }
 
 function crmCurrentFormData(){
@@ -4883,13 +4907,13 @@ const RESOURCE_WORKER_KEY = 'jimpick_v42_workers';
 
 function resourceRead(key){
   try{
-    const raw=localStorage.getItem(key);
+    const raw=localStorage.getItem(companyScopedKey(key));
     const data=raw?JSON.parse(raw):[];
     return Array.isArray(data)?data:[];
   }catch(e){return [];}
 }
 function resourceWrite(key,data){
-  localStorage.setItem(key,JSON.stringify(data));
+  localStorage.setItem(companyScopedKey(key),JSON.stringify(data));
 }
 
 function renderResources(){
@@ -5160,7 +5184,15 @@ function authSetSession(u){localStorage.setItem(AUTH_SESSION_KEY,JSON.stringify(
 function authClearSession(){localStorage.removeItem(AUTH_SESSION_KEY)}
 function authNormalizeId(v){return String(v||'').trim().toLowerCase().replace(/\s+/g,'')}
 function authShowPanel(id){document.querySelectorAll('.auth-panel').forEach(p=>p.classList.remove('active'));document.getElementById(id)?.classList.add('active')}
-function authShowApp(u){document.getElementById('authScreen').style.display='none';document.getElementById('appShell').style.display='block';const c=document.getElementById('loggedCompanyName');if(c)c.textContent=u.companyName||'업체명';const d=document.getElementById('companyNameDisplay');if(d)d.textContent=`${u.companyName||'짐픽'} ✏️`;if(typeof State!=='undefined'&&State.settings){State.settings.companyName=u.companyName||State.settings.companyName;State.settings.companyPhone=u.companyPhone||State.settings.companyPhone}}
+function authShowApp(u){document.getElementById('authScreen').style.display='none';document.getElementById('appShell').style.display='block';const c=document.getElementById('loggedCompanyName');if(c)c.textContent=u.companyName||'업체명';const d=document.getElementById('companyNameDisplay');if(d)d.textContent=`${u.companyName||'짐픽'} ✏️`;if(typeof State!=='undefined'&&State.settings){State.settings.companyName=u.companyName||State.settings.companyName;State.settings.companyPhone=u.companyPhone||State.settings.companyPhone}
+  setTimeout(async()=>{
+    try{
+      await DraftService.load();
+      await SettingsService.load();
+      if(typeof Calc!=='undefined') Calc.run();
+    }catch(e){console.warn('업체자료 불러오기 실패',e)}
+  },100);
+}
 function authShowLogin(){document.getElementById('authScreen').style.display='flex';document.getElementById('appShell').style.display='none';authShowPanel('loginPanel')}
 function authLogin(){const id=authNormalizeId(document.getElementById('loginIdInput')?.value),pw=document.getElementById('loginPasswordInput')?.value||'';if(!id||!pw){alert('휴대전화 또는 이메일과 비밀번호를 입력해주세요.');return}const u=authReadUsers().find(x=>(authNormalizeId(x.phone)===id||authNormalizeId(x.email)===id)&&x.password===pw);if(!u){alert('가입정보가 맞지 않습니다. 다시 확인해주세요.');return}authSetSession(u);authShowApp(u)}
 function authGoCompany(){const o=document.getElementById('signupOwnerName')?.value?.trim()||'',p=authNormalizeId(document.getElementById('signupPhone')?.value),e=authNormalizeId(document.getElementById('signupEmail')?.value),w=document.getElementById('signupPassword')?.value||'';if(!o){alert('대표자 이름을 입력해주세요.');return}if(p.length<10){alert('휴대전화 번호를 정확히 입력해주세요.');return}if(!e.includes('@')){alert('이메일을 정확히 입력해주세요.');return}if(w.length<6){alert('비밀번호는 6자리 이상으로 입력해주세요.');return}authShowPanel('companyPanel')}

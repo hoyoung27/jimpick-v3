@@ -1,4 +1,4 @@
-const CACHE_NAME='jimpick-pro-1-2-truck-mix';
+const CACHE_NAME='jimpick-pro-1-3-company-data';
 const FILES=['./','./index.html','./manifest.json','./icon.svg'];
 self.addEventListener('install',e=>{
   e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(FILES)));
