@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 1.5",
+  "name": "짐픽 PRO 1.6",
   "short_name": "짐픽 PRO",
-  "description": "서버에 AI 키를 안전하게 숨긴 사진 자동품목 이사견적 앱",
+  "description": "Supabase 실제 서버 로그인과 업체별 클라우드 계정",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

@@ -1,37 +1,13 @@
-짐픽 PRO 1.5 - AI 키 보안 서버 연결
+짐픽 PRO 1.6 실제 서버 로그인
 
-이번 핵심 작업
-- 일반 사용자는 Gemini API 키를 입력하지 않음
-- 사진은 Netlify Function 서버로 전송
-- 서버에서 Gemini AI 분석
-- AI 키는 Netlify 환경변수에만 저장
-- 사진 분석 결과로 품목 자동선택
-- API 키가 사용자 화면과 소스에 노출되지 않음
+1. Supabase 새 프로젝트 생성
+2. SQL Editor에서 supabase/setup.sql 실행
+3. Netlify 환경변수 등록
+- SUPABASE_URL
+- SUPABASE_ANON_KEY
+- GEMINI_API_KEY
+4. GitHub에 netlify 폴더와 supabase 폴더를 포함한 전체 파일 업로드
+5. 캐시 없이 재배포
 
-GitHub 업로드
-주의: 이번에는 netlify 폴더도 함께 올려야 합니다.
-
-업로드할 항목
-- index.html
-- service-worker.js
-- manifest.json
-- icon.svg
-- netlify.toml
-- netlify 폴더 전체
-- 사용방법.txt
-
-Netlify 환경변수 설정
-1. Netlify 프로젝트 열기
-2. Project configuration
-3. Environment variables
-4. Add a variable
-5. Key: GEMINI_API_KEY
-6. Value: 대표님의 Gemini API 키
-7. 저장
-8. Deploys → Trigger deploy → Deploy project without cache
-
-정상 표시
-build JIMPICK-PRO-1.5
-
-중요
-GEMINI_API_KEY를 설정하지 않으면 사진 AI 분석은 작동하지 않습니다.
+설정 전에는 '화면만 시험하기'로 화면 확인이 가능합니다.
+정상 표시: build JIMPICK-PRO-1.6
