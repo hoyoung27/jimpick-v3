@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 V3.1 AI 이사견적</title>
+<title>짐픽 V3.2 AI 이사견적</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -828,7 +828,7 @@ button:active{transform:scale(0.96);}
   <div class="brand">
     <div class="truck">🚚</div>
     <div class="brand-text">
-      <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V2 ✏️</div>
+      <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
       <div class="sub" id="quoteDateDisplay">견적일 -</div>
     </div>
   </div>
@@ -1463,7 +1463,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'V3.1-B31';
+const BUILD_VERSION = 'V3.2-B32';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -2155,7 +2155,7 @@ const State = {
   toLadderFloorVisible: false,
 
   settings: {
-    companyName:'짐픽 V2', companyPhone:'010-1234-5678', accountNumber:'', inquiryEmail:'',
+    companyName:'짐픽 V3', companyPhone:'010-1234-5678', accountNumber:'', inquiryEmail:'',
     basePrice: CONFIG.basePrice,
     pointPrice: CONFIG.pointPrice,
     baseWorkers: CONFIG.baseWorkers,
