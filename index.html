@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 V4.1 AI 이사견적</title>
+<title>짐픽 V4.2 AI 이사견적</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1251,6 +1251,54 @@ button:active{transform:scale(0.96);}
   .dispatch-form{grid-template-columns:1fr}
 }
 
+
+/* ===== V4.2 차량·직원관리 ===== */
+.resource-wrap{padding:20px}
+.resource-summary{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;margin-bottom:14px;
+}
+.resource-stat{
+  padding:16px;border-radius:16px;background:#102A43;color:#fff;
+}
+.resource-stat span{display:block;font-size:12px;opacity:.75;font-weight:800}
+.resource-stat strong{display:block;margin-top:5px;font-size:22px}
+.resource-columns{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;
+}
+.resource-card{
+  border:1px solid #E3EAF2;border-radius:18px;background:#fff;padding:16px;
+  box-shadow:0 8px 20px rgba(15,42,67,.06);
+}
+.resource-card h3{margin:0 0 12px;color:#102A43}
+.resource-form{display:grid;gap:9px}
+.resource-form input,.resource-form select{
+  width:100%;border:1px solid #D9E2EC;border-radius:11px;padding:10px 11px;font-size:13px;
+}
+.resource-form button{
+  border:0;border-radius:11px;padding:10px;background:#102A43;color:#fff;font-weight:900;cursor:pointer;
+}
+.resource-list{display:grid;gap:9px;margin-top:12px}
+.resource-empty{
+  padding:16px;text-align:center;border-radius:12px;background:#EEF3F8;color:#718096;font-size:13px;
+}
+.resource-item{
+  border:1px solid #E3EAF2;border-radius:13px;padding:12px;background:#FAFCFE;
+}
+.resource-item-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.resource-item-title{font-weight:900;color:#102A43}
+.resource-item-meta{margin-top:4px;font-size:12px;line-height:1.5;color:#60758A}
+.resource-status{
+  display:inline-flex;padding:4px 8px;border-radius:999px;background:#E9F6EF;color:#137333;font-size:11px;font-weight:900;
+}
+.resource-delete{
+  margin-top:9px;width:100%;border:0;border-radius:9px;padding:8px;background:#FFF0ED;color:#B42318;font-weight:800;cursor:pointer;
+}
+@media(max-width:720px){
+  .resource-columns{grid-template-columns:1fr}
+  .resource-summary{grid-template-columns:1fr}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1273,6 +1321,60 @@ button:active{transform:scale(0.96);}
     <div class="btn-row">
       <button class="btn btn-ghost" onclick="App.signUp()">회원가입</button>
       <button class="btn btn-primary" onclick="App.signIn()">로그인</button>
+
+    </div>
+
+    <div class="dashboard-tab-panel" id="dashPanelResources">
+      <div class="resource-wrap">
+        <div class="resource-summary">
+          <div class="resource-stat">
+            <span>등록 차량</span>
+            <strong id="resourceTruckCount">0대</strong>
+          </div>
+          <div class="resource-stat">
+            <span>등록 직원</span>
+            <strong id="resourceWorkerCount">0명</strong>
+          </div>
+        </div>
+
+        <div class="resource-columns">
+          <section class="resource-card">
+            <h3>🚚 차량관리</h3>
+            <div class="resource-form">
+              <input id="truckNumberInput" placeholder="차량번호 예: 12가3456">
+              <input id="truckDriverInput" placeholder="기사 이름">
+              <select id="truckStatusInput">
+                <option>사용가능</option>
+                <option>운행중</option>
+                <option>정비중</option>
+              </select>
+              <button type="button" id="addTruckBtn">차량 등록</button>
+            </div>
+            <div id="truckList" class="resource-list"></div>
+          </section>
+
+          <section class="resource-card">
+            <h3>👷 직원관리</h3>
+            <div class="resource-form">
+              <input id="workerNameInput" placeholder="직원 이름">
+              <input id="workerPhoneInput" placeholder="연락처">
+              <select id="workerRoleInput">
+                <option>작업자</option>
+                <option>기사</option>
+                <option>주방이모</option>
+                <option>관리자</option>
+              </select>
+              <input type="number" id="workerDailyPayInput" placeholder="일당" min="0" step="10000">
+              <button type="button" id="addWorkerBtn">직원 등록</button>
+            </div>
+            <div id="workerList" class="resource-list"></div>
+          </section>
+        </div>
+
+        <div class="dashboard-note">
+          차량·직원 정보는 현재 이 기기의 브라우저에 저장됩니다. 클라우드 동기화는 다음 단계에서 연결합니다.
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -2090,7 +2192,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'V4.1-B41';
+const BUILD_VERSION = 'V4.2-B42';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -3772,7 +3874,9 @@ function dashboardSwitchTab(name){
   });
   document.getElementById('dashPanelSummary')?.classList.toggle('active',name==='summary');
   document.getElementById('dashPanelCalendar')?.classList.toggle('active',name==='calendar');
+  document.getElementById('dashPanelResources')?.classList.toggle('active',name==='resources');
   if(name==='calendar') renderCalendar();
+  if(name==='resources') renderResources();
 }
 
 function renderCalendar(){
@@ -3892,6 +3996,113 @@ function saveDispatchRecord(id){
   crmWrite(records);
   renderDispatchList(calendarSelectedDate);
   alert('배차정보를 저장했습니다.');
+}
+
+
+const RESOURCE_TRUCK_KEY = 'jimpick_v42_trucks';
+const RESOURCE_WORKER_KEY = 'jimpick_v42_workers';
+
+function resourceRead(key){
+  try{
+    const raw=localStorage.getItem(key);
+    const data=raw?JSON.parse(raw):[];
+    return Array.isArray(data)?data:[];
+  }catch(e){return [];}
+}
+function resourceWrite(key,data){
+  localStorage.setItem(key,JSON.stringify(data));
+}
+
+function renderResources(){
+  const trucks=resourceRead(RESOURCE_TRUCK_KEY);
+  const workers=resourceRead(RESOURCE_WORKER_KEY);
+
+  const truckCount=document.getElementById('resourceTruckCount');
+  const workerCount=document.getElementById('resourceWorkerCount');
+  if(truckCount)truckCount.textContent=`${trucks.length}대`;
+  if(workerCount)workerCount.textContent=`${workers.length}명`;
+
+  const truckList=document.getElementById('truckList');
+  if(truckList){
+    truckList.innerHTML=trucks.length?trucks.map(t=>`
+      <div class="resource-item">
+        <div class="resource-item-head">
+          <div>
+            <div class="resource-item-title">${Utils.escapeHtml(t.number)}</div>
+            <div class="resource-item-meta">기사: ${Utils.escapeHtml(t.driver||'-')}</div>
+          </div>
+          <span class="resource-status">${Utils.escapeHtml(t.status||'사용가능')}</span>
+        </div>
+        <button type="button" class="resource-delete" data-delete-truck="${t.id}">차량 삭제</button>
+      </div>
+    `).join(''):'<div class="resource-empty">등록된 차량이 없습니다.</div>';
+  }
+
+  const workerList=document.getElementById('workerList');
+  if(workerList){
+    workerList.innerHTML=workers.length?workers.map(w=>`
+      <div class="resource-item">
+        <div class="resource-item-head">
+          <div>
+            <div class="resource-item-title">${Utils.escapeHtml(w.name)}</div>
+            <div class="resource-item-meta">${Utils.escapeHtml(w.role||'작업자')} · ${Utils.escapeHtml(w.phone||'-')}<br>일당: ${Utils.won(Number(w.dailyPay)||0)}</div>
+          </div>
+        </div>
+        <button type="button" class="resource-delete" data-delete-worker="${w.id}">직원 삭제</button>
+      </div>
+    `).join(''):'<div class="resource-empty">등록된 직원이 없습니다.</div>';
+  }
+}
+
+function addTruck(){
+  const number=document.getElementById('truckNumberInput')?.value?.trim();
+  const driver=document.getElementById('truckDriverInput')?.value?.trim();
+  const status=document.getElementById('truckStatusInput')?.value||'사용가능';
+
+  if(!number){
+    alert('차량번호를 입력해주세요.');
+    return;
+  }
+
+  const trucks=resourceRead(RESOURCE_TRUCK_KEY);
+  trucks.unshift({id:'T'+Date.now(),number,driver,status});
+  resourceWrite(RESOURCE_TRUCK_KEY,trucks);
+
+  document.getElementById('truckNumberInput').value='';
+  document.getElementById('truckDriverInput').value='';
+  renderResources();
+}
+
+function addWorker(){
+  const name=document.getElementById('workerNameInput')?.value?.trim();
+  const phone=document.getElementById('workerPhoneInput')?.value?.trim();
+  const role=document.getElementById('workerRoleInput')?.value||'작업자';
+  const dailyPay=Number(document.getElementById('workerDailyPayInput')?.value)||0;
+
+  if(!name){
+    alert('직원 이름을 입력해주세요.');
+    return;
+  }
+
+  const workers=resourceRead(RESOURCE_WORKER_KEY);
+  workers.unshift({id:'W'+Date.now(),name,phone,role,dailyPay});
+  resourceWrite(RESOURCE_WORKER_KEY,workers);
+
+  document.getElementById('workerNameInput').value='';
+  document.getElementById('workerPhoneInput').value='';
+  document.getElementById('workerDailyPayInput').value='';
+  renderResources();
+}
+
+function deleteTruck(id){
+  if(!confirm('이 차량을 삭제할까요?'))return;
+  resourceWrite(RESOURCE_TRUCK_KEY,resourceRead(RESOURCE_TRUCK_KEY).filter(x=>x.id!==id));
+  renderResources();
+}
+function deleteWorker(id){
+  if(!confirm('이 직원을 삭제할까요?'))return;
+  resourceWrite(RESOURCE_WORKER_KEY,resourceRead(RESOURCE_WORKER_KEY).filter(x=>x.id!==id));
+  renderResources();
 }
 
 /* ---------------------- 12. SMS 문구 생성 ---------------------- */
@@ -4652,6 +4863,18 @@ ${msg || '-'}`;
       calendarSelectedDate=day.dataset.calendarDate;
       renderCalendar();
     });
+
+    document.getElementById('addTruckBtn')?.addEventListener('click',addTruck);
+    document.getElementById('addWorkerBtn')?.addEventListener('click',addWorker);
+    document.getElementById('truckList')?.addEventListener('click',(e)=>{
+      const btn=e.target.closest('[data-delete-truck]');
+      if(btn)deleteTruck(btn.dataset.deleteTruck);
+    });
+    document.getElementById('workerList')?.addEventListener('click',(e)=>{
+      const btn=e.target.closest('[data-delete-worker]');
+      if(btn)deleteWorker(btn.dataset.deleteWorker);
+    });
+
     document.getElementById('dispatchList')?.addEventListener('click',(e)=>{
       const btn=e.target.closest('[data-dispatch-save]');
       if(btn)saveDispatchRecord(btn.dataset.dispatchSave);
@@ -5193,6 +5416,7 @@ document.addEventListener('DOMContentLoaded', App.init);
     <div class="dashboard-tabs">
       <button type="button" class="dashboard-tab active" data-dash-tab="summary">요약</button>
       <button type="button" class="dashboard-tab" data-dash-tab="calendar">일정·배차</button>
+      <button type="button" class="dashboard-tab" data-dash-tab="resources">차량·직원</button>
     </div>
 
     <div class="dashboard-tab-panel active" id="dashPanelSummary">
