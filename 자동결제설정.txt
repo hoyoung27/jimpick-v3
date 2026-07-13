@@ -1,0 +1,18 @@
+짐픽 PRO 2.9 자동결제 예약 실행
+
+Netlify Scheduled Functions는 요금제와 설정에 따라 사용 가능 여부가 다를 수 있습니다.
+
+가장 쉬운 방법:
+1. Netlify 환경변수에 BILLING_CRON_SECRET 추가
+2. 외부 예약서비스 또는 GitHub Actions에서 매일 한 번 아래 주소 호출
+   /.netlify/functions/renew-subscriptions?secret=등록한비밀값
+3. 비밀값은 절대로 GitHub 파일에 직접 적지 마세요.
+
+필수 환경변수:
+TOSS_CLIENT_KEY
+TOSS_SECRET_KEY
+SUPABASE_URL
+SUPABASE_ANON_KEY
+SUPABASE_SERVICE_ROLE_KEY
+GEMINI_API_KEY
+BILLING_CRON_SECRET

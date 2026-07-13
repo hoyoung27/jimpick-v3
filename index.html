@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 2.8</title>
+<title>짐픽 PRO 2.9</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 2.8 최소판매형 ===== */
+/* ===== 짐픽 PRO 2.9 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -2270,6 +2270,26 @@ body{font-size:18px}
   .training-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
+
+/* ===== PRO 2.9 자동갱신·해지 ===== */
+.subscription-manage-box{
+  display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px;
+}
+.subscription-manage-box div{
+  padding:12px;border-radius:13px;background:#F3F6FA;text-align:center;
+}
+.subscription-manage-box span{
+  display:block;font-size:12px;color:#65798C;font-weight:900;
+}
+.subscription-manage-box strong{
+  display:block;margin-top:4px;color:#102A43;font-size:16px;
+}
+.subscription-cancel-btn{
+  width:100%;min-height:54px;margin-top:10px;border:1px solid #F0B7AF;
+  border-radius:14px;background:#FFF0ED;color:#B42318;
+  font-size:16px;font-weight:900;cursor:pointer;
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2325,6 +2345,14 @@ body{font-size:18px}
       <div><span>현재 상태</span><strong id="billingCurrentStatus">무료체험</strong></div>
       <div><span>다음 결제일</span><strong id="billingNextDate">-</strong></div>
     </div>
+
+    <div class="subscription-manage-box">
+      <div><span>최근 결제</span><strong id="billingLastPaid">-</strong></div>
+      <div><span>구독 상태</span><strong id="billingDetailedStatus">무료체험</strong></div>
+    </div>
+    <button type="button" id="cancelSubscriptionBtn" class="subscription-cancel-btn" style="display:none;">
+      구독 해지하기
+    </button>
 <p class="subscription-note">
       첫 카드 등록 후 매월 22,000원이 자동결제됩니다. 언제든 해지할 수 있습니다.
     </p>
@@ -2532,7 +2560,7 @@ body{font-size:18px}
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-2.8</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-2.9</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -3390,7 +3418,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-2.8';
+const BUILD_VERSION = 'JIMPICK-PRO-2.9';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -6896,16 +6924,69 @@ async function handleBillingReturn(){
   return true;
 }
 
+
+async function cancelMonthlySubscription(){
+  if(localPreviewMode){
+    alert('시험 모드에서는 구독 해지를 할 수 없습니다.');
+    return;
+  }
+  if(!confirm('구독을 해지하시겠습니까?\n다음 결제일부터 자동결제가 중단됩니다.')){
+    return;
+  }
+
+  try{
+    const user=await currentCloudUser();
+    if(!user)throw new Error('로그인이 만료되었습니다.');
+
+    const response=await fetch('/.netlify/functions/cancel-subscription',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({userId:user.id})
+    });
+
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok)throw new Error(data.error||'구독 해지 실패');
+
+    localStorage.removeItem('jimpick_cloud_profile_cache');
+    await authLoadProfile(user);
+    updateSubscriptionUi();
+    updateBillingInfo();
+    alert('구독이 해지되었습니다. 다음 결제는 진행되지 않습니다.');
+  }catch(error){
+    console.error(error);
+    alert(`구독 해지 실패: ${error.message||error}`);
+  }
+}
+
 function updateBillingInfo(){
   const user=currentSessionUser();
   const status=document.getElementById('billingCurrentStatus');
   const nextDate=document.getElementById('billingNextDate');
-  const active=(user?.subscription_status||user?.subscriptionStatus)==='active';
+  const detailed=document.getElementById('billingDetailedStatus');
+  const lastPaid=document.getElementById('billingLastPaid');
+  const cancelBtn=document.getElementById('cancelSubscriptionBtn');
 
-  if(status)status.textContent=active?'구독중':'무료체험';
+  const current=user?.subscription_status||user?.subscriptionStatus||'trial';
+  const active=current==='active';
+  const canceled=current==='canceled';
+  const pastDue=current==='past_due';
+
+  if(status){
+    status.textContent=active?'구독중':canceled?'해지됨':pastDue?'결제실패':'무료체험';
+  }
+  if(detailed){
+    detailed.textContent=active?'정상 이용중':canceled?'자동결제 중단':pastDue?'결제수단 확인 필요':'무료체험';
+  }
   if(nextDate){
     const raw=user?.next_billing_at;
     nextDate.textContent=raw?new Date(raw).toLocaleDateString('ko-KR'):'-';
+  }
+  if(lastPaid){
+    const raw=user?.last_paid_at;
+    lastPaid.textContent=raw?new Date(raw).toLocaleDateString('ko-KR'):'-';
+  }
+  if(cancelBtn){
+    cancelBtn.style.display=active?'block':'none';
   }
 }
 
@@ -8458,6 +8539,7 @@ ${msg || '-'}`;
     document.getElementById('completeSignupBtn')?.addEventListener('click',authCompleteSignup);
     document.getElementById('forgotPasswordBtn')?.addEventListener('click',authForgotPassword);
     document.getElementById('logoutBtn')?.addEventListener('click',authLogout);
+    document.getElementById('cancelSubscriptionBtn')?.addEventListener('click',cancelMonthlySubscription);
     document.getElementById('saveTrainingCaseBtn')?.addEventListener('click',saveTrainingCase);
     updateTrainingSummary();
     document.getElementById('billingResultHomeBtn')?.addEventListener('click',()=>{

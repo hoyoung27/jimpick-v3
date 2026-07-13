@@ -147,3 +147,32 @@ with check (auth.uid() = user_id);
 create policy "training_cases_delete_own"
 on public.training_cases for delete
 using (auth.uid() = user_id);
+
+
+-- 짐픽 PRO 2.9 자동갱신·해지
+alter table public.profiles
+  add column if not exists last_paid_at timestamptz;
+
+alter table public.subscriptions
+  add column if not exists canceled_at timestamptz;
+
+create table if not exists public.payment_logs (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  order_id text not null default '',
+  payment_key text not null default '',
+  amount integer not null default 22000,
+  status text not null default '',
+  message text not null default '',
+  created_at timestamptz not null default now()
+);
+
+create index if not exists payment_logs_user_created_idx
+  on public.payment_logs(user_id, created_at desc);
+
+alter table public.payment_logs enable row level security;
+
+drop policy if exists "payment_logs_select_own" on public.payment_logs;
+create policy "payment_logs_select_own"
+on public.payment_logs for select
+using (auth.uid() = user_id);
