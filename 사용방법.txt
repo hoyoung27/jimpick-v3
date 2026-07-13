@@ -1,36 +1,24 @@
-짐픽 V4.7 화면복구 전체 프로그램
+짐픽 V4.7.1 클릭 기능 복구 긴급수정
 
-중요
-이번에는 index.html만 올리는 방식이 아닙니다.
-압축을 푼 뒤 폴더 안의 파일을 전부 올려야 합니다.
-
-포함 파일
-1. index.html
-2. service-worker.js
-3. manifest.json
-4. icon.svg
-5. netlify.toml
-6. 사용방법.txt
+문제 원인
+- 화면 디자인은 정상 표시됐지만 자바스크립트 문법 오류로 모든 버튼 클릭이 멈췄습니다.
 
 수정 내용
-- 깨진 상단 헤더 구조 완전 복구
-- 화면이 오른쪽으로 작게 몰리는 현상 방지
-- 견적일과 build V4.7-B47 정상 표시
-- V4.6 중복예약·지도·문자 기능 유지
-- 휴대폰 앱 설치용 manifest와 아이콘 포함
-- 이전 캐시 삭제 후 V4.7 캐시 사용
+- 모든 버튼 클릭 기능 복구
+- 고객정보/현장정보/사진AI/품목확인/견적확정/발송 이동 복구
+- 사장님 대시보드 클릭 복구
+- V4.6 기능 유지
+- 새 캐시 적용
 
-GitHub 업로드
-1. ZIP 다운로드
+업로드 방법
+1. ZIP 파일 다운로드
 2. 압축 풀기
-3. GitHub jimpick-v3 저장소 열기
-4. Add file → Upload files
-5. 압축을 푼 폴더 안 파일 6개를 전부 선택
-6. Commit changes
-7. Netlify Published 확인
-8. 프로그램에서 Ctrl + Shift + R
-9. 그래도 이전 화면이면 Ctrl + F5
+3. GitHub jimpick-v3 → Add file → Upload files
+4. 폴더 안 파일 6개를 모두 업로드
+5. Commit changes
+6. Netlify Published 확인
+7. Ctrl + Shift + R
+8. 그래도 안 되면 Ctrl + F5
 
-정상 확인
-- 화면이 가로 전체 폭으로 정상 표시
-- 상단에 build V4.7-B47 표시
+정상 표시
+build V4.7.1-B47H
