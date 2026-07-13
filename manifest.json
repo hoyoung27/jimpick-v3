@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 V4.8 AI 이사견적",
+  "name": "짐픽 상용앱 1.0",
   "short_name": "짐픽",
-  "description": "견적·고객·배차·매출통계 통합 프로그램",
+  "description": "로그인·업체가입 1단계",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
