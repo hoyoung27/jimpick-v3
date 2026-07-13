@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 1.0",
+  "name": "짐픽 PRO 1.2",
   "short_name": "짐픽 PRO",
-  "description": "이사업체 대표님용 사진 AI 자동견적 앱",
+  "description": "사진 AI 품목 자동선택과 1톤·5톤 차량 자동견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

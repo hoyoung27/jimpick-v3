@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 1.0</title>
+<title>짐픽 PRO 1.2</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1547,8 +1547,7 @@ body{
 #openDashboardBtn,.dashboard-modal,.crm-card,.profit-card,
 .account-bar,#accountBar,.install-banner,#installBanner,
 .cloud-save-card,#cloudSaveCard,#adminNavBtn{display:none!important}
-#truck5Count,#profitTruck5Cost,.truck-qty-item:has(#truck5Count){display:none!important}
-.truck-qty-row{grid-template-columns:1fr!important}
+
 .simple-ai-card{max-width:900px;margin:0 auto}
 .simple-ai-guide{display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;background:#F3F7FB;margin-bottom:14px}
 .simple-ai-number{width:40px;height:40px;border-radius:50%;background:#0F2A43;color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;flex:0 0 auto}
@@ -1632,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 1.0 최소판매형 ===== */
+/* ===== 짐픽 PRO 1.2 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -1675,13 +1674,13 @@ body{font-size:18px}
 .sticky-footer .nav-btn{min-height:58px;font-size:18px}
 
 /* AI 키 입력은 판매용 화면에서 숨김: 서버 연결 전 임시로 관리자만 사용 */
-.simple-ai-key-box{display:none!important}
+.simple-ai-key-box{display:block!important}
+.simple-ai-key-box{margin-top:12px}
+.simple-ai-key-box::before{
+  content:"처음 한 번만 AI 연결키를 입력합니다.";
+  display:block;margin-bottom:8px;font-size:13px;font-weight:900;color:#6D4910;
+}
 
-/* 1톤 차량만 사용 */
-#truck5Count,
-#profitTruck5Cost,
-.truck-qty-item:has(#truck5Count){display:none!important}
-.truck-qty-row{grid-template-columns:1fr!important}
 
 /* 복잡한 세부 항목은 기본적으로 감춤 */
 .advanced-box,.optional-box,.arch-note{display:none!important}
@@ -1692,6 +1691,40 @@ body{font-size:18px}
   .mvp-grid{grid-template-columns:1fr}
   .mvp-field.full{grid-column:auto}
   .card{padding:20px 16px}
+}
+
+
+/* ===== PRO 1.1 자동견적 결과 ===== */
+.pro-estimate-summary{max-width:820px;margin:0 auto 16px}
+.pro-estimate-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;margin-top:14px;
+}
+.pro-estimate-grid div{
+  padding:16px 12px;border-radius:16px;background:#F3F6FA;
+  border:1px solid #DCE5EE;text-align:center;
+}
+.pro-estimate-grid div.accent{background:#FFF1E8;border-color:#FFD0B8}
+.pro-estimate-grid span{display:block;font-size:14px;color:#64748B;font-weight:900}
+.pro-estimate-grid strong{display:block;margin-top:6px;font-size:23px;color:#102A43}
+.pro-estimate-grid .accent strong{color:#E6532F}
+.pro-estimate-note{
+  margin-top:12px;padding:12px 14px;border-radius:12px;
+  background:#FFF8E8;color:#6D4910;font-size:13px;font-weight:700;
+}
+@media(max-width:700px){
+  .pro-estimate-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+
+.pro-estimate-grid-five{
+  grid-template-columns:repeat(5,minmax(0,1fr));
+}
+@media(max-width:900px){
+  .pro-estimate-grid-five{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:640px){
+  .pro-estimate-grid-five{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
 </style>
@@ -1901,7 +1934,7 @@ body{font-size:18px}
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-1.0</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-1.2</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -2100,6 +2133,18 @@ body{font-size:18px}
 
   <!-- ============ STEP 5. 견적 확정 ============ -->
   <section class="panel" id="step5">
+    <div class="card pro-estimate-summary">
+      <h2><span class="eyebrow">4단계</span> 자동견적 결과</h2>
+      <div class="pro-estimate-grid pro-estimate-grid-five">
+        <div><span>1톤 차량</span><strong id="proTruck1Result">0대</strong></div>
+        <div><span>5톤 차량</span><strong id="proTruck5Result">0대</strong></div>
+        <div><span>작업 인원</span><strong id="proWorkerResult">0명</strong></div>
+        <div><span>예상 시간</span><strong id="proHourResult">0시간</strong></div>
+        <div class="accent"><span>예상 견적금액</span><strong id="proPriceResult">0원</strong></div>
+      </div>
+      <div class="pro-estimate-note">사진에서 선택된 품목을 기준으로 자동 계산합니다. 현장 상황에 따라 금액은 수정할 수 있습니다.</div>
+    </div>
+
     <div class="card">
       <h2><span class="eyebrow">STEP 5</span>견적 확정</h2>
       <div class="price-hero">
@@ -2541,7 +2586,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-1.0';
+const BUILD_VERSION = 'JIMPICK-PRO-1.2';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -3708,21 +3753,32 @@ const Calc = {
     const autoWorkers = Math.max(baseWorkers, Math.ceil(totalPoints / workerCapacity));
     const autoTrucks = Math.max(baseTrucks, Math.ceil(totalPoints / truckCapacity));
 
-    // V5.0 간편형: 1톤 차량만 추천
+    // PRO 1.2: 전체 짐량을 5톤 차량 우선 + 남는 짐은 1톤 차량으로 자동 계산
     const truck1Input = document.getElementById('truck1Count');
     const truck5Input = document.getElementById('truck5Count');
-    let truck1Count = Number(truck1Input.value) || 0;
-    let truck5Count = 0;
+    let truck1Count = Number(truck1Input?.value) || 0;
+    let truck5Count = Number(truck5Input?.value) || 0;
 
     if(!State.truckManual){
-      truck1Count = autoTrucks;
-      truck1Input.value = truck1Count;
-    }
-    if(truck5Input) truck5Input.value = 0;
+      const totalOneTonUnits = Math.max(0, autoTrucks);
+      truck5Count = Math.floor(totalOneTonUnits / 5);
+      truck1Count = totalOneTonUnits % 5;
 
-    const trucks = truck1Count;
-    const truckLabel = truck1Count > 0 ? `1톤(${truck1Count}대)` : '차량 미입력';
-    const truckTotalCount = truck1Count;
+      // 짐이 있으면 최소 1대 이상 표시
+      if(totalOneTonUnits > 0 && truck5Count === 0 && truck1Count === 0){
+        truck1Count = 1;
+      }
+
+      if(truck1Input) truck1Input.value = truck1Count;
+      if(truck5Input) truck5Input.value = truck5Count;
+    }
+
+    const trucks = truck1Count + (truck5Count * 5);
+    const truckParts = [];
+    if(truck5Count > 0) truckParts.push(`5톤(${truck5Count}대)`);
+    if(truck1Count > 0) truckParts.push(`1톤(${truck1Count}대)`);
+    const truckLabel = truckParts.length ? truckParts.join(' + ') : '차량 미입력';
+    const truckTotalCount = truck1Count + truck5Count;
 
     // 남자/주방이모 인원 직접 입력(수동)이 있으면 그 값을 우선 사용, 없으면 자동 추천 인원 사용
     const maleInput = document.getElementById('maleCount');
@@ -3871,7 +3927,10 @@ const Calc = {
     document.getElementById('recWorkers').textContent = workers + '명';
     const recTrucksEl = document.getElementById('recTrucks');
     if(recTrucksEl){
-      recTrucksEl.textContent = truck1Count > 0 ? `1톤 ${truck1Count}대` : '0대';
+      const parts = [];
+      if(truck5Count > 0) parts.push(`5톤 ${truck5Count}대`);
+      if(truck1Count > 0) parts.push(`1톤 ${truck1Count}대`);
+      recTrucksEl.textContent = parts.length ? parts.join(' + ') : '0대';
     }
     document.getElementById('finalCostDisplay').textContent = Utils.won(total);
 
@@ -4273,6 +4332,7 @@ function dashboardSwitchTab(name){
   if(name==='calendar') renderCalendar();
   if(name==='resources') renderResources();
   if(name==='sales') renderSalesDashboard();
+  updateProEstimateSummary();
 }
 
 
@@ -5125,6 +5185,27 @@ function mvpGoToPhoto(){
   DraftService.save();
   UI.goStep(3);
 }
+
+function updateProEstimateSummary(){
+  const truck1 = Number(document.getElementById('truck1Count')?.value)||0;
+  const truck5 = Number(document.getElementById('truck5Count')?.value)||0;
+  const workers = Number(document.getElementById('workerCount')?.value)||0;
+  const hours = Number(document.getElementById('workHours')?.value)||0;
+  const totalText = document.getElementById('finalTotal')?.textContent
+    || document.getElementById('quickTotal')?.textContent
+    || '0원';
+
+  const set=(id,text)=>{
+    const el=document.getElementById(id);
+    if(el)el.textContent=text;
+  };
+
+  set('proTruck1Result',`${truck1}대`);
+  set('proTruck5Result',`${truck5}대`);
+  set('proWorkerResult',`${workers}명`);
+  set('proHourResult',`${hours}시간`);
+  set('proPriceResult',totalText);
+}
 /* ---------------------- 12. SMS 문구 생성 ---------------------- */
 UI.renderSMS = function(){
   const q = State.lastQuote;
@@ -5609,7 +5690,7 @@ async function runAutoAIAnalysis(){
     Calc.run();DraftService.save();
 
     resultWrap.innerHTML=`<div class="simple-ai-success"><h3>✅ AI가 품목을 자동 선택했습니다.</h3><div>${Utils.escapeHtml(aiData.summary||'사진 속 품목을 자동 반영했습니다.')}</div><div class="simple-ai-items">${items.map(i=>`<div class="simple-ai-item">${Utils.escapeHtml(i.name)} × ${i.qty}</div>`).join('')}</div><div class="simple-ai-actions"><button type="button" class="simple-ai-check" onclick="UI.goStep(4)">선택된 품목 확인</button><button type="button" class="simple-ai-fix" onclick="document.getElementById('photoHelper').style.display='block';renderPhotoHelper();">빠진 품목 수정</button></div></div>`;
-    setTimeout(()=>UI.goStep(4),700);
+    setTimeout(()=>{UI.goStep(4);updateProEstimateSummary();},700);
   }catch(error){
     console.error(error);
     resultWrap.innerHTML=`<div class="simple-ai-error"><b>AI 분석을 완료하지 못했습니다.</b><br>API 키, 인터넷 연결 또는 사진을 확인해주세요.<div style="margin-top:10px"><button type="button" class="btn btn-outline" onclick="document.getElementById('photoHelper').style.display='block';renderPhotoHelper();">직접 간단히 선택하기</button></div></div>`;
@@ -6196,6 +6277,13 @@ ${msg || '-'}`;
     document.getElementById('completeSignupBtn')?.addEventListener('click',authCompleteSignup);
     document.getElementById('forgotPasswordBtn')?.addEventListener('click',authForgotPassword);
     document.getElementById('logoutBtn')?.addEventListener('click',authLogout);
+    document.querySelectorAll('[data-step="5"]').forEach(btn=>{
+      btn.addEventListener('click',()=>setTimeout(updateProEstimateSummary,50));
+    });
+    document.getElementById('truck1Count')?.addEventListener('input',updateProEstimateSummary);
+    document.getElementById('truck5Count')?.addEventListener('input',updateProEstimateSummary);
+    document.getElementById('workerCount')?.addEventListener('input',updateProEstimateSummary);
+    document.getElementById('workHours')?.addEventListener('input',updateProEstimateSummary);
     document.getElementById('mvpGoPhoto')?.addEventListener('click',mvpGoToPhoto);
     authInit();
     if(getGeminiApiKey()){
