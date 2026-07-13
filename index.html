@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 V4.3 AI 이사견적</title>
+<title>짐픽 V4.4 AI 이사견적</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1328,6 +1328,30 @@ button:active{transform:scale(0.96);}
   .dispatch-print-day{width:100%}
 }
 
+
+/* ===== V4.4 작업완료·잔금관리 ===== */
+.dispatch-payment-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;margin-top:10px;
+}
+.dispatch-payment-box{
+  padding:11px;border-radius:12px;background:#F5F8FB;border:1px solid #E3EAF2;
+}
+.dispatch-payment-box span{display:block;font-size:11px;color:#718096;font-weight:800}
+.dispatch-payment-box strong{display:block;margin-top:4px;font-size:16px;color:#102A43}
+.dispatch-payment-box.due{background:#FFF4E8;border-color:#FFD7AD}
+.dispatch-payment-box.paid{background:#EAF7F0;border-color:#BDE6CE}
+.dispatch-action-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:9px}
+.dispatch-message{
+  border:0;border-radius:11px;padding:10px;background:#E8EEF5;color:#102A43;font-weight:900;cursor:pointer;
+}
+.dispatch-status-complete{background:#EAF7F0!important;border-color:#BDE6CE!important}
+.dispatch-status-working{background:#FFF7E8!important;border-color:#F4CD8A!important}
+@media(max-width:650px){
+  .dispatch-payment-grid{grid-template-columns:1fr}
+  .dispatch-action-row{grid-template-columns:1fr}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2221,7 +2245,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'V4.3-B43';
+const BUILD_VERSION = 'V4.4-B44';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -3709,6 +3733,12 @@ function crmCurrentFormData(){
       driverName: '',
       workerNames: '',
       status: '미배정'
+    },
+    workStatus: '예약',
+    payment: {
+      deposit: 0,
+      paidAmount: 0,
+      paymentStatus: '미수'
     }
   };
 }
@@ -3849,12 +3879,19 @@ function renderOwnerDashboard(){
 
   const monthTotal = monthRecords.reduce((s,r)=>s+(Number(r.total)||0),0);
   const monthProfit = monthRecords.reduce((s,r)=>s+(Number(r.profitAnalysis?.netProfit)||0),0);
+  const totalReceivable = records.reduce((s,r)=>{
+    const paid = Number(r.payment?.paidAmount)||0;
+    return s + Math.max(0,(Number(r.total)||0)-paid);
+  },0);
+  const completedCount = records.filter(r=>r.workStatus==='작업완료').length;
 
   const setText=(id,text)=>{const el=document.getElementById(id);if(el)el.textContent=text;};
   setText('dashTodayCount',`${todayRecords.length}건`);
   setText('dashMonthCount',`${monthRecords.length}건`);
   setText('dashMonthTotal',Utils.won(monthTotal));
   setText('dashMonthProfit',Utils.won(monthProfit));
+  setText('dashReceivable',Utils.won(totalReceivable));
+  setText('dashCompletedCount',`${completedCount}건`);
 
   const list=document.getElementById('dashboardRecentList');
   if(!list)return;
@@ -3995,9 +4032,14 @@ function renderDispatchList(dateKey){
       Number(r.truck1Count)||Number(dispatch.truckCount)||1
     );
     const recommendedWorkers=Math.max(1,Number(r.workers)||1);
+    const workStatus=r.workStatus||'예약';
+    const payment=r.payment||{};
+    const paidAmount=Number(payment.paidAmount)||0;
+    const balance=Math.max(0,(Number(r.total)||0)-paidAmount);
+    const paymentClass=balance===0?'paid':'due';
 
     return `
-      <div class="dispatch-item ${isAssigned?'':'unassigned'}">
+      <div class="dispatch-item ${isAssigned?'':'unassigned'} ${workStatus==='작업완료'?'dispatch-status-complete':workStatus==='작업중'?'dispatch-status-working':''}">
         <div class="dispatch-item-head">
           <div>
             <b>${Utils.escapeHtml(r.customerName||'이름 없음')}</b>
@@ -4042,14 +4084,41 @@ function renderDispatchList(dateKey){
               <option ${dispatch.status==='배정완료'?'selected':''}>배정완료</option>
             </select>
           </div>
+          <div class="dispatch-field">
+            <label>작업 상태</label>
+            <select data-work-status="${r.id}">
+              <option ${workStatus==='예약'?'selected':''}>예약</option>
+              <option ${workStatus==='작업중'?'selected':''}>작업중</option>
+              <option ${workStatus==='작업완료'?'selected':''}>작업완료</option>
+            </select>
+          </div>
+          <div class="dispatch-field">
+            <label>계약금</label>
+            <input type="number" min="0" step="10000" value="${Number(payment.deposit)||0}" data-payment-deposit="${r.id}">
+          </div>
+          <div class="dispatch-field">
+            <label>현재까지 받은 금액</label>
+            <input type="number" min="0" step="10000" value="${paidAmount}" data-payment-paid="${r.id}">
+          </div>
+        </div>
+
+        <div class="dispatch-payment-grid">
+          <div class="dispatch-payment-box"><span>총 견적금액</span><strong>${Utils.won(Number(r.total)||0)}</strong></div>
+          <div class="dispatch-payment-box"><span>받은 금액</span><strong>${Utils.won(paidAmount)}</strong></div>
+          <div class="dispatch-payment-box ${paymentClass}"><span>남은 잔금</span><strong>${Utils.won(balance)}</strong></div>
         </div>
 
         <button type="button" class="dispatch-auto" data-dispatch-auto="${r.id}">
           ⚡ 등록 차량·직원 자동 배정
         </button>
-        <button type="button" class="dispatch-save" data-dispatch-save="${r.id}">
-          배차정보 저장
-        </button>
+        <div class="dispatch-action-row">
+          <button type="button" class="dispatch-save" data-dispatch-save="${r.id}">
+            배차·작업·잔금 저장
+          </button>
+          <button type="button" class="dispatch-message" data-dispatch-message="${r.id}">
+            📱 배차 안내문 복사
+          </button>
+        </div>
 
         ${(assignedTruckNames||assignedWorkerNames)?`
           <div class="dispatch-assigned">
@@ -4084,6 +4153,16 @@ function saveDispatchRecord(id){
     period:document.querySelector(`[data-dispatch-period="${id}"]`)?.value||'오전',
     teamName:document.querySelector(`[data-dispatch-team="${id}"]`)?.value?.trim()||'',
     status
+  };
+
+  const deposit=Number(document.querySelector(`[data-payment-deposit="${id}"]`)?.value)||0;
+  const paidAmount=Number(document.querySelector(`[data-payment-paid="${id}"]`)?.value)||0;
+  const total=Number(records[index].total)||0;
+  records[index].workStatus=document.querySelector(`[data-work-status="${id}"]`)?.value||'예약';
+  records[index].payment={
+    deposit,
+    paidAmount,
+    paymentStatus:paidAmount>=total && total>0?'완납':paidAmount>0?'일부입금':'미수'
   };
 
   crmWrite(records);
@@ -4134,6 +4213,52 @@ function autoAssignDispatch(id){
   renderDispatchList(calendarSelectedDate);
 }
 
+
+function buildDispatchMessage(record){
+  const trucks=resourceRead(RESOURCE_TRUCK_KEY);
+  const workers=resourceRead(RESOURCE_WORKER_KEY);
+  const d=record.dispatch||{};
+  const truckNames=trucks.filter(t=>(d.truckIds||[]).includes(t.id))
+    .map(t=>`${t.number}${t.driver?' ('+t.driver+')':''}`).join(', ')||'미정';
+  const workerNames=workers.filter(w=>(d.workerIds||[]).includes(w.id))
+    .map(w=>`${w.name}(${w.role||'작업자'})`).join(', ')||'미정';
+  const paid=Number(record.payment?.paidAmount)||0;
+  const balance=Math.max(0,(Number(record.total)||0)-paid);
+
+  return `[짐픽 배차 안내]
+
+고객명: ${record.customerName||'-'}
+이사일: ${record.moveDate||'-'}
+시작 시간: ${record.moveStartTime||'-'}
+작업 구분: ${d.period||'-'}
+팀: ${d.teamName||'-'}
+
+차량·기사: ${truckNames}
+작업자: ${workerNames}
+작업 상태: ${record.workStatus||'예약'}
+
+총 견적금액: ${Utils.won(Number(record.total)||0)}
+입금액: ${Utils.won(paid)}
+남은 잔금: ${Utils.won(balance)}
+
+출발지: ${record.fromAddress||'-'} ${record.fromDetail||''}
+도착지: ${record.toAddress||'-'} ${record.toDetail||''}
+
+※ 현장 상황에 따라 작업시간과 배차가 조정될 수 있습니다.`;
+}
+
+async function copyDispatchMessage(id){
+  const record=crmRead().find(r=>r.id===id);
+  if(!record)return;
+  const text=buildDispatchMessage(record);
+  try{
+    await navigator.clipboard.writeText(text);
+    alert('배차 안내문을 복사했습니다. 문자나 카카오톡에 붙여넣으세요.');
+  }catch(e){
+    window.prompt('아래 내용을 복사하세요.',text);
+  }
+}
+
 function printDispatchDay(){
   if(!calendarSelectedDate){
     alert('먼저 캘린더에서 날짜를 선택해주세요.');
@@ -4166,6 +4291,8 @@ function printDispatchDay(){
       <td>${Utils.escapeHtml(workerNames)}</td>
       <td>${Utils.escapeHtml(d.teamName||'-')}</td>
       <td>${Utils.escapeHtml(d.status||'미배정')}</td>
+      <td>${Utils.escapeHtml(r.workStatus||'예약')}</td>
+      <td>${Utils.won(Math.max(0,(Number(r.total)||0)-(Number(r.payment?.paidAmount)||0)))}</td>
     </tr>`;
   }).join('');
 
@@ -4186,7 +4313,7 @@ function printDispatchDay(){
     <p>작업일: ${calendarSelectedDate} · 총 ${records.length}건</p>
     <table><thead><tr>
       <th>순번</th><th>구분</th><th>시간</th><th>고객</th><th>구간</th>
-      <th>차량·기사</th><th>작업자</th><th>팀</th><th>상태</th>
+      <th>차량·기사</th><th>작업자</th><th>팀</th><th>배차</th><th>작업</th><th>잔금</th>
     </tr></thead><tbody>${rows}</tbody></table>
     <div class="foot">짐픽 V4.3 자동 배차표</div>
     <script>window.onload=()=>window.print();<\/script>
@@ -5074,8 +5201,10 @@ ${msg || '-'}`;
     document.getElementById('dispatchList')?.addEventListener('click',(e)=>{
       const saveBtn=e.target.closest('[data-dispatch-save]');
       const autoBtn=e.target.closest('[data-dispatch-auto]');
+      const messageBtn=e.target.closest('[data-dispatch-message]');
       if(saveBtn)saveDispatchRecord(saveBtn.dataset.dispatchSave);
       if(autoBtn)autoAssignDispatch(autoBtn.dataset.dispatchAuto);
+      if(messageBtn)copyDispatchMessage(messageBtn.dataset.dispatchMessage);
     });
     document.getElementById('printDispatchDay')?.addEventListener('click',printDispatchDay);
     document.getElementById('dashboardClose')?.addEventListener('click', closeOwnerDashboard);
@@ -5624,6 +5753,8 @@ document.addEventListener('DOMContentLoaded', App.init);
       <div class="dashboard-stat"><span>이번 달 견적</span><strong id="dashMonthCount">0건</strong></div>
       <div class="dashboard-stat"><span>이번 달 총 견적금액</span><strong id="dashMonthTotal">0원</strong></div>
       <div class="dashboard-stat"><span>이번 달 예상 순이익</span><strong id="dashMonthProfit">0원</strong></div>
+      <div class="dashboard-stat"><span>전체 미수금</span><strong id="dashReceivable">0원</strong></div>
+      <div class="dashboard-stat"><span>작업완료 건수</span><strong id="dashCompletedCount">0건</strong></div>
     </div>
 
     <div class="dashboard-section">
