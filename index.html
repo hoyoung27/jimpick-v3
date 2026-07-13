@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 1.4</title>
+<title>짐픽 PRO 1.5</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 1.4 최소판매형 ===== */
+/* ===== 짐픽 PRO 1.5 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -1674,7 +1674,7 @@ body{font-size:18px}
 .sticky-footer .nav-btn{min-height:58px;font-size:18px}
 
 /* AI 키 입력은 판매용 화면에서 숨김: 서버 연결 전 임시로 관리자만 사용 */
-.simple-ai-key-box{display:block!important}
+.simple-ai-key-box{display:none!important}
 .simple-ai-key-box{margin-top:12px}
 .simple-ai-key-box::before{
   content:"처음 한 번만 AI 연결키를 입력합니다.";
@@ -1778,6 +1778,13 @@ body{font-size:18px}
 .subscription-status-badge.active{background:#EAF7F0;color:#16794B}
 .subscription-status-badge.expired{background:#FFF0ED;color:#B42318}
 @media(max-width:640px){.subscription-status-badge{display:none}}
+
+
+.ai-server-ready{
+  margin-top:12px;padding:10px 12px;border-radius:12px;
+  background:#EAF7F0;color:#16794B;text-align:center;
+  font-size:13px;font-weight:900;
+}
 
 </style>
 <meta name="mobile-web-app-capable" content="yes">
@@ -2021,7 +2028,7 @@ body{font-size:18px}
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-1.4</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-1.5</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -2128,17 +2135,9 @@ body{font-size:18px}
 
       <div class="preview-grid" id="mediaPreview"></div>
 
-      <div class="simple-ai-key-box" id="simpleAiKeyBox">
-        <div class="simple-ai-key-title">🔑 AI 연결키 — 처음 한 번만 입력</div>
-        <div class="simple-ai-key-row">
-          <input type="password" id="geminiApiKeyInput" placeholder="Gemini API 키 붙여넣기">
-          <button type="button" id="saveGeminiApiKey">저장</button>
-        </div>
-        <div class="simple-ai-key-help">
-          입력한 키는 이 기기 안에만 저장됩니다. 다른 사람에게 보여주지 마세요.
-        </div>
-      </div>
+      
 
+      <div class="ai-server-ready">🔒 AI 보안 연결 적용</div>
       <button class="btn btn-accent simple-ai-analyze" id="analyzeBtn">
         🤖 AI로 품목 자동선택
       </button>
@@ -2673,7 +2672,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-1.4';
+const BUILD_VERSION = 'JIMPICK-PRO-1.5';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -5840,37 +5839,25 @@ function normalizeAiItems(items){
   return Object.entries(merged).map(([name,qty])=>({name,qty,confidence:1,size:'확인필요',disassembly_required:false,heavy_item:false,special_handling:false}));
 }
 
-async function callGeminiVision(apiKey,imageParts){
-  const names=['침대','옷장','서랍장','책상','책장','의자','화장대','컴퓨터','TV','에어컨','스타일러','행거','선풍기','박스','바구니','기타','소파','거실장','TV스탠드','안마의자','공기청정기','테이블','러닝머신','장식장','화분','스피커','냉장고','김치냉장고','식탁','전자레인지','에어프라이어','밥솥','정수기','식기세척기','가스레인지','수납장','세탁기','건조기','빨래건조대'];
-  const prompt=`한국 이사업체의 견적 사진 분석입니다. 사진에 보이는 이삿짐을 세고 JSON만 반환하세요.
-같은 물건이 여러 사진에 중복되면 한 번만 계산합니다.
-확실히 보이는 품목만 계산하고 작은 생활용품은 박스 수량으로 추정합니다.
-품목명은 반드시 다음 목록에서만 선택합니다:
-${names.join(', ')}
-반환 형식: {"items":[{"name":"냉장고","qty":1}],"summary":"짧은 설명"}`;
+async function callGeminiVision(imageParts){
+  const response=await fetch('/.netlify/functions/analyze-image',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({images:imageParts})
+  });
 
-  const body={contents:[{role:'user',parts:[{text:prompt},...imageParts.map(img=>({inlineData:{mimeType:img.mimeType,data:img.data}}))]}],generationConfig:{temperature:0.1,responseMimeType:'application/json',responseSchema:{type:'OBJECT',properties:{items:{type:'ARRAY',items:{type:'OBJECT',properties:{name:{type:'STRING'},qty:{type:'INTEGER'}},required:['name','qty']}},summary:{type:'STRING'}},required:['items']}}};
+  const data=await response.json().catch(()=>({}));
 
-  const models=['gemini-2.5-flash','gemini-2.0-flash'];
-  let lastError='';
-  for(const model of models){
-    const response=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},body:JSON.stringify(body)});
-    if(response.ok){
-      const data=await response.json();
-      return JSON.parse(cleanJsonText(extractGeminiText(data)));
-    }
-    lastError=`${response.status} ${await response.text()}`;
-    if(response.status!==404)break;
+  if(!response.ok){
+    throw new Error(data?.error||`AI 서버 오류 ${response.status}`);
   }
-  throw new Error(lastError||'AI 서버 응답이 없습니다.');
+
+  return data;
 }
 
 async function runAutoAIAnalysis(){
   if(State.media.length===0){alert('먼저 사진을 촬영하거나 선택해주세요.');return;}
-  const apiKey=getGeminiApiKey();
-  if(!apiKey){document.getElementById('simpleAiKeyBox')?.scrollIntoView({behavior:'smooth'});alert('AI 서버 연결이 아직 준비되지 않았습니다. 대표님 테스트용 연결키를 먼저 설정해주세요.');return;}
-
-  const btn=document.getElementById('analyzeBtn');
+const btn=document.getElementById('analyzeBtn');
   const progress=document.getElementById('simpleAiProgress');
   const resultWrap=document.getElementById('aiResultWrap');
   btn.disabled=true;btn.textContent='분석 중…';progress.style.display='flex';resultWrap.innerHTML='';
@@ -5879,7 +5866,7 @@ async function runAutoAIAnalysis(){
     const files=State.media.map(m=>m.file).filter(f=>f?.type?.startsWith('image/')).slice(0,8);
     const imageParts=[];
     for(const file of files)imageParts.push(await prepareImageForGemini(file));
-    const aiData=await callGeminiVision(apiKey,imageParts);
+    const aiData=await callGeminiVision(imageParts);
     const items=normalizeAiItems(aiData.items);
     if(!items.length)throw new Error('품목을 찾지 못했습니다.');
 
@@ -5893,7 +5880,7 @@ async function runAutoAIAnalysis(){
     setTimeout(()=>{UI.goStep(4);updateProEstimateSummary();},700);
   }catch(error){
     console.error(error);
-    resultWrap.innerHTML=`<div class="simple-ai-error"><b>AI 분석을 완료하지 못했습니다.</b><br>API 키, 인터넷 연결 또는 사진을 확인해주세요.<div style="margin-top:10px"><button type="button" class="btn btn-outline" onclick="document.getElementById('photoHelper').style.display='block';renderPhotoHelper();">직접 간단히 선택하기</button></div></div>`;
+    resultWrap.innerHTML=`<div class="simple-ai-error"><b>AI 분석을 완료하지 못했습니다.</b><br>인터넷 연결 또는 사진을 확인해주세요. 계속 안 되면 짐픽 관리자에게 문의해주세요.<div style="margin-top:10px"><button type="button" class="btn btn-outline" onclick="document.getElementById('photoHelper').style.display='block';renderPhotoHelper();">직접 간단히 선택하기</button></div></div>`;
   }finally{
     btn.disabled=false;btn.textContent='🤖 AI로 품목 자동선택';progress.style.display='none';
   }
@@ -6468,7 +6455,6 @@ ${msg || '-'}`;
 
     // AI 사진 자동분석
     document.getElementById('analyzeBtn').addEventListener('click', runAutoAIAnalysis);
-    document.getElementById('saveGeminiApiKey')?.addEventListener('click', saveGeminiApiKey);
     document.getElementById('loginBtn')?.addEventListener('click',authLogin);
     document.getElementById('goSignupBtn')?.addEventListener('click',()=>authShowPanel('signupPanel'));
     document.getElementById('backLoginBtn')?.addEventListener('click',()=>authShowPanel('loginPanel'));
@@ -6490,10 +6476,6 @@ ${msg || '-'}`;
     document.getElementById('workHours')?.addEventListener('input',updateProEstimateSummary);
     document.getElementById('mvpGoPhoto')?.addEventListener('click',mvpGoToPhoto);
     authInit();
-    if(getGeminiApiKey()){
-      const title=document.querySelector('.simple-ai-key-title');
-      if(title)title.textContent='✅ AI 연결키 저장됨';
-    }
     document.getElementById('photoHelperChips').addEventListener('click', (e)=>{
       const btn = e.target.closest('.photo-qty-btn');
       const chip = e.target.closest('.photo-chip');
