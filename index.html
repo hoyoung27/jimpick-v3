@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 상용앱 1.1 간편판</title>
+<title>짐픽 PRO 1.0</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,6 +1631,69 @@ body{
   .mvp-field input{font-size:18px}
 }
 
+
+/* ===== 짐픽 PRO 1.0 최소판매형 ===== */
+.inquiry-banner,
+.install-banner,
+.account-bar,
+#accountBar,
+#openDashboardBtn,
+.dashboard-modal,
+.crm-card,
+.profit-card,
+.sales-wrap,
+#dashPanelSales,
+#adminNavBtn,
+.cloud-save-card,
+#cloudSaveCard,
+.resource-wrap,
+.dispatch-panel,
+.calendar-toolbar,
+.calendar-week,
+.calendar-grid {
+  display:none!important;
+}
+
+body{font-size:18px}
+.container{max-width:820px}
+.card{padding:24px 22px}
+.card h2{font-size:24px}
+.mvp-guide{font-size:18px}
+.mvp-field span{font-size:19px}
+.mvp-field input{height:66px;font-size:20px}
+.mvp-next-btn{min-height:72px;font-size:22px}
+.route-nav{justify-content:center}
+.route-step{min-width:116px;padding:0 12px}
+.route-step .dot{width:42px;height:42px;font-size:16px}
+.route-step .lbl{font-size:15px!important}
+.btn{min-height:62px;font-size:19px}
+.upload-btn{min-height:64px;font-size:18px}
+.simple-ai-analyze{min-height:72px!important;font-size:21px!important}
+.item-check span{font-size:20px!important}
+.qty-btn{width:44px;height:44px}
+.qty-input{height:44px;font-size:18px}
+.sticky-footer .nav-btn{min-height:58px;font-size:18px}
+
+/* AI 키 입력은 판매용 화면에서 숨김: 서버 연결 전 임시로 관리자만 사용 */
+.simple-ai-key-box{display:none!important}
+
+/* 1톤 차량만 사용 */
+#truck5Count,
+#profitTruck5Cost,
+.truck-qty-item:has(#truck5Count){display:none!important}
+.truck-qty-row{grid-template-columns:1fr!important}
+
+/* 복잡한 세부 항목은 기본적으로 감춤 */
+.advanced-box,.optional-box,.arch-note{display:none!important}
+
+@media(max-width:640px){
+  .route-nav{justify-content:flex-start}
+  .route-step{min-width:96px}
+  .mvp-grid{grid-template-columns:1fr}
+  .mvp-field.full{grid-column:auto}
+  .card{padding:20px 16px}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1646,14 +1709,14 @@ body{
   <div class="auth-card">
     <div class="auth-logo">🚚</div>
     <h1>짐픽</h1>
-    <p class="auth-sub">이사업체 대표님 전용<br>AI 이사견적 앱</p>
+    <p class="auth-sub">사진만 찍으면 자동견적<br>이사업체 대표님 전용</p>
     <div id="loginPanel" class="auth-panel active">
       <label class="auth-label">휴대전화 또는 이메일</label>
       <input id="loginIdInput" class="auth-input" placeholder="예: 01012345678">
       <label class="auth-label">비밀번호</label>
       <input id="loginPasswordInput" class="auth-input" type="password" placeholder="비밀번호 입력">
       <button id="loginBtn" class="auth-main-btn">로그인</button>
-      <button id="goSignupBtn" class="auth-sub-btn">처음 사용하시나요? 회원가입</button>
+      <button id="goSignupBtn" class="auth-sub-btn">처음이면 회원가입</button>
       <button id="forgotPasswordBtn" class="auth-link-btn">비밀번호를 잊으셨나요?</button>
     </div>
     <div id="signupPanel" class="auth-panel">
@@ -1838,7 +1901,7 @@ body{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build COMMERCIAL-1.1-MVP</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-1.0</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -1867,13 +1930,12 @@ body{
 </div>
 
 <!-- ============ 진행 경로 네비 ============ -->
-<div class="route-nav no-print" id="routeNav">
+<div class="route-nav no-print">
   <div class="route-step active" data-step="1"><div class="dot">1</div><div class="lbl">고객정보</div></div>
-  <div class="route-step" data-step="2"><div class="dot">2</div><div class="lbl">사진촬영</div></div>
-  <div class="route-step" data-step="3"><div class="dot">3</div><div class="lbl">AI분석</div></div>
-  <div class="route-step" data-step="4"><div class="dot">4</div><div class="lbl">품목확인</div></div>
-  <div class="route-step" data-step="5"><div class="dot">5</div><div class="lbl">견적확정</div></div>
-  <div class="route-step" data-step="6"><div class="dot">6</div><div class="lbl">문자발송</div></div>
+  <div class="route-step" data-step="3"><div class="dot">2</div><div class="lbl">사진촬영</div></div>
+  <div class="route-step" data-step="4"><div class="dot">3</div><div class="lbl">품목확인</div></div>
+  <div class="route-step" data-step="5"><div class="dot">4</div><div class="lbl">자동견적</div></div>
+  <div class="route-step" data-step="6"><div class="dot">5</div><div class="lbl">문자발송</div></div>
 </div>
 
 <div class="container">
@@ -1882,7 +1944,7 @@ body{
   <section class="panel active" id="step1">
     <div class="card mvp-card">
       <h2><span class="eyebrow">1단계</span> 고객정보</h2>
-      <p class="mvp-guide">고객에게 물어본 내용만 간단히 입력하세요.</p>
+      <p class="mvp-guide">5가지만 입력하고 사진을 찍으세요.</p>
 
       <div class="mvp-grid">
         <label class="mvp-field">
@@ -1914,142 +1976,6 @@ body{
       <button type="button" class="mvp-next-btn" id="mvpGoPhoto">
         다음: 사진 찍기 →
       </button>
-    </div>
-  </section>
-
-  <!-- ============ STEP 2. 이사 정보(출발/도착) ============ -->
-  <section class="panel" id="step2">
-    <div class="card">
-      <h2><span class="eyebrow">STEP 2</span>출발지 · 도착지</h2>
-      <div class="hint" style="margin-bottom:10px;">주소검색은 Claude 미리보기보다 다운로드한 파일 또는 배포된 Chrome 화면에서 테스트하는 것이 정확합니다.</div>
-
-      <div class="addr-block from">
-        <div class="addr-title">📍 출발지</div>
-        <div class="field">
-          <label>주소</label>
-          <div class="addr-search-row">
-            <input type="text" id="fromAddress" placeholder="출발지 주소를 입력하세요">
-            <button type="button" id="fromAddressSearchButton" class="addr-search-btn" onclick="openPostcode('from')">🔍 검색</button>
-          </div>
-          <div class="mini-map" id="fromMap"></div>
-        </div>
-        <div class="field">
-          <label>상세주소 (동/호수 등)</label>
-          <input type="text" id="fromDetail" placeholder="예) 101동 202호">
-        </div>
-        <div class="field">
-          <label>사다리차 사유(선택)</label>
-          <input type="text" id="fromLadderNote" placeholder="예) 계단 협소">
-        </div>
-        <div class="switch-row" id="fromStairsRow">
-          <span><svg class="row-icon" viewBox="0 0 24 24" width="20" height="20"><path d="M3 21V17H7V13H11V9H15V5H19V21H3Z" fill="currentColor"/></svg> 수작업(계단) <b id="fromStairsStatus">없음</b></span>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="size-tag" id="fromStairsFloorTag">1층</span>
-            <button type="button" class="size-toggle" id="fromStairsFloorToggle">▼</button>
-            <label class="switch"><input type="checkbox" id="fromStairs"><span class="track"></span><span class="thumb"></span></label>
-          </div>
-        </div>
-        <input type="hidden" id="fromStairsFloor" value="1">
-        <div class="size-options ladder-floor-options" id="fromStairsFloorOptions"></div>
-        <div class="switch-row elevator-row on" id="fromElevatorRow">
-          <span>🛗 엘리베이터 <b id="fromElevatorStatus">있음</b></span>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="size-tag" id="fromElevatorFloorTag">1층</span>
-            <button type="button" class="size-toggle" id="fromElevatorFloorToggle">▼</button>
-            <label class="switch elevator"><input type="checkbox" id="fromElevator" checked><span class="track"></span><span class="thumb"></span></label>
-          </div>
-        </div>
-        <input type="hidden" id="fromElevatorFloor" value="1">
-        <div class="size-options ladder-floor-options" id="fromElevatorFloorOptions"></div>
-        <div class="switch-row">
-          <span><svg class="row-icon" viewBox="0 0 24 24" width="20" height="20"><rect x="2" y="11" width="9" height="7" rx="1.2" fill="currentColor"/><path d="M10 13.5H14.5L18.5 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="5.2" cy="19.5" r="1.6" fill="currentColor"/><circle cx="9.5" cy="19.5" r="1.6" fill="currentColor"/></svg> 사다리차 <b id="fromLadderStatus">필요 없음</b></span>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="size-tag" id="fromLadderFloorTag">2층</span>
-            <button type="button" class="size-toggle" id="fromLadderFloorToggle">▼</button>
-            <label class="switch"><input type="checkbox" id="fromLadder"><span class="track"></span><span class="thumb"></span></label>
-          </div>
-        </div>
-        <div class="size-options ladder-floor-options" id="fromLadderFloorOptions"></div>
-        <div class="field">
-          <label>골목 진입 가능</label>
-          <select id="fromAlleyAccess">
-            <option value="가능" selected>가능</option>
-            <option value="어려움">어려움</option>
-            <option value="불가능(추가 인력 필요)">불가능(추가 인력 필요)</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>작업 특이사항</label>
-          <input type="text" id="fromSiteNote" placeholder="예) 이중주차 많음, 경사로 있음 등">
-        </div>
-      </div>
-
-      <div class="addr-block to">
-        <div class="addr-title">🏁 도착지</div>
-        <div class="field">
-          <label>주소</label>
-          <div class="addr-search-row">
-            <input type="text" id="toAddress" placeholder="도착지 주소를 입력하세요">
-            <button type="button" id="toAddressSearchButton" class="addr-search-btn" onclick="openPostcode('to')">🔍 검색</button>
-          </div>
-          <div class="mini-map" id="toMap"></div>
-        </div>
-        <div class="field">
-          <label>상세주소 (동/호수 등)</label>
-          <input type="text" id="toDetail" placeholder="예) 101동 202호">
-        </div>
-        <div class="field">
-          <label>사다리차 사유(선택)</label>
-          <input type="text" id="toLadderNote" placeholder="예) 계단 협소">
-        </div>
-        <div class="switch-row" id="toStairsRow">
-          <span><svg class="row-icon" viewBox="0 0 24 24" width="20" height="20"><path d="M3 21V17H7V13H11V9H15V5H19V21H3Z" fill="currentColor"/></svg> 수작업(계단) <b id="toStairsStatus">없음</b></span>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="size-tag" id="toStairsFloorTag">1층</span>
-            <button type="button" class="size-toggle" id="toStairsFloorToggle">▼</button>
-            <label class="switch"><input type="checkbox" id="toStairs"><span class="track"></span><span class="thumb"></span></label>
-          </div>
-        </div>
-        <input type="hidden" id="toStairsFloor" value="1">
-        <div class="size-options ladder-floor-options" id="toStairsFloorOptions"></div>
-        <div class="switch-row elevator-row on" id="toElevatorRow">
-          <span>🛗 엘리베이터 <b id="toElevatorStatus">있음</b></span>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="size-tag" id="toElevatorFloorTag">1층</span>
-            <button type="button" class="size-toggle" id="toElevatorFloorToggle">▼</button>
-            <label class="switch elevator"><input type="checkbox" id="toElevator" checked><span class="track"></span><span class="thumb"></span></label>
-          </div>
-        </div>
-        <input type="hidden" id="toElevatorFloor" value="1">
-        <div class="size-options ladder-floor-options" id="toElevatorFloorOptions"></div>
-        <div class="switch-row">
-          <span><svg class="row-icon" viewBox="0 0 24 24" width="20" height="20"><rect x="2" y="11" width="9" height="7" rx="1.2" fill="currentColor"/><path d="M10 13.5H14.5L18.5 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="5.2" cy="19.5" r="1.6" fill="currentColor"/><circle cx="9.5" cy="19.5" r="1.6" fill="currentColor"/></svg> 사다리차 <b id="toLadderStatus">필요 없음</b></span>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="size-tag" id="toLadderFloorTag">2층</span>
-            <button type="button" class="size-toggle" id="toLadderFloorToggle">▼</button>
-            <label class="switch"><input type="checkbox" id="toLadder"><span class="track"></span><span class="thumb"></span></label>
-          </div>
-        </div>
-        <div class="size-options ladder-floor-options" id="toLadderFloorOptions"></div>
-        <div class="field">
-          <label>골목 진입 가능</label>
-          <select id="toAlleyAccess">
-            <option value="가능" selected>가능</option>
-            <option value="어려움">어려움</option>
-            <option value="불가능(추가 인력 필요)">불가능(추가 인력 필요)</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>작업 특이사항</label>
-          <input type="text" id="toSiteNote" placeholder="예) 이중주차 많음, 경사로 있음 등">
-        </div>
-      </div>
-      <div class="hint">※ 수작업·엘리베이터·사다리차의 세모(▼)를 누르면 층수를 선택할 수 있고, 다시 누르면 목록이 닫힙니다.</div>
-      <div class="arch-note">
-        🗺️ <b>지도 안내</b>: 주소를 검색해서 고르면 자동으로 좌표로 변환되어 지도가 그 위치로 이동하고 마커가 표시됩니다.
-        단, 이 기능을 쓰려면 무료 카카오 지도 키를 한 번 발급받아 코드 맨 위 <code>KAKAO_APP_KEY</code> 자리에 넣어야 합니다
-        (발급 방법은 그 위치의 안내 주석 참고). 키가 없어도 주소 검색·입력 자체는 정상적으로 작동합니다.
-      </div>
     </div>
   </section>
 
@@ -2615,7 +2541,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'COMMERCIAL-1.1-MVP';
+const BUILD_VERSION = 'JIMPICK-PRO-1.0';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -5661,7 +5587,7 @@ ${names.join(', ')}
 async function runAutoAIAnalysis(){
   if(State.media.length===0){alert('먼저 사진을 촬영하거나 선택해주세요.');return;}
   const apiKey=getGeminiApiKey();
-  if(!apiKey){document.getElementById('simpleAiKeyBox')?.scrollIntoView({behavior:'smooth'});alert('처음 한 번만 Gemini API 키를 입력하고 저장해주세요.');return;}
+  if(!apiKey){document.getElementById('simpleAiKeyBox')?.scrollIntoView({behavior:'smooth'});alert('AI 서버 연결이 아직 준비되지 않았습니다. 대표님 테스트용 연결키를 먼저 설정해주세요.');return;}
 
   const btn=document.getElementById('analyzeBtn');
   const progress=document.getElementById('simpleAiProgress');

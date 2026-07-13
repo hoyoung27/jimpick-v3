@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 상용앱 1.1 간편판",
-  "short_name": "짐픽",
-  "description": "로그인 후 고객정보와 사진 AI 견적만 사용하는 간편 MVP",
+  "name": "짐픽 PRO 1.0",
+  "short_name": "짐픽 PRO",
+  "description": "이사업체 대표님용 사진 AI 자동견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

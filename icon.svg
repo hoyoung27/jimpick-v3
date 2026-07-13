@@ -1,12 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="112" fill="#0F2A43"/>
-  <rect x="76" y="206" width="250" height="126" rx="22" fill="#FFB347"/>
-  <rect x="326" y="242" width="110" height="90" rx="18" fill="#FF6B35"/>
-  <path d="M344 242h52l40 42v12h-92z" fill="#F4F8FB"/>
-  <circle cx="160" cy="352" r="42" fill="#EAF0F5"/>
-  <circle cx="374" cy="352" r="42" fill="#EAF0F5"/>
-  <circle cx="160" cy="352" r="20" fill="#0F2A43"/>
-  <circle cx="374" cy="352" r="20" fill="#0F2A43"/>
-  <text x="256" y="164" text-anchor="middle" font-size="86"
-        font-family="Arial, sans-serif" font-weight="900" fill="#FFFFFF">짐픽</text>
+<rect width="512" height="512" rx="110" fill="#0F2A43"/>
+<rect x="70" y="225" width="245" height="120" rx="22" fill="#FFB347"/>
+<rect x="315" y="250" width="120" height="95" rx="18" fill="#FF6B35"/>
+<circle cx="155" cy="365" r="40" fill="#fff"/>
+<circle cx="375" cy="365" r="40" fill="#fff"/>
+<text x="256" y="170" text-anchor="middle" font-size="90" font-weight="900" fill="#fff">짐픽</text>
 </svg>
