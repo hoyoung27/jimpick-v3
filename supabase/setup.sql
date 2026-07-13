@@ -176,3 +176,42 @@ drop policy if exists "payment_logs_select_own" on public.payment_logs;
 create policy "payment_logs_select_own"
 on public.payment_logs for select
 using (auth.uid() = user_id);
+
+
+-- 짐픽 PRO 3.3 현장 베타테스트 평가
+create table if not exists public.beta_feedback (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  build_version text not null default '',
+  customer_name text not null default '',
+  items_rating text not null default '',
+  trucks_rating text not null default '',
+  work_rating text not null default '',
+  price_rating text not null default '',
+  feedback_note text not null default '',
+  predicted_truck1 integer not null default 0,
+  predicted_truck5 integer not null default 0,
+  predicted_workers integer not null default 0,
+  predicted_hours numeric not null default 0,
+  predicted_price integer not null default 0,
+  scene_data jsonb not null default '{}'::jsonb,
+  items_data jsonb not null default '{}'::jsonb,
+  device_info jsonb not null default '{}'::jsonb,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists beta_feedback_user_created_idx
+  on public.beta_feedback(user_id, created_at desc);
+
+alter table public.beta_feedback enable row level security;
+
+drop policy if exists "beta_feedback_select_own" on public.beta_feedback;
+drop policy if exists "beta_feedback_insert_own" on public.beta_feedback;
+
+create policy "beta_feedback_select_own"
+on public.beta_feedback for select
+using (auth.uid() = user_id);
+
+create policy "beta_feedback_insert_own"
+on public.beta_feedback for insert
+with check (auth.uid() = user_id);

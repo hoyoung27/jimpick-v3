@@ -1,4 +1,4 @@
-const CACHE_NAME='jimpick-pro-3-2-estimate-share';
+const CACHE_NAME='jimpick-pro-3-3-beta-feedback';
 const FILES=['./','./index.html','./manifest.json','./icon.svg'];
 self.addEventListener('install',e=>{
   e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(FILES)));
