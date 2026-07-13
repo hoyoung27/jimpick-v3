@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 2.7</title>
+<title>짐픽 PRO 2.8</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 2.7 최소판매형 ===== */
+/* ===== 짐픽 PRO 2.8 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -2225,6 +2225,51 @@ body{font-size:18px}
 .ai-confidence-badge{padding:7px 10px;border-radius:999px;background:#fff;border:1px solid #E7C988;font-size:13px;font-weight:900}
 @media(max-width:700px){.ai-detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
+
+/* ===== PRO 2.8 업체별 맞춤 견적 학습 ===== */
+.training-card{max-width:900px;margin:0 auto 16px}
+.training-guide{
+  margin:0 0 14px;padding:13px 14px;border-radius:13px;
+  background:#EEF5FF;color:#174A7E;font-size:15px;font-weight:900;
+}
+.training-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;
+}
+.training-grid label{display:grid;gap:7px}
+.training-grid label.wide{grid-column:span 2}
+.training-grid span{font-size:14px;font-weight:900;color:#102A43}
+.training-grid input{
+  min-height:52px;padding:0 12px;border:1px solid #CBD6E2;
+  border-radius:12px;background:#fff;font-size:18px;font-weight:800;
+}
+.save-training-btn{
+  width:100%;min-height:62px;margin-top:12px;border:0;border-radius:15px;
+  background:#16A36A;color:#fff;font-size:18px;font-weight:900;cursor:pointer;
+}
+.training-summary{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:12px;
+}
+.training-summary div{
+  padding:12px 8px;border-radius:13px;background:#F3F6FA;
+  border:1px solid #DCE5EE;text-align:center;
+}
+.training-summary span{display:block;font-size:11px;color:#65798C;font-weight:900}
+.training-summary strong{display:block;margin-top:4px;font-size:18px;color:#102A43}
+.training-message{
+  margin-top:10px;padding:12px;border-radius:12px;background:#FFF8E8;
+  color:#6D4910;text-align:center;font-weight:900;
+}
+.training-message.ok{background:#EAF7F0;color:#16794B}
+@media(max-width:800px){
+  .training-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .training-summary{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:520px){
+  .training-grid{grid-template-columns:1fr}
+  .training-grid label.wide{grid-column:auto}
+  .training-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2487,7 +2532,7 @@ body{font-size:18px}
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-2.7</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-2.8</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -2824,6 +2869,37 @@ body{font-size:18px}
 
   <!-- ============ STEP 5. 견적 확정 ============ -->
   <section class="panel" id="step5">
+<div class="card training-card">
+  <h2><span class="eyebrow">맞춤학습</span> 실제 현장 결과 입력</h2>
+  <p class="training-guide">
+    이사가 끝난 뒤 실제 결과를 입력하면 다음 견적부터 대표님 기준으로 자동 보정합니다.
+  </p>
+
+  <div class="training-grid">
+    <label><span>실제 1톤 차량</span><input type="number" id="actualTruck1" min="0" value="0"></label>
+    <label><span>실제 5톤 차량</span><input type="number" id="actualTruck5" min="0" value="0"></label>
+    <label><span>실제 작업 인원</span><input type="number" id="actualWorkers" min="1" value="2"></label>
+    <label><span>실제 작업시간</span><input type="number" id="actualHours" min="1" value="4"></label>
+    <label class="wide"><span>실제 받은 금액</span><input type="number" id="actualPrice" min="0" step="10000" placeholder="예: 950000"></label>
+  </div>
+
+  <button type="button" id="saveTrainingCaseBtn" class="save-training-btn">
+    이 현장 결과를 학습시키기
+  </button>
+
+  <div class="training-summary">
+    <div><span>학습 사례</span><strong id="trainingCaseCount">0건</strong></div>
+    <div><span>차량 보정</span><strong id="trainingTruckFactor">100%</strong></div>
+    <div><span>인원 보정</span><strong id="trainingWorkerFactor">100%</strong></div>
+    <div><span>시간 보정</span><strong id="trainingHourFactor">100%</strong></div>
+    <div><span>금액 보정</span><strong id="trainingPriceFactor">100%</strong></div>
+  </div>
+
+  <div id="trainingMessage" class="training-message">
+    아직 학습 사례가 없습니다.
+  </div>
+</div>
+
     <div class="card full-auto-result-card">
       <h2><span class="eyebrow">완료</span> AI 자동견적 결과</h2>
       <div class="full-auto-result-grid">
@@ -3314,7 +3390,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-2.7';
+const BUILD_VERSION = 'JIMPICK-PRO-2.8';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -6503,8 +6579,22 @@ function calculateMovingEstimateEngine(){
   let price=truckCost+(adjustedWorkers*110000)+heavyCost+disassemblyCost+specialCost+timeCost+confirmedDisassemblyCost+confirmedSpecialCost+ladderCost+sceneAdjust.priceExtra;
   price=Math.ceil(price/10000)*10000;
 
+  const learnedTruckUnits=Math.max(
+    1,
+    Math.ceil(((truck5*5)+truck1)*(companyTrainingFactors.truckFactor||1))
+  );
+  let learnedTruck5=Math.floor(learnedTruckUnits/5);
+  let learnedTruck1=learnedTruckUnits%5;
+  const learnedWorkers=Math.max(2,Math.ceil(adjustedWorkers*(companyTrainingFactors.workerFactor||1)));
+  const learnedHours=Math.max(2,Math.ceil(adjustedHours*(companyTrainingFactors.hourFactor||1)));
+  const learnedPrice=Math.ceil((price*(companyTrainingFactors.priceFactor||1))/10000)*10000;
+
+  truck1=learnedTruck1;
+  truck5=learnedTruck5;
+  price=learnedPrice;
+
   lastEngineResult={
-    totalTon,truck1,truck5,workers:adjustedWorkers,hours:adjustedHours,price,
+    totalTon,truck1,truck5,workers:learnedWorkers,hours:learnedHours,price,
     heavyCount,disassemblyCount,specialCount,truckCapacity,ladderCost,confirmedDisassemblyCost,confirmedSpecialCost
   };
   return lastEngineResult;
@@ -6791,6 +6881,7 @@ async function handleBillingReturn(){
     localStorage.removeItem('jimpick_cloud_profile_cache');
     await authLoadProfile(user);
     updateSubscriptionUi();
+      await loadCompanyTrainingFactors();
     updateBillingInfo();
 
     showBillingResult(
@@ -7388,6 +7479,163 @@ function updateAiConfidenceSummary(items){
     sorted.slice(0,12).map(i=>`<span class="ai-confidence-badge">${Utils.escapeHtml(i.name)} ${Math.round((i.confidence||0)*100)}%</span>`).join('')
   }</div>`;
 }
+
+
+let companyTrainingFactors={
+  cases:0,
+  truckFactor:1,
+  workerFactor:1,
+  hourFactor:1,
+  priceFactor:1
+};
+
+function clampTrainingFactor(value,min=0.7,max=1.5){
+  return Math.max(min,Math.min(max,Number(value)||1));
+}
+
+function updateTrainingSummary(){
+  const set=(id,value)=>{
+    const el=document.getElementById(id);
+    if(el)el.textContent=value;
+  };
+  set('trainingCaseCount',`${companyTrainingFactors.cases||0}건`);
+  set('trainingTruckFactor',`${Math.round((companyTrainingFactors.truckFactor||1)*100)}%`);
+  set('trainingWorkerFactor',`${Math.round((companyTrainingFactors.workerFactor||1)*100)}%`);
+  set('trainingHourFactor',`${Math.round((companyTrainingFactors.hourFactor||1)*100)}%`);
+  set('trainingPriceFactor',`${Math.round((companyTrainingFactors.priceFactor||1)*100)}%`);
+
+  const msg=document.getElementById('trainingMessage');
+  if(msg){
+    if((companyTrainingFactors.cases||0)>0){
+      msg.classList.add('ok');
+      msg.textContent=`최근 ${companyTrainingFactors.cases}건을 기준으로 대표님 맞춤 보정이 적용됩니다.`;
+    }else{
+      msg.classList.remove('ok');
+      msg.textContent='아직 학습 사례가 없습니다.';
+    }
+  }
+}
+
+async function loadCompanyTrainingFactors(){
+  if(localPreviewMode||!supabaseClient){
+    updateTrainingSummary();
+    return;
+  }
+  try{
+    const user=await currentCloudUser();
+    if(!user)return;
+
+    const {data,error}=await supabaseClient
+      .from('training_cases')
+      .select('*')
+      .eq('user_id',user.id)
+      .order('created_at',{ascending:false})
+      .limit(20);
+
+    if(error)throw error;
+    if(!data?.length){
+      companyTrainingFactors={cases:0,truckFactor:1,workerFactor:1,hourFactor:1,priceFactor:1};
+      updateTrainingSummary();
+      return;
+    }
+
+    const safeRatio=(actual,predicted)=>{
+      const a=Number(actual)||0;
+      const p=Number(predicted)||0;
+      if(a<=0||p<=0)return 1;
+      return a/p;
+    };
+
+    const averages=(values)=>{
+      const valid=values.filter(v=>Number.isFinite(v)&&v>0);
+      return valid.length?valid.reduce((a,b)=>a+b,0)/valid.length:1;
+    };
+
+    companyTrainingFactors={
+      cases:data.length,
+      truckFactor:clampTrainingFactor(averages(data.map(r=>safeRatio(
+        (Number(r.actual_truck1)||0)+(Number(r.actual_truck5)||0)*5,
+        (Number(r.predicted_truck1)||0)+(Number(r.predicted_truck5)||0)*5
+      )))),
+      workerFactor:clampTrainingFactor(averages(data.map(r=>safeRatio(r.actual_workers,r.predicted_workers)))),
+      hourFactor:clampTrainingFactor(averages(data.map(r=>safeRatio(r.actual_hours,r.predicted_hours)))),
+      priceFactor:clampTrainingFactor(averages(data.map(r=>safeRatio(r.actual_price,r.predicted_price))),0.75,1.6)
+    };
+
+    updateTrainingSummary();
+  }catch(error){
+    console.warn('학습값 불러오기 실패',error);
+  }
+}
+
+async function saveTrainingCase(){
+  if(localPreviewMode){
+    alert('시험 모드에서는 학습 결과가 서버에 저장되지 않습니다.');
+    return;
+  }
+  if(!supabaseClient||!cloudAuthReady){
+    alert('실제 계정으로 로그인해주세요.');
+    return;
+  }
+
+  const user=await currentCloudUser();
+  if(!user){alert('로그인이 만료되었습니다.');return;}
+
+  const predicted=lastEngineResult||calculateMovingEstimateEngine();
+  const actualTruck1=Number(document.getElementById('actualTruck1')?.value)||0;
+  const actualTruck5=Number(document.getElementById('actualTruck5')?.value)||0;
+  const actualWorkers=Number(document.getElementById('actualWorkers')?.value)||0;
+  const actualHours=Number(document.getElementById('actualHours')?.value)||0;
+  const actualPrice=Number(document.getElementById('actualPrice')?.value)||0;
+
+  if(actualTruck1===0&&actualTruck5===0){
+    alert('실제 차량 대수를 입력해주세요.');
+    return;
+  }
+  if(actualWorkers<1||actualHours<1||actualPrice<10000){
+    alert('실제 인원·시간·금액을 정확히 입력해주세요.');
+    return;
+  }
+
+  const btn=document.getElementById('saveTrainingCaseBtn');
+  const original=btn?.textContent||'이 현장 결과를 학습시키기';
+  if(btn){btn.disabled=true;btn.textContent='학습자료 저장 중…';}
+
+  try{
+    const quote=collectCurrentQuoteData();
+    const {error}=await supabaseClient.from('training_cases').insert({
+      user_id:user.id,
+      customer_name:quote.customer_name||'',
+      predicted_truck1:Number(predicted.truck1)||0,
+      predicted_truck5:Number(predicted.truck5)||0,
+      predicted_workers:Number(predicted.workers)||0,
+      predicted_hours:Number(predicted.hours)||0,
+      predicted_price:Number(predicted.price)||0,
+      actual_truck1:actualTruck1,
+      actual_truck5:actualTruck5,
+      actual_workers:actualWorkers,
+      actual_hours:actualHours,
+      actual_price:actualPrice,
+      scene_data:lastAiSceneAnalysis||{},
+      items_data:quote.quote_data?.items||{}
+    });
+    if(error)throw error;
+
+    await loadCompanyTrainingFactors();
+    const msg=document.getElementById('trainingMessage');
+    if(msg){
+      msg.classList.add('ok');
+      msg.textContent='현장 결과가 저장되었습니다. 다음 견적부터 자동 보정됩니다.';
+    }
+    alert('대표님 맞춤 학습이 완료되었습니다.');
+  }catch(error){
+    console.error(error);
+    alert(`학습자료를 저장하지 못했습니다: ${error.message||error}`);
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent=original;}
+  }
+}
+
 
 function calculateSceneAdjustments(){
   let workerExtra=0,hourExtra=0,priceExtra=0;
@@ -8210,6 +8458,8 @@ ${msg || '-'}`;
     document.getElementById('completeSignupBtn')?.addEventListener('click',authCompleteSignup);
     document.getElementById('forgotPasswordBtn')?.addEventListener('click',authForgotPassword);
     document.getElementById('logoutBtn')?.addEventListener('click',authLogout);
+    document.getElementById('saveTrainingCaseBtn')?.addEventListener('click',saveTrainingCase);
+    updateTrainingSummary();
     document.getElementById('billingResultHomeBtn')?.addEventListener('click',()=>{
       history.replaceState({},'',location.pathname);
       document.getElementById('billingResultScreen').style.display='none';
