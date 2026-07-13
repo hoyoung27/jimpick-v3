@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <clipPath id="round">
+      <rect x="0" y="0" width="512" height="512" rx="112" ry="112"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#round)">
+    <rect width="512" height="512" fill="#0F2A43"/>
+    <polygon points="0,0 512,0 512,143 0,281" fill="#204B72"/>
+    <rect x="68" y="178" width="250" height="140" rx="10" fill="#FF6B35"/>
+    <path d="M318 224 L338 224 L400 224 L400 318 L318 318 Z" fill="#FFFFFF"/>
+    <rect x="352" y="248" width="34" height="26" rx="4" fill="#0F2A43"/>
+    <rect x="60" y="316" width="352" height="14" fill="#0A1928"/>
+    <circle cx="136" cy="340" r="30" fill="#0A1928"/>
+    <circle cx="136" cy="340" r="12" fill="#C8D2DC"/>
+    <circle cx="356" cy="340" r="30" fill="#0A1928"/>
+    <circle cx="356" cy="340" r="12" fill="#C8D2DC"/>
+  </g>
+</svg>

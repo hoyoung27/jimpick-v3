@@ -1,0 +1,3746 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>짐픽 V3.0 AI 이사견적</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+/* =========================================================
+   0. 디자인 토큰 (색상 / 타이포 / 간격)
+   ========================================================= */
+:root{
+  --navy-900:#0F2A43;
+  --navy-800:#173B5C;
+  --navy-700:#204B72;
+  --accent:#FF6B35;
+  --accent-dark:#E5541E;
+  --accent-soft:#FFE7DC;
+  --bg:#F3F5F8;
+  --card:#FFFFFF;
+  --line:#E3E7ED;
+  --text:#1C2530;
+  --text-soft:#3F4854;
+  --text-faint:#6B7480;
+  --success:#2F9E63;
+  --success-soft:#E4F6ED;
+  --danger:#E5484D;
+  --danger-soft:#FDE7E8;
+  --mint:#20B2A6;
+  --mint-dark:#0E8E84;
+  --mint-soft:#E1F7F3;
+  --radius:16px;
+  --radius-sm:10px;
+  --radius-lg:20px;
+  --shadow:0 3px 14px rgba(15,42,67,0.07), 0 1px 3px rgba(15,42,67,0.05);
+  --shadow-lift:0 10px 28px rgba(15,42,67,0.14);
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:'Pretendard','-apple-system',BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:17px;
+  line-height:1.6;
+  -webkit-tap-highlight-color:transparent;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:100px; /* sticky footer 공간 */
+  letter-spacing:0;
+}
+button,input,select,textarea{font-family:inherit;}
+h1,h2,h3,h4{margin:0;}
+button{cursor:pointer;transition:transform .12s var(--ease), background .15s var(--ease), box-shadow .15s var(--ease), border-color .15s var(--ease);}
+button:active{transform:scale(0.96);}
+
+/* =========================================================
+   1. 상단 헤더
+   ========================================================= */
+.topbar{
+  background:var(--navy-900);
+  color:#fff;
+  padding:18px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  position:sticky;
+  top:0;
+  z-index:50;
+  box-shadow:0 4px 18px rgba(8,24,40,0.22);
+}
+.topbar .brand{display:flex;align-items:center;gap:10px;}
+.brand .truck{font-size:30px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.25));}
+.brand-text .company{
+  font-size:17px;font-weight:800;letter-spacing:0;cursor:pointer;
+  border-bottom:2px dashed rgba(255,255,255,0.6);
+  padding:4px 2px;margin:-4px -2px;border-radius:6px;transition:background .15s var(--ease);
+}
+.brand-text .company:active{background:rgba(255,255,255,0.15);}
+.brand-text .sub{font-size:13px;color:#D7E4EF;margin-top:3px;}
+.topbar .quick-total{
+  text-align:right;
+}
+.topbar .quick-total .amt{font-size:23px;font-weight:800;color:#FFD9C7;letter-spacing:0;}
+.topbar .quick-total .lbl{font-size:12px;color:#D7E4EF;}
+
+/* =========================================================
+   2. 진행 경로(route) 스텝 네비게이션 — 시그니처 요소
+   ========================================================= */
+.inquiry-banner{
+  background:linear-gradient(90deg,var(--mint-dark),var(--mint));
+  color:#fff;text-align:center;font-size:12.5px;font-weight:600;
+  padding:9px 14px;cursor:pointer;letter-spacing:-.1px;
+}
+.inquiry-banner b{font-weight:800;}
+.inquiry-banner:active{opacity:.85;}
+
+.install-banner{
+  display:flex;width:100%;align-items:center;justify-content:center;gap:6px;
+  background:var(--accent);color:#fff;text-align:center;font-size:13.5px;font-weight:700;
+  padding:11px 14px;border:none;letter-spacing:-.1px;
+}
+.install-banner b{font-weight:900;}
+.install-banner:active{background:var(--accent-dark);}
+
+/* 로그인 화면 */
+.login-gate{
+  position:fixed;inset:0;z-index:2000;background:var(--navy-900);
+  display:flex;align-items:center;justify-content:center;padding:24px;
+}
+.login-box{background:#fff;border-radius:20px;padding:28px 24px;width:100%;max-width:380px;}
+.login-logo{font-size:24px;font-weight:800;color:var(--navy-900);text-align:center;margin-bottom:6px;}
+.login-logo span{font-size:14px;font-weight:700;color:var(--accent-dark);display:block;margin-top:2px;}
+
+.account-bar{
+  display:flex;align-items:center;gap:8px;background:#fff;border-bottom:1px solid var(--line);
+  padding:8px 10px;overflow-x:auto;
+}
+.account-bar button{
+  flex:0 0 auto;background:#EEF1F5;color:var(--navy-900);border:none;border-radius:999px;
+  padding:8px 14px;font-size:12.5px;font-weight:700;
+}
+.sub-badge{
+  flex:0 0 auto;background:var(--mint-soft);color:var(--mint-dark);font-weight:800;
+  font-size:11.5px;padding:6px 12px;border-radius:999px;
+}
+.sub-badge.expired{background:var(--danger-soft);color:var(--danger);}
+
+.route-nav{
+  display:flex;
+  overflow-x:auto;
+  gap:0;
+  background:var(--card);
+  padding:14px 12px 10px;
+  border-bottom:1px solid var(--line);
+  position:sticky;
+  top:64px;
+  z-index:40;
+  scrollbar-width:none;
+}
+.route-nav::-webkit-scrollbar{display:none;}
+.route-step{
+  flex:0 0 auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  padding:0 14px;
+  position:relative;
+  min-width:74px;
+}
+.route-step .dot{
+  width:34px;height:34px;border-radius:50%;
+  background:#EDF1F5;color:var(--text-faint);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:13px;
+  border:2px solid var(--line);
+  transition:all .2s ease;
+}
+.route-step .lbl{font-size:13px;color:var(--text-soft);font-weight:700;white-space:nowrap;}
+.route-step::after{
+  content:"";
+  position:absolute;
+  top:17px;right:-6px;
+  width:24px;height:2px;
+  background:var(--line);
+}
+.route-step:last-child::after{display:none;}
+.route-step.done .dot{background:var(--success);border-color:var(--success);color:#fff;}
+.route-step.done::after{background:var(--success);}
+.route-step.active .dot{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 0 0 5px var(--accent-soft);}
+.route-step.active .lbl{color:var(--navy-900);}
+.route-step.active .dot::before{content:"🚚";position:absolute;transform:translateY(-30px) scale(.9);}
+
+/* =========================================================
+   3. 레이아웃
+   ========================================================= */
+.container{max-width:920px;margin:0 auto;padding:16px 14px 40px;}
+.panel{display:none;animation:fadeIn .25s ease;}
+.panel.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:20px 18px;
+  margin-bottom:18px;
+  border:1px solid var(--line);
+}
+.card h2{
+  font-size:20px;font-weight:800;color:var(--navy-900);
+  display:flex;align-items:center;gap:8px;margin-bottom:16px;
+  padding-bottom:12px;border-bottom:1.5px solid var(--line);
+}
+.card h2 .eyebrow{
+  font-size:12px;background:var(--navy-900);color:#fff;border-radius:7px;
+  padding:4px 9px;font-weight:800;letter-spacing:.4px;
+}
+.card h3{font-size:16px;font-weight:700;color:var(--text-soft);margin:14px 0 8px;}
+
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:15px;font-weight:700;color:var(--text-soft);margin-bottom:7px;}
+.field input[type=text],
+.field input[type=tel],
+.field input[type=number],
+.field input[type=date],
+.field input[type=time],
+.field select,
+.field textarea{
+  width:100%;
+  padding:14px 15px;
+  border:1.5px solid var(--line);
+  border-radius:var(--radius-sm);
+  font-size:17px;
+  background:#FBFCFD;
+  color:var(--text);
+  min-height:54px;
+  transition:border-color .15s var(--ease), background .15s var(--ease), box-shadow .15s var(--ease);
+}
+.field input[type=time]{font-size:19px;font-weight:700;letter-spacing:.5px;}
+.field textarea{min-height:100px;resize:vertical;line-height:1.6;}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:none;border-color:var(--accent);background:#fff;box-shadow:0 0 0 4px var(--accent-soft);
+}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media (max-width:520px){.row2{grid-template-columns:1fr;}}
+
+.chip-toggle{display:flex;gap:10px;flex-wrap:wrap;}
+.chip-toggle label{
+  flex:1;min-width:120px;
+  border:1.5px solid var(--line);border-radius:var(--radius-sm);
+  padding:12px 10px;text-align:center;font-weight:700;font-size:14px;color:var(--text-soft);
+  background:#FBFCFD;
+}
+.chip-toggle input{display:none;}
+.chip-toggle input:checked + span{color:var(--accent-dark);}
+.chip-toggle label:has(input:checked){border-color:var(--accent);background:var(--accent-soft);color:var(--accent-dark);}
+
+/* 주소 블록 (출발/도착 공용) */
+.addr-block{border:1.5px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:12px;background:#FBFCFD;}
+.addr-block .addr-title{font-weight:800;font-size:17px;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.addr-block.from{border-left:4px solid var(--navy-700);}
+.addr-block.from .addr-title{color:var(--navy-800);}
+.addr-block.to{border-left:4px solid var(--accent);}
+.addr-search-row{display:flex;gap:8px;}
+.addr-search-row input{flex:1;min-width:0;}
+.mini-map{
+  width:100%;height:200px;border-radius:12px;margin-top:10px;
+  background:#EAEDF1;overflow:hidden;display:none;border:1.5px solid var(--line);
+}
+.mini-map.visible{display:block;}
+.addr-search-btn{
+  flex:0 0 auto;background:var(--navy-900);color:#fff;border:none;border-radius:var(--radius-sm);
+  font-size:13px;font-weight:800;padding:0 16px;white-space:nowrap;
+  position:relative;z-index:5;pointer-events:auto;min-height:50px;
+}
+#fromAddressSearchButton,
+#toAddressSearchButton {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+#fromAddress,
+#toAddress,
+#fromDetail,
+#toDetail {
+  position: relative;
+  z-index: 1;
+  pointer-events: auto;
+}
+.addr-block.to .addr-title{color:var(--accent-dark);}
+.switch-row{display:flex;align-items:center;justify-content:space-between;padding:12px 8px;border-top:1px solid var(--line);margin-top:6px;}
+.switch-row span{font-size:16px;font-weight:700;color:var(--text);}
+.row-icon{width:20px;height:20px;vertical-align:-5px;margin-right:2px;color:var(--navy-800);}
+.switch{position:relative;width:48px;height:28px;flex:0 0 auto;}
+.switch input{opacity:0;width:100%;height:100%;position:absolute;margin:0;z-index:2;cursor:pointer;}
+.switch .track{position:absolute;inset:0;background:#D9DEE5;border-radius:20px;transition:.2s;}
+.switch .thumb{position:absolute;top:3px;left:3px;width:22px;height:22px;background:#fff;border-radius:50%;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:.2s;}
+.switch input:checked ~ .track{background:var(--success);}
+.switch input:checked ~ .thumb{transform:translateX(20px);}
+/* 엘리베이터 스위치는 켜지면 주황색으로 표시 */
+.switch.elevator input:checked ~ .track{background:var(--mint);}
+.switch-row.elevator-row{transition:background .15s var(--ease);border-radius:10px;}
+.switch-row.elevator-row.on{background:var(--mint-soft);}
+.switch-row.elevator-row.on span{color:var(--mint-dark);}
+
+/* 방 탭 */
+.room-count-control{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:16px;}
+.room-count-control .num{font-size:24px;font-weight:800;min-width:60px;text-align:center;color:var(--navy-900);}
+.section-tab-bar{display:flex;gap:8px;margin-top:2px;flex-wrap:wrap;}
+.section-tab{
+  flex:1;min-width:74px;padding:12px 6px;border-radius:12px;border:1.5px solid var(--line);
+  background:#fff;font-weight:800;font-size:14px;color:var(--text-soft);
+}
+.section-tab.active{background:var(--navy-900);border-color:var(--navy-900);color:#fff;box-shadow:0 4px 10px rgba(15,42,67,.22);}
+.item-section{display:block;}
+
+.room-tabs{display:flex;gap:8px;overflow-x:auto;margin-bottom:14px;padding-bottom:4px;}
+.room-tab{
+  flex:0 0 auto;padding:11px 20px;border-radius:999px;border:1.5px solid var(--line);
+  background:#fff;font-weight:700;font-size:16px;color:var(--text-soft);
+}
+.room-tab.active{background:var(--navy-900);border-color:var(--navy-900);color:#fff;box-shadow:0 4px 10px rgba(15,42,67,.22);}
+.room-name-input{font-size:16px;font-weight:800;color:var(--navy-900);border:none;border-bottom:2px solid var(--line);background:transparent;padding:6px 2px;margin-bottom:12px;width:100%;}
+.room-name-input:focus{outline:none;border-color:var(--accent);}
+
+/* 아이템 리스트 */
+.item-list{display:flex;flex-direction:column;gap:8px;}
+.item-row{
+  display:flex;align-items:center;flex-wrap:wrap;row-gap:10px;
+  border:1.5px solid var(--line);border-radius:var(--radius-sm);
+  padding:13px 14px;background:#FBFCFD;transition:border-color .15s var(--ease), background .15s var(--ease);
+}
+.item-row.checked{border-color:var(--accent);background:#FFF6F2;box-shadow:0 2px 8px rgba(255,107,53,.10);}
+.item-check{display:flex;align-items:center;gap:10px;flex:1;min-width:0;}
+.item-check input[type=checkbox]{
+  width:26px;height:26px;flex:0 0 auto;accent-color:var(--accent);
+}
+.item-check span{font-size:20px;font-weight:800;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.item-icon{width:24px;height:24px;flex:0 0 auto;color:var(--navy-800);}
+.opt-hint{font-size:13px!important;font-weight:600!important;color:var(--accent-dark)!important;white-space:nowrap;}
+/* 수량 체크(-/+)와 삭제 버튼은 품목명 아래 줄로 내려가서 오른쪽 정렬됨 */
+.item-row-actions{
+  flex:1 1 100%;display:flex;align-items:center;justify-content:flex-end;
+  gap:8px;padding-left:34px;
+}
+.qty-stepper{display:flex;align-items:center;gap:0;flex:0 0 auto;}
+.qty-btn{
+  width:38px;height:38px;border-radius:8px;border:1.5px solid var(--line);
+  background:#fff;font-size:19px;font-weight:800;color:var(--navy-900);
+  display:flex;align-items:center;justify-content:center;
+}
+.qty-btn:disabled{opacity:.35;}
+.qty-input{
+  width:44px;height:38px;text-align:center;border:1.5px solid var(--line);
+  border-left:none;border-right:none;font-size:17px;font-weight:700;
+  -moz-appearance:textfield;
+}
+.qty-input::-webkit-outer-spin-button,.qty-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+.qty-stepper .qty-btn:first-child{border-radius:8px 0 0 8px;}
+.qty-stepper .qty-btn:last-child{border-radius:0 8px 8px 0;}
+.item-delete-btn{
+  flex:0 0 auto;width:36px;height:36px;margin-left:2px;border-radius:8px;
+  border:1.5px solid var(--danger-soft);background:var(--danger-soft);color:var(--danger);
+  font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;
+}
+.add-item-btn{
+  width:100%;margin-top:10px;padding:12px;border-radius:var(--radius-sm);
+  border:1.5px dashed var(--line);background:#FBFCFD;color:var(--text-soft);
+  font-size:15px;font-weight:700;
+}
+.add-item-btn:active{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-dark);}
+.final-item-row .item-check{flex-wrap:nowrap;}
+.final-qty{
+  flex:0 0 auto;background:var(--navy-900);color:#fff;font-size:14px;font-weight:800;
+  padding:6px 12px;border-radius:999px;
+}
+
+/* 품목 세부 옵션 선택: 이름 옆 작은 세모를 누르면 같은 줄 옆쪽에 칩이 펼쳐짐(공간이 부족하면 가로 스크롤) */
+.item-block{margin-bottom:10px;position:relative;}
+.item-block.dragging{opacity:.5;}
+.item-block.dragging .item-row{border-color:var(--accent);box-shadow:0 4px 14px rgba(255,107,53,.25);}
+.drag-handle{
+  flex:0 0 auto;color:var(--text-faint);font-size:17px;line-height:1;
+  padding:6px 4px;cursor:grab;touch-action:none;user-select:none;letter-spacing:-2px;
+}
+.drag-handle:active{cursor:grabbing;color:var(--accent-dark);}
+.item-block .item-row{margin-bottom:0;}
+.size-toggle{
+  flex:0 0 auto;background:#fff;border:1.5px solid var(--line);color:var(--text-soft);
+  font-size:10px;font-weight:700;width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;padding:0;transition:.15s;
+}
+.size-toggle.open{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-dark);transform:rotate(180deg);}
+.size-tag{
+  font-size:13px;font-weight:700;color:var(--accent-dark);background:var(--accent-soft);
+  padding:4px 10px;border-radius:999px;flex:0 0 auto;
+  display:none;
+}
+/* 세모(▼)를 눌러 옵션을 선택하면 그때 옆에 글씨가 나타남 (모든 옵션 품목 공통) */
+.size-tag.visible{display:inline-block;}
+.size-options{
+  display:none;align-items:center;gap:8px;flex-wrap:wrap;
+  padding:8px 12px 4px 34px;
+}
+.size-options.open{display:flex;}
+.size-chip{
+  flex:0 0 auto;white-space:nowrap;
+  border:1.5px solid var(--line);background:#fff;border-radius:999px;
+  padding:9px 17px;font-size:15px;font-weight:700;color:var(--text-soft);min-height:42px;
+}
+.size-chip.active{background:var(--danger);border-color:var(--danger);color:#fff;}
+
+/* 사다리차 층수 선택 (1~25층, 가로 스크롤) */
+.ladder-floor-options{
+  flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;
+  padding:8px 2px 2px 2px;
+}
+.ladder-floor-options .size-chip{flex:0 0 auto;padding:6px 12px;font-size:12.5px;min-height:32px;}
+
+/* 기타 품목 메모 입력란 (세모를 눌러야 펼쳐짐) */
+.memo-input{
+  width:100%;flex:1 1 100%;padding:9px 12px;border:1.5px solid var(--line);border-radius:9px;
+  font-size:13px;background:#fff;transition:border-color .15s var(--ease), background .15s var(--ease);
+}
+.memo-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+
+.section-subtotal{
+  margin-top:10px;text-align:right;font-size:13px;color:var(--text-faint);font-weight:600;
+}
+.section-subtotal b{color:var(--navy-900);}
+
+/* 미디어 업로드 */
+.upload-box{
+  border:2px dashed var(--line);border-radius:var(--radius);padding:26px 16px;
+  text-align:center;color:var(--text-faint);background:#FBFCFD;
+}
+.upload-box input[type=file]{display:none;}
+.upload-btn-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px;}
+.upload-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--navy-900);color:#fff;font-weight:700;font-size:15px;
+  padding:13px 20px;border-radius:999px;border:none;
+}
+.upload-btn.camera{background:var(--accent);}
+.preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px;margin-top:14px;}
+.preview-item{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:1/1;background:#EDF1F5;border:1px solid var(--line);}
+.preview-item img,.preview-item video{width:100%;height:100%;object-fit:cover;filter:brightness(1.25) saturate(1.05);}
+.preview-item .tag{position:absolute;bottom:2px;left:2px;background:rgba(15,42,67,.75);color:#fff;font-size:9px;padding:1px 5px;border-radius:5px;}
+.preview-item .rm{position:absolute;top:2px;right:2px;background:rgba(0,0,0,.55);color:#fff;border:none;width:20px;height:20px;border-radius:50%;font-size:12px;line-height:1;}
+
+.ai-banner{
+  background:var(--danger-soft);border:1.5px solid #F7C7C9;color:#A32C30;
+  font-size:12.5px;font-weight:700;border-radius:10px;padding:10px 12px;margin-top:12px;line-height:1.5;
+}
+.ai-result-row{display:flex;align-items:center;justify-content:space-between;padding:9px 4px;border-bottom:1px solid var(--line);font-size:14px;}
+.ai-result-row:last-child{border-bottom:none;}
+.ai-result-row .conf{font-size:13px;color:var(--text-soft);}
+.ai-badges{font-size:12px;color:var(--text-faint);font-weight:600;}
+
+/* 견적 결과 */
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+@media (max-width:480px){.summary-grid{grid-template-columns:1fr;}}
+.stat-box{background:linear-gradient(150deg,var(--navy-900),var(--navy-800));color:#fff;border-radius:var(--radius);padding:18px;text-align:center;box-shadow:0 6px 16px rgba(15,42,67,.18);}
+.stat-box .v{font-size:29px;font-weight:800;letter-spacing:0;word-break:keep-all;}
+.stat-box.orange .v{font-size:22px;line-height:1.35;}
+.stat-box .l{font-size:13px;color:#D7E4EF;margin-top:5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;}
+.stat-box.orange{background:linear-gradient(150deg,var(--accent),var(--accent-dark));box-shadow:0 6px 16px rgba(229,84,30,.25);}
+
+.mini-toggle{
+  flex:0 0 auto;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.4);color:#fff;
+  width:20px;height:20px;border-radius:50%;font-size:9px;display:inline-flex;align-items:center;justify-content:center;
+  padding:0;transition:.15s;
+}
+.mini-toggle.open{background:#fff;color:var(--navy-900);transform:rotate(180deg);}
+.mini-panel{display:none;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.22);text-align:left;}
+.mini-panel.open{display:block;}
+.mini-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.mini-row:last-child{margin-bottom:0;}
+.mini-row span{font-size:12.5px;color:#fff;font-weight:700;}
+.mini-stepper{display:flex;align-items:center;}
+.mini-btn{
+  width:26px;height:26px;border-radius:6px;border:1px solid rgba(255,255,255,.4);
+  background:rgba(255,255,255,.14);color:#fff;font-size:14px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+}
+.mini-input{
+  width:34px;height:26px;text-align:center;border:1px solid rgba(255,255,255,.4);
+  border-left:none;border-right:none;background:rgba(255,255,255,.08);color:#fff;
+  font-size:13px;font-weight:700;-moz-appearance:textfield;
+}
+.mini-input::-webkit-outer-spin-button,.mini-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+.truck-chip-row{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}
+.truck-qty-row{display:flex;gap:10px;justify-content:center;}
+.truck-qty-item{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  background:rgba(255,255,255,.15);border-radius:12px;padding:8px 14px;
+}
+.truck-qty-item span{font-size:13px;font-weight:800;color:#fff;}
+.truck-qty-item input{
+  width:56px;text-align:center;padding:7px 4px;border:none;border-radius:8px;
+  font-size:17px;font-weight:800;color:var(--navy-900);
+}
+.truck-chip{
+  padding:6px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.45);
+  background:rgba(255,255,255,.14);color:#fff;font-size:12.5px;font-weight:700;min-height:30px;
+}
+.truck-chip.active{background:#fff;color:var(--accent-dark);border-color:#fff;}
+
+.price-hero{
+  background:var(--navy-900);
+  border-radius:var(--radius-lg);color:#fff;padding:28px 20px;text-align:center;margin-bottom:16px;
+  box-shadow:0 10px 26px rgba(15,42,67,.22);position:relative;overflow:hidden;
+}
+.price-hero .l{font-size:14px;color:#D7E4EF;font-weight:700;letter-spacing:.3px;position:relative;}
+.price-hero .v{
+  font-size:42px;font-weight:800;margin:10px 0 4px;color:#FFD9C7;letter-spacing:0;position:relative;
+  cursor:pointer;display:inline-flex;align-items:baseline;gap:8px;transition:opacity .15s var(--ease);
+}
+.price-hero .v:active{opacity:.75;}
+.price-hero .v .edit-pencil{font-size:18px;opacity:.9;}
+.price-hero .n{font-size:13px;color:#BFD2E3;position:relative;}
+.price-edit-input{
+  width:80%;max-width:280px;margin:8px auto 3px;display:block;text-align:center;
+  font-size:32px;font-weight:800;color:var(--navy-900);background:#fff;
+  border:none;border-radius:10px;padding:6px 10px;position:relative;
+}
+.price-edit-input:focus{outline:3px solid var(--accent);}
+.reset-price-btn{
+  position:relative;margin-top:10px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.5);
+  color:#fff;font-size:14px;font-weight:700;padding:9px 16px;border-radius:999px;
+}
+.price-hero .n.manual{color:#FFD9C7;font-weight:700;}
+
+.breakdown{width:100%;border-collapse:collapse;font-size:16px;}
+.cost-entry-list{margin-bottom:14px;}
+.cost-row{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:10px 2px;border-bottom:1px solid var(--line);
+}
+.cost-row-draggable{cursor:default;}
+.cost-row-draggable .drag-handle{flex:0 0 auto;padding:4px 2px;}
+.cost-row-draggable label{flex:1;}
+.cost-row-draggable.dragging{opacity:.5;}
+.cost-row label{font-size:15px;font-weight:700;color:var(--text-soft);}
+.cost-row .cost-sub{font-size:12px;font-weight:600;color:var(--text-faint);}
+.cost-row input{
+  width:130px;text-align:right;padding:9px 10px;border:1.5px solid var(--line);
+  border-radius:9px;font-size:15px;font-weight:700;color:var(--navy-900);background:#FBFCFD;
+}
+.cost-row input:focus{outline:none;border-color:var(--accent);background:#fff;}
+.cost-row-final{border-bottom:none;border-top:2px solid var(--navy-900);margin-top:4px;padding-top:14px;}
+.cost-row-final label{font-size:17px;font-weight:800;color:var(--navy-900);}
+.cost-row-final span{font-size:20px;font-weight:800;color:var(--accent-dark);}
+.cost-row-storage{flex-wrap:wrap;}
+.storage-inputs{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.storage-inputs input{width:90px;text-align:right;padding:9px 8px;border:1.5px solid var(--line);border-radius:9px;font-size:14px;font-weight:700;color:var(--navy-900);background:#FBFCFD;}
+.storage-inputs span{font-size:13px;font-weight:700;color:var(--text-soft);}
+.cost-row-storage-total{padding-top:0;}
+.cost-row-storage-total label{color:var(--text-faint);font-size:13px;font-weight:700;}
+.cost-row-storage-total span{font-size:15px;font-weight:800;color:var(--navy-900);}
+.breakdown td{padding:12px 4px;border-bottom:1px solid var(--line);}
+.breakdown td:last-child{text-align:right;font-weight:700;color:var(--navy-900);}
+.breakdown tr.total td{font-weight:800;font-size:15.5px;border-top:2px solid var(--navy-900);border-bottom:none;padding-top:14px;color:var(--accent-dark);}
+
+/* 버튼 */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:56px;border-radius:13px;font-weight:800;font-size:17px;border:none;
+  padding:0 18px;width:100%;letter-spacing:0;
+}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 4px 12px rgba(255,107,53,.3);}
+.btn-primary:active{background:var(--accent-dark);}
+.btn-outline{background:#fff;border:2px solid var(--navy-900);color:var(--navy-900);}
+.btn-navy{background:var(--navy-900);color:#fff;box-shadow:0 4px 12px rgba(15,42,67,.25);}
+.btn-ghost{background:#E7EBF0;color:var(--text-soft);}
+.btn-success{background:var(--success);color:#fff;box-shadow:0 4px 12px rgba(47,158,99,.25);}
+.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+.btn-row.three{grid-template-columns:1fr 1fr 1fr;}
+@media (max-width:520px){.btn-row.three{grid-template-columns:1fr;}}
+
+/* 하단 고정 바 */
+.sticky-footer{
+  position:fixed;bottom:0;left:0;right:0;background:#fff;
+  border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(15,42,67,.10);
+  padding:12px 14px;display:flex;align-items:center;gap:10px;z-index:60;
+  border-radius:18px 18px 0 0;
+}
+.sticky-footer .foot-total{flex:1;}
+.sticky-footer .foot-total .l{font-size:12px;color:var(--text-soft);font-weight:700;}
+.sticky-footer .foot-total .v{font-size:20px;font-weight:800;color:var(--navy-900);}
+.sticky-footer .nav-btn{min-height:54px;padding:0 20px;border-radius:12px;font-weight:800;font-size:16px;border:none;}
+
+/* 배너/도움말 */
+.hint{font-size:14px;color:var(--text-soft);margin-top:6px;line-height:1.6;}
+.arch-note{
+  background:#EEF2FF;border:1px dashed #B7C4EA;color:#2C3F70;font-size:13px;
+  border-radius:10px;padding:10px 12px;margin-top:8px;line-height:1.6;
+}
+
+/* 모달 */
+.modal-bg{position:fixed;inset:0;background:rgba(15,42,67,.45);display:none;align-items:center;justify-content:center;z-index:100;padding:20px;pointer-events:auto;}
+.modal-bg.open{display:flex;}
+.modal{background:#fff;border-radius:16px;padding:20px;max-width:420px;width:100%;max-height:86vh;overflow:auto;position:relative;z-index:1;pointer-events:auto;}
+.modal h3{font-size:16px;font-weight:800;margin-bottom:14px;color:var(--navy-900);}
+
+/* 인쇄 전용 영역 */
+#printArea{display:none;}
+@media print{
+  body *{visibility:hidden;}
+  #printArea, #printArea *{visibility:visible;}
+  #printArea{display:block;position:absolute;top:0;left:0;width:100%;padding:20px;}
+  .no-print{display:none!important;}
+}
+.print-sheet{font-family:'Pretendard',sans-serif;color:#111;}
+.print-sheet h1{font-size:20px;border-bottom:3px solid #111;padding-bottom:10px;margin-bottom:14px;}
+.print-sheet table{width:100%;border-collapse:collapse;margin-bottom:14px;font-size:13px;}
+.print-sheet th,.print-sheet td{border:1px solid #ccc;padding:7px 8px;text-align:left;}
+.print-sheet .p-total{font-size:18px;font-weight:800;text-align:right;margin-top:10px;}
+
+/* 유틸 */
+.flex-between{display:flex;align-items:center;justify-content:space-between;}
+.muted{color:var(--text-faint);font-size:12px;}
+::selection{background:var(--accent-soft);}
+/* =========================================================
+   휴대폰(모바일) 화면 대응 — 태블릿뿐 아니라 좁은 폰 화면에서도
+   자연스럽게 보이도록 폭이 좁을 때 크기를 살짝 줄여줍니다.
+   ========================================================= */
+@media (max-width:430px){
+  .container{padding:14px 10px 40px;}
+  .topbar{padding:14px 14px;}
+  .topbar .quick-total .amt{font-size:17px;}
+  .brand-text .company{font-size:14px;}
+  .card{padding:16px 14px;}
+  .card h2{font-size:15.5px;}
+  .price-hero{padding:22px 16px;}
+  .price-hero .v{font-size:30px;}
+  .stat-box .v{font-size:22px;}
+  .stat-box{padding:14px;}
+  .route-step{min-width:62px;padding:0 8px;}
+  .route-step .lbl{font-size:10px;}
+  .item-check span{font-size:14px;max-width:88px;}
+  .size-chip{padding:7px 12px;font-size:12px;}
+  .sticky-footer .foot-total .v{font-size:16px;}
+  .sticky-footer .nav-btn{padding:0 14px;font-size:13px;}
+
+  /* 옵션(세모/글씨) 클릭 시 +/- 수량 버튼과 겹치지 않도록, 좁은 화면에서는 줄바꿈되게 함 */
+  .item-row{flex-wrap:wrap;row-gap:8px;}
+  .item-check{flex:1 1 auto;min-width:0;}
+  .size-tag{font-size:11px;padding:3px 8px;}
+  .qty-stepper{margin-left:auto;}
+  .item-delete-btn{width:28px;height:28px;margin-left:6px;}
+}
+
+/* V2.6 컬러 품목 아이콘 */
+.item-icon-wrap{
+  width:38px;
+  height:38px;
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:12px;
+  background:linear-gradient(145deg,var(--icon-a),var(--icon-b));
+  box-shadow:0 4px 10px color-mix(in srgb, var(--icon-b) 28%, transparent);
+  border:1px solid rgba(255,255,255,.72);
+}
+.item-icon-wrap .item-icon{
+  width:23px;
+  height:23px;
+  color:#fff;
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.18));
+}
+.item-row.checked .item-icon-wrap{
+  transform:scale(1.05);
+  box-shadow:0 5px 13px color-mix(in srgb, var(--icon-b) 38%, transparent);
+}
+
+
+/* ===== V2.9 고급 품목 카드 디자인 ===== */
+.item-row{
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.98),rgba(247,250,252,.96));
+  border:1px solid rgba(15,42,67,.10);
+  box-shadow:
+    0 8px 24px rgba(15,42,67,.07),
+    inset 0 1px 0 rgba(255,255,255,.95);
+  min-height:78px;
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.item-row::before{
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:4px;
+  background:linear-gradient(180deg,var(--accent),#FFB36B);
+  opacity:.0;
+  transition:opacity .18s ease;
+}
+.item-row:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 30px rgba(15,42,67,.12);
+}
+.item-row.checked{
+  border-color:rgba(255,107,53,.45);
+  background:linear-gradient(145deg,#FFF9F6,#FFF1EA);
+  box-shadow:0 10px 28px rgba(255,107,53,.14);
+}
+.item-row.checked::before{opacity:1}
+.item-check{gap:13px}
+.item-check span{
+  font-size:18px;
+  letter-spacing:-.2px;
+}
+.item-icon-wrap{
+  width:50px!important;
+  height:50px!important;
+  border-radius:16px!important;
+  background:
+    radial-gradient(circle at 30% 25%,rgba(255,255,255,.75),transparent 38%),
+    linear-gradient(145deg,var(--icon-a),var(--icon-b))!important;
+  box-shadow:
+    0 9px 18px color-mix(in srgb,var(--icon-b) 28%,transparent),
+    inset 0 1px 0 rgba(255,255,255,.8)!important;
+  border:1px solid rgba(255,255,255,.72)!important;
+}
+.item-icon-wrap .item-icon{
+  width:30px!important;
+  height:30px!important;
+  stroke-width:1.7!important;
+}
+.qty-btn{
+  background:linear-gradient(180deg,#fff,#F1F5F9);
+  box-shadow:0 2px 6px rgba(15,42,67,.08);
+}
+.add-item-btn{
+  background:linear-gradient(180deg,#fff,#F8FAFC);
+  box-shadow:0 5px 14px rgba(15,42,67,.06);
+}
+.room-tab.active,
+.section-tab.active{
+  background:linear-gradient(145deg,var(--navy-900),var(--navy-700));
+}
+.card{
+  box-shadow:
+    0 12px 32px rgba(15,42,67,.08),
+    0 2px 8px rgba(15,42,67,.04);
+}
+
+
+/* ===== V3.0 프리미엄 실사형 품목 화면 ===== */
+.items-grid{
+  gap:14px!important;
+}
+.item-row{
+  position:relative;
+  min-height:92px!important;
+  padding:14px!important;
+  border-radius:20px!important;
+  border:1px solid rgba(15,42,67,.10)!important;
+  background:
+    radial-gradient(circle at 10% 0%,rgba(255,255,255,.98),rgba(255,255,255,.20) 34%,transparent 35%),
+    linear-gradient(145deg,#ffffff,#f4f7fb)!important;
+  box-shadow:
+    0 14px 30px rgba(15,42,67,.09),
+    inset 0 1px 0 rgba(255,255,255,.95)!important;
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease!important;
+}
+.item-row:hover{
+  transform:translateY(-3px);
+  box-shadow:0 18px 38px rgba(15,42,67,.14)!important;
+}
+.item-row.checked{
+  border-color:rgba(255,107,53,.48)!important;
+  background:linear-gradient(145deg,#fffaf7,#fff0e8)!important;
+  box-shadow:0 16px 34px rgba(255,107,53,.16)!important;
+}
+.item-icon-wrap{
+  width:64px!important;
+  height:64px!important;
+  border-radius:20px!important;
+  background:
+    radial-gradient(circle at 28% 22%,rgba(255,255,255,.9),transparent 34%),
+    linear-gradient(145deg,var(--icon-a),var(--icon-b))!important;
+  box-shadow:
+    0 12px 22px color-mix(in srgb,var(--icon-b) 30%,transparent),
+    inset 0 1px 0 rgba(255,255,255,.85)!important;
+  border:1px solid rgba(255,255,255,.75)!important;
+}
+.item-icon-wrap .item-icon{
+  width:40px!important;
+  height:40px!important;
+  stroke-width:1.65!important;
+  filter:drop-shadow(0 2px 2px rgba(0,0,0,.16));
+}
+.item-check span{
+  font-size:18px!important;
+  font-weight:800!important;
+  color:#102A43!important;
+}
+.section-title,.room-title{
+  letter-spacing:-.3px;
+}
+.room-tab,.section-tab{
+  border-radius:14px!important;
+  box-shadow:0 4px 12px rgba(15,42,67,.07);
+}
+.room-tab.active,.section-tab.active{
+  background:linear-gradient(145deg,#0F2A43,#1F4E75)!important;
+  color:#fff!important;
+}
+
+</style>
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="짐픽">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAFEElEQVR4nO3cvW4TQRSG4UkEFYKEFppQAtdAAUSigIpL4Vq4DioaJH4KOjqKQBkaaBNAVBShgITNxl6PvWdmzvnmfSoUJ/Zq9tXJrDd4a+/xs5MEiNhufQCAJYKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGlEutDwCY6+jw49m/CRohDSMeImiEsCzgMYKGS7kBjxE03Ng04iGCRjMWAY8RNKopEfAYQaOoGhEPETRM1Q54jKAxS+uAx6oHfbj3vvZLyrn15V7T1/cW8VDVoInZxuHe+6pRew54rFrQxGyrZNSRAh6rEjQxl2EZdeSIh7go7JRKwGME3QnVgMcIWlgvEQ8RtJAeAx4j6OCI+Dz+TyGkEDSkEDSkEDSkEDSkEDSkEDSkEDSkEDSkcKdQxPHB62avvXt3v9lrjxF0cC1DHh+Dh7DZckAKQUf2/EPrIzjHw28LgoYU9tCCSuxlPUzfHExoMaUuzDxc8OUgaEghaEghaEghaEghaEghaEghaEgpemPl7DMj9kq+CvCfadB86Alamx00EcOTtYMmYHi2MmgCjuX44HXXf5y0MGgiji1KfCVcSomAoWObmKEk5B/4X3nxc+ljv55erXgkcV25cXvpY7++fa54JLbCBD0V8bLvI+7zpiJe9n3R4g5x6zs3ZqufU5Qbs9XPteI+6LlREvX8KCNF7Tpoqxh7jtoqxihRuw3aOsIeo7aOMELULoMuFV9PUZeKz3vU7oIuHV0PUZeOznPUVd622313LR3f/2H6nG9fvbzwtQePnpi+hne7d/dn3ea2XkMPn91RbULvvrtm9lyLTsTU1xXNXU/VNdzaufPwpOYLTk3qnO1AzoLnTJnIN10WxXw6qXO2A2Zr+O+mi4fJfKp60FN+H32dfHyd6bHqhFy+fjP7uSLpfQ3dXRQCcxS7KFw1KVrzfnwRrFrDFhOcCQ0pBA0poYLOfY+0t/ej16G+hq7e5Ugpb287daWecyI8Xp1b6nkNQ03oU8sWPOpUaUF1DUNO6Lm8ThcrPa+huwldeqG8nghLPa+hu6BTKrdgnk+EtV7X0GXQKdkvnPcTUUKPa+g26JTsFjDCiSiltzV0HXRK8xcyyokoqac1dB90SpsvaKQTUVovaxjmg2aGCzv1tlS0E1BTD2sYJuihyAvuheoahthyALkIGlIIGlIIGlIIGlIIGlIIGlIIGlIIGlIIGlIIGlIIGlIIGlIIGlIIGlIIGlIIGlIIGlK2v396s9X6IAAL3z+92WJCQwpBQwpBQ8p2Sn/3Hq0PBJjjtGEmNKQQNKScBc22A1EN22VCQwpBQ8q5oNl2IJpxs0xoSLkQNFMaUSxqdeGEJmp4t6xRthyQsjRopjS8mmpzckITNbxZ1SRbDkhZGTRTGl7ktJg1oYkareU2mL3lIGq0sk57a+2hiRq1rdvc2heFRI1aNmlto3c5iBqlbdrYxm/bETVKmdOWSZQ7dx6eWDwP+mYxJE1urDCtMZdVQ+YhMq2xDuthaH7rm2mNXCVaKRof0xqLlBx61aYpcfet1m/uJtsD4u5Di+2ni/0ugWvwcP30B3PCbulkXcw/AAAAAElFTkSuQmCC">
+<link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAFdklEQVR4nO3cvZIUVRyH4d4tjChhTTVZQ+EaDBSqDDTyUrwWr8PIxCqQgMzMAAwx0RTQIjLAAEdmZ2dme2b6nD6nf88TUXzMTp3+v326e5Y9u/z6u7cDhDqf+w3AnARANAEQTQBEEwDRBEA0ARBNAEQTANEEQDQBEE0ARBMA0QRANAEQTQBEEwDRBEA0ARBNAEQTANEEQDQBEE0ARBMA0QRANAEQTQBEEwDRBEA0ARBNAEQTANEEQDQBEE0ARBMA0QRANAEQTQBEEwDRBEA0ARBNAEQTANEEQDQBEE0ARBMA0QRANAEQTQBEEwDRbs39BqC2ly9+/f/XAiDC+tCvEwCLtGvgNwmARRg78JsEQLeOHfp1AqAbUwz8JgHQrBIDv0kANKPGwG8SALOaY+jXCYCq5h74TQKgqNYGftMsAby4fDrHl43x6e+fz/r1Wx/6ddUDMPzlvbh8WjWCngZ+U9UADH89JSPoeeA3VQvA8Nc3ZQRLGvp1boLZaqkDv0kADMOQM/CbBBAsdejXCSCIgb9OAAtn6Pfzn+KJJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAovlWiBCvnj2a+y0MF/cfzv0WrhHAwrUw+Cur99JSCC6BiCaAJfv+l7nfwVYt7UoCIJp7gEAlr8FbOruPYQcIU/oGtKUb3DEEQDQBEE0ARBMA0QRANAEQTQBEEwDRin4SfOWnkl2W/EpwnEkD8GP46M3JARh6enZwAAaeJbkxAAO/LK+ePfLdoGu2BmDol623IS3p1jAYeHKdG36S+SCMaF3/l8jbP/y988/efPthxXeyTLc//mznn73587eK76Sc7gLYN/S7/p4Yxts39Lv+Xs8xdHUJNHb4p/p3acYO/1T/rgVd7ABTDPDqNewG100xwKvX6G03aH4HmPrsbTe4auqzd2+7QdMBlBpWEbxTalh7iqDpAKC0ZgMofZZO3wVKn6V72QWaDKDWcKZGUGs4e4ig2lOgiyd3hldf/DX56/7804/Xfu/Lr76Z/Ov06OL+w5O/8a3E+rb04xOr7gAXT+5M+nrbDs6+308yxVonrO/Z3XsP3tb+ovt2grGXJWMOwtgz1dI+G9g2/KudYOxlyaTr+99nAy2d+VdmCWCff17+cePfOeQMNOYgffDRJ6Nfr3fW96omb4KhlqI3wWPONi3o5X326qb1nXOHsAMQTQBE6zKAsU8ffB5wnKT1be4p0DCMvybf97Ri7MFp+QlFKdb3vS53gJVdB2EJZ6YWJKxv1zvAFFo/Q5Vgfd9rcgeotWitH5xSrO97TQYwDOUXr4eDU5L1fafZAKCGpgModRbp5exUmvVtPIBhmH4xezo4NaSvbxc/FmW1qKc8vejtwNSUvL7N7wDrjl3kXg9ObYnr28UOsG59sfedsXo+KHNKW9/uAli3lIPQqoT17eoSCKYmAKIJgGgCIJoAiCYAogmAaAIgmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAop2/fv74bO43AXN4/fzxmR2AaAIgmgCIJgCinQ/Du5uBud8I1LSaeTsA0QRAtP8DcBlEivVZtwMQ7UoAdgGWbnPG7QBEuxaAXYCl2jbbdgCibQ3ALsDS7JppOwDRdgZgF2Ap9s3y3h1ABPTuphl2CUS0GwOwC9CrMbM7agcQAb0ZO7OjL4FEQC8OmdWD7gFEQOsOndGDb4JFQKuOmc2jngKJgNYcO5NHPwYVAa04ZRZP+hxABMzt1Bk8+YMwETCXKWZv0uG9e+/B2ylfD7aZ8qQ76bdC2A0obeoZKzawdgOmVOrkWvyMLQROUfqqotolixA4RK3L6erX7EJgn9r3kbPetIqBYZj34UlzT21EsWytPSn8F2B1hFN3Q2YjAAAAAElFTkSuQmCC">
+<meta name="theme-color" content="#0F2A43">
+</head>
+<body>
+
+<!-- ============ 로그인 화면 (Supabase 연결 시에만 사용) ============ -->
+<div class="login-gate" id="loginGate" style="display:none;">
+  <div class="login-box">
+    <div class="login-logo">🚚 짐픽 <span>AI 이사견적</span></div>
+    <div class="hint" id="loginHint" style="text-align:center;margin-bottom:16px;">업체 계정으로 로그인하세요</div>
+    <div class="field"><label>이메일</label><input type="text" id="loginEmail" placeholder="example@company.com"></div>
+    <div class="field"><label>비밀번호</label><input type="password" id="loginPassword" placeholder="6자리 이상"></div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="App.signUp()">회원가입</button>
+      <button class="btn btn-primary" onclick="App.signIn()">로그인</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============ 상단바 ============ -->
+<div class="topbar no-print">
+  <div class="brand">
+    <div class="truck">🚚</div>
+    <div class="brand-text">
+      <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V2 ✏️</div>
+      <div class="sub" id="quoteDateDisplay">견적일 -</div>
+    </div>
+  </div>
+  <div class="quick-total">
+    <div class="amt" id="topTotal">0원</div>
+    <div class="lbl">예상 견적금액</div>
+  </div>
+</div>
+
+<!-- ============ 앱 설치 배너 (설치 가능할 때만 자동으로 나타남) ============ -->
+<button type="button" class="install-banner no-print" id="installBanner" style="display:none;" onclick="App.installApp()">
+  📲 <b>짐픽</b>을 휴대폰 홈 화면에 앱으로 설치하기
+</button>
+
+<!-- ============ 계정 바 (Supabase 로그인 시에만 표시) ============ -->
+<div class="account-bar no-print" id="accountBar" style="display:none;">
+  <button type="button" onclick="App.openCustomerModal()">👤 고객관리</button>
+  <button type="button" onclick="App.openSavedQuotes()">📁 저장된 견적</button>
+  <span class="sub-badge" id="subscriptionBadge">체험중</span>
+  <button type="button" id="adminNavBtn" style="display:none;" onclick="App.openAdmin()">🛠️ 관리자</button>
+  <button type="button" onclick="App.logout()">로그아웃</button>
+</div>
+
+<!-- ============ 도입 문의 배너 (다른 이사업체용) ============ -->
+<div class="inquiry-banner no-print" id="inquiryBanner" onclick="App.openInquiry()">
+  🤝 다른 이사업체 사장님이신가요? <b>이 프로그램 도입 문의하기 →</b>
+</div>
+
+<!-- ============ 진행 경로 네비 ============ -->
+<div class="route-nav no-print" id="routeNav">
+  <div class="route-step active" data-step="1"><div class="dot">1</div><div class="lbl">고객정보</div></div>
+  <div class="route-step" data-step="2"><div class="dot">2</div><div class="lbl">현장정보</div></div>
+  <div class="route-step" data-step="3"><div class="dot">3</div><div class="lbl">사진AI</div></div>
+  <div class="route-step" data-step="4"><div class="dot">4</div><div class="lbl">품목확인</div></div>
+  <div class="route-step" data-step="5"><div class="dot">5</div><div class="lbl">견적확정</div></div>
+  <div class="route-step" data-step="6"><div class="dot">6</div><div class="lbl">발송</div></div>
+</div>
+
+<div class="container">
+
+  <!-- ============ STEP 1. 고객정보 ============ -->
+  <section class="panel active" id="step1">
+    <div class="card">
+      <h2><span class="eyebrow">STEP 1</span>고객 정보</h2>
+      <div class="btn-row" style="margin-bottom:14px;">
+        <button type="button" class="btn btn-ghost" id="tempSaveBtn" style="font-size:13px;">💾 임시저장</button>
+        <button type="button" class="btn btn-ghost" id="tempLoadBtn" style="font-size:13px;">📂 불러오기</button>
+      </div>
+      <div class="btn-row" style="margin-bottom:14px;">
+        <button type="button" class="btn btn-outline" id="newQuoteBtn" style="font-size:13px;">🆕 새 견적 시작</button>
+        <button type="button" class="btn btn-ghost" id="resetAllBtn" style="font-size:13px;color:var(--danger);">🗑️ 전체 초기화</button>
+      </div>
+      <div class="field">
+        <label>고객명</label>
+        <input type="text" id="custName" placeholder="예) 김철수">
+      </div>
+      <div class="field">
+        <label>연락처</label>
+        <input type="tel" id="custPhone" placeholder="010-0000-0000">
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>이사 날짜</label>
+          <input type="date" id="moveDate">
+        </div>
+        <div class="field">
+          <label>이사 시작 시간</label>
+          <input type="time" id="moveStartTime">
+        </div>
+      </div>
+      <div class="field">
+        <label>이사 종류</label>
+        <select id="moveType">
+          <option value="포장이사">포장이사</option>
+          <option value="반포장이사">반포장이사</option>
+          <option value="일반이사" selected>일반이사</option>
+          <option value="원룸이사">원룸이사</option>
+          <option value="사무실이사">사무실이사</option>
+          <option value="보관이사">보관이사</option>
+          <option value="기타">기타(직접입력)</option>
+        </select>
+      </div>
+      <div class="field" id="moveTypeEtcWrap" style="display:none;">
+        <label>이사 종류 직접입력</label>
+        <input type="text" id="moveTypeEtc" placeholder="예) 단순운송">
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>상담 담당자</label>
+          <input type="text" id="consultantName" placeholder="예) 김대표">
+        </div>
+        <div class="field">
+          <label>계약 상태</label>
+          <select id="contractStatus">
+            <option value="상담중" selected>상담중</option>
+            <option value="계약완료">계약완료</option>
+            <option value="보류">보류</option>
+            <option value="취소">취소</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>고객 요청사항</label>
+        <textarea id="custRequest" placeholder="예) 오전 9시 이전 도착 희망, 반려동물 있음 등"></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STEP 2. 이사 정보(출발/도착) ============ -->
+  <section class="panel" id="step2">
+    <div class="card">
+      <h2><span class="eyebrow">STEP 2</span>출발지 · 도착지</h2>
+      <div class="hint" style="margin-bottom:10px;">주소검색은 Claude 미리보기보다 다운로드한 파일 또는 배포된 Chrome 화면에서 테스트하는 것이 정확합니다.</div>
+
+      <div class="addr-block from">
+        <div class="addr-title">📍 출발지</div>
+        <div class="field">
+          <label>주소</label>
+          <div class="addr-search-row">
+            <input type="text" id="fromAddress" placeholder="출발지 주소를 입력하세요">
+            <button type="button" id="fromAddressSearchButton" class="addr-search-btn" onclick="openPostcode('from')">🔍 검색</button>
+          </div>
+          <div class="mini-map" id="fromMap"></div>
+        </div>
+        <div class="field">
+          <label>상세주소 (동/호수 등)</label>
+          <input type="text" id="fromDetail" placeholder="예) 101동 202호">
+        </div>
+        <div class="field">
+          <label>사다리차 사유(선택)</label>
+          <input type="text" id="fromLadderNote" placeholder="예) 계단 협소">
+        </div>
+        <div class="switch-row" id="fromStairsRow">
+          <span><svg class="row-icon" viewBox="0 0 24 24" width="20" height="20"><path d="M3 21V17H7V13H11V9H15V5H19V21H3Z" fill="currentColor"/></svg> 수작업(계단) <b id="fromStairsStatus">없음</b></span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="size-tag" id="fromStairsFloorTag">1층</span>
+            <button type="button" class="size-toggle" id="fromStairsFloorToggle">▼</button>
+            <label class="switch"><input type="checkbox" id="fromStairs"><span class="track"></span><span class="thumb"></span></label>
+          </div>
+        </div>
+        <input type="hidden" id="fromStairsFloor" value="1">
+        <div class="size-options ladder-floor-options" id="fromStairsFloorOptions"></div>
+        <div class="switch-row elevator-row on" id="fromElevatorRow">
+          <span>🛗 엘리베이터 <b id="fromElevatorStatus">있음</b></span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="size-tag" id="fromElevatorFloorTag">1층</span>
+            <button type="button" class="size-toggle" id="fromElevatorFloorToggle">▼</button>
+            <label class="switch elevator"><input type="checkbox" id="fromElevator" checked><span class="track"></span><span class="thumb"></span></label>
+          </div>
+        </div>
+        <input type="hidden" id="fromElevatorFloor" value="1">
+        <div class="size-options ladder-floor-options" id="fromElevatorFloorOptions"></div>
+        <div class="switch-row">
+          <span><svg class="row-icon" viewBox="0 0 24 24" width="20" height="20"><rect x="2" y="11" width="9" height="7" rx="1.2" fill="currentColor"/><path d="M10 13.5H14.5L18.5 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="5.2" cy="19.5" r="1.6" fill="currentColor"/><circle cx="9.5" cy="19.5" r="1.6" fill="currentColor"/></svg> 사다리차 <b id="fromLadderStatus">필요 없음</b></span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="size-tag" id="fromLadderFloorTag">2층</span>
+            <button type="button" class="size-toggle" id="fromLadderFloorToggle">▼</button>
+            <label class="switch"><input type="checkbox" id="fromLadder"><span class="track"></span><span class="thumb"></span></label>
+          </div>
+        </div>
+        <div class="size-options ladder-floor-options" id="fromLadderFloorOptions"></div>
+        <div class="field">
+          <label>골목 진입 가능</label>
+          <select id="fromAlleyAccess">
+            <option value="가능" selected>가능</option>
+            <option value="어려움">어려움</option>
+            <option value="불가능(추가 인력 필요)">불가능(추가 인력 필요)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>작업 특이사항</label>
+          <input type="text" id="fromSiteNote" placeholder="예) 이중주차 많음, 경사로 있음 등">
+        </div>
+      </div>
+
+      <div class="addr-block to">
+        <div class="addr-title">🏁 도착지</div>
+        <div class="field">
+          <label>주소</label>
+          <div class="addr-search-row">
+            <input type="text" id="toAddress" placeholder="도착지 주소를 입력하세요">
+            <button type="button" id="toAddressSearchButton" class="addr-search-btn" onclick="openPostcode('to')">🔍 검색</button>
+          </div>
+          <div class="mini-map" id="toMap"></div>
+        </div>
+        <div class="field">
+          <label>상세주소 (동/호수 등)</label>
+          <input type="text" id="toDetail" placeholder="예) 101동 202호">
+        </div>
+        <div class="field">
+          <label>사다리차 사유(선택)</label>
+          <input type="text" id="toLadderNote" placeholder="예) 계단 협소">
+        </div>
+        <div class="switch-row" id="toStairsRow">
+          <span><svg class="row-icon" viewBox="0 0 24 24" width="20" height="20"><path d="M3 21V17H7V13H11V9H15V5H19V21H3Z" fill="currentColor"/></svg> 수작업(계단) <b id="toStairsStatus">없음</b></span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="size-tag" id="toStairsFloorTag">1층</span>
+            <button type="button" class="size-toggle" id="toStairsFloorToggle">▼</button>
+            <label class="switch"><input type="checkbox" id="toStairs"><span class="track"></span><span class="thumb"></span></label>
+          </div>
+        </div>
+        <input type="hidden" id="toStairsFloor" value="1">
+        <div class="size-options ladder-floor-options" id="toStairsFloorOptions"></div>
+        <div class="switch-row elevator-row on" id="toElevatorRow">
+          <span>🛗 엘리베이터 <b id="toElevatorStatus">있음</b></span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="size-tag" id="toElevatorFloorTag">1층</span>
+            <button type="button" class="size-toggle" id="toElevatorFloorToggle">▼</button>
+            <label class="switch elevator"><input type="checkbox" id="toElevator" checked><span class="track"></span><span class="thumb"></span></label>
+          </div>
+        </div>
+        <input type="hidden" id="toElevatorFloor" value="1">
+        <div class="size-options ladder-floor-options" id="toElevatorFloorOptions"></div>
+        <div class="switch-row">
+          <span><svg class="row-icon" viewBox="0 0 24 24" width="20" height="20"><rect x="2" y="11" width="9" height="7" rx="1.2" fill="currentColor"/><path d="M10 13.5H14.5L18.5 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="5.2" cy="19.5" r="1.6" fill="currentColor"/><circle cx="9.5" cy="19.5" r="1.6" fill="currentColor"/></svg> 사다리차 <b id="toLadderStatus">필요 없음</b></span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="size-tag" id="toLadderFloorTag">2층</span>
+            <button type="button" class="size-toggle" id="toLadderFloorToggle">▼</button>
+            <label class="switch"><input type="checkbox" id="toLadder"><span class="track"></span><span class="thumb"></span></label>
+          </div>
+        </div>
+        <div class="size-options ladder-floor-options" id="toLadderFloorOptions"></div>
+        <div class="field">
+          <label>골목 진입 가능</label>
+          <select id="toAlleyAccess">
+            <option value="가능" selected>가능</option>
+            <option value="어려움">어려움</option>
+            <option value="불가능(추가 인력 필요)">불가능(추가 인력 필요)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>작업 특이사항</label>
+          <input type="text" id="toSiteNote" placeholder="예) 이중주차 많음, 경사로 있음 등">
+        </div>
+      </div>
+      <div class="hint">※ 수작업·엘리베이터·사다리차의 세모(▼)를 누르면 층수를 선택할 수 있고, 다시 누르면 목록이 닫힙니다.</div>
+      <div class="arch-note">
+        🗺️ <b>지도 안내</b>: 주소를 검색해서 고르면 자동으로 좌표로 변환되어 지도가 그 위치로 이동하고 마커가 표시됩니다.
+        단, 이 기능을 쓰려면 무료 카카오 지도 키를 한 번 발급받아 코드 맨 위 <code>KAKAO_APP_KEY</code> 자리에 넣어야 합니다
+        (발급 방법은 그 위치의 안내 주석 참고). 키가 없어도 주소 검색·입력 자체는 정상적으로 작동합니다.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STEP 3. 사진/동영상 AI 분석 ============ -->
+  <section class="panel" id="step3">
+    <div class="card">
+      <h2><span class="eyebrow">STEP 3</span>사진 · 동영상 업로드 (AI 짐 분석)</h2>
+      <div class="upload-box">
+        <div>📷 현장에서 바로 촬영하거나, 찍어둔 사진/동영상을 업로드하면 AI가 품목을 자동으로 인식합니다.</div>
+        <div class="upload-btn-row">
+          <label class="upload-btn camera" for="cameraPhotoInput">📷 지금 사진 촬영</label>
+          <label class="upload-btn camera" for="cameraVideoInput">🎥 지금 동영상 촬영</label>
+          <label class="upload-btn" for="mediaInput">🖼️ 사진/동영상 선택</label>
+        </div>
+        <input type="file" id="mediaInput" accept="image/*,video/*" multiple>
+        <input type="file" id="cameraPhotoInput" accept="image/*" capture="environment">
+        <input type="file" id="cameraVideoInput" accept="video/*" capture="environment">
+      </div>
+      <div class="preview-grid" id="mediaPreview"></div>
+      <button class="btn btn-navy" id="analyzeBtn" style="margin-top:14px;">🤖 AI 분석하기 (데모)</button>
+      <div id="aiResultWrap"></div>
+      <div class="arch-note">
+        🔧 <b>연동 안내</b>: 지금은 데모 시뮬레이션입니다. 실제 서비스 단계에서는 서버(백엔드)의
+        <code>/api/analyze-media</code> 엔드포인트가 사진/동영상을 Vision AI 모델로 분석하여
+        <code>{items:[{name, qty, confidence}]}</code> 형태로 결과를 반환하도록 교체하면 됩니다.
+        (AIService.analyzeMedia 함수만 교체) 사진을 찍거나 올리면 자동으로 분석되어 해당 품목이 바로 체크되고,
+        우리 목록에 없는 물건은 자동으로 "기타" 항목에 체크되면서 무엇인지 메모로 기록됩니다.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STEP 4. 품목 확인 (방 + 거실 + 부엌 통합) ============ -->
+  <section class="panel" id="step4">
+    <div class="card">
+      <h2><span class="eyebrow">STEP 4</span>품목 확인</h2>
+      <div class="section-tab-bar" id="itemSectionTabBar">
+        <button type="button" class="section-tab active" data-section="room">🛏️ 방</button>
+        <button type="button" class="section-tab" data-section="living">🛋️ 거실</button>
+        <button type="button" class="section-tab" data-section="kitchen">🍳 부엌</button>
+        <button type="button" class="section-tab" data-section="laundry">🧺 세탁실</button>
+      </div>
+    </div>
+    <div class="item-section" id="itemSectionRoom">
+    <div class="card">
+      <h2><span class="eyebrow">품목</span>방 별 품목 (최대 5개)</h2>
+      <div class="room-count-control">
+        <button class="qty-btn" id="roomMinus" type="button">−</button>
+        <div class="num"><span id="roomCountLabel">1</span>개 방</div>
+        <button class="qty-btn" id="roomPlus" type="button">+</button>
+      </div>
+      <div class="room-tabs" id="roomTabs"></div>
+      <div id="roomPanels"></div>
+    </div>
+    </div>
+    <div class="item-section" id="itemSectionLiving" style="display:none;">
+    <div class="card">
+      <h2><span class="eyebrow">품목</span>거실 품목</h2>
+      <div class="item-list" id="livingList"></div>
+      <button type="button" class="add-item-btn">+ 품목 추가</button>
+    </div>
+    </div>
+    <div class="item-section" id="itemSectionKitchen" style="display:none;">
+    <div class="card">
+      <h2><span class="eyebrow">품목</span>부엌 품목</h2>
+      <div class="item-list" id="kitchenList"></div>
+      <button type="button" class="add-item-btn">+ 품목 추가</button>
+    </div>
+    </div>
+    <div class="item-section" id="itemSectionLaundry" style="display:none;">
+    <div class="card">
+      <h2><span class="eyebrow">품목</span>세탁실·베란다 품목</h2>
+      <div class="item-list" id="laundryList"></div>
+      <button type="button" class="add-item-btn">+ 품목 추가</button>
+    </div>
+    </div>
+  </section>
+
+  <!-- ============ STEP 5. 견적 확정 ============ -->
+  <section class="panel" id="step5">
+    <div class="card">
+      <h2><span class="eyebrow">STEP 5</span>견적 확정</h2>
+      <div class="price-hero">
+        <div class="l">예상 견적 금액 (VAT 별도)</div>
+        <div class="v" id="finalPrice" onclick="App.editPrice()">0원 <span class="edit-pencil">✏️</span></div>
+        <input type="text" id="finalPriceInput" class="price-edit-input money-input" style="display:none;" inputmode="numeric">
+        <div class="n">탭하여 금액을 직접 수정할 수 있습니다</div>
+        <button type="button" id="resetPriceBtn" class="reset-price-btn" style="display:none;">↺ 자동 계산 금액으로 되돌리기</button>
+      </div>
+      <div class="summary-grid">
+        <div class="stat-box">
+          <div class="v" id="recWorkers">-</div>
+          <div class="l">추천 작업자 수 <button type="button" class="mini-toggle" id="workerToggle">▼</button></div>
+          <div class="mini-panel" id="workerPanel">
+            <div class="mini-row">
+              <span>남자</span>
+              <div class="mini-stepper">
+                <button type="button" class="mini-btn" data-field="maleCount" data-op="-1">−</button>
+                <input type="number" id="maleCount" class="mini-input" value="0" min="0" max="20">
+                <button type="button" class="mini-btn" data-field="maleCount" data-op="1">+</button>
+              </div>
+            </div>
+            <div class="mini-row">
+              <span>주방이모</span>
+              <div class="mini-stepper">
+                <button type="button" class="mini-btn" data-field="kitchenCount" data-op="-1">−</button>
+                <input type="number" id="kitchenCount" class="mini-input" value="0" min="0" max="10">
+                <button type="button" class="mini-btn" data-field="kitchenCount" data-op="1">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="stat-box orange">
+          <div class="v" id="recTrucks">-</div>
+          <div class="l">추천 차량 구성</div>
+          <div class="mini-panel open" style="display:block;margin-top:12px;">
+            <div class="truck-qty-row">
+              <div class="truck-qty-item">
+                <span>1톤 차량</span>
+                <input type="number" id="truck1Count" value="0" min="0" max="30">
+              </div>
+              <div class="truck-qty-item">
+                <span>5톤 차량</span>
+                <input type="number" id="truck5Count" value="0" min="0" max="20">
+              </div>
+            </div>
+            <div style="font-size:11px;color:#fff;margin-top:8px;opacity:.9;">
+              짐의 양을 계산해 1톤과 5톤으로 나누어 추천합니다. 수량은 직접 변경할 수 있습니다.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cost-entry-list" id="costEntryList">
+        <div class="cost-row cost-row-draggable">
+          <span class="drag-handle" title="눌러서 위/아래로 순서 변경">⠿</span>
+          <label>이사 비용</label>
+          <input type="text" id="costMove" class="money-input" value="200,000" inputmode="numeric">
+        </div>
+        <div class="cost-row cost-row-draggable">
+          <span class="drag-handle" title="눌러서 위/아래로 순서 변경">⠿</span>
+          <label>차 증차시 비용</label>
+          <input type="text" id="costExtraTruck" class="money-input" value="0" inputmode="numeric">
+        </div>
+        <div class="cost-row cost-row-draggable">
+          <span class="drag-handle" title="눌러서 위/아래로 순서 변경">⠿</span>
+          <label>수작업 비용</label>
+          <input type="text" id="costWork" class="money-input" value="0" inputmode="numeric">
+        </div>
+        <div class="cost-row cost-row-draggable">
+          <span class="drag-handle" title="눌러서 위/아래로 순서 변경">⠿</span>
+          <label>사다리 비용</label>
+          <input type="text" id="costLadder" class="money-input" value="0" inputmode="numeric">
+        </div>
+        <div class="cost-row cost-row-draggable">
+          <span class="drag-handle" title="눌러서 위/아래로 순서 변경">⠿</span>
+          <label>옵션 비용</label>
+          <input type="text" id="costOption" class="money-input" value="0" inputmode="numeric">
+        </div>
+        <div class="cost-row cost-row-draggable">
+          <span class="drag-handle" title="눌러서 위/아래로 순서 변경">⠿</span>
+          <label>분해·조립 비용</label>
+          <input type="text" id="costAssembly" class="money-input" value="0" inputmode="numeric">
+        </div>
+        <div class="cost-row cost-row-draggable">
+          <span class="drag-handle" title="눌러서 위/아래로 순서 변경">⠿</span>
+          <label>기타 추가비</label>
+          <input type="text" id="costEtc" class="money-input" value="0" inputmode="numeric">
+        </div>
+        <div class="cost-row cost-row-storage">
+          <label>보관 이사 비용</label>
+          <div class="storage-inputs">
+            <input type="text" id="storageDailyRate" class="money-input" placeholder="하루 비용" inputmode="numeric">
+            <span>원 ×</span>
+            <input type="number" id="storageDays" placeholder="기간" min="0">
+            <span>일</span>
+          </div>
+        </div>
+        <div class="cost-row cost-row-storage-total">
+          <label>→ 보관 비용 합계</label>
+          <span id="storageCostDisplay">0원</span>
+        </div>
+        <div class="cost-row">
+          <label>할인</label>
+          <input type="text" id="costDiscount" class="money-input" value="0" inputmode="numeric" placeholder="할인 금액(빼기)">
+        </div>
+        <div class="cost-row cost-row-storage-total">
+          <label>→ 할인 적용 후 소계</label>
+          <span id="subtotalAfterDiscountDisplay">0원</span>
+        </div>
+        <div class="cost-row">
+          <label>VAT (10%)</label>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <label class="switch"><input type="checkbox" id="vatEnabled"><span class="track"></span><span class="thumb"></span></label>
+            <span id="vatAmountDisplay" class="muted">0원</span>
+          </div>
+        </div>
+        <div class="cost-row cost-row-final">
+          <label>최종 견적 비용</label>
+          <span id="finalCostDisplay">0원</span>
+        </div>
+      </div>
+      <div class="field" style="margin-top:14px;">
+        <label>특이사항</label>
+        <textarea id="specialNotes" placeholder="예: 대형 냉장고 문 분리 필요, 주차 공간 협소, 반려동물 있음 등"></textarea>
+      </div>
+      <button class="btn btn-outline" id="recalcBtn" style="margin-top:14px;">🔄 견적 다시 계산하기</button>
+    </div>
+  </section>
+
+  <!-- ============ STEP 6. 발송 ============ -->
+  <section class="panel" id="step6">
+    <div class="card">
+      <h2><span class="eyebrow">문자</span>고객 안내 문자 자동 생성</h2>
+      <div class="hint" style="margin-bottom:8px;">아래 문구는 자동으로 생성되지만, 직접 눌러서 원하는 대로 수정할 수 있습니다.</div>
+      <div class="field">
+        <textarea id="smsText"></textarea>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="smsRegenBtn">🔄 문자 문안 만들기</button>
+        <button class="btn btn-ghost" id="smsCopyBtn">📋 문자 내용 복사</button>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="smsOpenAppBtn">📱 휴대폰 문자앱 열기</button>
+        <button class="btn btn-success" id="kakaoShareBtn">💬 카카오톡 공유 준비</button>
+      </div>
+      <div class="arch-note">
+        🔧 <b>연동 안내</b>: "휴대폰 문자앱 열기"는 <code>sms:</code> 링크로 바로 작동합니다 (서버 필요 없음).
+        "카카오톡 공유"는 기기가 지원하면 공유 시트를 바로 열고, 지원하지 않으면 문구를 복사해드립니다.
+        문자를 사람이 직접 앱을 열지 않고 자동으로 발송하려면 네이버클라우드 SENS 또는 카카오 알림톡 연동이
+        추가로 필요합니다. 이건 비밀 키가 필요해서 반드시 <b>백엔드 서버</b>를 하나 두고 그 서버가 API를
+        호출하도록 구성해야 합니다(API 키가 브라우저에 노출되면 안 되기 때문). 이 파일의
+        <code>SMSService.send()</code> 함수 안의 안내 주석을 참고해 서버 주소만 연결하면 됩니다.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="eyebrow">문서</span>PDF 저장 / 인쇄</h2>
+      <div class="btn-row">
+        <button class="btn btn-navy" id="pdfBtn">📄 PDF로 저장</button>
+        <button class="btn btn-success" id="printBtn">🖨️ 인쇄하기</button>
+      </div>
+    </div>
+
+    <div class="card no-print" id="cloudSaveCard" style="display:none;">
+      <h2><span class="eyebrow">클라우드</span>견적 저장</h2>
+      <div class="hint" style="margin-bottom:10px;">이 견적을 고객별로 서버에 저장해서, 나중에 다시 찾아볼 수 있어요. 업로드한 사진도 함께 저장됩니다.</div>
+      <button class="btn btn-primary" id="cloudSaveBtn">☁️ 이 견적 저장하기</button>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============ 하단 고정 네비게이션 ============ -->
+<div class="sticky-footer no-print">
+  <button class="nav-btn btn-ghost" id="prevBtn">← 이전</button>
+  <div class="foot-total">
+    <div class="l">예상 견적금액</div>
+    <div class="v" id="footTotal">0원</div>
+  </div>
+  <button class="nav-btn btn-primary" id="nextBtn">다음 →</button>
+</div>
+
+<!-- ============ 설정 모달 (업체 정보) ============ -->
+<div class="modal-bg no-print" id="settingsModal">
+  <div class="modal">
+    <h3>🏢 우리 업체 정보</h3>
+    <div class="hint" style="margin-bottom:10px;">견적 비용은 이제 견적 결과 화면에서 매번 직접 입력합니다.</div>
+
+    <div class="field"><label>상호명</label><input type="text" id="cfgCompanyName"></div>
+    <div class="field"><label>대표 연락처</label><input type="text" id="cfgCompanyPhone"></div>
+    <div class="field"><label>입금 계좌번호</label><input type="text" id="cfgAccountNumber" placeholder="예: 국민은행 123456-00-000000 (짐픽)"></div>
+    <div class="field"><label>도입 문의 받을 이메일</label><input type="email" id="cfgInquiryEmail" placeholder="예: myemail@gmail.com"></div>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="App.closeSettings()">닫기</button>
+      <button class="btn btn-primary" onclick="App.saveSettings()">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 도입 문의 모달 (다른 이사업체용) ============ -->
+<div class="modal-bg no-print" id="inquiryModal">
+  <div class="modal">
+    <h3>🤝 도입 문의하기</h3>
+    <div class="hint" style="margin-bottom:12px;">문의 내용을 작성하고 보내면, 담당자 메일함으로 바로 연결됩니다.</div>
+    <div class="field"><label>업체명</label><input type="text" id="inqCompany" placeholder="예) OO이사"></div>
+    <div class="field"><label>담당자명</label><input type="text" id="inqName" placeholder="예) 홍길동"></div>
+    <div class="field"><label>연락처</label><input type="tel" id="inqPhone" placeholder="010-0000-0000"></div>
+    <div class="field"><label>문의 내용</label><textarea id="inqMessage" placeholder="예) 저희 이사업체에도 이 견적 프로그램을 도입하고 싶습니다. 가격과 사용법이 궁금해요."></textarea></div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="App.closeInquiry()">닫기</button>
+      <button class="btn btn-primary" onclick="App.sendInquiry()">📩 문의 보내기</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 고객관리 모달 ============ -->
+<div class="modal-bg no-print" id="customerModal">
+  <div class="modal">
+    <h3>👤 고객관리</h3>
+    <div class="btn-row">
+      <input type="text" id="newCustName" placeholder="고객명" style="flex:1;padding:10px;border:1.5px solid var(--line);border-radius:9px;">
+      <input type="text" id="newCustPhone" placeholder="연락처" style="flex:1;padding:10px;border:1.5px solid var(--line);border-radius:9px;">
+    </div>
+    <button class="btn btn-primary" style="margin-top:8px;" onclick="App.addCustomer()">+ 고객 추가</button>
+    <div id="customerListWrap" style="margin-top:14px;max-height:320px;overflow:auto;"></div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="App.closeCustomerModal()">닫기</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 저장된 견적 모달 ============ -->
+<div class="modal-bg no-print" id="savedQuotesModal">
+  <div class="modal">
+    <h3>📁 저장된 견적</h3>
+    <div id="savedQuotesWrap" style="max-height:400px;overflow:auto;"></div>
+    <div class="btn-row"><button class="btn btn-ghost" onclick="document.getElementById('savedQuotesModal').classList.remove('open')">닫기</button></div>
+  </div>
+</div>
+
+<!-- ============ 관리자 페이지 모달 ============ -->
+<div class="modal-bg no-print" id="adminModal">
+  <div class="modal" style="max-width:520px;">
+    <h3>🛠️ 관리자 페이지 - 전체 업체 현황</h3>
+    <div id="adminCompanyWrap" style="max-height:420px;overflow:auto;"></div>
+    <div class="btn-row"><button class="btn btn-ghost" onclick="document.getElementById('adminModal').classList.remove('open')">닫기</button></div>
+  </div>
+</div>
+
+<!-- ============ 인쇄/PDF 전용 영역 ============ -->
+<div id="printArea"></div>
+
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+/* 화면에 보이는 오류 알림: 스크립트 어디서든 오류가 나면 화면 맨 위에 빨간 띠로 표시합니다.
+   (개발자 도구가 없어도 무슨 문제인지 캡처해서 보여줄 수 있게 하기 위함) */
+window.addEventListener('error', function(e){
+  try{
+    var banner = document.getElementById('__jsErrorBanner');
+    if(!banner){
+      banner = document.createElement('div');
+      banner.id = '__jsErrorBanner';
+      banner.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#c0392b;color:#fff;padding:10px 14px;font-size:12px;z-index:999999;white-space:pre-wrap;line-height:1.5;font-family:monospace;pointer-events:none;';
+      document.body.appendChild(banner);
+    }
+    banner.textContent = '⚠ 오류: ' + (e.message||'') + '  (파일 줄 ' + (e.lineno||'?') + ')';
+  }catch(err){}
+});
+
+/* =====================================================================
+   이사 견적 프로그램 — 단일 파일(HTML/CSS/JS) MVP
+   ---------------------------------------------------------------------
+   구조 설명 (나중에 기능 확장 시 참고):
+     - Config       : 가격/단가 등 설정값. 사장님이 숫자만 바꾸면 견적 로직 조정 가능.
+     - Catalog      : 방/거실/부엌 품목 목록과 포인트(환산 작업량).
+     - Utils        : 공용 헬퍼 함수.
+     - CloudService : 데이터 저장/불러오기. 지금은 localStorage(이 태블릿 안)에만 저장하지만,
+                      나중에는 fetch()로 실제 서버 API를 호출하도록 내부 구현만 바꾸면 됩니다.
+     - AIService    : 사진/동영상 분석. 지금은 데모(가짜 결과)이며, 나중에 실제 Vision AI
+                      서버 엔드포인트를 호출하도록 analyzeMedia()만 교체하면 됩니다.
+     - SMSService   : 문자 발송. 지금은 발송하지 않고 안내만 표시하며, 나중에 네이버클라우드
+                      SENS 또는 카카오 알림톡을 호출하는 "내 서버"의 주소를 연결하면 됩니다.
+     - PDFService   : 인쇄용 화면(printArea)을 캡처해 PDF 파일로 저장.
+     - Calc         : 포인트 합계 → 작업자/차량 추천 → 금액 계산.
+     - UI           : 화면 렌더링과 이벤트 처리.
+     - App          : 초기화 및 전역에서 호출하는 함수 모음.
+   ===================================================================== */
+
+/* ---------------------- 0. 지도(카카오맵) 설정 ----------------------
+   아래 KAKAO_APP_KEY 자리에 카카오 개발자 사이트에서 발급받은
+   "JavaScript 키"를 넣으면 주소 선택 시 좌표 변환 + 지도 이동 + 마커 표시가
+   자동으로 활성화됩니다. (무료 발급, https://developers.kakao.com)
+   1) 카카오 개발자 사이트 로그인 → 내 애플리케이션 → 애플리케이션 추가
+   2) [플랫폼] 설정에서 "Web" 플랫폼 추가 후, 이 프로그램을 올린 사이트 주소
+      (예: https://내이사프로그램.netlify.app)를 사이트 도메인으로 등록
+   3) [앱 키] 메뉴에서 "JavaScript 키" 복사해서 아래 따옴표 안에 붙여넣기
+------------------------------------------------------------------- */
+const KAKAO_APP_KEY = 'YOUR_KAKAO_JAVASCRIPT_KEY';
+
+/* ---------------------- 0b. Supabase 설정 (로그인/고객관리/견적저장/사진저장 담당) ----------------------
+   1) supabase.com 에서 무료 계정 + 새 프로젝트 생성
+   2) 프로젝트 설정 > API 메뉴에서 "Project URL"과 "anon public" 키를 복사
+   3) 아래 두 값에 붙여넣기
+   4) 함께 드린 supabase_schema.sql 파일을 Supabase의 SQL Editor에 붙여넣고 실행
+   5) Storage 메뉴에서 "quote-photos" 라는 이름의 Public 버킷 생성
+------------------------------------------------------------------------------------------ */
+const SUPABASE_URL = 'YOUR_SUPABASE_PROJECT_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY';
+const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+// 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
+const BUILD_VERSION = 'V3.0-B30';
+
+/* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
+const CONFIG = {
+  basePrice: 200000,       // 기본 출동비
+  pointPrice: 7000,        // 포인트(품목 환산 작업량) 1개당 단가
+  noElevatorPerFloor: 20000, // 엘리베이터 없을 때, 층당 추가 비용(출발/도착 각각)
+  ladderTruckPrice: 150000,  // 사다리차 필요 시 추가비용(출발/도착 각각)
+  baseWorkers: 2,          // 기본 작업자 수(최소 인원)
+  baseTrucks: 1,           // 기본 트럭 대수(최소 대수)
+  workerCapacity: 15,      // 작업자 1명이 처리 가능한 포인트
+  truckCapacity: 40,       // 1톤 트럭 1대가 처리 가능한 포인트
+  extraWorkerPrice: 100000,// 기본 인원 초과 1명당 비용
+  extraTruckPrice: 150000, // 기본 대수 초과 1대당 비용
+};
+
+/* ---------------------- 2. CATALOG (품목 & 포인트) ---------------------- */
+const ROOM_ITEMS = ['침대','옷장','서랍장','책상','책장','의자','화장대','컴퓨터','TV','에어컨','스타일러','행거','선풍기','박스','바구니','기타'];
+const LIVING_ITEMS = ['소파','거실장','TV','TV스탠드','안마의자','공기청정기','테이블','책장','러닝머신','장식장','화분','스피커','에어컨','박스','바구니','기타'];
+const KITCHEN_ITEMS = ['냉장고','김치냉장고','식탁','의자','전자레인지','에어프라이어','밥솥','정수기','식기세척기','가스레인지','수납장','박스','바구니','기타'];
+const LAUNDRY_ITEMS = ['세탁기','건조기','빨래건조대','수납장','화분','김치냉장고','박스','바구니','기타'];
+
+const POINTS = {
+  '침대':3,'옷장':3,'서랍장':2,'책상':2,'책장':2,'의자':1,'화장대':2,'컴퓨터':2,'TV':2,'에어컨':3,'스타일러':3,'행거':1,'선풍기':1,'바구니':1,
+  '소파':4,'거실장':3,'TV스탠드':1,'공기청정기':1,'안마의자':4,'테이블':2,'화분':1,'장식장':3,'러닝머신':3,'스피커':1,'박스':1,
+  '냉장고':5,'김치냉장고':4,'세탁기':4,'건조기':4,'빨래건조대':1,'식탁':3,'전자레인지':1,'에어프라이어':1,'밥솥':1,'정수기':1,'식기세척기':2,'가스레인지':2,'수납장':2,
+  '기타':2
+};
+
+// 세부 옵션(세모 버튼)이 있는 품목: 품목명 -> 선택 가능한 옵션 목록 (첫 번째 값이 기본 선택)
+const ITEM_OPTIONS = {
+  '침대':['싱글','퀸','라지킹'],
+  '서랍장':['2단','3단','4단','5단','6단'],
+  '옷장':['붙박이장','슬라이드장','키높이 장'],
+  '스타일러':['3벌','5벌'],
+  '세탁기':['트윈세탁기','워시타워','일체형','통돌이','드럼','이전설치 별도'],
+  '건조기':['트윈건조기','일반'],
+  '김치냉장고':['단층','스텐드'],
+  '에어컨':['벽걸이','스텐드','2in1','이전설치 별도'],
+  'TV':['50인치','55인치','65인치','70인치','75인치','80인치','85인치','이전설치 별도'],
+  '소파':['2인용','3인용','4인용'],
+  '식탁':['2인식탁','4인식탁','6인식탁'],
+  '거실장':['대리석','일반'],
+  '안마의자':['이전설치 별도'],
+  '냉장고':['일반','양문형','정수기','스크린','이전설치 별도'],
+  '정수기':['일반','일체형'],
+  '식기세척기':['철거','이전설치업체'],
+};
+
+/* ---------------------- 3. UTILS ---------------------- */
+const Utils = {
+  won(n){ return Math.round(n).toLocaleString('ko-KR') + '원'; },
+  round10k(n){ return Math.round(n/10000)*10000; },
+  todayStr(){
+    const d = new Date();
+    return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+  },
+  el(html){
+    const t = document.createElement('template');
+    t.innerHTML = html.trim();
+    return t.content.firstChild;
+  },
+  // "100,000" 같은 문자열에서 콤마를 떼고 숫자로 변환 (금액 입력칸 읽을 때 사용)
+  moneyNum(el){
+    if(!el) return 0;
+    const n = Number(String(el.value).replace(/[^0-9.-]/g, ''));
+    return isFinite(n) ? n : 0;
+  }
+};
+
+/* ---------------------- 4. CLOUD SERVICE (지금: localStorage / 나중: 실서버 API) ---------------------- */
+const CloudService = {
+  KEY_DRAFT: 'moving_quote_draft_v1',
+  KEY_SETTINGS: 'moving_quote_settings_v1',
+
+  // 지금은 이 태블릿(브라우저)에만 저장됩니다.
+  // 나중에 클라우드 서버를 붙일 때는 아래 두 함수 내부만
+  //   fetch('https://내서버주소/api/draft', {method:'POST', body: JSON.stringify(data)})
+  // 형태로 바꾸면, 나머지 화면 코드는 전혀 수정할 필요가 없습니다.
+  async save(key, data){
+    try{ localStorage.setItem(key, JSON.stringify(data)); return true; }
+    catch(e){ console.warn('저장 실패', e); return false; }
+  },
+  async load(key){
+    try{
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : null;
+    }catch(e){ return null; }
+  }
+};
+
+/* ---------------------- 4b. DRAFT SERVICE (작성 중인 견적 임시 저장/복원 — 인터넷이 끊겨도 유지) ---------------------- */
+const DraftService = {
+  // 값만 저장하면 되는 일반 입력칸들 (체크박스/텍스트/숫자/select 공통 처리)
+  FIELD_IDS: [
+    'custName','custPhone','moveDate','moveStartTime','moveType','moveTypeEtc',
+    'consultantName','contractStatus','custRequest',
+    'fromAddress','fromDetail','toAddress','toDetail',
+    'fromLadderNote','toLadderNote','fromStairsFloor','toStairsFloor','fromElevatorFloor','toElevatorFloor',
+    'fromAlleyAccess','toAlleyAccess','fromSiteNote','toSiteNote',
+    'fromElevator','toElevator','fromLadder','toLadder','fromStairs','toStairs',
+    'maleCount','kitchenCount','truck1Count','truck5Count',
+    'costMove','costExtraTruck','costWork','costLadder','costOption',
+    'costAssembly','costEtc','costDiscount','vatEnabled',
+    'storageDailyRate','storageDays','specialNotes'
+  ],
+
+  serializeItemList(listEl){
+    if(!listEl) return [];
+    return Array.from(listEl.querySelectorAll(':scope > .item-block')).map(block=>{
+      const row = block.querySelector('.item-row');
+      const chk = row.querySelector('.chk');
+      const qty = row.querySelector('.qty-input');
+      const memo = block.querySelector('.memo-input');
+      return {
+        name: row.dataset.item,
+        checked: chk.checked,
+        qty: qty.value,
+        size: row.dataset.size || null,
+        memo: memo ? memo.value : null
+      };
+    });
+  },
+
+  applyItemList(listEl, items){
+    if(!listEl || !items) return;
+    items.forEach(saved=>{
+      const block = Array.from(listEl.querySelectorAll(':scope > .item-block'))
+        .find(b => b.querySelector('.item-row').dataset.item === saved.name);
+      if(!block) return;
+      const row = block.querySelector('.item-row');
+      const chk = row.querySelector('.chk');
+      const qty = row.querySelector('.qty-input');
+      const minus = row.querySelector('.qty-btn.minus');
+      const plus = row.querySelector('.qty-btn.plus');
+      chk.checked = !!saved.checked;
+      row.classList.toggle('checked', chk.checked);
+      qty.disabled = !chk.checked;
+      minus.disabled = !chk.checked;
+      plus.disabled = !chk.checked;
+      if(saved.qty) qty.value = saved.qty;
+      if(saved.size){
+        row.dataset.size = saved.size;
+        const chip = block.querySelector(`.size-chip[data-size="${saved.size}"]`);
+        const tag = block.querySelector('.size-tag');
+        if(chip){
+          block.querySelectorAll('.size-chip').forEach(c=>c.classList.remove('active'));
+          chip.classList.add('active');
+        }
+        if(tag){ tag.textContent = saved.size; tag.classList.add('visible'); }
+      }
+      if(saved.memo){
+        const memoInput = block.querySelector('.memo-input');
+        if(memoInput) memoInput.value = saved.memo;
+      }
+    });
+  },
+
+  serialize(){
+    const data = { savedAt: Date.now(), fields:{}, roomCount: State.roomCount, roomNames:[], rooms:[], living:[], kitchen:[] };
+    this.FIELD_IDS.forEach(id=>{
+      const el = document.getElementById(id);
+      if(!el) return;
+      data.fields[id] = (el.type === 'checkbox') ? el.checked : el.value;
+    });
+    document.querySelectorAll('.room-panel').forEach(panel=>{
+      data.roomNames.push(panel.querySelector('.room-name-input').value);
+      data.rooms.push(this.serializeItemList(panel.querySelector('.item-list')));
+    });
+    data.living = this.serializeItemList(document.getElementById('livingList'));
+    data.kitchen = this.serializeItemList(document.getElementById('kitchenList'));
+    data.laundry = this.serializeItemList(document.getElementById('laundryList'));
+    return data;
+  },
+
+  async save(){
+    await CloudService.save(CloudService.KEY_DRAFT, this.serialize());
+  },
+
+  async restore(){
+    const data = await CloudService.load(CloudService.KEY_DRAFT);
+    if(!data) return false;
+
+    // 일반 입력칸 복원
+    (data.fields ? Object.entries(data.fields) : []).forEach(([id, value])=>{
+      const el = document.getElementById(id);
+      if(!el) return;
+      if(el.type === 'checkbox') el.checked = value; else el.value = value;
+    });
+
+    // 방 개수/이름 복원
+    if(data.roomCount){
+      State.roomCount = Math.max(1, Math.min(4, data.roomCount));
+      UI.renderRooms();
+      document.querySelectorAll('.room-panel').forEach((panel, i)=>{
+        if(data.roomNames && data.roomNames[i]) panel.querySelector('.room-name-input').value = data.roomNames[i];
+      });
+    }
+
+    // 품목 체크/수량/옵션/메모 복원
+    document.querySelectorAll('.room-panel').forEach((panel, i)=>{
+      if(data.rooms && data.rooms[i]) this.applyItemList(panel.querySelector('.item-list'), data.rooms[i]);
+    });
+    this.applyItemList(document.getElementById('livingList'), data.living);
+    this.applyItemList(document.getElementById('kitchenList'), data.kitchen);
+    this.applyItemList(document.getElementById('laundryList'), data.laundry);
+
+    // 엘리베이터/계단 상태 문구, 견적 재계산까지 화면에 반영
+    ['from','to'].forEach(p=>{
+      const chk = document.getElementById(p+'Elevator');
+      const rowEl = document.getElementById(p+'ElevatorRow');
+      const statusEl = document.getElementById(p+'ElevatorStatus');
+      if(chk && rowEl){ rowEl.classList.toggle('on', chk.checked); if(statusEl) statusEl.textContent = chk.checked ? '있음' : '없음'; }
+      const stairsChk = document.getElementById(p+'Stairs');
+      const stairsStatus = document.getElementById(p+'StairsStatus');
+      if(stairsChk && stairsStatus) stairsStatus.textContent = stairsChk.checked ? '있음' : '없음';
+      ['Stairs','Elevator','Ladder'].forEach(kind=>{
+        const tag = document.getElementById(p+kind+'FloorTag');
+        if(tag){
+          tag.textContent = '';
+          tag.classList.remove('visible');
+        }
+      });
+      const ladderChk = document.getElementById(p+'Ladder');
+      const ladderStatus = document.getElementById(p+'LadderStatus');
+      if(ladderChk && ladderStatus) ladderStatus.textContent = ladderChk.checked ? '필요' : '필요 없음';
+    });
+    if(document.getElementById('moveType').value === '기타') document.getElementById('moveTypeEtcWrap').style.display = 'block';
+
+    Calc.updateAllSubtotals();
+    return true;
+  }
+};
+
+/* ---------------------- 4c. AUTH / 업체 / 고객 / 견적 / 사진저장 / 관리자 서비스 (Supabase) ----------------------
+   SUPABASE_URL, SUPABASE_ANON_KEY를 설정해야 실제로 동작합니다.
+   설정 전에는 모든 함수가 "연결 안 됨" 상태를 반환하고, 기존 데모 기능은 그대로 작동합니다.
+------------------------------------------------------------------------------------------ */
+const AuthService = {
+  async signUp(email, password){
+    if(!sb) return { error: '연결 안 됨' };
+    const { data, error } = await sb.auth.signUp({ email, password });
+    return { data, error };
+  },
+  async signIn(email, password){
+    if(!sb) return { error: '연결 안 됨' };
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+    return { data, error };
+  },
+  async signOut(){
+    if(!sb) return;
+    await sb.auth.signOut();
+  },
+  async getSession(){
+    if(!sb) return null;
+    const { data } = await sb.auth.getSession();
+    return data.session || null;
+  }
+};
+
+const CompanyService = {
+  // 로그인한 사장님의 업체 정보가 없으면 새로 만들고, 있으면 가져옴
+  async ensureCompany(){
+    if(!sb) return null;
+    const session = await AuthService.getSession();
+    if(!session) return null;
+    const { data: existing } = await sb.from('companies').select('*').eq('owner_id', session.user.id).maybeSingle();
+    if(existing) return existing;
+    const { data: created, error } = await sb.from('companies')
+      .insert({ owner_id: session.user.id, company_name: '내 이사업체' })
+      .select().single();
+    if(error){ console.warn('업체 생성 실패', error); return null; }
+    return created;
+  },
+  async update(companyId, fields){
+    if(!sb) return false;
+    const { error } = await sb.from('companies').update(fields).eq('id', companyId);
+    return !error;
+  }
+};
+
+const CustomerService = {
+  async list(companyId){
+    if(!sb) return [];
+    const { data, error } = await sb.from('customers').select('*').eq('company_id', companyId).order('created_at', { ascending:false });
+    return error ? [] : data;
+  },
+  async add(companyId, name, phone, memo){
+    if(!sb) return null;
+    const { data, error } = await sb.from('customers').insert({ company_id: companyId, name, phone, memo }).select().single();
+    return error ? null : data;
+  },
+  async remove(id){
+    if(!sb) return false;
+    const { error } = await sb.from('customers').delete().eq('id', id);
+    return !error;
+  }
+};
+
+const QuoteService = {
+  async save(companyId, customerId, customerName, moveDate, totalPrice, data, photoUrls){
+    if(!sb) return null;
+    const { data: row, error } = await sb.from('quotes').insert({
+      company_id: companyId, customer_id: customerId, customer_name: customerName,
+      move_date: moveDate || null, total_price: totalPrice, data, photo_urls: photoUrls || []
+    }).select().single();
+    if(error) console.warn('견적 저장 실패', error);
+    return error ? null : row;
+  },
+  async listForCustomer(customerId){
+    if(!sb) return [];
+    const { data, error } = await sb.from('quotes').select('*').eq('customer_id', customerId).order('created_at', { ascending:false });
+    return error ? [] : data;
+  },
+  async listForCompany(companyId){
+    if(!sb) return [];
+    const { data, error } = await sb.from('quotes').select('*').eq('company_id', companyId).order('created_at', { ascending:false });
+    return error ? [] : data;
+  }
+};
+
+const StorageService = {
+  async uploadPhoto(file, companyId){
+    if(!sb) return null;
+    const path = `${companyId}/${Date.now()}_${file.name}`;
+    const { error } = await sb.storage.from('quote-photos').upload(path, file);
+    if(error){ console.warn('사진 업로드 실패', error); return null; }
+    const { data } = sb.storage.from('quote-photos').getPublicUrl(path);
+    return data.publicUrl;
+  }
+};
+
+const AdminService = {
+  async listAllCompanies(){
+    if(!sb) return [];
+    const { data, error } = await sb.from('companies').select('*').order('created_at', { ascending:false });
+    return error ? [] : data;
+  }
+};
+
+/* ---------------------- 5. AI SERVICE (사진/동영상 분석: 지금은 데모) ---------------------- */
+const AIService = {
+  /**
+   * 실제 서비스 연동 방법 (지금은 아래 mock 로직으로 대체되어 있습니다):
+   *
+   * 1) 서버에 POST /api/analyze-media 로 사진/동영상 파일들을 업로드
+   * 2) 서버가 Vision AI 모델에 아래 AI_SYSTEM_PROMPT를 시스템 프롬프트로 넘겨서 분석
+   * 3) 서버가 아래 형태의 JSON 배열로 응답:
+   *    [{ name, category, room, quantity, size, estimated_volume_cbm,
+   *       disassembly_required, heavy_item, special_handling, confidence }, ...]
+   * 4) 이 함수의 리턴값을 그 응답으로 교체 (quantity → 이 프로그램 내부의 qty로 매핑)
+   *    나머지 화면 로직(체크/수량 반영, 기타 자동 메모 등)은 그대로 사용 가능합니다.
+   */
+  AI_SYSTEM_PROMPT: `당신은 대한민국 이사업체의 현장 견적을 보조하는 이미지 분석 AI입니다.
+
+첨부된 사진은 이사할 집의 내부 사진입니다.
+
+사진에 보이는 가구, 가전, 박스, 생활용품을 분석하세요.
+
+규칙:
+1. 실제로 명확하게 보이는 물건만 기록하세요.
+2. 같은 물건이 여러 사진에 나타나면 중복 계산하지 마세요.
+3. 보이지 않는 물건을 추측해서 만들지 마세요.
+4. 정확하지 않은 경우 confidence를 낮게 표시하세요.
+5. 가구와 가전의 크기를 소형, 중형, 대형으로 구분하세요.
+6. 분해가 필요한지 판단하세요.
+7. 무거운 물건인지 판단하세요.
+8. 특수 포장이 필요한지 기록하세요.
+9. 잔짐 박스 수를 보수적으로 예상하세요.
+10. 차량은 반드시 1톤 차량 기준으로만 추천하세요.
+11. 최종 결과는 설명문 없이 JSON만 반환하세요.
+
+반환 필드:
+- name
+- category
+- room
+- quantity
+- size
+- estimated_volume_cbm
+- disassembly_required
+- heavy_item
+- special_handling
+- confidence`,
+
+  async analyzeMedia(files){
+    await new Promise(r => setTimeout(r, 1100)); // 분석 중인 것처럼 대기(데모)
+    // 데모 데이터도 실제 스펙과 같은 필드 구조로 맞춰뒀습니다 (qty는 quantity와 동일한 의미)
+    const demoPool = [
+      {name:'소파', category:'가구', room:'거실', qty:1, size:'대형', estimated_volume_cbm:1.8, disassembly_required:false, heavy_item:true, special_handling:false, confidence:0.91},
+      {name:'냉장고', category:'가전', room:'주방', qty:1, size:'대형', estimated_volume_cbm:1.2, disassembly_required:false, heavy_item:true, special_handling:true, confidence:0.95},
+      {name:'행거', category:'생활용품', room:'방', qty:2, size:'소형', estimated_volume_cbm:0.3, disassembly_required:true, heavy_item:false, special_handling:false, confidence:0.83},
+      {name:'책상', category:'가구', room:'방', qty:1, size:'중형', estimated_volume_cbm:0.5, disassembly_required:true, heavy_item:false, special_handling:false, confidence:0.77},
+      {name:'박스', category:'잔짐', room:'거실', qty:6, size:'소형', estimated_volume_cbm:0.05, disassembly_required:false, heavy_item:false, special_handling:false, confidence:0.68},
+    ];
+    // 업로드한 파일 개수에 따라 데모 결과 개수를 살짝 다르게 보여줌
+    const count = Math.max(2, Math.min(demoPool.length, files.length || 2));
+    return demoPool.slice(0, count);
+  }
+};
+
+/* ---------------------- 6. SMS SERVICE (문자 발송: 지금은 미발송, 구조만 준비) ---------------------- */
+const SMSService = {
+  /**
+   * 실제 서비스 연동 방법:
+   * 문자 API(네이버클라우드 SENS, 카카오 알림톡)는 비밀 인증키가 필요하기 때문에
+   * 브라우저(태블릿)에서 직접 호출하면 안 되고, 반드시 "내 서버"를 하나 거쳐야 합니다.
+   *
+   * 예시(나중에 서버가 준비되면 아래 주석을 해제하고 사용):
+   *
+   * async send(phone, message){
+   *   const res = await fetch('https://내서버주소/api/send-sms', {
+   *     method:'POST',
+   *     headers:{'Content-Type':'application/json'},
+   *     body: JSON.stringify({ phone, message })
+   *   });
+   *   return await res.json();
+   * }
+   *
+   * 서버 쪽에서는 그 요청을 받아 SENS(간편 인증) 또는 카카오 알림톡 API를 호출합니다.
+   */
+  async send(phone, message){
+    await new Promise(r => setTimeout(r, 600));
+    return { ok:false, demo:true, message:'데모 모드: 실제 문자 발송 기능은 서버 연동 후 활성화됩니다.' };
+  }
+};
+
+/* ---------------------- 7. PDF / PRINT SERVICE ---------------------- */
+const PDFService = {
+  ensureLibs(){
+    return new Promise((resolve)=>{
+      if (window.jspdf && window.html2canvas) return resolve(true);
+      let n=0;
+      const s1=document.createElement('script');
+      s1.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      const s2=document.createElement('script');
+      s2.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+      const done=()=>{ n++; if(n===2) resolve(true); };
+      s1.onload=done; s2.onload=done;
+      s1.onerror=()=>resolve(false); s2.onerror=()=>resolve(false);
+      document.head.appendChild(s1);
+      document.head.appendChild(s2);
+    });
+  },
+  async exportPDF(){
+    const ok = await this.ensureLibs();
+    const area = document.getElementById('printArea');
+    if(!ok || !window.html2canvas || !window.jspdf){
+      alert('PDF 라이브러리를 불러오지 못했습니다. 네트워크 연결을 확인해주세요. (대신 인쇄 기능을 이용해 PDF로 저장할 수 있습니다: 인쇄 대화상자 > 프린터를 "PDF로 저장"으로 선택)');
+      return;
+    }
+    area.style.display = 'block';
+    const canvas = await window.html2canvas(area, {scale:2});
+    area.style.display = 'none';
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p','mm','a4');
+    const pageWidth = 210;
+    const imgWidth = pageWidth - 20;
+    const imgHeight = canvas.height * imgWidth / canvas.width;
+    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 10, 10, imgWidth, imgHeight);
+    const name = (document.getElementById('custName').value || '고객') + '_견적서';
+    pdf.save(`${name}.pdf`);
+  }
+};
+
+/* ---------------------- 7b. MAPS SERVICE (카카오맵: 좌표 변환 + 지도 이동 + 마커) ---------------------- */
+const MapsService = {
+  ready: false,
+  instances: {}, // { fromAddress: {map, marker}, toAddress: {map, marker} }
+
+  // 카카오맵 SDK를 한 번만 불러옴 (키가 설정되어 있을 때만 동작)
+  load(){
+    return new Promise((resolve)=>{
+      if(this.ready) return resolve(true);
+      if(!KAKAO_APP_KEY || KAKAO_APP_KEY === 'YOUR_KAKAO_JAVASCRIPT_KEY'){
+        resolve(false); // 키 미설정: 지도 기능은 조용히 건너뜀 (주소 입력은 정상 동작)
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_APP_KEY}&libraries=services&autoload=false`;
+      script.onload = ()=>{
+        kakao.maps.load(()=>{ this.ready = true; resolve(true); });
+      };
+      script.onerror = ()=> resolve(false);
+      document.head.appendChild(script);
+    });
+  },
+
+  // 지도가 없으면 새로 만들고, 있으면 재사용
+  ensureMap(inputId){
+    if(this.instances[inputId]) return this.instances[inputId];
+    const container = document.getElementById(inputId === 'fromAddress' ? 'fromMap' : 'toMap');
+    container.classList.add('visible');
+    const map = new kakao.maps.Map(container, { center: new kakao.maps.LatLng(37.5665,126.9780), level: 4 });
+    const marker = new kakao.maps.Marker({ position: map.getCenter() });
+    marker.setMap(map);
+    this.instances[inputId] = { map, marker, container };
+    return this.instances[inputId];
+  },
+
+  // 주소 문자열 → 좌표 변환 후 해당 위치로 지도 이동 + 마커 표시
+  async showAddressOnMap(inputId, addressText){
+    const ok = await this.load();
+    if(!ok || !kakao.maps.services) return;
+    const geocoder = new kakao.maps.services.Geocoder();
+    geocoder.addressSearch(addressText, (result, status)=>{
+      if(status !== kakao.maps.services.Status.OK) return;
+      const lat = Number(result[0].y);
+      const lng = Number(result[0].x);
+      const { map, marker, container } = this.ensureMap(inputId);
+      const pos = new kakao.maps.LatLng(lat, lng);
+      map.setCenter(pos);
+      marker.setPosition(pos);
+      // 방금 화면에 보이게 된 지도라 크기 계산이 어긋날 수 있어 다시 한 번 정렬
+      setTimeout(()=>{ map.relayout(); map.setCenter(pos); }, 80);
+    });
+  }
+};
+
+/* ---------------------- 7c. 주소 검색 (전역 함수: 버튼 onclick에서 직접 호출) ----------------------
+   출발지 검색 버튼 → openPostcode('from'), 도착지 검색 버튼 → openPostcode('to')
+   이 파일 안에는 openPostcode 함수가 이 자리 단 하나만 존재합니다.
+------------------------------------------------------------------------------------------ */
+(function () {
+  "use strict";
+
+  window.openPostcode = function (type) {
+    console.log("[주소검색 시작]", type);
+
+    if (type !== "from" && type !== "to") {
+      alert("주소검색 종류가 올바르지 않습니다.");
+      return;
+    }
+
+    if (
+      typeof window.daum === "undefined" ||
+      typeof window.daum.Postcode !== "function"
+    ) {
+      alert(
+        "카카오 주소검색 서비스를 불러오지 못했습니다. " +
+        "인터넷 연결을 확인한 뒤 새로고침해주세요."
+      );
+      return;
+    }
+
+    new window.daum.Postcode({
+      oncomplete: function (data) {
+        console.log("[주소 선택 완료]", data);
+
+        const selectedAddress =
+          data.roadAddress ||
+          data.jibunAddress ||
+          data.autoRoadAddress ||
+          data.autoJibunAddress ||
+          data.address ||
+          "";
+
+        if (!selectedAddress) {
+          alert("선택한 주소를 가져오지 못했습니다.");
+          return;
+        }
+
+        const addressId =
+          type === "from" ? "fromAddress" : "toAddress";
+
+        const detailId =
+          type === "from" ? "fromDetail" : "toDetail";
+
+        const addressInput =
+          document.getElementById(addressId);
+
+        const detailInput =
+          document.getElementById(detailId);
+
+        if (!addressInput) {
+          alert(
+            addressId +
+            " 입력칸을 찾을 수 없습니다. HTML의 id를 확인해주세요."
+          );
+          return;
+        }
+
+        addressInput.value = selectedAddress;
+        addressInput.setAttribute("value", selectedAddress);
+
+        addressInput.dispatchEvent(
+          new Event("input", {
+            bubbles: true
+          })
+        );
+
+        addressInput.dispatchEvent(
+          new Event("change", {
+            bubbles: true
+          })
+        );
+
+        addressInput.dispatchEvent(
+          new Event("blur", {
+            bubbles: true
+          })
+        );
+
+        localStorage.setItem(addressId, selectedAddress);
+
+        console.log(
+          "[주소 입력 성공]",
+          addressId,
+          addressInput.value
+        );
+
+        setTimeout(function () {
+          if (detailInput) {
+            detailInput.focus();
+          }
+        }, 150);
+
+        // 선택한 주소를 좌표로 변환해 지도 이동 + 마커 표시 (카카오 지도 키가 설정된 경우 / 기존 기능 유지)
+        if (typeof MapsService !== "undefined") {
+          MapsService.showAddressOnMap(addressId, selectedAddress);
+        }
+      },
+
+      onclose: function (state) {
+        console.log("[주소검색 닫힘]", state);
+      },
+
+      width: "100%",
+      height: "100%"
+    }).open({
+      popupTitle: "짐픽 주소검색",
+      left:
+        window.screenX +
+        Math.max(0, (window.outerWidth - 500) / 2),
+      top:
+        window.screenY +
+        Math.max(0, (window.outerHeight - 650) / 2)
+    });
+  };
+
+  window.addEventListener("DOMContentLoaded", function () {
+    const savedFrom =
+      localStorage.getItem("fromAddress");
+
+    const savedTo =
+      localStorage.getItem("toAddress");
+
+    const fromInput =
+      document.getElementById("fromAddress");
+
+    const toInput =
+      document.getElementById("toAddress");
+
+    if (savedFrom && fromInput && !fromInput.value) {
+      fromInput.value = savedFrom;
+    }
+
+    if (savedTo && toInput && !toInput.value) {
+      toInput.value = savedTo;
+    }
+  });
+})();
+
+/* ---------------------- 8. STATE ---------------------- */
+const State = {
+  roomCount: 1,
+  media: [], // {file, url, type}
+  aiSelected: [],
+  lastQuote: null,
+  workerManual: false, // true가 되면 남자/주방이모 직접 입력값을 우선 사용
+  truckManual: false, // true가 되면 1톤 차량 직접 입력값을 우선 사용
+  manualPrice: null, // 값이 있으면 자동 계산 대신 이 금액을 최종 견적으로 사용
+  smsManuallyEdited: false, // 문자 내용을 직접 수정하면 true로 바뀌어 자동 재생성을 멈춤
+  deferredInstallPrompt: null, // PWA 설치 배너용(브라우저가 beforeinstallprompt를 보내주면 여기에 저장)
+  session: null,       // 로그인 세션 (Supabase)
+  company: null,       // 로그인한 사장님의 업체 정보(행)
+  customers: [],       // 고객 목록 캐시
+  selectedCustomerId: null, // 지금 견적을 작성 중인 고객
+  quoteNumber: null, // 견적서 발행 시 자동 생성되는 견적번호
+  fromLadderFloor: 2,
+  toLadderFloor: 2,
+  fromStairsFloor: 1,
+  toStairsFloor: 1,
+  fromElevatorFloor: 1,
+  toElevatorFloor: 1,
+  fromStairsFloorVisible: false,
+  toStairsFloorVisible: false,
+  fromElevatorFloorVisible: false,
+  toElevatorFloorVisible: false,
+  fromLadderFloorVisible: false,
+  toLadderFloorVisible: false,
+
+  settings: {
+    companyName:'짐픽 V2', companyPhone:'010-1234-5678', accountNumber:'', inquiryEmail:'',
+    basePrice: CONFIG.basePrice,
+    pointPrice: CONFIG.pointPrice,
+    baseWorkers: CONFIG.baseWorkers,
+    baseTrucks: CONFIG.baseTrucks,
+    workerCapacity: CONFIG.workerCapacity,
+    truckCapacity: CONFIG.truckCapacity,
+    extraWorkerPrice: CONFIG.extraWorkerPrice,
+    extraTruckPrice: CONFIG.extraTruckPrice,
+    noElevatorPerFloor: CONFIG.noElevatorPerFloor,
+    ladderTruckPrice: CONFIG.ladderTruckPrice,
+  }
+};
+
+/* ---------------------- 9. UI BUILDERS ---------------------- */
+const BED_SIZE_POINTS = {'싱글':2,'퀸':3,'라지킹':4}; // 침대는 사이즈에 따라 작업 포인트가 달라짐
+
+// 품목별 작은 아이콘 (선으로 그린 간단한 그림). name -> SVG 내부 도형만 저장하고, 공통 wrapper로 감쌉니다.
+const ITEM_ICON_SHAPES = {
+  '침대': '<path d="M2 19v-5a1 1 0 011-1h18a1 1 0 011 1v5M2 19v2M22 19v2M4 13V8a1 1 0 011-1h3v6M13 13h8"/>',
+  '옷장': '<rect x="4" y="3" width="16" height="18" rx="1"/><line x1="12" y1="3" x2="12" y2="21"/><circle cx="9.6" cy="12" r="0.6" fill="currentColor" stroke="none"/><circle cx="14.4" cy="12" r="0.6" fill="currentColor" stroke="none"/>',
+  '서랍장': '<rect x="4" y="4" width="16" height="16" rx="1"/><line x1="4" y1="9.3" x2="20" y2="9.3"/><line x1="4" y1="14.6" x2="20" y2="14.6"/><line x1="10" y1="6.6" x2="14" y2="6.6"/><line x1="10" y1="12" x2="14" y2="12"/><line x1="10" y1="17.3" x2="14" y2="17.3"/>',
+  '책상': '<path d="M3 8h18M5 8v12M19 8v12M3 12h6"/>',
+  '책장': '<rect x="4" y="3" width="16" height="18" rx="1"/><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="8" y1="9" x2="8" y2="15"/><line x1="16" y1="3" x2="16" y2="9"/>',
+  '의자': '<path d="M6 4v9a2 2 0 002 2h8a2 2 0 002-2V4M7 20l1-5M17 20l-1-5M7 20h10"/>',
+  '화장대': '<rect x="4" y="12" width="16" height="8" rx="1"/><ellipse cx="12" cy="6" rx="5" ry="4"/><line x1="12" y1="10" x2="12" y2="12"/>',
+  'TV': '<rect x="3" y="4" width="18" height="12" rx="1"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="16" x2="12" y2="20"/>',
+  '에어컨': '<rect x="2" y="6" width="20" height="6" rx="2"/><path d="M6 15c0 2-1 3-1 5M12 15c0 2-1 3-1 5M18 15c0 2-1 3-1 5"/>',
+  '스타일러': '<rect x="7" y="2" width="10" height="20" rx="1"/><rect x="9.3" y="5" width="5.4" height="9" rx="0.5"/>',
+  '박스': '<rect x="3" y="7" width="18" height="13" rx="1"/><path d="M3 7l9 5 9-5M12 12v8"/>',
+  '바구니': '<path d="M4 10h16l-2 10H6L4 10z"/><path d="M7 10V7a5 5 0 0110 0v3"/>',
+  '기타': '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9.6 9.5a2.4 2.4 0 014.8.3c0 1.5-2.1 1.7-2.1 3.2"/><circle cx="12" cy="16.6" r="0.6" fill="currentColor" stroke="none"/>',
+  '소파': '<path d="M4 12V9a2 2 0 012-2h12a2 2 0 012 2v3"/><path d="M2 12h20v6a1 1 0 01-1 1H3a1 1 0 01-1-1v-6z"/><line x1="4" y1="19" x2="4" y2="21"/><line x1="20" y1="19" x2="20" y2="21"/>',
+  '거실장': '<rect x="3" y="9" width="18" height="8" rx="1"/><line x1="12" y1="9" x2="12" y2="17"/><line x1="3" y1="17" x2="3" y2="20"/><line x1="21" y1="17" x2="21" y2="20"/>',
+  '공기청정기': '<rect x="7" y="3" width="10" height="18" rx="3"/><line x1="9.5" y1="8" x2="9.5" y2="16"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="14.5" y1="8" x2="14.5" y2="16"/>',
+  '안마의자': '<path d="M4 20l3-9h6l5 3"/><path d="M7 11V4h5"/><path d="M13 14l6 2"/>',
+  '테이블': '<path d="M2 7h20M4 7v13M20 7v13"/>',
+  '화분': '<path d="M8 13h8l-1 8H9l-1-8z"/><path d="M12 13c0-4-4-3-4-7 3 0 4 3 4 3M12 13c0-5 5-4 5-8-3 0-5 3-5 4"/>',
+  '장식장': '<rect x="4" y="3" width="16" height="18" rx="1"/><line x1="4" y1="10" x2="20" y2="10"/><line x1="4" y1="16" x2="20" y2="16"/><line x1="12" y1="3" x2="12" y2="21"/>',
+  '냉장고': '<rect x="5" y="2" width="14" height="20" rx="1.5"/><line x1="5" y1="9" x2="19" y2="9"/><circle cx="8" cy="5.5" r="0.6" fill="currentColor" stroke="none"/><circle cx="8" cy="13" r="0.6" fill="currentColor" stroke="none"/>',
+  '김치냉장고': '<rect x="4" y="6" width="16" height="14" rx="1.5"/><line x1="4" y1="13" x2="20" y2="13"/><circle cx="17" cy="9" r="0.6" fill="currentColor" stroke="none"/>',
+  '세탁기': '<rect x="4" y="3" width="16" height="18" rx="1.5"/><circle cx="12" cy="13" r="5"/><circle cx="12" cy="13" r="2"/><circle cx="7" cy="6" r="0.5" fill="currentColor" stroke="none"/>',
+  '건조기': '<rect x="4" y="3" width="16" height="18" rx="1.5"/><circle cx="12" cy="13" r="5"/><path d="M9.5 13a2.5 2.5 0 015 0"/>',
+  '식탁': '<ellipse cx="12" cy="8" rx="9" ry="3"/><line x1="5" y1="9" x2="5" y2="20"/><line x1="19" y1="9" x2="19" y2="20"/>',
+  '전자레인지': '<rect x="3" y="6" width="18" height="12" rx="1"/><rect x="5" y="8.5" width="9" height="7" rx="0.5"/><circle cx="18" cy="12" r="1.2" fill="currentColor" stroke="none"/>',
+  '밥솥': '<path d="M4 10a8 4 0 0116 0v4a4 4 0 01-4 4H8a4 4 0 01-4-4v-4z"/><line x1="4" y1="10" x2="20" y2="10"/>',
+  '정수기': '<rect x="7" y="3" width="10" height="17" rx="1.5"/><line x1="9" y1="20" x2="9" y2="21"/><line x1="15" y1="20" x2="15" y2="21"/><line x1="5.5" y1="8" x2="7" y2="8"/><line x1="17" y1="8" x2="18.5" y2="8"/>',
+  '식기세척기': '<rect x="4" y="4" width="16" height="16" rx="1"/><line x1="4" y1="9" x2="20" y2="9"/><line x1="8" y1="9" x2="8" y2="20"/><line x1="16" y1="9" x2="16" y2="20"/>',
+  '수납장': '<rect x="4" y="4" width="16" height="16" rx="1"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="12" y1="4" x2="12" y2="20"/>',
+};
+const ITEM_ICON_DEFAULT = '<path d="M3 8l9-5 9 5-9 5-9-5z"/><path d="M3 8v8l9 5 9-5V8"/><line x1="12" y1="13" x2="12" y2="21"/>';
+
+// 카탈로그에 없는 이름(사용자가 직접 추가한 품목)도 그럴듯한 아이콘을 자동으로 붙여주기 위한
+// 동의어/키워드 사전: 입력한 이름에 이 키워드가 들어있으면 해당 도형(또는 기존 품목의 도형)을 사용
+const ITEM_ICON_EXTRA_SHAPES = {
+  '행거': '<path d="M12 4.2a1.8 1.8 0 10-1.8 1.8"/><path d="M12 6l9 7H3l9-7z"/><line x1="4" y1="17.5" x2="20" y2="17.5"/>',
+  '청소기': '<path d="M9 21V11a3 3 0 016 0v10"/><circle cx="12" cy="6" r="3"/><line x1="7" y1="21" x2="17" y2="21"/>',
+  '자전거': '<circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17l4-9h4l4 9M9 8h5"/>',
+  '캠핑': '<path d="M4 20L12 5l8 15M8 20l4-8 4 8"/>',
+  '텐트': '<path d="M4 20L12 5l8 15M8 20l4-8 4 8"/>',
+  '컴퓨터': '<rect x="3" y="4" width="18" height="12" rx="1"/><line x1="8" y1="20" x2="16" y2="20"/><line x1="12" y1="16" x2="12" y2="20"/><rect x="6" y="7" width="8" height="6" rx="0.5"/>',
+  '선풍기': '<circle cx="12" cy="10" r="6"/><circle cx="12" cy="10" r="1.5" fill="currentColor" stroke="none"/><line x1="12" y1="16" x2="12" y2="21"/><line x1="8" y1="21" x2="16" y2="21"/>',
+  'TV스탠드': '<rect x="3" y="10" width="18" height="7" rx="1"/><line x1="7" y1="17" x2="7" y2="20"/><line x1="17" y1="17" x2="17" y2="20"/><rect x="8" y="3" width="8" height="6" rx="0.5"/>',
+  '러닝머신': '<rect x="3" y="14" width="14" height="4" rx="1"/><path d="M17 14l3-7M6 14V8h4"/><circle cx="19" cy="6" r="1.3" fill="currentColor" stroke="none"/>',
+  '스피커': '<rect x="6" y="2" width="12" height="20" rx="2"/><circle cx="12" cy="8" r="2.2"/><circle cx="12" cy="16" r="3.2"/>',
+  '에어프라이어': '<rect x="5" y="6" width="14" height="14" rx="2"/><circle cx="12" cy="13" r="4"/><rect x="9" y="3" width="6" height="3" rx="1"/>',
+  '가스레인지': '<rect x="3" y="4" width="18" height="16" rx="1"/><circle cx="8.5" cy="10" r="2.6"/><circle cx="15.5" cy="10" r="2.6"/><line x1="6" y1="17" x2="18" y2="17"/>',
+  '빨래건조대': '<path d="M4 6v15M20 6v15M4 6h16"/><path d="M8 10h8M8 14h8"/>',
+};
+const ITEM_ICON_SYNONYMS = [
+  [['장롱','붙박이','드레스룸'], '옷장'],
+  [['서랍'], '서랍장'],
+  [['책상','데스크'], '책상'],
+  [['책꽂이','서재'], '책장'],
+  [['의자','체어'], '의자'],
+  [['파우더','화장'], '화장대'],
+  [['티비','텔레비전'], 'TV'],
+  [['냉방','에어콘'], '에어컨'],
+  [['상자'], '박스'],
+  [['바스켓'], '바구니'],
+  [['카우치'], '소파'],
+  [['tv장','티비장','미디어장'], '거실장'],
+  [['공청'], '공기청정기'],
+  [['안마','마사지'], '안마의자'],
+  [['탁자'], '테이블'],
+  [['식물','플랜트','화초'], '화분'],
+  [['진열장','장식'], '장식장'],
+  [['냉장'], '냉장고'],
+  [['다이닝'], '식탁'],
+  [['전자렌지','렌지'], '전자레인지'],
+  [['쿠커','압력밥솥'], '밥솥'],
+  [['정수'], '정수기'],
+  [['세척'], '식기세척기'],
+  [['선반','캐비닛','신발장','신발'], '수납장'],
+  [['매트리스'], '침대'],
+];
+
+function findIconShapeForName(name){
+  if(ITEM_ICON_SHAPES[name]) return ITEM_ICON_SHAPES[name];
+  if(ITEM_ICON_EXTRA_SHAPES[name]) return ITEM_ICON_EXTRA_SHAPES[name];
+  // 사전 키워드가 이름에 포함되어 있으면 그 카테고리 아이콘을 사용 (예: "미니냉장고" → 냉장고)
+  for(const [keywords, targetKey] of ITEM_ICON_SYNONYMS){
+    if(keywords.some(k => name.includes(k))) return ITEM_ICON_SHAPES[targetKey];
+  }
+  for(const [keyword, shape] of Object.entries(ITEM_ICON_EXTRA_SHAPES)){
+    if(name.includes(keyword)) return shape;
+  }
+  // 기존 카탈로그 이름이 새 이름 안에(혹은 반대로) 포함되어 있으면 그 아이콘 재사용
+  for(const key of Object.keys(ITEM_ICON_SHAPES)){
+    if(name.includes(key) || key.includes(name)) return ITEM_ICON_SHAPES[key];
+  }
+  return null; // 못 찾으면 null → 호출부에서 일반 아이콘 사용
+}
+
+
+const PREMIUM_ITEM_ICON_SHAPES = {
+  "침대": `<path d="M3 17V9.5c0-.8.7-1.5 1.5-1.5H10c1.1 0 2 .9 2 2v7M12 12h6.5c1.4 0 2.5 1.1 2.5 2.5V17M3 17h18M5 17v3M19 17v3"/><path d="M5 8V6.5C5 5.7 5.7 5 6.5 5H10c1.1 0 2 .9 2 2v3"/>`,
+  "매트리스": `<rect x="3" y="7" width="18" height="10" rx="3"/><path d="M6 10h12M6 14h12M8 7v10M16 7v10"/>`,
+  "소파": `<path d="M5 11V8.5A2.5 2.5 0 0 1 7.5 6h9A2.5 2.5 0 0 1 19 8.5V11"/><path d="M4 10.5A2.5 2.5 0 0 0 2 13v3a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-3a2.5 2.5 0 0 0-2-2.5"/><path d="M6 18v2M18 18v2M12 6v12"/>`,
+  "냉장고": `<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M6 9h12M9 5h.01M9 12h.01M15 5v2M15 12v5"/>`,
+  "김치냉장고": `<rect x="4" y="6" width="16" height="12" rx="2"/><path d="M4 10h16M12 6v4M7 14h.01M17 14h.01"/>`,
+  "세탁기": `<rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="13" r="5"/><circle cx="12" cy="13" r="3"/><path d="M7 6h.01M10 6h4M17 6h.01"/>`,
+  "건조기": `<rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="13" r="5"/><path d="M8 6h8M9 13h6"/>`,
+  "TV": `<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>`,
+  "컴퓨터": `<rect x="3" y="4" width="13" height="10" rx="1.5"/><path d="M7 18h5M9.5 14v4M18 7h3v11h-3"/>`,
+  "에어컨": `<rect x="3" y="5" width="18" height="8" rx="2"/><path d="M6 16c2-2 4-2 6 0s4 2 6 0M7 10h10"/>`,
+  "장롱": `<rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M12 3v18M9 11h.01M15 11h.01M6 21v1M18 21v1"/>`,
+  "옷장": `<rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M12 3v18M9 9h.01M15 9h.01"/><path d="M8 5h8"/>`,
+  "서랍장": `<rect x="5" y="4" width="14" height="16" rx="1.5"/><path d="M5 9h14M5 14h14M10 6.5h4M10 11.5h4M10 16.5h4"/>`,
+  "책상": `<path d="M3 8h18v5H3zM5 13v8M19 13v8M9 13v8M15 13v8"/>`,
+  "의자": `<path d="M7 4v8h10V4M7 12v8M17 12v8M7 15h10"/>`,
+  "식탁": `<ellipse cx="12" cy="8" rx="8" ry="3"/><path d="M5 8v3c0 1.7 3.1 3 7 3s7-1.3 7-3V8M8 14v7M16 14v7"/>`,
+  "전자레인지": `<rect x="3" y="6" width="18" height="12" rx="2"/><rect x="6" y="9" width="9" height="6" rx="1"/><circle cx="18" cy="10" r=".7"/><circle cx="18" cy="14" r=".7"/>`,
+  "밥솥": `<path d="M6 10h12l1 8H5l1-8z"/><path d="M8 10V7h8v3M9 14h6M10 5h4"/>`,
+  "정수기": `<rect x="7" y="3" width="10" height="18" rx="2"/><path d="M9 8h6M10 12h4M12 12v3M10 18h4"/>`,
+  "식기세척기": `<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M5 8h14M8 5h.01M11 5h.01M9 13h6M8 17h8"/>`,
+  "안마의자": `<path d="M8 4h5a3 3 0 0 1 3 3v6l3 4v3h-4l-2-4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z"/><path d="M8 8h5v6H8z"/>`,
+  "책장": `<rect x="4" y="3" width="16" height="18" rx="1"/><path d="M4 9h16M4 15h16M9 3v18M15 3v18"/>`
+};
+
+
+const V30_REALISTIC_ICONS = {
+  "침대": `<path d="M3 17V9.5c0-.8.7-1.5 1.5-1.5H10c1.1 0 2 .9 2 2v7M12 12h6.5c1.4 0 2.5 1.1 2.5 2.5V17M3 17h18M5 17v3M19 17v3"/><path d="M5 8V6.5C5 5.7 5.7 5 6.5 5H10c1.1 0 2 .9 2 2v3"/>`,
+  "매트리스": `<rect x="3" y="7" width="18" height="10" rx="3"/><path d="M6 10h12M6 14h12M8 7v10M16 7v10"/>`,
+  "장롱": `<rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M12 3v18M9 11h.01M15 11h.01M6 21v1M18 21v1"/>`,
+  "옷장": `<rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M12 3v18M9 9h.01M15 9h.01"/><path d="M8 5h8"/>`,
+  "서랍장": `<rect x="5" y="4" width="14" height="16" rx="1.5"/><path d="M5 9h14M5 14h14M10 6.5h4M10 11.5h4M10 16.5h4"/>`,
+  "책상": `<path d="M3 8h18v5H3zM5 13v8M19 13v8M9 13v8M15 13v8"/>`,
+  "책장": `<rect x="4" y="3" width="16" height="18" rx="1"/><path d="M4 9h16M4 15h16M9 3v18M15 3v18"/>`,
+  "의자": `<path d="M7 4v8h10V4M7 12v8M17 12v8M7 15h10"/>`,
+  "화장대": `<path d="M5 10h14v8H5zM7 18v3M17 18v3"/><ellipse cx="12" cy="6" rx="4" ry="3"/>`,
+  "소파": `<path d="M5 11V8.5A2.5 2.5 0 0 1 7.5 6h9A2.5 2.5 0 0 1 19 8.5V11"/><path d="M4 10.5A2.5 2.5 0 0 0 2 13v3a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-3a2.5 2.5 0 0 0-2-2.5"/><path d="M6 18v2M18 18v2M12 6v12"/>`,
+  "거실장": `<rect x="3" y="9" width="18" height="9" rx="1.5"/><path d="M9 9v9M15 9v9M5 18v2M19 18v2"/>`,
+  "TV": `<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>`,
+  "TV 스탠드": `<path d="M12 5v10M7 20h10M9 15h6"/>`,
+  "안마의자": `<path d="M8 4h5a3 3 0 0 1 3 3v6l3 4v3h-4l-2-4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z"/><path d="M8 8h5v6H8z"/>`,
+  "공기청정기": `<rect x="7" y="3" width="10" height="18" rx="3"/><path d="M9 7h6M9 11h6M9 15h6"/><circle cx="12" cy="18" r=".7"/>`,
+  "냉장고": `<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M6 9h12M9 5h.01M9 12h.01M15 5v2M15 12v5"/>`,
+  "김치냉장고": `<rect x="4" y="6" width="16" height="12" rx="2"/><path d="M4 10h16M12 6v4M7 14h.01M17 14h.01"/>`,
+  "식탁": `<ellipse cx="12" cy="8" rx="8" ry="3"/><path d="M5 8v3c0 1.7 3.1 3 7 3s7-1.3 7-3V8M8 14v7M16 14v7"/>`,
+  "전자레인지": `<rect x="3" y="6" width="18" height="12" rx="2"/><rect x="6" y="9" width="9" height="6" rx="1"/><circle cx="18" cy="10" r=".7"/><circle cx="18" cy="14" r=".7"/>`,
+  "에어프라이어": `<path d="M7 4h10l2 15H5L7 4z"/><path d="M9 8h6M10 13h4M12 4v3"/>`,
+  "밥솥": `<path d="M6 10h12l1 8H5l1-8z"/><path d="M8 10V7h8v3M9 14h6M10 5h4"/>`,
+  "정수기": `<rect x="7" y="3" width="10" height="18" rx="2"/><path d="M9 8h6M10 12h4M12 12v3M10 18h4"/>`,
+  "식기세척기": `<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M5 8h14M8 5h.01M11 5h.01M9 13h6M8 17h8"/>`,
+  "가스레인지": `<rect x="3" y="7" width="18" height="10" rx="2"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="12" r="2"/><path d="M6 4h12"/>`,
+  "세탁기": `<rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="13" r="5"/><circle cx="12" cy="13" r="3"/><path d="M7 6h.01M10 6h4M17 6h.01"/>`,
+  "건조기": `<rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="13" r="5"/><path d="M8 6h8M9 13h6"/>`,
+  "빨래건조대": `<path d="M4 6h16M6 6l3 15M18 6l-3 15M8 10h8M9 14h6"/>`,
+  "컴퓨터": `<rect x="3" y="4" width="13" height="10" rx="1.5"/><path d="M7 18h5M9.5 14v4M18 7h3v11h-3"/>`,
+  "에어컨": `<rect x="3" y="5" width="18" height="8" rx="2"/><path d="M6 16c2-2 4-2 6 0s4 2 6 0M7 10h10"/>`
+};
+
+const ITEM_ICON_PALETTES = [
+  ['#FF8A5B','#FF5A36'],
+  ['#5B8CFF','#3564D4'],
+  ['#33C7B5','#159A8D'],
+  ['#B56EFF','#7C3ED1'],
+  ['#FFBE3D','#F28B18'],
+  ['#FF6FA8','#D94782'],
+  ['#54C36A','#299548'],
+  ['#38BDF8','#087DB5'],
+  ['#8B7CF6','#5A45C7'],
+  ['#F97373','#C83D3D']
+];
+
+function iconPaletteForName(name){
+  let sum = 0;
+  for(let i=0;i<name.length;i++) sum += name.charCodeAt(i) * (i+1);
+  return ITEM_ICON_PALETTES[sum % ITEM_ICON_PALETTES.length];
+}
+
+function itemIconSVG(name){
+  const shape = V30_REALISTIC_ICONS[name] || PREMIUM_ITEM_ICON_SHAPES?.[name] || findIconShapeForName(name) || ITEM_ICON_DEFAULT;
+  const [a,b] = iconPaletteForName(name);
+  return `<span class="item-icon-wrap" style="--icon-a:${a};--icon-b:${b}">
+    <svg class="item-icon" viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${shape}</svg>
+  </span>`;
+}
+
+function buildItemRowHTML(name){
+  const opts = ITEM_OPTIONS[name];
+  const hasOpts = !!opts;
+  const defaultOpt = hasOpts ? opts[0] : null;
+  const isMemo = (name === '기타');
+  const showToggle = hasOpts || isMemo;
+  const row = `
+  <div class="item-row" data-item="${name}" ${hasOpts ? `data-size="${defaultOpt}"` : ''}>
+    <span class="drag-handle" title="눌러서 위/아래로 순서 변경">⠿</span>
+    <label class="item-check">
+      <input type="checkbox" class="chk">
+      ${itemIconSVG(name)}
+      <span>${name}</span>
+      ${hasOpts ? `<span class="size-tag">${defaultOpt}</span>` : ''}
+      ${showToggle ? `<button type="button" class="size-toggle">▼</button>` : ''}
+    </label>
+    <div class="item-row-actions">
+      <div class="qty-stepper">
+        <button type="button" class="qty-btn minus" disabled>−</button>
+        <input type="number" class="qty-input" value="1" min="1" max="20" disabled>
+        <button type="button" class="qty-btn plus" disabled>+</button>
+      </div>
+      <button type="button" class="item-delete-btn" title="이 품목 삭제">✕</button>
+    </div>
+  </div>`;
+  let sizeOptions = '';
+  if(hasOpts){
+    sizeOptions = `
+  <div class="size-options">
+    ${opts.map(s=>`<button type="button" class="size-chip ${s===defaultOpt?'active':''}" data-size="${s}">${s}</button>`).join('')}
+  </div>`;
+  } else if(isMemo){
+    sizeOptions = `
+  <div class="size-options">
+    <input type="text" class="memo-input" placeholder="예: 행거 2개, 캠핑용품 박스, 화분 등 무엇인지 메모해두세요">
+  </div>`;
+  }
+  return `<div class="item-block">${row}${sizeOptions}</div>`;
+}
+
+function buildRoomPanelHTML(idx){
+  const items = ROOM_ITEMS.map(buildItemRowHTML).join('');
+  const defaultName = (idx === 1) ? '안방' : `침실${idx}`;
+  return `
+  <div class="room-panel" data-room="${idx}" style="display:none;">
+    <input type="text" class="room-name-input" value="${defaultName}">
+    <div class="item-list">${items}</div>
+    <button type="button" class="add-item-btn">+ 품목 추가</button>
+  </div>`;
+}
+
+const UI = {
+  renderRooms(){
+    const tabsWrap = document.getElementById('roomTabs');
+    const panelsWrap = document.getElementById('roomPanels');
+    const existingNames = {};
+    panelsWrap.querySelectorAll('.room-panel').forEach(p=>{
+      existingNames[p.dataset.room] = p.querySelector('.room-name-input').value;
+    });
+
+    tabsWrap.innerHTML = '';
+    panelsWrap.innerHTML = '';
+    for(let i=1;i<=State.roomCount;i++){
+      const tab = Utils.el(`<button type="button" class="room-tab ${i===1?'active':''}" data-room="${i}">${existingNames[i] || '침실'+i}</button>`);
+      tabsWrap.appendChild(tab);
+      const panel = Utils.el(buildRoomPanelHTML(i));
+      if(existingNames[i]) panel.querySelector('.room-name-input').value = existingNames[i];
+      if(i===1) panel.style.display='block';
+      panelsWrap.appendChild(panel);
+      makeListSortable(panel.querySelector('.item-list'));
+    }
+    document.getElementById('roomCountLabel').textContent = State.roomCount;
+  },
+
+  switchRoomTab(idx){
+    document.querySelectorAll('.room-tab').forEach(t=>t.classList.toggle('active', t.dataset.room===String(idx)));
+    document.querySelectorAll('.room-panel').forEach(p=>p.style.display = (p.dataset.room===String(idx) ? 'block':'none'));
+  },
+
+  renderStaticLists(){
+    document.getElementById('livingList').innerHTML = LIVING_ITEMS.map(buildItemRowHTML).join('');
+    document.getElementById('kitchenList').innerHTML = KITCHEN_ITEMS.map(buildItemRowHTML).join('');
+    document.getElementById('laundryList').innerHTML = LAUNDRY_ITEMS.map(buildItemRowHTML).join('');
+    makeListSortable(document.getElementById('livingList'));
+    makeListSortable(document.getElementById('kitchenList'));
+    makeListSortable(document.getElementById('laundryList'));
+  },
+
+  goStep(n){
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    document.getElementById('step'+n).classList.add('active');
+    document.querySelectorAll('.route-step').forEach(s=>{
+      const sn = Number(s.dataset.step);
+      s.classList.remove('active','done');
+      if(sn===n) s.classList.add('active');
+      else if(sn<n) s.classList.add('done');
+    });
+    document.getElementById('prevBtn').style.visibility = n===1 ? 'hidden':'visible';
+    document.getElementById('nextBtn').textContent = n===6 ? '완료 ✓' : '다음 →';
+    window.scrollTo({top:0, behavior:'smooth'});
+    State.currentStep = n;
+    if(n===5) Calc.run();
+  }
+};
+
+/* ---------------------- 10. ITEM ROW 이벤트 (이벤트 위임) ---------------------- */
+/* 목록 드래그 정렬: 손잡이(⠿)를 잡고 위/아래로 끌면 순서가 바뀝니다 (품목 목록, 견적 비용 항목 공통) */
+function makeListSortable(listEl, childSelector){
+  childSelector = childSelector || '.item-block';
+  if(!listEl || listEl.dataset.sortableBound === childSelector) return;
+  listEl.dataset.sortableBound = childSelector;
+  let dragEl = null;
+
+  listEl.addEventListener('pointerdown', (e)=>{
+    const handle = e.target.closest('.drag-handle');
+    if(!handle) return;
+    const block = handle.closest(childSelector);
+    if(!block) return;
+    dragEl = block;
+    dragEl.classList.add('dragging');
+    try{ handle.setPointerCapture(e.pointerId); }catch(err){}
+    e.preventDefault();
+  });
+
+  listEl.addEventListener('pointermove', (e)=>{
+    if(!dragEl) return;
+    const blocks = Array.from(listEl.querySelectorAll(':scope > ' + childSelector)).filter(b=>b!==dragEl);
+    let inserted = false;
+    for(const b of blocks){
+      const rect = b.getBoundingClientRect();
+      const mid = rect.top + rect.height/2;
+      if(e.clientY < mid){
+        listEl.insertBefore(dragEl, b);
+        inserted = true;
+        break;
+      }
+    }
+    if(!inserted && blocks.length > 0){
+      // 같은 종류의 마지막 항목 바로 뒤에 놓기 (고정된 다른 행들 뒤로는 넘어가지 않음)
+      const last = blocks[blocks.length - 1];
+      listEl.insertBefore(dragEl, last.nextSibling);
+    }
+  });
+
+  const endDrag = ()=>{
+    if(dragEl) dragEl.classList.remove('dragging');
+    dragEl = null;
+  };
+  listEl.addEventListener('pointerup', endDrag);
+  listEl.addEventListener('pointercancel', endDrag);
+  listEl.addEventListener('pointerleave', ()=>{ /* 목록 밖으로 나가도 유지, 위쪽 pointerup에서 마무리 */ });
+}
+
+function bindItemEvents(container){
+  container.addEventListener('change', (e)=>{
+    if(e.target.classList.contains('chk')){
+      const row = e.target.closest('.item-row');
+      const qtyInput = row.querySelector('.qty-input');
+      const minus = row.querySelector('.qty-btn.minus');
+      const plus = row.querySelector('.qty-btn.plus');
+      const checked = e.target.checked;
+      qtyInput.disabled = !checked;
+      minus.disabled = !checked;
+      plus.disabled = !checked;
+      if(checked && (!qtyInput.value || Number(qtyInput.value)<1)) qtyInput.value = 1;
+      row.classList.toggle('checked', checked);
+      Calc.updateAllSubtotals();
+    }
+    if(e.target.classList.contains('qty-input')){
+      let v = Number(e.target.value)||1;
+      v = Math.max(1, Math.min(20, v));
+      e.target.value = v;
+      Calc.updateAllSubtotals();
+    }
+  });
+  container.addEventListener('click', (e)=>{
+    // 품목 삭제(✕) 버튼
+    const deleteBtn = e.target.closest('.item-delete-btn');
+    if(deleteBtn){
+      const block = deleteBtn.closest('.item-block');
+      const row = block.querySelector('.item-row');
+      const itemName = row ? row.dataset.item : '이 품목';
+      if(confirm(`"${itemName}" 품목을 목록에서 삭제할까요?`)){
+        block.remove();
+        Calc.updateAllSubtotals();
+      }
+      return;
+    }
+    // 침대 사이즈 세모(펼치기/접기) 버튼
+    const sizeToggle = e.target.closest('.size-toggle');
+    if(sizeToggle){
+      const block = sizeToggle.closest('.item-block');
+      const options = block.querySelector('.size-options');
+      const isOpen = options.classList.toggle('open');
+      sizeToggle.classList.toggle('open', isOpen);
+      return;
+    }
+    // 침대 사이즈 칩(싱글/퀸/라지킹) 선택 - 이미 선택된 걸 다시 누르면 선택 해제(원래 색으로)
+    const sizeChip = e.target.closest('.size-chip');
+    if(sizeChip){
+      const block = sizeChip.closest('.item-block');
+      const row = block.querySelector('.item-row');
+      const tagEl = block.querySelector('.size-tag');
+      const wasActive = sizeChip.classList.contains('active');
+      block.querySelectorAll('.size-chip').forEach(c=>c.classList.remove('active'));
+      if(wasActive){
+        // 다시 선택 → 선택 해제: 빨간색이 원래 색으로 돌아가고, 옆 글씨도 다시 숨겨짐
+        delete row.dataset.size;
+        tagEl.classList.remove('visible');
+      }else{
+        sizeChip.classList.add('active');
+        const size = sizeChip.dataset.size;
+        row.dataset.size = size;
+        tagEl.textContent = size;
+        tagEl.classList.add('visible'); // 선택을 완료했을 때만 옆에 글씨가 나타남
+      }
+      // 선택(또는 선택 해제) 후에는 세모 아래 옵션 목록을 자동으로 닫음
+      const optionsPanel = block.querySelector('.size-options');
+      const toggleBtn = block.querySelector('.size-toggle');
+      if(optionsPanel) optionsPanel.classList.remove('open');
+      if(toggleBtn) toggleBtn.classList.remove('open');
+      Calc.updateAllSubtotals();
+      return;
+    }
+    const btn = e.target.closest('.qty-btn');
+    if(!btn || btn.disabled) return;
+    const row = btn.closest('.item-row');
+    const input = row.querySelector('.qty-input');
+    let v = Number(input.value)||1;
+    v += btn.classList.contains('plus') ? 1 : -1;
+    v = Math.max(1, Math.min(20, v));
+    input.value = v;
+    Calc.updateAllSubtotals();
+  });
+}
+
+/* ---------------------- 11. CALC ---------------------- */
+const Calc = {
+  sumPointsIn(root){
+    let sum = 0;
+    root.querySelectorAll('.item-row').forEach(row=>{
+      const chk = row.querySelector('.chk');
+      if(chk && chk.checked){
+        const qty = Number(row.querySelector('.qty-input').value)||0;
+        const name = row.dataset.item;
+        const pt = (name === '침대') ? (BED_SIZE_POINTS[row.dataset.size] || POINTS[name]) : (POINTS[name]||1);
+        sum += qty * pt;
+      }
+    });
+    return sum;
+  },
+  updateAllSubtotals(){
+    this.run();
+  },
+  run(){
+    const roomsWrap = document.getElementById('roomPanels');
+    const livingWrap = document.getElementById('livingList');
+    const kitchenWrap = document.getElementById('kitchenList');
+    const laundryWrap = document.getElementById('laundryList');
+    const totalPoints = this.sumPointsIn(roomsWrap) + this.sumPointsIn(livingWrap) + this.sumPointsIn(kitchenWrap) + this.sumPointsIn(laundryWrap);
+
+    const s = State.settings;
+    const baseWorkers = s.baseWorkers || CONFIG.baseWorkers;
+    const baseTrucks = s.baseTrucks || CONFIG.baseTrucks;
+    const workerCapacity = s.workerCapacity || CONFIG.workerCapacity;
+    const truckCapacity = s.truckCapacity || CONFIG.truckCapacity;
+
+    const autoWorkers = Math.max(baseWorkers, Math.ceil(totalPoints / workerCapacity));
+    const autoTrucks = Math.max(baseTrucks, Math.ceil(totalPoints / truckCapacity));
+
+    // 선택한 짐의 양을 1톤 환산량으로 계산한 뒤 5톤과 1톤 차량으로 나눕니다.
+    // 예: 7톤 분량이면 5톤 1대 + 1톤 2대로 추천합니다.
+    const truck1Input = document.getElementById('truck1Count');
+    const truck5Input = document.getElementById('truck5Count');
+    let truck1Count = Number(truck1Input.value) || 0;
+    let truck5Count = Number(truck5Input.value) || 0;
+
+    if(!State.truckManual){
+      truck5Count = Math.floor(autoTrucks / 5);
+      truck1Count = autoTrucks % 5;
+      truck1Input.value = truck1Count;
+      truck5Input.value = truck5Count;
+    }
+
+    const trucks = truck1Count + (truck5Count * 5);
+    const truckParts = [];
+    if(truck5Count > 0) truckParts.push(`5톤(${truck5Count}대)`);
+    if(truck1Count > 0) truckParts.push(`1톤(${truck1Count}대)`);
+    const truckLabel = truckParts.length ? truckParts.join(' + ') : '차량 미입력';
+    const truckTotalCount = truck1Count + truck5Count;
+
+    // 남자/주방이모 인원 직접 입력(수동)이 있으면 그 값을 우선 사용, 없으면 자동 추천 인원 사용
+    const maleInput = document.getElementById('maleCount');
+    const kitchenInput = document.getElementById('kitchenCount');
+    let workers = autoWorkers;
+    if(State.workerManual){
+      const male = Number(maleInput.value)||0;
+      const kitchen = Number(kitchenInput.value)||0;
+      workers = Math.max(1, male + kitchen);
+    } else if(maleInput && kitchenInput){
+      maleInput.value = autoWorkers;
+      kitchenInput.value = 0;
+    }
+    const extraWorkers = Math.max(0, workers - baseWorkers);
+    const extraTrucks = Math.max(0, trucks - baseTrucks);
+
+    const fromStairsOn = document.getElementById('fromStairs').checked;
+    const toStairsOn = document.getElementById('toStairs').checked;
+    const fromStairsFloor = Number(document.getElementById('fromStairsFloor').value)||1;
+    const toStairsFloor = Number(document.getElementById('toStairsFloor').value)||1;
+
+    const noElevatorPerFloor = CONFIG.noElevatorPerFloor;
+    let stairsSurcharge = 0;
+    if(fromStairsOn && fromStairsFloor>1) stairsSurcharge += (fromStairsFloor-1)*noElevatorPerFloor;
+    if(toStairsOn && toStairsFloor>1) stairsSurcharge += (toStairsFloor-1)*noElevatorPerFloor;
+
+    // 이사 비용 / 증차 비용 / 수작업 비용 / 사다리 비용 / 옵션 비용 등은 직접 입력하고, 나머지는 자동으로 합산됩니다.
+    const costMove = Utils.moneyNum(document.getElementById('costMove'));
+    const costExtraTruck = Utils.moneyNum(document.getElementById('costExtraTruck'));
+    const costWork = Utils.moneyNum(document.getElementById('costWork'));
+    const costLadder = Utils.moneyNum(document.getElementById('costLadder'));
+    const costOption = Utils.moneyNum(document.getElementById('costOption'));
+    const costAssembly = Utils.moneyNum(document.getElementById('costAssembly'));
+    const costEtc = Utils.moneyNum(document.getElementById('costEtc'));
+    const costDiscount = Utils.moneyNum(document.getElementById('costDiscount'));
+
+    // 보관 이사 비용 = 하루 비용 × 기간(일), 자동 계산
+    const storageDailyRate = Utils.moneyNum(document.getElementById('storageDailyRate'));
+    const storageDays = Number(document.getElementById('storageDays').value) || 0;
+    const storageCost = storageDailyRate * storageDays;
+    document.getElementById('storageCostDisplay').textContent = Utils.won(storageCost);
+
+    const subtotalBeforeDiscount = costMove + costExtraTruck + costWork + costLadder + costOption
+      + costAssembly + costEtc + storageCost + stairsSurcharge;
+    const subtotalAfterDiscount = Math.max(0, subtotalBeforeDiscount - costDiscount);
+    document.getElementById('subtotalAfterDiscountDisplay').textContent = Utils.won(subtotalAfterDiscount);
+
+    const vatEnabled = document.getElementById('vatEnabled').checked;
+    const vatAmount = vatEnabled ? Math.round(subtotalAfterDiscount * 0.1) : 0;
+    document.getElementById('vatAmountDisplay').textContent = vatEnabled ? Utils.won(vatAmount) : '별도(미포함)';
+
+    let autoTotal = subtotalAfterDiscount + vatAmount;
+    autoTotal = Utils.round10k(autoTotal);
+    const isManual = (State.manualPrice != null) && isFinite(State.manualPrice);
+    const total = isManual ? State.manualPrice : autoTotal;
+
+    State.lastQuote = {
+      totalPoints, workers, trucks, extraWorkers, extraTrucks,
+      costMove, costExtraTruck, costWork, costLadder, costOption,
+      costAssembly, costEtc, costDiscount,
+      storageDailyRate, storageDays, storageCost, stairsSurcharge, vatEnabled, vatAmount, subtotalBeforeDiscount, subtotalAfterDiscount,
+      total, autoTotal, isManual,
+      maleCount: Number(maleInput ? maleInput.value : 0)||0,
+      kitchenCount: Number(kitchenInput ? kitchenInput.value : 0)||0,
+      truckLabel, truckTotalCount, truck1Count, truck5Count
+    };
+
+    // 상단/하단 실시간 표시
+    document.getElementById('topTotal').textContent = Utils.won(total);
+    document.getElementById('footTotal').textContent = Utils.won(total);
+
+    // STEP 6 상세 표시
+    document.getElementById('finalPrice').innerHTML = Utils.won(total) + ' <span class="edit-pencil">✏️</span>';
+    document.getElementById('recWorkers').textContent = workers + '명';
+    const recTrucksEl = document.getElementById('recTrucks');
+    if(recTrucksEl){
+      const parts = [];
+      if(truck5Count > 0) parts.push(`5톤 ${truck5Count}대`);
+      if(truck1Count > 0) parts.push(`1톤 ${truck1Count}대`);
+      recTrucksEl.textContent = parts.length ? parts.join(' + ') : '0대';
+    }
+    document.getElementById('finalCostDisplay').textContent = Utils.won(total);
+
+    const priceHint = document.querySelector('.price-hero .n');
+    const resetBtn = document.getElementById('resetPriceBtn');
+    if(isManual){
+      priceHint.textContent = `직접 입력한 금액입니다 (합산 금액: ${Utils.won(autoTotal)})`;
+      priceHint.classList.add('manual');
+      resetBtn.style.display = 'inline-flex';
+    } else {
+      priceHint.textContent = '입력한 항목들이 자동으로 합산됩니다 · 탭하면 금액을 직접 수정할 수도 있습니다';
+      priceHint.classList.remove('manual');
+      resetBtn.style.display = 'none';
+    }
+
+    UI.renderSMS();
+    return State.lastQuote;
+  }
+};
+
+/* ---------------------- 12. SMS 문구 생성 ---------------------- */
+UI.renderSMS = function(){
+  const q = State.lastQuote;
+  if(!q || State.smsManuallyEdited) return;
+
+  const name = document.getElementById('custName').value || '고객';
+  const date = document.getElementById('moveDate').value || '미정';
+  const startTime = document.getElementById('moveStartTime').value || '미정';
+  const specialNotes = document.getElementById('specialNotes').value.trim();
+
+  const fromDetail = document.getElementById('fromDetail').value.trim();
+  const toDetail = document.getElementById('toDetail').value.trim();
+  const fromAddr = (document.getElementById('fromAddress').value || '출발지 미입력') + (fromDetail ? ' ' + fromDetail : '');
+  const toAddr = (document.getElementById('toAddress').value || '도착지 미입력') + (toDetail ? ' ' + toDetail : '');
+
+  const siteMethod = (prefix)=>{
+    const stairs = document.getElementById(prefix+'Stairs');
+    const elevator = document.getElementById(prefix+'Elevator');
+    const ladder = document.getElementById(prefix+'Ladder');
+
+    if(stairs && stairs.checked){
+      const v = document.getElementById(prefix+'StairsFloor')?.value || '';
+      return `수작업(계단)${v ? ' ' + (v==='별도' ? '별도' : v+'층') : ''}`;
+    }
+    if(elevator && elevator.checked){
+      const v = document.getElementById(prefix+'ElevatorFloor')?.value || '';
+      return `엘리베이터${v ? ' ' + (v==='별도' ? '별도' : v+'층') : ''}`;
+    }
+    if(ladder && ladder.checked){
+      const v = document.getElementById(prefix+'LadderFloor')?.value || '';
+      return `사다리차${v ? ' ' + (v==='별도' ? '별도' : v+'층') : ''}`;
+    }
+    return '';
+  };
+
+  const fromMethod = siteMethod('from');
+  const toMethod = siteMethod('to');
+
+  const moveTypeValue = document.getElementById('moveType').value;
+  const moveType = moveTypeValue === '기타'
+    ? (document.getElementById('moveTypeEtc').value || '기타')
+    : moveTypeValue;
+
+  const phone = State.settings.companyPhone || '010-1234-5678';
+  const specialBlock = specialNotes ? `\n\n특이사항\n${specialNotes}` : '';
+
+  const text =
+`[짐픽 이사견적 안내]
+
+고객명: ${name}
+이사일: ${date}
+시작 시간: ${startTime}
+
+출발지${fromMethod ? ` (${fromMethod})` : ''}
+${fromAddr}
+
+도착지${toMethod ? ` (${toMethod})` : ''}
+${toAddr}
+
+이사 종류: ${moveType}
+차량 구성: ${q.truckLabel}
+작업 인원: ${q.workers}명 (남자 ${q.maleCount}명 · 주방이모 ${q.kitchenCount}명)
+예상 견적금액: ${Utils.won(q.total)}${q.vatEnabled ? ' (VAT포함)' : ' (VAT별도)'}${specialBlock}
+
+※ 사진, 현장 상황, 추가 작업에 따라 최종 금액이 달라질 수 있습니다.
+
+문의: ${phone}
+업체명: 짐픽 V2`;
+
+  document.getElementById('smsText').value = text;
+};
+
+/* ---------------------- 13. 인쇄/견적서 HTML 생성 ---------------------- */
+function buildPrintHTML(){
+  const q = State.lastQuote || Calc.run();
+  const name = document.getElementById('custName').value || '-';
+  const phone = document.getElementById('custPhone').value || '-';
+  const date = document.getElementById('moveDate').value || '-';
+  const startTime = document.getElementById('moveStartTime').value;
+  const specialNotesV = document.getElementById('specialNotes').value.trim();
+  const moveTypeSel = document.getElementById('moveType').value;
+  const moveType = moveTypeSel==='기타' ? (document.getElementById('moveTypeEtc').value||'기타') : moveTypeSel;
+  const fromDetailV2 = document.getElementById('fromDetail').value.trim();
+  const toDetailV2 = document.getElementById('toDetail').value.trim();
+  const fromAddr = (document.getElementById('fromAddress').value || '-') + (fromDetailV2 ? ' ' + fromDetailV2 : '');
+  const toAddr = (document.getElementById('toAddress').value || '-') + (toDetailV2 ? ' ' + toDetailV2 : '');
+  const fromStairsFloor = document.getElementById('fromStairsFloor').value;
+  const toStairsFloor = document.getElementById('toStairsFloor').value;
+  const fromElevatorFloor = document.getElementById('fromElevatorFloor').value;
+  const toElevatorFloor = document.getElementById('toElevatorFloor').value;
+
+  // 견적번호: 날짜 + 임의 4자리 (같은 견적서를 다시 뽑아도 매번 새로 생성됨)
+  if(!State.quoteNumber){
+    const d = new Date();
+    const ymd = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+    State.quoteNumber = `JP-${ymd}-${Math.floor(1000+Math.random()*9000)}`;
+  }
+
+  const costRows = [
+    ['이사 비용', q.costMove],
+    ['차 증차시 비용', q.costExtraTruck],
+    ['수작업 비용', q.costWork],
+    ['사다리 비용', q.costLadder],
+    ['옵션 비용', q.costOption],
+    ['분해·조립 비용', q.costAssembly],
+    ['기타 추가비', q.costEtc],
+    ['보관 비용', q.storageCost],
+    ['계단 작업비', q.stairsSurcharge],
+  ].filter(r => r[1] > 0)
+   .map(r => `<tr><td>${r[0]}</td><td>${Utils.won(r[1])}</td></tr>`).join('');
+
+  return `
+  <div class="print-sheet">
+    <h1>🚚 이사 견적서 <span style="font-size:12px;font-weight:400;float:right;">견적번호: ${State.quoteNumber} · 발행일: ${Utils.todayStr()}</span></h1>
+    <table>
+      <tr><th style="width:120px;">업체명</th><td>${State.settings.companyName}</td><th style="width:120px;">연락처</th><td>${State.settings.companyPhone}</td></tr>
+      ${State.settings.accountNumber ? `<tr><th>입금계좌</th><td colspan="3">${State.settings.accountNumber}</td></tr>` : ''}
+      <tr><th>고객명</th><td>${name}</td><th>연락처</th><td>${phone}</td></tr>
+      <tr><th>이사일</th><td>${date}${startTime ? ' ' + startTime : ''}</td><th>이사종류</th><td>${moveType}</td></tr>
+      <tr><th>출발지</th><td colspan="3">${fromAddr}</td></tr>
+      <tr><th>도착지</th><td colspan="3">${toAddr}</td></tr>
+      <tr><th>출발 수작업</th><td>${document.getElementById('fromStairs').checked ? fromStairsFloor+'층' : '없음'}</td><th>출발 엘리베이터</th><td>${fromElevatorFloor}층</td></tr>
+      <tr><th>도착 수작업</th><td>${document.getElementById('toStairs').checked ? toStairsFloor+'층' : '없음'}</td><th>도착 엘리베이터</th><td>${toElevatorFloor}층</td></tr>
+      ${specialNotesV ? `<tr><th>특이사항</th><td colspan="3">${specialNotesV}</td></tr>` : ''}
+    </table>
+    <table>
+      <tr><th>항목</th><th>금액</th></tr>
+      ${costRows || '<tr><td colspan="2">입력된 추가 항목 없음</td></tr>'}
+      ${q.costDiscount > 0 ? `<tr><td>할인</td><td>-${Utils.won(q.costDiscount)}</td></tr>` : ''}
+      <tr><td>VAT</td><td>${q.vatEnabled ? Utils.won(q.vatAmount) : '별도(미포함)'}</td></tr>
+    </table>
+    <div>추천 작업 인원: <b>${q.workers}명</b> (남자 ${q.maleCount}명 · 주방이모 ${q.kitchenCount}명) &nbsp;|&nbsp; 추천 차량: <b>${q.truckLabel}</b></div>
+    <div class="p-total">총 예상 견적금액: ${Utils.won(q.total)}</div>
+    <table style="margin-top:24px;">
+      <tr>
+        <th style="width:50%;">업체 서명</th>
+        <th style="width:50%;">고객 서명</th>
+      </tr>
+      <tr>
+        <td style="height:60px;"></td>
+        <td style="height:60px;"></td>
+      </tr>
+    </table>
+  </div>`;
+}
+
+/* ---------------------- 14. 미디어 업로드 & AI 데모 ---------------------- */
+function renderMediaPreview(){
+  const wrap = document.getElementById('mediaPreview');
+  wrap.innerHTML = State.media.map((m,i)=>`
+    <div class="preview-item">
+      ${m.type.startsWith('video') ? `<video src="${m.url}" muted></video>` : `<img src="${m.url}">`}
+      <span class="tag">${m.type.startsWith('video')?'동영상':'사진'}</span>
+      <button class="rm" data-idx="${i}">✕</button>
+    </div>`).join('');
+}
+
+// 사진/동영상이 감지한 가전·가구를 실제 방/거실/부엌 품목에 자동으로 체크 + 수량 반영
+function applyAIResultsToItems(results){
+  const firstRoomPanel = document.querySelector('.room-panel[data-room="1"]');
+  const unmatched = [];
+  results.forEach(item=>{
+    const row = (firstRoomPanel && firstRoomPanel.querySelector(`.item-row[data-item="${item.name}"]`))
+              || document.getElementById('livingList').querySelector(`.item-row[data-item="${item.name}"]`)
+              || document.getElementById('kitchenList').querySelector(`.item-row[data-item="${item.name}"]`)
+              || document.getElementById('laundryList').querySelector(`.item-row[data-item="${item.name}"]`);
+    if(row){
+      row.querySelector('.chk').checked = true;
+      row.querySelector('.qty-input').disabled = false;
+      row.querySelector('.qty-btn.minus').disabled = false;
+      row.querySelector('.qty-btn.plus').disabled = false;
+      row.querySelector('.qty-input').value = item.qty;
+      row.classList.add('checked');
+    } else {
+      unmatched.push(item); // 우리 목록에 없는 품목 → 아래에서 "기타"로 자동 정리
+    }
+  });
+
+  // 목록에 없는 품목은 "기타" 항목에 체크 + 무엇인지 메모로 자동 기록
+  if(unmatched.length > 0 && firstRoomPanel){
+    const etcRow = firstRoomPanel.querySelector('.item-row[data-item="기타"]');
+    if(etcRow){
+      const qtyInput = etcRow.querySelector('.qty-input');
+      etcRow.querySelector('.chk').checked = true;
+      qtyInput.disabled = false;
+      etcRow.querySelector('.qty-btn.minus').disabled = false;
+      etcRow.querySelector('.qty-btn.plus').disabled = false;
+      qtyInput.value = unmatched.reduce((sum,i)=> sum + (i.qty||1), 0);
+      etcRow.classList.add('checked');
+
+      const block = etcRow.closest('.item-block');
+      const memoInput = block.querySelector('.memo-input');
+      const noteText = unmatched.map(i=>`${i.name} x${i.qty}`).join(', ');
+      if(memoInput){
+        memoInput.value = memoInput.value ? `${memoInput.value}, ${noteText}` : noteText;
+        // 메모가 보이도록 세모(옵션 패널)를 자동으로 펼침
+        const toggle = block.querySelector('.size-toggle');
+        const options = block.querySelector('.size-options');
+        if(toggle && options && !options.classList.contains('open')){
+          options.classList.add('open');
+          toggle.classList.add('open');
+        }
+      }
+    }
+  }
+  Calc.updateAllSubtotals();
+}
+
+// 업로드된 사진/동영상을 분석하고, 감지된 품목을 자동으로 체크까지 완료하는 통합 함수
+async function runAutoAIAnalysis(){
+  if(State.media.length===0) return;
+  const btn = document.getElementById('analyzeBtn');
+  const originalLabel = btn.textContent;
+  btn.textContent = '🤖 자동 분석 중...';
+  btn.disabled = true;
+
+  const results = await AIService.analyzeMedia(State.media);
+  applyAIResultsToItems(results);
+
+  btn.textContent = originalLabel;
+  btn.disabled = false;
+
+  const wrap = document.getElementById('aiResultWrap');
+  wrap.innerHTML = `
+    <div class="ai-banner">⚠ 데모 결과입니다. 사진/동영상을 기반으로 아래 품목이 STEP 3·4에 자동으로 체크되었습니다.</div>
+    <div style="margin-top:10px;">
+      ${results.map(r=>{
+        const badges = [];
+        if(r.size) badges.push(r.size);
+        if(r.disassembly_required) badges.push('분해필요');
+        if(r.heavy_item) badges.push('무거움');
+        if(r.special_handling) badges.push('특수포장');
+        return `
+        <div class="ai-result-row">
+          <span>✅ ${r.name} × ${r.qty}${badges.length ? ` <span class="ai-badges">(${badges.join(' · ')})</span>` : ''}</span>
+          <span class="conf">신뢰도 ${Math.round(r.confidence*100)}%</span>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="hint">STEP 3·4로 이동해 자동 체크된 항목과 수량을 확인하고, 다르면 직접 수정하세요.</div>
+  `;
+}
+
+/* ---------------------- 15. 이벤트 바인딩 & 초기화 ---------------------- */
+// 금액 입력칸(.money-input)에 "100,000"처럼 천단위 콤마를 자동으로 넣어줌
+function bindMoneyInputs(){
+  document.querySelectorAll('.money-input').forEach(el=>{
+    if(el.dataset.moneyBound) return;
+    el.dataset.moneyBound = '1';
+    el.addEventListener('input', ()=>{
+      const raw = el.value.replace(/[^0-9]/g, '');
+      el.value = raw ? Number(raw).toLocaleString('ko-KR') : '';
+    });
+  });
+}
+
+const App = {
+  /* ---------- 로그인 / 인증 ---------- */
+  async signUp(){
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    if(!email || password.length < 6){ alert('이메일과 6자리 이상 비밀번호를 입력해주세요.'); return; }
+    const hint = document.getElementById('loginHint');
+    hint.textContent = '가입 처리 중...';
+    const { error } = await AuthService.signUp(email, password);
+    if(error){ hint.textContent = '가입 실패: ' + error.message; return; }
+    hint.textContent = '가입 완료! 이메일 인증 후 로그인해주세요. (인증 메일을 확인하세요)';
+  },
+  async signIn(){
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    if(!email || !password){ alert('이메일과 비밀번호를 입력해주세요.'); return; }
+    const hint = document.getElementById('loginHint');
+    hint.textContent = '로그인 중...';
+    const { error } = await AuthService.signIn(email, password);
+    if(error){ hint.textContent = '로그인 실패: ' + error.message; return; }
+    await App.afterLogin();
+  },
+  async logout(){
+    await AuthService.signOut();
+    location.reload();
+  },
+  async afterLogin(){
+    State.session = await AuthService.getSession();
+    if(!State.session) return;
+    State.company = await CompanyService.ensureCompany();
+    document.getElementById('loginGate').style.display = 'none';
+    document.getElementById('accountBar').style.display = 'flex';
+    if(State.company){
+      // 업체 정보를 이 프로그램의 기존 설정(State.settings)에도 반영해서
+      // 고객 문자/견적서에 자동으로 쓰이도록 함
+      State.settings.companyName = State.company.company_name || State.settings.companyName;
+      State.settings.companyPhone = State.company.company_phone || State.settings.companyPhone;
+      State.settings.accountNumber = State.company.account_number || '';
+      State.settings.inquiryEmail = State.company.inquiry_email || '';
+      document.getElementById('companyNameDisplay').textContent = State.settings.companyName + ' ✏️';
+      document.getElementById('cloudSaveCard').style.display = 'block';
+      document.getElementById('adminNavBtn').style.display = State.company.is_admin ? 'inline-flex' : 'none';
+      App.updateSubscriptionBadge();
+      State.customers = await CustomerService.list(State.company.id);
+    }
+    Calc.run();
+  },
+  updateSubscriptionBadge(){
+    const badge = document.getElementById('subscriptionBadge');
+    if(!badge || !State.company) return;
+    const status = State.company.subscription_status;
+    const expires = State.company.subscription_expires_at ? new Date(State.company.subscription_expires_at) : null;
+    const expired = expires && expires < new Date();
+    if(status === 'active' && !expired){
+      badge.textContent = '정상 이용중';
+      badge.classList.remove('expired');
+    }else{
+      badge.textContent = expired ? '이용 만료' : '체험중 (' + (expires ? expires.toLocaleDateString('ko-KR') : '') + '까지)';
+      badge.classList.toggle('expired', !!expired);
+    }
+  },
+
+  /* ---------- 고객관리 ---------- */
+  openCustomerModal(){
+    App.renderCustomerList();
+    document.getElementById('customerModal').classList.add('open');
+  },
+  closeCustomerModal(){ document.getElementById('customerModal').classList.remove('open'); },
+  async addCustomer(){
+    if(!State.company){ alert('로그인 후 이용해주세요.'); return; }
+    const name = document.getElementById('newCustName').value.trim();
+    const phone = document.getElementById('newCustPhone').value.trim();
+    if(!name){ alert('고객명을 입력해주세요.'); return; }
+    const created = await CustomerService.add(State.company.id, name, phone, '');
+    if(!created){ alert('고객 추가에 실패했습니다.'); return; }
+    document.getElementById('newCustName').value = '';
+    document.getElementById('newCustPhone').value = '';
+    State.customers = await CustomerService.list(State.company.id);
+    App.renderCustomerList();
+  },
+  renderCustomerList(){
+    const wrap = document.getElementById('customerListWrap');
+    if(!State.customers || State.customers.length === 0){
+      wrap.innerHTML = '<div class="hint">등록된 고객이 아직 없어요.</div>';
+      return;
+    }
+    wrap.innerHTML = State.customers.map(c => `
+      <div class="item-row" style="margin-bottom:8px;">
+        <div>
+          <div style="font-weight:800;">${c.name}</div>
+          <div class="muted">${c.phone || ''}</div>
+        </div>
+        <div class="btn-row" style="width:auto;margin:0;">
+          <button class="btn btn-ghost" style="width:auto;min-height:36px;padding:0 12px;" onclick="App.selectCustomer('${c.id}')">이 고객으로 견적</button>
+        </div>
+      </div>`).join('');
+  },
+  selectCustomer(customerId){
+    const c = State.customers.find(x => x.id === customerId);
+    if(!c) return;
+    State.selectedCustomerId = c.id;
+    document.getElementById('custName').value = c.name;
+    document.getElementById('custPhone').value = c.phone || '';
+    App.closeCustomerModal();
+    UI.goStep(1);
+    Calc.run();
+    alert(`"${c.name}" 고객으로 견적 작성을 시작합니다.`);
+  },
+
+  /* ---------- 견적 저장 / 불러오기 ---------- */
+  async saveQuoteToCloud(){
+    if(!State.company){ alert('로그인 후 이용해주세요.'); return; }
+    const btn = document.getElementById('cloudSaveBtn');
+    btn.disabled = true;
+    btn.textContent = '☁️ 저장 중...';
+    try{
+      // 사진/동영상을 먼저 클라우드에 업로드
+      const photoUrls = [];
+      for(const m of State.media){
+        const url = await StorageService.uploadPhoto(m.file, State.company.id);
+        if(url) photoUrls.push(url);
+      }
+      const data = DraftService.serialize();
+      const customerName = document.getElementById('custName').value || '고객';
+      const moveDate = document.getElementById('moveDate').value || null;
+      const total = State.lastQuote ? State.lastQuote.total : 0;
+      const row = await QuoteService.save(
+        State.company.id, State.selectedCustomerId, customerName, moveDate, total, data, photoUrls
+      );
+      if(row) alert('견적이 저장되었습니다. "저장된 견적"에서 다시 볼 수 있어요.');
+      else alert('저장에 실패했습니다. 인터넷 연결을 확인해주세요.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '☁️ 이 견적 저장하기';
+    }
+  },
+  async openSavedQuotes(){
+    if(!State.company){ alert('로그인 후 이용해주세요.'); return; }
+    const wrap = document.getElementById('savedQuotesWrap');
+    wrap.innerHTML = '<div class="hint">불러오는 중...</div>';
+    document.getElementById('savedQuotesModal').classList.add('open');
+    const quotes = State.selectedCustomerId
+      ? await QuoteService.listForCustomer(State.selectedCustomerId)
+      : await QuoteService.listForCompany(State.company.id);
+    if(quotes.length === 0){ wrap.innerHTML = '<div class="hint">저장된 견적이 없습니다.</div>'; return; }
+    wrap.innerHTML = quotes.map(q => `
+      <div class="item-row" style="margin-bottom:8px;">
+        <div>
+          <div style="font-weight:800;">${q.customer_name || '고객'} · ${Utils.won(q.total_price||0)}</div>
+          <div class="muted">${new Date(q.created_at).toLocaleString('ko-KR')}</div>
+        </div>
+        <div class="btn-row" style="width:auto;margin:0;">
+          <button class="btn btn-ghost" style="width:auto;min-height:36px;padding:0 12px;" onclick='App.loadSavedQuote(${JSON.stringify(q.id)})'>불러오기</button>
+        </div>
+      </div>`).join('');
+  },
+  async loadSavedQuote(quoteId){
+    const quotes = await QuoteService.listForCompany(State.company.id);
+    const q = quotes.find(x => x.id === quoteId);
+    if(!q){ alert('견적을 찾을 수 없습니다.'); return; }
+    await CloudService.save(CloudService.KEY_DRAFT, q.data);
+    await DraftService.restore();
+    document.getElementById('savedQuotesModal').classList.remove('open');
+    UI.goStep(1);
+    alert('저장된 견적을 불러왔습니다.');
+  },
+
+  /* ---------- 관리자 페이지 ---------- */
+  async openAdmin(){
+    if(!State.company || !State.company.is_admin){ alert('관리자만 볼 수 있습니다.'); return; }
+    const wrap = document.getElementById('adminCompanyWrap');
+    wrap.innerHTML = '<div class="hint">불러오는 중...</div>';
+    document.getElementById('adminModal').classList.add('open');
+    const companies = await AdminService.listAllCompanies();
+    if(companies.length === 0){ wrap.innerHTML = '<div class="hint">업체가 없습니다.</div>'; return; }
+    wrap.innerHTML = companies.map(c => `
+      <div class="item-row" style="margin-bottom:8px;">
+        <div>
+          <div style="font-weight:800;">${c.company_name}</div>
+          <div class="muted">${c.company_phone || '-'} · 가입일 ${new Date(c.created_at).toLocaleDateString('ko-KR')}</div>
+        </div>
+        <span class="sub-badge ${c.subscription_status !== 'active' ? 'expired' : ''}">${c.subscription_status}</span>
+      </div>`).join('');
+  },
+
+  openSettings(){
+    const s = State.settings;
+    document.getElementById('cfgCompanyName').value = s.companyName;
+    document.getElementById('cfgCompanyPhone').value = s.companyPhone;
+    document.getElementById('cfgAccountNumber').value = s.accountNumber || '';
+    document.getElementById('cfgInquiryEmail').value = s.inquiryEmail || '';
+    document.getElementById('settingsModal').classList.add('open');
+  },
+  closeSettings(){ document.getElementById('settingsModal').classList.remove('open'); },
+  editPrice(){
+    const v = document.getElementById('finalPrice');
+    const input = document.getElementById('finalPriceInput');
+    const current = (State.lastQuote ? State.lastQuote.total : 0);
+    v.style.display = 'none';
+    input.style.display = 'block';
+    input.value = Math.round(current).toLocaleString('ko-KR');
+    input.focus();
+    input.select();
+  },
+  async installApp(){
+    const promptEvent = State.deferredInstallPrompt;
+    if(!promptEvent){
+      alert('지금은 설치 버튼을 사용할 수 없습니다.\n크롬 브라우저 메뉴(⋮)에서 "홈 화면에 추가" 또는 "앱 설치"를 직접 선택해주세요.');
+      return;
+    }
+    promptEvent.prompt();
+    const choice = await promptEvent.userChoice;
+    if(choice && choice.outcome === 'accepted'){
+      const banner = document.getElementById('installBanner');
+      if(banner) banner.style.display = 'none';
+    }
+    State.deferredInstallPrompt = null;
+  },
+  openInquiry(){
+    document.getElementById('inquiryModal').classList.add('open');
+  },
+  closeInquiry(){
+    document.getElementById('inquiryModal').classList.remove('open');
+  },
+  sendInquiry(){
+    const toEmail = (State.settings.inquiryEmail || '').trim();
+    if(!toEmail){
+      alert('아직 문의받을 이메일이 설정되지 않았습니다.\n(업체 사장님께: 상호명 ✏️ 설정에서 "도입 문의 받을 이메일"을 먼저 등록해주세요.)');
+      return;
+    }
+    const company = document.getElementById('inqCompany').value.trim();
+    const name = document.getElementById('inqName').value.trim();
+    const phone = document.getElementById('inqPhone').value.trim();
+    const msg = document.getElementById('inqMessage').value.trim();
+    if(!company || !phone){
+      alert('업체명과 연락처는 꼭 입력해주세요.');
+      return;
+    }
+    const subject = `[도입 문의] ${company}`;
+    const body =
+`업체명: ${company}
+담당자명: ${name || '-'}
+연락처: ${phone}
+
+문의 내용:
+${msg || '-'}`;
+    const mailto = `mailto:${toEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
+    App.closeInquiry();
+  },
+  async saveSettings(){
+    const s = State.settings;
+    s.companyName = document.getElementById('cfgCompanyName').value || s.companyName;
+    s.companyPhone = document.getElementById('cfgCompanyPhone').value || s.companyPhone;
+    s.accountNumber = document.getElementById('cfgAccountNumber').value || '';
+    s.inquiryEmail = document.getElementById('cfgInquiryEmail').value || '';
+    document.getElementById('companyNameDisplay').textContent = s.companyName + ' ✏️';
+    await CloudService.save(CloudService.KEY_SETTINGS, s);
+    App.closeSettings();
+    Calc.run();
+  },
+
+  async init(){
+    bindMoneyInputs();
+    makeListSortable(document.getElementById('costEntryList'), '.cost-row-draggable');
+
+    // 설정 불러오기
+    const savedSettings = await CloudService.load(CloudService.KEY_SETTINGS);
+    if(savedSettings) State.settings = Object.assign(State.settings, savedSettings);
+    document.getElementById('companyNameDisplay').textContent = State.settings.companyName + ' ✏️';
+    document.getElementById('quoteDateDisplay').textContent = '견적일 ' + Utils.todayStr() + ' · build ' + BUILD_VERSION;
+
+    // 리스트 렌더링
+    UI.renderStaticLists();
+    UI.renderRooms();
+
+    // 이벤트 위임 바인딩
+    bindItemEvents(document.getElementById('roomPanels'));
+    bindItemEvents(document.getElementById('livingList'));
+    bindItemEvents(document.getElementById('kitchenList'));
+    bindItemEvents(document.getElementById('laundryList'));
+
+    // 방 개수 조절
+    document.getElementById('roomPlus').addEventListener('click', ()=>{
+      if(State.roomCount<4){ State.roomCount++; UI.renderRooms(); Calc.updateAllSubtotals(); }
+    });
+    document.getElementById('roomMinus').addEventListener('click', ()=>{
+      if(State.roomCount>1){ State.roomCount--; UI.renderRooms(); Calc.updateAllSubtotals(); }
+    });
+    document.getElementById('roomTabs').addEventListener('click', (e)=>{
+      const tab = e.target.closest('.room-tab');
+      if(tab) UI.switchRoomTab(tab.dataset.room);
+    });
+
+    // STEP 4 "품목 확인": 방/거실/부엌 섹션 탭 전환
+    document.getElementById('itemSectionTabBar').addEventListener('click', (e)=>{
+      const tab = e.target.closest('.section-tab');
+      if(!tab) return;
+      const target = tab.dataset.section;
+      document.querySelectorAll('.section-tab').forEach(t=>t.classList.toggle('active', t===tab));
+      ['room','living','kitchen','laundry'].forEach(name=>{
+        const el = document.getElementById('itemSection' + name.charAt(0).toUpperCase() + name.slice(1));
+        if(el) el.style.display = (name===target) ? 'block' : 'none';
+      });
+    });
+
+    // 품목 직접 추가 ("+ 품목 추가" 버튼은 항상 바로 위 .item-list 뒤에 붙어있음)
+    document.body.addEventListener('click', (e)=>{
+      const addBtn = e.target.closest('.add-item-btn');
+      if(!addBtn) return;
+      const listEl = addBtn.previousElementSibling;
+      if(!listEl || !listEl.classList.contains('item-list')) return;
+      const name = prompt('추가할 품목 이름을 입력하세요 (예: 행거, 캠핑용품 등)');
+      if(!name || !name.trim()) return;
+      const block = Utils.el(buildItemRowHTML(name.trim()));
+      listEl.appendChild(block);
+      Calc.updateAllSubtotals();
+    });
+
+    // 이사종류 기타
+    document.getElementById('moveType').addEventListener('change', (e)=>{
+      document.getElementById('moveTypeEtcWrap').style.display = e.target.value==='기타' ? 'block':'none';
+    });
+
+    // 임시저장 / 불러오기 / 새 견적 시작 / 전체 초기화
+    document.getElementById('tempSaveBtn').addEventListener('click', async ()=>{
+      await DraftService.save();
+      alert('현재 입력 내용을 임시저장했습니다.');
+    });
+    document.getElementById('tempLoadBtn').addEventListener('click', async ()=>{
+      const ok = await DraftService.restore();
+      alert(ok ? '저장된 내용을 불러왔습니다.' : '불러올 저장 내용이 없습니다.');
+    });
+    document.getElementById('newQuoteBtn').addEventListener('click', ()=>{
+      if(confirm('현재 화면 내용을 지우고 새 견적을 시작할까요?')){
+        localStorage.removeItem(CloudService.KEY_DRAFT);
+        location.reload();
+      }
+    });
+    document.getElementById('resetAllBtn').addEventListener('click', ()=>{
+      if(confirm('정말 모든 내용을 초기화할까요? 임시저장된 견적 데이터가 전부 삭제됩니다.')){
+        localStorage.clear();
+        location.reload();
+      }
+    });
+
+    // (주소 검색 버튼은 이제 HTML의 onclick="openPostcode(...)"로 직접 연결되어 있어
+    //  아래에서 별도로 이벤트를 연결하지 않아도 됩니다. 관련 로직은 전역 함수 openPostcode()를 참고하세요.)
+
+    // 스텝 네비게이션
+    document.getElementById('routeNav').addEventListener('click', (e)=>{
+      const step = e.target.closest('.route-step');
+      if(step) UI.goStep(Number(step.dataset.step));
+    });
+    document.getElementById('nextBtn').addEventListener('click', ()=>{
+      const cur = State.currentStep || 1;
+      if(cur<6) UI.goStep(cur+1);
+    });
+    document.getElementById('prevBtn').addEventListener('click', ()=>{
+      const cur = State.currentStep || 1;
+      if(cur>1) UI.goStep(cur-1);
+    });
+
+    // 주소/층수/엘리베이터/사다리차 변경 시 재계산
+    ['fromStairsFloor','toStairsFloor','fromElevatorFloor','toElevatorFloor','fromElevator','toElevator','fromLadder','toLadder','fromStairs','toStairs','custName','custPhone','moveDate','fromAddress','toAddress',
+     'costMove','costExtraTruck','costWork','costLadder','costOption',
+     'costAssembly','costEtc','costDiscount','vatEnabled',
+     'storageDailyRate','storageDays']
+      .forEach(id=> document.getElementById(id).addEventListener('input', ()=>Calc.run()));
+    ['fromElevator','toElevator','fromLadder','toLadder']
+      .forEach(id=> document.getElementById(id).addEventListener('change', ()=>Calc.run()));
+
+    // 엘리베이터 스위치 on/off 시 배경 톤 전환 + 있음/없음 문구 갱신
+    ['from','to'].forEach(p=>{
+      const chk = document.getElementById(p+'Elevator');
+      const rowEl = document.getElementById(p+'ElevatorRow');
+      const statusEl = document.getElementById(p+'ElevatorStatus');
+      chk.addEventListener('change', ()=>{
+        rowEl.classList.toggle('on', chk.checked);
+        if(statusEl) statusEl.textContent = chk.checked ? '있음' : '없음';
+      });
+    });
+
+    // 수작업(계단) 있다/없다 문구 갱신
+    ['from','to'].forEach(p=>{
+      const chk = document.getElementById(p+'Stairs');
+      const statusEl = document.getElementById(p+'StairsStatus');
+      chk.addEventListener('change', ()=>{
+        if(statusEl) statusEl.textContent = chk.checked ? '있음' : '없음';
+      });
+    });
+
+    // 사다리차 필요/필요 없음 문구 갱신
+    ['from','to'].forEach(p=>{
+      const chk = document.getElementById(p+'Ladder');
+      const statusEl = document.getElementById(p+'LadderStatus');
+      chk.addEventListener('change', ()=>{
+        if(statusEl) statusEl.textContent = chk.checked ? '필요' : '필요 없음';
+      });
+    });
+
+    // 출발지/도착지별로 수작업(계단), 엘리베이터, 사다리차 중 한 가지만 선택
+    function updateSiteMethodUI(prefix){
+      const stairs = document.getElementById(prefix+'Stairs');
+      const elevator = document.getElementById(prefix+'Elevator');
+      const ladder = document.getElementById(prefix+'Ladder');
+
+      const stairsStatus = document.getElementById(prefix+'StairsStatus');
+      const elevatorStatus = document.getElementById(prefix+'ElevatorStatus');
+      const ladderStatus = document.getElementById(prefix+'LadderStatus');
+      const elevatorRow = document.getElementById(prefix+'ElevatorRow');
+
+      if(stairsStatus) stairsStatus.textContent = stairs.checked ? '있음' : '없음';
+      if(elevatorStatus) elevatorStatus.textContent = elevator.checked ? '있음' : '없음';
+      if(ladderStatus) ladderStatus.textContent = ladder.checked ? '필요' : '필요 없음';
+      if(elevatorRow) elevatorRow.classList.toggle('on', elevator.checked);
+    }
+
+    ['from','to'].forEach(prefix=>{
+      ['Stairs','Elevator','Ladder'].forEach(kind=>{
+        const current = document.getElementById(prefix+kind);
+        current.addEventListener('change', ()=>{
+          if(current.checked){
+            ['Stairs','Elevator','Ladder'].forEach(otherKind=>{
+              if(otherKind !== kind){
+                const other = document.getElementById(prefix+otherKind);
+                if(other) other.checked = false;
+              }
+            });
+          }
+          updateSiteMethodUI(prefix);
+          Calc.run();
+          DraftService.save();
+          if(!State.smsManuallyEdited) UI.renderSMS();
+        });
+      });
+      updateSiteMethodUI(prefix);
+    });
+
+
+    // 현장정보 변경 시 발송 문자 자동 갱신
+    ['fromStairs','fromElevator','fromLadder','fromStairsFloor','fromElevatorFloor','fromLadderFloor','toStairs','toElevator','toLadder','toStairsFloor','toElevatorFloor','toLadderFloor','moveStartTime','specialNotes'].forEach(id=>{
+      const el=document.getElementById(id);
+      if(!el) return;
+      ['change','input'].forEach(ev=>el.addEventListener(ev,()=>{
+        if(!State.smsManuallyEdited) UI.renderSMS();
+      }));
+    });
+
+    // 미디어 업로드 → 업로드하는 즉시 자동으로 AI 분석 + 품목 자동 체크까지 진행
+    const handleMediaFiles = (e)=>{
+      Array.from(e.target.files).forEach(file=>{
+        State.media.push({file, url: URL.createObjectURL(file), type: file.type});
+      });
+      renderMediaPreview();
+      runAutoAIAnalysis();
+      e.target.value = ''; // 같은 파일을 다시 찍어도 change 이벤트가 또 발생하도록 초기화
+    };
+    document.getElementById('mediaInput').addEventListener('change', handleMediaFiles);
+    document.getElementById('cameraPhotoInput').addEventListener('change', handleMediaFiles);
+    document.getElementById('cameraVideoInput').addEventListener('change', handleMediaFiles);
+    document.getElementById('mediaPreview').addEventListener('click', (e)=>{
+      const rm = e.target.closest('.rm');
+      if(rm){ State.media.splice(Number(rm.dataset.idx),1); renderMediaPreview(); }
+    });
+
+    // AI 분석(데모) - 수동으로 다시 실행하고 싶을 때 사용
+    document.getElementById('analyzeBtn').addEventListener('click', ()=>{
+      if(State.media.length===0){ alert('먼저 사진 또는 동영상을 업로드해주세요.'); return; }
+      runAutoAIAnalysis();
+    });
+
+    // 재계산 버튼
+    document.getElementById('recalcBtn').addEventListener('click', ()=>Calc.run());
+
+    // 견적 금액 직접 수정
+    const finalPriceInput = document.getElementById('finalPriceInput');
+    const commitManualPrice = ()=>{
+      const raw = finalPriceInput.value.replace(/[^0-9]/g,'');
+      const val = Number(raw);
+      State.manualPrice = (isFinite(val) && val >= 0 && raw !== '') ? val : null;
+      finalPriceInput.style.display = 'none';
+      document.getElementById('finalPrice').style.display = 'inline-flex';
+      Calc.run();
+    };
+    finalPriceInput.addEventListener('blur', commitManualPrice);
+    finalPriceInput.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter') finalPriceInput.blur();
+    });
+    document.getElementById('resetPriceBtn').addEventListener('click', ()=>{
+      State.manualPrice = null;
+      Calc.run();
+    });
+
+    // 수작업(1~6층), 엘리베이터(1~50층), 사다리차(2~25층+별도) 층수 선택기
+    function setupFloorSelector(prefix, kind, floorList, includeEtc=false){
+      const optionsEl = document.getElementById(prefix + kind + 'FloorOptions');
+      const tagEl = document.getElementById(prefix + kind + 'FloorTag');
+      const toggleEl = document.getElementById(prefix + kind + 'FloorToggle');
+      const hiddenEl = document.getElementById(prefix + kind + 'Floor');
+      if(!optionsEl || !tagEl || !toggleEl) return;
+
+      const currentValue = hiddenEl ? hiddenEl.value : '';
+      optionsEl.innerHTML =
+        floorList.map(f => `<button type="button" class="size-chip ${String(f)===String(currentValue)?'active':''}" data-floor="${f}">${f}층</button>`).join('')
+        + (includeEtc ? `<button type="button" class="size-chip ${currentValue==='별도'?'active':''}" data-floor="별도">별도</button>` : '');
+
+      // 처음 화면에서는 세모 왼쪽 층수 문구를 숨깁니다.
+      const visibleKey = prefix + kind + 'FloorVisible';
+      State[visibleKey] = false;
+      tagEl.textContent = '';
+      tagEl.classList.remove('visible');
+
+      toggleEl.addEventListener('click', ()=>{
+        const willOpen = !optionsEl.classList.contains('open');
+
+        // 다른 층수 목록은 모두 닫기
+        document.querySelectorAll('.size-options.ladder-floor-options.open').forEach(el=>{
+          if(el !== optionsEl) el.classList.remove('open');
+        });
+        document.querySelectorAll('.size-toggle.open').forEach(btn=>{
+          if(btn !== toggleEl) btn.classList.remove('open');
+        });
+
+        // 같은 세모를 다시 누르면 닫힘
+        optionsEl.classList.toggle('open', willOpen);
+        toggleEl.classList.toggle('open', willOpen);
+      });
+
+      optionsEl.addEventListener('click', (e)=>{
+        const chip = e.target.closest('.size-chip');
+        if(!chip) return;
+
+        const floorValue = chip.dataset.floor;
+        const selectedKey = prefix + kind + 'SelectedFloor';
+        const visibleKey = prefix + kind + 'FloorVisible';
+        const previousFloor = String(State[selectedKey] ?? (hiddenEl ? hiddenEl.value : ''));
+        const sameFloor = previousFloor === String(floorValue);
+        const currentlyVisible = State[visibleKey] === true || tagEl.classList.contains('visible');
+
+        // 같은 층수를 다시 누르면 표시만 숨기고,
+        // 숨겨진 상태에서 같은 층수를 다시 누르면 다시 표시합니다.
+        if(sameFloor && currentlyVisible){
+          State[visibleKey] = false;
+          tagEl.textContent = '';
+          tagEl.classList.remove('visible');
+          optionsEl.querySelectorAll('.size-chip').forEach(c=>c.classList.remove('active'));
+        } else {
+          State[selectedKey] = floorValue;
+          State[visibleKey] = true;
+          if(hiddenEl) hiddenEl.value = floorValue;
+          State[prefix + kind + 'Floor'] = floorValue === '별도' ? '별도' : Number(floorValue);
+
+          // 층수를 선택하면 해당 작업 방식만 자동 선택
+          const selectedMethod = document.getElementById(prefix + kind);
+          if(selectedMethod){
+            selectedMethod.checked = true;
+            ['Stairs','Elevator','Ladder'].forEach(otherKind=>{
+              if(otherKind !== kind){
+                const other = document.getElementById(prefix + otherKind);
+                if(other) other.checked = false;
+              }
+            });
+            if(typeof updateSiteMethodUI === 'function') updateSiteMethodUI(prefix);
+          }
+
+          optionsEl.querySelectorAll('.size-chip').forEach(c=>c.classList.remove('active'));
+          chip.classList.add('active');
+          tagEl.textContent = floorValue === '별도' ? '별도' : floorValue + '층';
+          tagEl.classList.add('visible');
+        }
+
+        optionsEl.classList.remove('open');
+        toggleEl.classList.remove('open');
+        Calc.run();
+        DraftService.save();
+      });
+    }
+
+    ['from','to'].forEach(p=>{
+      setupFloorSelector(p, 'Stairs', Array.from({length:6}, (_,i)=>i+1));
+      setupFloorSelector(p, 'Elevator', Array.from({length:50}, (_,i)=>i+1));
+      setupFloorSelector(p, 'Ladder', Array.from({length:24}, (_,i)=>i+2), true);
+    });
+
+    // 층수 목록이나 세모 밖을 누르면 열린 목록 닫기
+    document.addEventListener('click', (e)=>{
+      if(e.target.closest('.size-toggle') || e.target.closest('.size-options.ladder-floor-options')) return;
+      document.querySelectorAll('.size-options.ladder-floor-options.open').forEach(el=>el.classList.remove('open'));
+      document.querySelectorAll('.size-toggle.open').forEach(btn=>btn.classList.remove('open'));
+    });
+
+    // 추천 작업자 수 패널 펼치기·접기
+    document.getElementById('workerToggle').addEventListener('click', ()=>{
+      document.getElementById('workerToggle').classList.toggle('open');
+      document.getElementById('workerPanel').classList.toggle('open');
+    });
+
+    // 남자/주방이모 인원 +/- 버튼: 조작하는 순간부터 수동 인원 입력을 우선 사용
+    document.getElementById('workerPanel').addEventListener('click', (e)=>{
+      const btn = e.target.closest('.mini-btn');
+      if(!btn) return;
+      const input = document.getElementById(btn.dataset.field);
+      let v = Number(input.value)||0;
+      v = Math.max(0, Math.min(20, v + Number(btn.dataset.op)));
+      input.value = v;
+      State.workerManual = true;
+      Calc.run();
+    });
+    ['maleCount','kitchenCount'].forEach(id=>{
+      document.getElementById(id).addEventListener('input', ()=>{
+        State.workerManual = true;
+        Calc.run();
+      });
+    });
+
+    // 1톤 또는 5톤 차량 수를 직접 바꾸면 수동 입력값을 우선 사용
+    ['truck1Count','truck5Count'].forEach(id=>{
+      document.getElementById(id).addEventListener('input', ()=>{
+        State.truckManual = true;
+        Calc.run();
+      });
+    });
+
+    // 문자 복사/발송
+    document.getElementById('smsText').addEventListener('input', ()=>{
+      State.smsManuallyEdited = true;
+    });
+
+    ['moveStartTime','specialNotes',
+      'fromStairs','fromElevator','fromLadder','fromStairsFloor','fromElevatorFloor','fromLadderFloor',
+      'toStairs','toElevator','toLadder','toStairsFloor','toElevatorFloor','toLadderFloor'
+    ].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el){
+        el.addEventListener('input', ()=>{
+          if(!State.smsManuallyEdited) UI.renderSMS();
+        });
+        el.addEventListener('change', ()=>{
+          if(!State.smsManuallyEdited) UI.renderSMS();
+        });
+      }
+    });
+    document.getElementById('smsRegenBtn').addEventListener('click', ()=>{
+      State.smsManuallyEdited = false;
+      UI.renderSMS();
+    });
+    document.getElementById('smsCopyBtn').addEventListener('click', ()=>{
+      const ta = document.getElementById('smsText');
+      ta.select();
+      document.execCommand('copy');
+      alert('문자 내용이 복사되었습니다.');
+    });
+    document.getElementById('smsOpenAppBtn').addEventListener('click', ()=>{
+      const phone = document.getElementById('custPhone').value;
+      if(!phone){ alert('고객 연락처를 먼저 입력해주세요.'); return; }
+      const msg = document.getElementById('smsText').value;
+      // sms: 링크로 휴대폰 기본 문자앱을 바로 엶 (서버 없이 실제로 작동)
+      const cleanPhone = phone.replace(/[^0-9+]/g, '');
+      const smsUrl = `sms:${cleanPhone}?body=${encodeURIComponent(msg)}`;
+      window.location.href = smsUrl;
+    });
+    document.getElementById('kakaoShareBtn').addEventListener('click', async ()=>{
+      const msg = document.getElementById('smsText').value;
+      if(navigator.share){
+        try{
+          await navigator.share({ title: '이사 견적 안내', text: msg });
+          return;
+        }catch(e){ /* 사용자가 공유를 취소한 경우 등: 아래 복사로 대체 */ }
+      }
+      const ta = document.getElementById('smsText');
+      ta.select();
+      document.execCommand('copy');
+      alert('이 기기에서는 공유 시트를 지원하지 않아 문구를 복사했어요. 카카오톡을 열어 붙여넣기 해주세요.');
+    });
+
+    // PDF / 인쇄
+    document.getElementById('pdfBtn').addEventListener('click', async ()=>{
+      document.getElementById('printArea').innerHTML = buildPrintHTML();
+      await PDFService.exportPDF();
+    });
+    document.getElementById('printBtn').addEventListener('click', ()=>{
+      document.getElementById('printArea').innerHTML = buildPrintHTML();
+      setTimeout(()=>window.print(), 50);
+    });
+    document.getElementById('cloudSaveBtn').addEventListener('click', ()=>App.saveQuoteToCloud());
+
+    // Supabase가 설정되어 있으면: 로그인 화면을 보여주고, 이미 로그인되어 있으면 자동으로 통과
+    if(SUPABASE_READY){
+      const existingSession = await AuthService.getSession();
+      if(existingSession){
+        await App.afterLogin();
+      }else{
+        document.getElementById('loginGate').style.display = 'flex';
+      }
+    }
+    // (Supabase 미설정 시에는 로그인 화면 없이 기존처럼 이 기기 안에서만 작동합니다)
+
+    // 최초 계산
+    Calc.run();
+
+    // 인터넷이 끊겨 있어도 작성 중이던 견적(고객정보 + 방/거실/부엌 체크 상태 등)을 복원
+    const restored = await DraftService.restore();
+    if(restored){
+      console.log('이전에 작성 중이던 견적을 자동으로 불러왔습니다.');
+    }
+
+    // 임시 자동 저장(내용 손실 방지) - 인터넷이 없어도 이 기기 안에 저장되며, 다시 열면 자동 복원됩니다.
+    document.body.addEventListener('input', ()=>{
+      clearTimeout(App._saveTimer);
+      App._saveTimer = setTimeout(()=>{ DraftService.save(); }, 600);
+    });
+    document.body.addEventListener('change', ()=>{
+      clearTimeout(App._saveTimer);
+      App._saveTimer = setTimeout(()=>{ DraftService.save(); }, 600);
+    });
+
+    // PWA 설치 배너: 브라우저가 "설치 가능"이라고 알려주면 배너를 보여줌
+    window.addEventListener('beforeinstallprompt', (e)=>{
+      e.preventDefault();
+      State.deferredInstallPrompt = e;
+      const banner = document.getElementById('installBanner');
+      if(banner) banner.style.display = 'flex';
+    });
+    window.addEventListener('appinstalled', ()=>{
+      const banner = document.getElementById('installBanner');
+      if(banner) banner.style.display = 'none';
+      State.deferredInstallPrompt = null;
+    });
+
+    // 서비스 워커 등록 (오프라인 지원 + 설치 가능 조건 충족)
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('./service-worker.js').catch(()=>{
+        console.warn('서비스 워커 등록 실패 (오프라인 캐시가 제한될 수 있습니다)');
+      });
+    }
+  }
+};
+
+document.addEventListener('DOMContentLoaded', App.init);
+</script>
+</body>
+</html>
