@@ -77,3 +77,31 @@ with check (auth.uid() = user_id);
 create policy "quotes_delete_own"
 on public.quotes for delete
 using (auth.uid() = user_id);
+
+
+-- 짐픽 PRO 2.6 구독결제 테이블
+alter table public.profiles
+  add column if not exists next_billing_at timestamptz;
+
+create table if not exists public.subscriptions (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  customer_key text not null unique,
+  billing_key text not null,
+  status text not null default 'active',
+  amount integer not null default 22000,
+  last_payment_key text not null default '',
+  last_order_id text not null default '',
+  last_paid_at timestamptz,
+  next_billing_at timestamptz,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table public.subscriptions enable row level security;
+
+drop policy if exists "subscriptions_select_own" on public.subscriptions;
+create policy "subscriptions_select_own"
+on public.subscriptions for select
+using (auth.uid() = user_id);
+
+-- billing_key는 일반 클라이언트가 수정하지 못하고 서버 함수에서만 관리합니다.

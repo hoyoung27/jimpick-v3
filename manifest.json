@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 2.5",
+  "name": "짐픽 PRO 2.6",
   "short_name": "짐픽 PRO",
-  "description": "특수품목·분해작업·사다리차 조건을 자동판단하는 AI 이사견적 앱",
+  "description": "토스페이먼츠 카드등록과 월 22,000원 자동결제 구조를 적용한 AI 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

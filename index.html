@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 2.5</title>
+<title>짐픽 PRO 2.6</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 2.5 최소판매형 ===== */
+/* ===== 짐픽 PRO 2.6 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -2186,6 +2186,34 @@ body{font-size:18px}
 .special-badges{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.special-badge{padding:7px 10px;border-radius:999px;background:#FFF0ED;color:#B42318;font-size:13px;font-weight:900}
 @media(max-width:850px){.smart-condition-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.smart-condition-grid{grid-template-columns:1fr}}
 
+
+/* ===== PRO 2.6 월 구독결제 ===== */
+.billing-info-box{
+  display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:14px 0 0;
+}
+.billing-info-box div{
+  padding:12px;border-radius:13px;background:#F3F6FA;text-align:center;
+}
+.billing-info-box span{display:block;font-size:12px;color:#65798C;font-weight:900}
+.billing-info-box strong{display:block;margin-top:4px;color:#102A43;font-size:17px}
+.billing-result-screen{
+  position:fixed;inset:0;z-index:25000;
+  align-items:center;justify-content:center;padding:18px;
+  background:linear-gradient(160deg,#0F2A43,#1F4D70);
+}
+.billing-result-card{
+  width:min(460px,100%);padding:30px 24px;border-radius:26px;
+  background:#fff;text-align:center;box-shadow:0 28px 80px rgba(0,0,0,.3);
+}
+.billing-result-icon{font-size:66px}
+.billing-result-card h1{font-size:28px;color:#102A43}
+.billing-result-card p{font-size:16px;line-height:1.6;color:#52667A}
+.billing-result-card button{
+  width:100%;min-height:58px;border:0;border-radius:14px;
+  background:#102A43;color:#fff;font-size:17px;font-weight:900;cursor:pointer;
+}
+.subscription-pay-btn.loading{opacity:.65;pointer-events:none}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2195,8 +2223,18 @@ body{font-size:18px}
 <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAFEElEQVR4nO3cvW4TQRSG4UkEFYKEFppQAtdAAUSigIpL4Vq4DioaJH4KOjqKQBkaaBNAVBShgITNxl6PvWdmzvnmfSoUJ/Zq9tXJrDd4a+/xs5MEiNhufQCAJYKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGFIKGlEutDwCY6+jw49m/CRohDSMeImiEsCzgMYKGS7kBjxE03Ng04iGCRjMWAY8RNKopEfAYQaOoGhEPETRM1Q54jKAxS+uAx6oHfbj3vvZLyrn15V7T1/cW8VDVoInZxuHe+6pRew54rFrQxGyrZNSRAh6rEjQxl2EZdeSIh7go7JRKwGME3QnVgMcIWlgvEQ8RtJAeAx4j6OCI+Dz+TyGkEDSkEDSkEDSkEDSkEDSkEDSkEDSkEDSkcKdQxPHB62avvXt3v9lrjxF0cC1DHh+Dh7DZckAKQUf2/EPrIzjHw28LgoYU9tCCSuxlPUzfHExoMaUuzDxc8OUgaEghaEghaEghaEghaEghaEghaEgpemPl7DMj9kq+CvCfadB86Alamx00EcOTtYMmYHi2MmgCjuX44HXXf5y0MGgiji1KfCVcSomAoWObmKEk5B/4X3nxc+ljv55erXgkcV25cXvpY7++fa54JLbCBD0V8bLvI+7zpiJe9n3R4g5x6zs3ZqufU5Qbs9XPteI+6LlREvX8KCNF7Tpoqxh7jtoqxihRuw3aOsIeo7aOMELULoMuFV9PUZeKz3vU7oIuHV0PUZeOznPUVd622313LR3f/2H6nG9fvbzwtQePnpi+hne7d/dn3ea2XkMPn91RbULvvrtm9lyLTsTU1xXNXU/VNdzaufPwpOYLTk3qnO1AzoLnTJnIN10WxXw6qXO2A2Zr+O+mi4fJfKp60FN+H32dfHyd6bHqhFy+fjP7uSLpfQ3dXRQCcxS7KFw1KVrzfnwRrFrDFhOcCQ0pBA0poYLOfY+0t/ej16G+hq7e5Ugpb287daWecyI8Xp1b6nkNQ03oU8sWPOpUaUF1DUNO6Lm8ThcrPa+huwldeqG8nghLPa+hu6BTKrdgnk+EtV7X0GXQKdkvnPcTUUKPa+g26JTsFjDCiSiltzV0HXRK8xcyyokoqac1dB90SpsvaKQTUVovaxjmg2aGCzv1tlS0E1BTD2sYJuihyAvuheoahthyALkIGlIIGlIIGlIIGlIIGlIIGlIIGlIIGlIIGlIIGlIIGlIIGlIIGlIIGlIIGlIIGlIIGlK2v396s9X6IAAL3z+92WJCQwpBQwpBQ8p2Sn/3Hq0PBJjjtGEmNKQQNKScBc22A1EN22VCQwpBQ8q5oNl2IJpxs0xoSLkQNFMaUSxqdeGEJmp4t6xRthyQsjRopjS8mmpzckITNbxZ1SRbDkhZGTRTGl7ktJg1oYkareU2mL3lIGq0sk57a+2hiRq1rdvc2heFRI1aNmlto3c5iBqlbdrYxm/bETVKmdOWSZQ7dx6eWDwP+mYxJE1urDCtMZdVQ+YhMq2xDuthaH7rm2mNXCVaKRof0xqLlBx61aYpcfet1m/uJtsD4u5Di+2ni/0ugWvwcP30B3PCbulkXcw/AAAAAElFTkSuQmCC">
 <link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAFdklEQVR4nO3cvZIUVRyH4d4tjChhTTVZQ+EaDBSqDDTyUrwWr8PIxCqQgMzMAAwx0RTQIjLAAEdmZ2dme2b6nD6nf88TUXzMTp3+v326e5Y9u/z6u7cDhDqf+w3AnARANAEQTQBEEwDRBEA0ARBNAEQTANEEQDQBEE0ARBMA0QRANAEQTQBEEwDRBEA0ARBNAEQTANEEQDQBEE0ARBMA0QRANAEQTQBEEwDRBEA0ARBNAEQTANEEQDQBEE0ARBMA0QRANAEQTQBEEwDRBEA0ARBNAEQTANEEQDQBEE0ARBMA0QRANAEQTQBEEwDRbs39BqC2ly9+/f/XAiDC+tCvEwCLtGvgNwmARRg78JsEQLeOHfp1AqAbUwz8JgHQrBIDv0kANKPGwG8SALOaY+jXCYCq5h74TQKgqNYGftMsAby4fDrHl43x6e+fz/r1Wx/6ddUDMPzlvbh8WjWCngZ+U9UADH89JSPoeeA3VQvA8Nc3ZQRLGvp1boLZaqkDv0kADMOQM/CbBBAsdejXCSCIgb9OAAtn6Pfzn+KJJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAovlWiBCvnj2a+y0MF/cfzv0WrhHAwrUw+Cur99JSCC6BiCaAJfv+l7nfwVYt7UoCIJp7gEAlr8FbOruPYQcIU/oGtKUb3DEEQDQBEE0ARBMA0QRANAEQTQBEEwDRin4SfOWnkl2W/EpwnEkD8GP46M3JARh6enZwAAaeJbkxAAO/LK+ePfLdoGu2BmDol623IS3p1jAYeHKdG36S+SCMaF3/l8jbP/y988/efPthxXeyTLc//mznn73587eK76Sc7gLYN/S7/p4Yxts39Lv+Xs8xdHUJNHb4p/p3acYO/1T/rgVd7ABTDPDqNewG100xwKvX6G03aH4HmPrsbTe4auqzd2+7QdMBlBpWEbxTalh7iqDpAKC0ZgMofZZO3wVKn6V72QWaDKDWcKZGUGs4e4ig2lOgiyd3hldf/DX56/7804/Xfu/Lr76Z/Ov06OL+w5O/8a3E+rb04xOr7gAXT+5M+nrbDs6+308yxVonrO/Z3XsP3tb+ovt2grGXJWMOwtgz1dI+G9g2/KudYOxlyaTr+99nAy2d+VdmCWCff17+cePfOeQMNOYgffDRJ6Nfr3fW96omb4KhlqI3wWPONi3o5X326qb1nXOHsAMQTQBE6zKAsU8ffB5wnKT1be4p0DCMvybf97Ri7MFp+QlFKdb3vS53gJVdB2EJZ6YWJKxv1zvAFFo/Q5Vgfd9rcgeotWitH5xSrO97TQYwDOUXr4eDU5L1fafZAKCGpgModRbp5exUmvVtPIBhmH4xezo4NaSvbxc/FmW1qKc8vejtwNSUvL7N7wDrjl3kXg9ObYnr28UOsG59sfedsXo+KHNKW9/uAli3lIPQqoT17eoSCKYmAKIJgGgCIJoAiCYAogmAaAIgmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAop2/fv74bO43AXN4/fzxmR2AaAIgmgCIJgCinQ/Du5uBud8I1LSaeTsA0QRAtP8DcBlEivVZtwMQ7UoAdgGWbnPG7QBEuxaAXYCl2jbbdgCibQ3ALsDS7JppOwDRdgZgF2Ap9s3y3h1ABPTuphl2CUS0GwOwC9CrMbM7agcQAb0ZO7OjL4FEQC8OmdWD7gFEQOsOndGDb4JFQKuOmc2jngKJgNYcO5NHPwYVAa04ZRZP+hxABMzt1Bk8+YMwETCXKWZv0uG9e+/B2ylfD7aZ8qQ76bdC2A0obeoZKzawdgOmVOrkWvyMLQROUfqqotolixA4RK3L6erX7EJgn9r3kbPetIqBYZj34UlzT21EsWytPSn8F2B1hFN3Q2YjAAAAAElFTkSuQmCC">
 <meta name="theme-color" content="#0F2A43">
+<script src="https://js.tosspayments.com/v2/standard"></script>
 </head>
-<body><div id="serverSetupGate" class="server-setup-gate" style="display:none;"><div class="server-setup-card"><div class="server-setup-icon">☁️</div><h1>클라우드 연결 준비</h1><p>Supabase 설정을 완료하면 실제 서버 로그인이 시작됩니다.</p><div id="serverSetupError" class="server-setup-error">서버 설정을 확인해주세요.</div><button id="retryServerSetupBtn">다시 연결</button><button id="localPreviewBtn">화면만 시험하기</button></div></div>
+<body>
+<div id="billingResultScreen" class="billing-result-screen" style="display:none;">
+  <div class="billing-result-card">
+    <div id="billingResultIcon" class="billing-result-icon">💳</div>
+    <h1 id="billingResultTitle">결제 확인 중</h1>
+    <p id="billingResultMessage">잠시 기다려주세요.</p>
+    <button type="button" id="billingResultHomeBtn">짐픽으로 돌아가기</button>
+  </div>
+</div>
+<div id="serverSetupGate" class="server-setup-gate" style="display:none;"><div class="server-setup-card"><div class="server-setup-icon">☁️</div><h1>클라우드 연결 준비</h1><p>Supabase 설정을 완료하면 실제 서버 로그인이 시작됩니다.</p><div id="serverSetupError" class="server-setup-error">서버 설정을 확인해주세요.</div><button id="retryServerSetupBtn">다시 연결</button><button id="localPreviewBtn">화면만 시험하기</button></div></div>
 <div id="subscriptionGate" class="subscription-gate" style="display:none;">
   <div class="subscription-card">
     <div class="subscription-icon">💳</div>
@@ -2220,14 +2258,19 @@ body{font-size:18px}
       무료체험 계속 사용
     </button>
     <button type="button" id="startSubscriptionBtn" class="subscription-pay-btn">
-      월 22,000원 구독 시작
+      카드 등록하고 월 22,000원 구독
     </button>
     <button type="button" id="subscriptionLogoutBtn" class="subscription-logout-btn">
       다른 계정으로 로그인
     </button>
 
-    <p class="subscription-note">
-      카드결제는 Google Play 결제상품 등록 후 연결됩니다.
+    
+    <div class="billing-info-box">
+      <div><span>현재 상태</span><strong id="billingCurrentStatus">무료체험</strong></div>
+      <div><span>다음 결제일</span><strong id="billingNextDate">-</strong></div>
+    </div>
+<p class="subscription-note">
+      첫 카드 등록 후 매월 22,000원이 자동결제됩니다. 언제든 해지할 수 있습니다.
     </p>
   </div>
 </div>
@@ -2433,7 +2476,7 @@ body{font-size:18px}
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-2.5</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-2.6</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -3249,7 +3292,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-2.5';
+const BUILD_VERSION = 'JIMPICK-PRO-2.6';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -5836,7 +5879,13 @@ async function authCompleteSignup(){const o=document.getElementById('signupOwner
 async function authForgotPassword(){const e=document.getElementById('loginIdInput')?.value?.trim()||'';if(!e.includes('@')){alert('가입 이메일을 입력해주세요.');return}const {error}=await supabaseClient.auth.resetPasswordForEmail(e);alert(error?'메일 발송 실패':'비밀번호 재설정 메일을 보냈습니다.')}
 async function authLogout(){if(!confirm('로그아웃하시겠습니까?'))return;if(supabaseClient&&!localPreviewMode)await supabaseClient.auth.signOut();authShowLogin()}
 function authClearSession(){if(supabaseClient&&!localPreviewMode)supabaseClient.auth.signOut()}
-async function authInit(){const ok=await initCloudAuth();if(!ok)return;const {data}=await supabaseClient.auth.getSession();if(data?.session?.user)await authShowApp(data.session.user);else authShowLogin();supabaseClient.auth.onAuthStateChange(async(e,s)=>{if(e==='SIGNED_IN'&&s?.user)await authShowApp(s.user);if(e==='SIGNED_OUT')authShowLogin()})}
+async function authInit(){const ok=await initCloudAuth();if(!ok)return;const {data}=await supabaseClient.auth.getSession();if(data?.session?.user){
+    await authShowApp(data.session.user);
+    await handleBillingReturn();
+    updateBillingInfo();
+  }else{
+    authShowLogin();
+  }supabaseClient.auth.onAuthStateChange(async(e,s)=>{if(e==='SIGNED_IN'&&s?.user)await authShowApp(s.user);if(e==='SIGNED_OUT')authShowLogin()})}
 
 
 function collectCurrentQuoteData(){
@@ -6585,6 +6634,7 @@ function updateSubscriptionUi(){
     }
   }
 
+  updateBillingInfo();
   if(info.status==='expired'){
     if(gate)gate.style.display='flex';
     if(app)app.style.display='none';
@@ -6614,9 +6664,136 @@ function continueTrial(){
   document.getElementById('appShell').style.display='block';
 }
 
-function startMonthlySubscription(){
-  alert('다음 단계에서 Google Play 월 22,000원 카드결제를 연결합니다.');
+async function startMonthlySubscription(){
+  if(localPreviewMode){
+    alert('시험 모드에서는 실제 카드 등록이 되지 않습니다.');
+    return;
+  }
+  if(!supabaseClient||!cloudAuthReady){
+    alert('먼저 실제 계정으로 로그인해주세요.');
+    return;
+  }
+
+  const btn=document.getElementById('startSubscriptionBtn');
+  const original=btn?.textContent||'카드 등록하고 월 22,000원 구독';
+  if(btn){
+    btn.classList.add('loading');
+    btn.textContent='결제창 준비 중…';
+  }
+
+  try{
+    const user=await currentCloudUser();
+    if(!user)throw new Error('로그인 정보가 없습니다.');
+
+    const response=await fetch('/.netlify/functions/billing-config',{cache:'no-store'});
+    const config=await response.json().catch(()=>({}));
+    if(!response.ok)throw new Error(config.error||'결제 설정을 불러오지 못했습니다.');
+
+    if(!window.TossPayments)throw new Error('결제 프로그램을 불러오지 못했습니다.');
+
+    const customerKey=`jimpick_${user.id.replaceAll('-','')}`;
+    const tossPayments=TossPayments(config.clientKey);
+    const payment=tossPayments.payment({customerKey});
+
+    const baseUrl=location.origin+location.pathname;
+    await payment.requestBillingAuth({
+      method:'CARD',
+      successUrl:`${baseUrl}?billing=success`,
+      failUrl:`${baseUrl}?billing=fail`,
+      customerEmail:user.email||'',
+      customerName:document.getElementById('loggedCompanyName')?.textContent||'짐픽 고객'
+    });
+  }catch(error){
+    console.error(error);
+    alert(`구독 결제를 시작하지 못했습니다: ${error.message||error}`);
+  }finally{
+    if(btn){
+      btn.classList.remove('loading');
+      btn.textContent=original;
+    }
+  }
 }
+
+function showBillingResult(ok,title,message){
+  const screen=document.getElementById('billingResultScreen');
+  const icon=document.getElementById('billingResultIcon');
+  const titleEl=document.getElementById('billingResultTitle');
+  const msgEl=document.getElementById('billingResultMessage');
+  if(screen)screen.style.display='flex';
+  if(icon)icon.textContent=ok?'✅':'❌';
+  if(titleEl)titleEl.textContent=title;
+  if(msgEl)msgEl.textContent=message;
+}
+
+async function handleBillingReturn(){
+  const params=new URLSearchParams(location.search);
+  const billing=params.get('billing');
+  if(!billing)return false;
+
+  if(billing==='fail'){
+    const message=params.get('message')||'카드 등록이 취소되었거나 실패했습니다.';
+    showBillingResult(false,'카드 등록 실패',message);
+    return true;
+  }
+
+  const authKey=params.get('authKey');
+  const customerKey=params.get('customerKey');
+  if(!authKey||!customerKey){
+    showBillingResult(false,'결제정보 오류','카드 인증정보가 부족합니다.');
+    return true;
+  }
+
+  showBillingResult(true,'구독 처리 중','카드 등록과 첫 결제를 확인하고 있습니다.');
+
+  try{
+    const user=await currentCloudUser();
+    if(!user)throw new Error('로그인이 만료되었습니다.');
+
+    const response=await fetch('/.netlify/functions/activate-subscription',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        authKey,
+        customerKey,
+        userId:user.id,
+        email:user.email||''
+      })
+    });
+
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok)throw new Error(data.error||'구독 처리 실패');
+
+    localStorage.removeItem('jimpick_cloud_profile_cache');
+    await authLoadProfile(user);
+    updateSubscriptionUi();
+    updateBillingInfo();
+
+    showBillingResult(
+      true,
+      '구독 완료',
+      '월 22,000원 구독이 시작되었습니다. 이제 짐픽 PRO의 모든 기능을 사용할 수 있습니다.'
+    );
+  }catch(error){
+    console.error(error);
+    showBillingResult(false,'구독 처리 실패',error.message||String(error));
+  }
+  return true;
+}
+
+function updateBillingInfo(){
+  const user=currentSessionUser();
+  const status=document.getElementById('billingCurrentStatus');
+  const nextDate=document.getElementById('billingNextDate');
+  const active=(user?.subscription_status||user?.subscriptionStatus)==='active';
+
+  if(status)status.textContent=active?'구독중':'무료체험';
+  if(nextDate){
+    const raw=user?.next_billing_at;
+    nextDate.textContent=raw?new Date(raw).toLocaleDateString('ko-KR'):'-';
+  }
+}
+
+
 
 function subscriptionLogout(){
   authClearSession();
@@ -7950,6 +8127,12 @@ ${msg || '-'}`;
     document.getElementById('completeSignupBtn')?.addEventListener('click',authCompleteSignup);
     document.getElementById('forgotPasswordBtn')?.addEventListener('click',authForgotPassword);
     document.getElementById('logoutBtn')?.addEventListener('click',authLogout);
+    document.getElementById('billingResultHomeBtn')?.addEventListener('click',()=>{
+      history.replaceState({},'',location.pathname);
+      document.getElementById('billingResultScreen').style.display='none';
+      document.getElementById('appShell').style.display='block';
+      updateSubscriptionUi();
+    });
     ['fromFloorSmart','toFloorSmart','fromElevatorSmart','toElevatorSmart'].forEach(id=>{
       document.getElementById(id)?.addEventListener('input',()=>{evaluateLadderTruck();updateMovingEstimateEngine();});
       document.getElementById(id)?.addEventListener('change',()=>{evaluateLadderTruck();updateMovingEstimateEngine();});

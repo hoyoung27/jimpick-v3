@@ -1,11 +1,35 @@
-짐픽 PRO 2.5
+짐픽 PRO 2.6 - 월 22,000원 구독결제
 
-핵심 변경
-- 특수품목 인식: 피아노, 금고, 돌침대, 양문형냉장고, 대형 TV
-- 분해 필요 여부 질문
-- 특수 운반비 적용 여부 질문
-- 층수와 엘리베이터 조건으로 사다리차 추천
-- 분해·특수운반·사다리차 비용 자동 반영
+이번 핵심 작업
+- 토스페이먼츠 카드 등록창 연결
+- 카드번호는 짐픽 서버에 저장하지 않음
+- 빌링키를 이용한 첫 달 22,000원 결제
+- 구독 상태 Supabase 저장
+- 다음 결제일 표시
+- 무료체험 종료 시 견적기능 잠금
+- 결제 성공·실패 화면
 
-업로드: 전체 파일과 netlify, supabase 폴더 업로드 후 캐시 없이 재배포
-정상 표시: build JIMPICK-PRO-2.5
+실제 결제를 위한 Netlify 환경변수
+- TOSS_CLIENT_KEY
+- TOSS_SECRET_KEY
+- SUPABASE_URL
+- SUPABASE_ANON_KEY
+- SUPABASE_SERVICE_ROLE_KEY
+- GEMINI_API_KEY
+
+중요
+1. 먼저 토스페이먼츠 가맹점 계약과 자동결제 사용 승인이 필요합니다.
+2. 테스트할 때는 테스트 키를 사용하세요.
+3. Supabase SQL Editor에서 supabase/setup.sql을 다시 실행하세요.
+4. TOSS_SECRET_KEY와 SUPABASE_SERVICE_ROLE_KEY는 절대로 화면이나 GitHub에 올리지 마세요.
+
+업로드
+1. 압축 풀기
+2. GitHub에 전체 파일과 netlify, supabase 폴더 업로드
+3. Commit changes
+4. Netlify 환경변수 등록
+5. Deploy project without cache
+6. Ctrl + Shift + R
+
+정상 표시
+build JIMPICK-PRO-2.6
