@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 2.4</title>
+<title>짐픽 PRO 2.5</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 2.4 최소판매형 ===== */
+/* ===== 짐픽 PRO 2.5 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -2172,6 +2172,20 @@ body{font-size:18px}
   .full-auto-result-actions{grid-template-columns:1fr}
 }
 
+
+.smart-condition-card,.smart-special-card{max-width:900px;margin:0 auto 16px}
+.smart-condition-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.smart-condition-grid label{display:grid;gap:7px}.smart-condition-grid span{font-size:14px;font-weight:900;color:#102A43}
+.smart-condition-grid input,.smart-condition-grid select{min-height:52px;padding:0 12px;border:1px solid #CBD6E2;border-radius:12px;background:#fff;font-size:17px;font-weight:800}
+.ladder-recommendation{margin-top:12px;padding:13px;border-radius:13px;background:#EEF5FF;color:#174A7E;font-weight:900;text-align:center}
+.ladder-recommendation.need{background:#FFF1E8;color:#B54708;border:1px solid #FFD0B8}
+.special-item-summary{padding:13px;border-radius:13px;background:#F3F6FA;color:#52667A;font-weight:900}
+.smart-questions{display:grid;gap:10px;margin-top:12px}.smart-question{padding:14px;border-radius:14px;background:#FFF8E8;border:1px solid #F3D6A1}
+.smart-question-title{font-size:16px;font-weight:900;color:#6D4910}.smart-question-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.smart-question-actions button{min-height:48px;border:0;border-radius:11px;font-size:15px;font-weight:900;cursor:pointer}.smart-question-actions .yes{background:#16A36A;color:#fff}.smart-question-actions .no{background:#E8EEF5;color:#102A43}
+.special-badges{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.special-badge{padding:7px 10px;border-radius:999px;background:#FFF0ED;color:#B42318;font-size:13px;font-weight:900}
+@media(max-width:850px){.smart-condition-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.smart-condition-grid{grid-template-columns:1fr}}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2419,7 +2433,7 @@ body{font-size:18px}
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-2.4</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-2.5</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -2460,6 +2474,17 @@ body{font-size:18px}
 
   <!-- ============ STEP 1. 고객정보 ============ -->
   <section class="panel active" id="step1">
+<div class="card smart-condition-card">
+  <h2><span class="eyebrow">현장조건</span> 추가비용 자동판단</h2>
+  <div class="smart-condition-grid">
+    <label><span>출발지 층수</span><input type="number" id="fromFloorSmart" min="-5" max="80" value="1"></label>
+    <label><span>도착지 층수</span><input type="number" id="toFloorSmart" min="-5" max="80" value="1"></label>
+    <label><span>출발지 엘리베이터</span><select id="fromElevatorSmart"><option value="yes">사용 가능</option><option value="no">사용 불가</option></select></label>
+    <label><span>도착지 엘리베이터</span><select id="toElevatorSmart"><option value="yes">사용 가능</option><option value="no">사용 불가</option></select></label>
+  </div>
+  <div id="ladderRecommendation" class="ladder-recommendation">사다리차 추천 조건을 자동으로 확인합니다.</div>
+</div>
+
     <div class="card mvp-card">
       <h2><span class="eyebrow">1단계</span> 고객정보</h2>
       <p class="mvp-guide">5가지만 입력하고 사진을 찍으세요.</p>
@@ -2656,6 +2681,12 @@ body{font-size:18px}
 
   <!-- ============ STEP 4. 품목 확인 (방 + 거실 + 부엌 통합) ============ -->
   <section class="panel" id="step4">
+<div class="card smart-special-card">
+  <h2><span class="eyebrow">AI 확인</span> 특수품목과 분해작업</h2>
+  <div id="specialItemSummary" class="special-item-summary">특수품목을 아직 찾지 않았습니다.</div>
+  <div id="smartQuestions" class="smart-questions"></div>
+</div>
+
     <div class="card estimate-engine-card">
       <h2><span class="eyebrow">자동계산</span> 이사업체 전용 견적 엔진</h2>
       <p class="estimate-engine-guide">
@@ -3218,7 +3249,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-2.4';
+const BUILD_VERSION = 'JIMPICK-PRO-2.5';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -6247,7 +6278,48 @@ async function sendFinalSms(){
 
 
 
+
+const SMART_SPECIAL_ITEMS=new Set(['안마의자','러닝머신','피아노','금고','돌침대','양문형냉장고','대형 TV','김치냉장고','건조기','스타일러','에어컨']);
+const SmartAnswerState={disassembly:{},special:{},ladder:false};
+
+function evaluateLadderTruck(){
+  const ff=Number(document.getElementById('fromFloorSmart')?.value)||1;
+  const tf=Number(document.getElementById('toFloorSmart')?.value)||1;
+  const fe=document.getElementById('fromElevatorSmart')?.value||'yes';
+  const te=document.getElementById('toElevatorSmart')?.value||'yes';
+  const fromNeed=ff>=3&&fe==='no',toNeed=tf>=3&&te==='no';
+  SmartAnswerState.ladder=fromNeed||toNeed;
+  const el=document.getElementById('ladderRecommendation');
+  if(el){
+    el.classList.toggle('need',SmartAnswerState.ladder);
+    el.textContent=SmartAnswerState.ladder
+      ?`사다리차 추천: ${[fromNeed?`출발지 ${ff}층`:'',toNeed?`도착지 ${tf}층`:''].filter(Boolean).join(' · ')}`
+      :'현재 조건에서는 사다리차가 필수로 판단되지 않습니다.';
+  }
+  return SmartAnswerState.ladder;
+}
+
+function renderSmartQuestions(){
+  const wrap=document.getElementById('smartQuestions'),summary=document.getElementById('specialItemSummary');
+  if(!wrap||!summary)return;
+  const selected=Object.entries(State?.items||{}).filter(([,i])=>Number(i?.qty||i?.quantity||0)>0).map(([name,i])=>({name,qty:Number(i?.qty||i?.quantity||0)}));
+  const special=selected.filter(i=>{const r=MOVING_ITEM_RULES[i.name]||{};return SMART_SPECIAL_ITEMS.has(i.name)||r.special||r.heavy;});
+  summary.innerHTML=special.length?`특수·중량 품목 ${special.length}종 발견<div class="special-badges">${special.map(i=>`<span class="special-badge">${Utils.escapeHtml(i.name)} × ${i.qty}</span>`).join('')}</div>`:'특수품목이 자동으로 발견되면 여기에 표시됩니다.';
+  const qs=[];
+  selected.forEach(i=>{const r=MOVING_ITEM_RULES[i.name]||{};if(r.disassembly)qs.push({type:'disassembly',name:i.name,title:`${i.name} 분해 작업이 필요합니까?`});if(r.special||r.heavy)qs.push({type:'special',name:i.name,title:`${i.name} 특수 운반비를 적용할까요?`});});
+  wrap.innerHTML=qs.map(q=>`<div class="smart-question"><div class="smart-question-title">${Utils.escapeHtml(q.title)}</div><div class="smart-question-actions"><button class="yes" data-smart-type="${q.type}" data-smart-name="${Utils.escapeHtml(q.name)}" data-smart-value="yes">예</button><button class="no" data-smart-type="${q.type}" data-smart-name="${Utils.escapeHtml(q.name)}" data-smart-value="no">아니오</button></div></div>`).join('');
+  wrap.querySelectorAll('[data-smart-type]').forEach(b=>b.addEventListener('click',()=>{SmartAnswerState[b.dataset.smartType][b.dataset.smartName]=b.dataset.smartValue==='yes';renderSmartQuestions();updateMovingEstimateEngine();
+    renderSmartQuestions();
+    evaluateLadderTruck();}));
+}
+
+
 const MOVING_ITEM_RULES={
+  '피아노':{ton:0.45,heavy:1,special:1,workers:0.4,minutes:40},
+  '금고':{ton:0.5,heavy:1,special:1,workers:0.5,minutes:45},
+  '돌침대':{ton:0.55,heavy:1,special:1,disassembly:1,workers:0.5,minutes:50},
+  '양문형냉장고':{ton:0.3,heavy:1,special:1,workers:0.22,minutes:25},
+  '대형 TV':{ton:0.1,special:1,workers:0.08,minutes:12},
   '냉장고':{ton:0.22,heavy:1,workers:0.15,minutes:18},
   '김치냉장고':{ton:0.16,heavy:1,workers:0.12,minutes:15},
   '세탁기':{ton:0.14,heavy:1,workers:0.1,minutes:14},
@@ -6350,13 +6422,16 @@ function calculateMovingEstimateEngine(){
   const disassemblyCost=disassemblyCount*18000;
   const specialCost=specialCount*30000;
   const timeCost=Math.max(0,hours-5)*50000;
+  const confirmedDisassemblyCost=Object.values(SmartAnswerState.disassembly).filter(Boolean).length*30000;
+  const confirmedSpecialCost=Object.values(SmartAnswerState.special).filter(Boolean).length*40000;
+  const ladderCost=SmartAnswerState.ladder?250000:0;
 
-  let price=truckCost+workerCost+heavyCost+disassemblyCost+specialCost+timeCost;
+  let price=truckCost+workerCost+heavyCost+disassemblyCost+specialCost+timeCost+confirmedDisassemblyCost+confirmedSpecialCost+ladderCost;
   price=Math.ceil(price/10000)*10000;
 
   lastEngineResult={
     totalTon,truck1,truck5,workers,hours,price,
-    heavyCount,disassemblyCount,specialCount,truckCapacity
+    heavyCount,disassemblyCount,specialCount,truckCapacity,ladderCost,confirmedDisassemblyCost,confirmedSpecialCost
   };
   return lastEngineResult;
 }
@@ -7875,6 +7950,13 @@ ${msg || '-'}`;
     document.getElementById('completeSignupBtn')?.addEventListener('click',authCompleteSignup);
     document.getElementById('forgotPasswordBtn')?.addEventListener('click',authForgotPassword);
     document.getElementById('logoutBtn')?.addEventListener('click',authLogout);
+    ['fromFloorSmart','toFloorSmart','fromElevatorSmart','toElevatorSmart'].forEach(id=>{
+      document.getElementById(id)?.addEventListener('input',()=>{evaluateLadderTruck();updateMovingEstimateEngine();});
+      document.getElementById(id)?.addEventListener('change',()=>{evaluateLadderTruck();updateMovingEstimateEngine();});
+    });
+    document.getElementById('step4')?.addEventListener('input',()=>setTimeout(renderSmartQuestions,80));
+    document.getElementById('step4')?.addEventListener('change',()=>setTimeout(renderSmartQuestions,80));
+    evaluateLadderTruck();
     document.getElementById('fullAutoEstimateBtn')?.addEventListener('click',runFullAutoEstimate);
     document.getElementById('autoResultSaveBtn')?.addEventListener('click',finishAndSaveQuote);
     document.getElementById('autoResultSmsBtn')?.addEventListener('click',sendFinalSms);
