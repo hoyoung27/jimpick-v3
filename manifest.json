@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 6.3.4 DEMO",
+  "name": "짐픽 PRO 6.4 DEMO",
   "short_name": "짐픽 PRO",
-  "description": "로그인 없이 사진 등록·AI 분석·품목수정·견적계산·문자·계약금·서명을 체험하는 AI 이사견적 완전 체험판",
+  "description": "고객용 이사견적서를 미리보고 인쇄·PDF 저장하며 카카오톡·공유 앱으로 보내는 AI 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

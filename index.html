@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 6.3.4 DEMO</title>
+<title>짐픽 PRO 6.4 DEMO</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 6.3.4 DEMO 최소판매형 ===== */
+/* ===== 짐픽 PRO 6.4 DEMO 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -3733,6 +3733,141 @@ body.demo-click-ready #routeNav{
   background:#EAF7F0;color:#16794B;font-size:18px;font-weight:900;
 }
 
+
+/* ===== PRO 6.4 견적서 PDF·공유 ===== */
+.estimate-document-card{max-width:920px;margin:0 auto 16px}
+.estimate-document-guide{
+  margin:0 0 14px;padding:13px 14px;border-radius:13px;
+  background:#EEF5FF;color:#174A7E;font-size:16px;font-weight:900;
+}
+.estimate-document-actions{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:9px;
+}
+.estimate-document-actions button{
+  min-height:58px;border:0;border-radius:14px;font-size:16px;font-weight:900;cursor:pointer;
+}
+#previewEstimateDocumentBtn{background:#102A43;color:#fff}
+#saveEstimatePdfBtn{background:#5B3DB5;color:#fff}
+#shareEstimateDocumentBtn{background:#16A36A;color:#fff}
+.estimate-document-status{
+  margin-top:10px;padding:12px;border-radius:12px;background:#F3F6FA;
+  color:#52667A;text-align:center;font-weight:900;
+}
+.estimate-document-status.ok{background:#EAF7F0;color:#16794B}
+
+.estimate-document-modal{
+  position:fixed;inset:0;z-index:35000;
+  align-items:flex-start;justify-content:center;padding:18px;
+  overflow:auto;background:rgba(8,24,40,.86);
+}
+.estimate-document-modal-card{
+  width:min(900px,100%);margin:auto;padding:18px;border-radius:22px;background:#E9EEF3;
+}
+.estimate-document-modal-head{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  padding:4px 4px 14px;
+}
+.estimate-document-modal-head h2{margin:0;color:#102A43;font-size:26px}
+.estimate-document-modal-head p{margin:5px 0 0;color:#52667A}
+.estimate-document-modal-head button{
+  width:44px;height:44px;border:0;border-radius:12px;
+  background:#fff;color:#102A43;font-size:20px;cursor:pointer;
+}
+.estimate-document-paper{
+  width:100%;min-height:1120px;padding:48px;
+  background:#fff;color:#172B3A;box-shadow:0 10px 30px rgba(0,0,0,.18);
+  font-family:Arial,'Noto Sans KR',sans-serif;
+}
+.estimate-paper-header{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:25px;
+  padding-bottom:24px;border-bottom:3px solid #102A43;
+}
+.estimate-paper-kicker{display:block;color:#5B3DB5;font-size:12px;font-weight:900;letter-spacing:2px}
+.estimate-paper-header h1{margin:7px 0 0;font-size:38px;color:#102A43}
+.estimate-paper-company{text-align:right}
+.estimate-paper-company strong{display:block;font-size:22px;color:#102A43}
+.estimate-paper-company span{display:block;margin-top:5px;font-size:13px;color:#52667A}
+.estimate-paper-section{margin-top:25px}
+.estimate-paper-section h3{
+  margin:0 0 10px;padding-bottom:7px;border-bottom:1px solid #CBD6E2;
+  font-size:18px;color:#102A43;
+}
+.estimate-paper-grid{display:grid;gap:10px}
+.estimate-paper-grid.two{grid-template-columns:repeat(2,1fr)}
+.estimate-paper-grid.four{grid-template-columns:repeat(4,1fr)}
+.estimate-paper-grid>div,.estimate-paper-address>div{
+  padding:12px;border-radius:10px;background:#F5F7FA;border:1px solid #E0E7EE;
+}
+.estimate-paper-grid span,.estimate-paper-address span{
+  display:block;font-size:11px;color:#68798A;font-weight:900;
+}
+.estimate-paper-grid strong,.estimate-paper-address strong{
+  display:block;margin-top:5px;font-size:15px;color:#102A43;
+}
+.estimate-paper-address{display:grid;gap:9px}
+.estimate-paper-price-table{border:1px solid #CBD6E2;border-radius:11px;overflow:hidden}
+.estimate-paper-price-table>div{
+  display:flex;align-items:center;justify-content:space-between;gap:15px;
+  padding:12px 14px;border-bottom:1px solid #E0E7EE;
+}
+.estimate-paper-price-table>div:last-child{border-bottom:0}
+.estimate-paper-price-table span{color:#52667A;font-weight:800}
+.estimate-paper-price-table strong{color:#102A43;font-size:16px}
+.estimate-paper-price-table .total{background:#FFF3EC}
+.estimate-paper-price-table .total span{color:#C94720;font-size:16px;font-weight:900}
+.estimate-paper-price-table .total strong{color:#E6532F;font-size:25px}
+.estimate-paper-note{
+  padding:12px;border-radius:10px;background:#F5F7FA;border:1px solid #E0E7EE;
+  color:#52667A;font-size:13px;line-height:1.6;
+}
+.estimate-paper-note+.estimate-paper-note{margin-top:8px}
+.estimate-paper-signatures{
+  display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:40px;
+}
+.estimate-paper-signatures>div{
+  min-height:120px;padding-top:10px;border-top:1px solid #52667A;text-align:center;
+}
+.estimate-paper-signatures span{display:block;color:#68798A;font-size:12px;font-weight:900}
+.estimate-paper-signatures strong{display:block;margin-top:15px;color:#102A43}
+.estimate-paper-signatures img{
+  display:none;width:220px;max-height:80px;object-fit:contain;margin:8px auto 0;
+}
+.estimate-paper-footer{
+  display:flex;justify-content:space-between;gap:20px;margin-top:40px;
+  padding-top:12px;border-top:1px solid #CBD6E2;color:#7B8B99;font-size:11px;
+}
+.estimate-document-modal-actions{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;
+}
+.estimate-document-modal-actions button{
+  min-height:58px;border:0;border-radius:14px;font-size:17px;font-weight:900;cursor:pointer;
+}
+#modalSavePdfBtn{background:#5B3DB5;color:#fff}
+#modalShareEstimateBtn{background:#16A36A;color:#fff}
+
+@media(max-width:700px){
+  .estimate-document-actions{grid-template-columns:1fr}
+  .estimate-document-paper{padding:24px;min-height:auto}
+  .estimate-paper-header{flex-direction:column}
+  .estimate-paper-company{text-align:left}
+  .estimate-paper-grid.two,.estimate-paper-grid.four{grid-template-columns:1fr 1fr}
+  .estimate-paper-signatures{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .estimate-paper-grid.two,.estimate-paper-grid.four{grid-template-columns:1fr}
+  .estimate-document-modal-actions{grid-template-columns:1fr}
+}
+@media print{
+  body *{visibility:hidden!important}
+  #estimateDocumentPaper,#estimateDocumentPaper *{visibility:visible!important}
+  #estimateDocumentPaper{
+    position:absolute;left:0;top:0;width:100%;
+    min-height:0;padding:18mm;box-shadow:none;
+  }
+  .no-print{display:none!important}
+  @page{size:A4;margin:0}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -4012,7 +4147,7 @@ body.demo-click-ready #routeNav{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-6.3.4-DEMO</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-6.4-DEMO</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">6.3 DEMO</span><span class="beta-version-badge">베타시험</span><button type="button" id="betaResultsBtn">베타결과</button><button type="button" id="betaTestMenuBtn">현장테스트</button><button type="button" id="launchMenuBtn">출시진단</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="contractHistoryBtn">계약관리</button><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -4529,6 +4664,23 @@ body.demo-click-ready #routeNav{
 
   <!-- ============ STEP 5. 견적 확정 ============ -->
   <section class="panel" id="step5">
+<div class="card estimate-document-card">
+  <h2><span class="eyebrow">고객용 견적서</span> PDF 저장·공유</h2>
+  <p class="estimate-document-guide">
+    고객에게 보여줄 견적서를 미리 확인한 뒤 PDF 저장 또는 공유할 수 있습니다.
+  </p>
+
+  <div class="estimate-document-actions">
+    <button type="button" id="previewEstimateDocumentBtn">👀 견적서 미리보기</button>
+    <button type="button" id="saveEstimatePdfBtn">📄 PDF로 저장</button>
+    <button type="button" id="shareEstimateDocumentBtn">📤 카카오톡·공유</button>
+  </div>
+
+  <div id="estimateDocumentStatus" class="estimate-document-status">
+    최종금액을 확인한 뒤 견적서를 저장하세요.
+  </div>
+</div>
+
 <div class="card customer-message-card">
   <h2><span class="eyebrow">고객안내</span> 계약·입금 문자 보내기</h2>
   <p class="customer-message-guide">
@@ -5297,7 +5449,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-6.3.4-DEMO';
+const BUILD_VERSION = 'JIMPICK-PRO-6.4-DEMO';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -15653,6 +15805,293 @@ window.openJimpickDemoHotfix = function(event){
   document.addEventListener('click',function(){
     if(demoMode()) setTimeout(bindAll,0);
   },true);
+})();
+
+</script>
+
+<div id="estimateDocumentModal" class="estimate-document-modal" style="display:none;">
+  <div class="estimate-document-modal-card">
+    <div class="estimate-document-modal-head no-print">
+      <div>
+        <h2>이사 견적서 미리보기</h2>
+        <p>PDF 저장 시 아래 내용이 출력됩니다.</p>
+      </div>
+      <button type="button" id="closeEstimateDocumentBtn">✕</button>
+    </div>
+
+    <article id="estimateDocumentPaper" class="estimate-document-paper">
+      <header class="estimate-paper-header">
+        <div>
+          <span class="estimate-paper-kicker">MOVING ESTIMATE</span>
+          <h1>이사 견적서</h1>
+        </div>
+        <div class="estimate-paper-company">
+          <strong id="docCompanyName">짐픽</strong>
+          <span id="docCompanyPhone">-</span>
+          <span id="docBusinessNumber">-</span>
+        </div>
+      </header>
+
+      <section class="estimate-paper-section">
+        <h3>고객정보</h3>
+        <div class="estimate-paper-grid two">
+          <div><span>고객명</span><strong id="docCustomerName">-</strong></div>
+          <div><span>연락처</span><strong id="docCustomerPhone">-</strong></div>
+          <div><span>이사일</span><strong id="docMoveDate">-</strong></div>
+          <div><span>견적일</span><strong id="docEstimateDate">-</strong></div>
+        </div>
+      </section>
+
+      <section class="estimate-paper-section">
+        <h3>이사 정보</h3>
+        <div class="estimate-paper-address">
+          <div><span>출발지</span><strong id="docFromAddress">-</strong></div>
+          <div><span>도착지</span><strong id="docToAddress">-</strong></div>
+        </div>
+      </section>
+
+      <section class="estimate-paper-section">
+        <h3>작업 계획</h3>
+        <div class="estimate-paper-grid four">
+          <div><span>1톤 차량</span><strong id="docTruck1">0대</strong></div>
+          <div><span>5톤 차량</span><strong id="docTruck5">0대</strong></div>
+          <div><span>작업자</span><strong id="docWorkers">0명</strong></div>
+          <div><span>작업시간</span><strong id="docHours">0시간</strong></div>
+        </div>
+      </section>
+
+      <section class="estimate-paper-section">
+        <h3>견적 금액</h3>
+        <div class="estimate-paper-price-table">
+          <div><span>업체 요금표 계산금액</span><strong id="docCalculatedPrice">0원</strong></div>
+          <div><span>할인금액</span><strong id="docDiscountPrice">0원</strong></div>
+          <div><span>추가 조정금액</span><strong id="docExtraPrice">0원</strong></div>
+          <div class="total"><span>최종 견적금액</span><strong id="docFinalPrice">0원</strong></div>
+          <div><span>계약금</span><strong id="docDeposit">0원</strong></div>
+          <div><span>잔금</span><strong id="docBalance">0원</strong></div>
+        </div>
+      </section>
+
+      <section class="estimate-paper-section">
+        <h3>추가요금 및 안내</h3>
+        <div id="docAdditionalFees" class="estimate-paper-note">선택된 추가요금 없음</div>
+        <div class="estimate-paper-note">
+          실제 짐량, 주차 환경, 계단·사다리차 사용 여부와 현장 상황에 따라 최종 작업내용이 달라질 수 있습니다.
+        </div>
+      </section>
+
+      <section class="estimate-paper-signatures">
+        <div>
+          <span>업체 확인</span>
+          <strong id="docOwnerName">대표자</strong>
+        </div>
+        <div>
+          <span>고객 서명</span>
+          <img id="docCustomerSignature" alt="고객 서명">
+          <strong id="docCustomerSignatureText">서명 전</strong>
+        </div>
+      </section>
+
+      <footer class="estimate-paper-footer">
+        <span id="docFooterCompany">짐픽</span>
+        <span>본 견적서는 짐픽 PRO에서 작성되었습니다.</span>
+      </footer>
+    </article>
+
+    <div class="estimate-document-modal-actions no-print">
+      <button type="button" id="modalSavePdfBtn">📄 인쇄·PDF 저장</button>
+      <button type="button" id="modalShareEstimateBtn">📤 공유하기</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+(function(){
+  function money(value){
+    return (Number(value)||0).toLocaleString('ko-KR')+'원';
+  }
+  function val(id){
+    var el=document.getElementById(id);
+    return el ? el.value : '';
+  }
+  function num(id){
+    return Number(val(id))||0;
+  }
+  function setText(id,value){
+    var el=document.getElementById(id);
+    if(el)el.textContent=value||'-';
+  }
+
+  function getSignatureData(){
+    var canvas=document.getElementById('customerSignatureCanvas');
+    try{
+      if(canvas && typeof canvas.toDataURL==='function'){
+        return canvas.toDataURL('image/png');
+      }
+    }catch(e){}
+    var printImg=document.getElementById('printCustomerSignature');
+    return printImg?.src||'';
+  }
+
+  function getAdditionalFeeText(){
+    var labels=[];
+    document.querySelectorAll('[data-quote-custom-fee]:checked').forEach(function(input){
+      var item=input.closest('.quote-custom-fee-item');
+      if(item){
+        var name=item.querySelector('span')?.textContent?.trim()||'';
+        var amount=item.querySelector('strong')?.textContent?.trim()||'';
+        if(name)labels.push(name+(amount?' '+amount:''));
+      }
+    });
+    return labels.length?labels.join(', '):'선택된 추가요금 없음';
+  }
+
+  window.updateEstimateDocument=function(){
+    var company=(window.CompanyPricing&&CompanyPricing.companyName)||'짐픽';
+    var owner=(window.CompanyPricing&&CompanyPricing.ownerName)||'대표자';
+    var phone=(window.CompanyPricing&&CompanyPricing.companyPhone)||'-';
+    var business=(window.CompanyPricing&&CompanyPricing.businessNumber)||'사업자번호 미등록';
+
+    setText('docCompanyName',company);
+    setText('docCompanyPhone','전화 '+phone);
+    setText('docBusinessNumber',business);
+    setText('docFooterCompany',company);
+    setText('docOwnerName',owner);
+
+    setText('docCustomerName',val('customerName')||val('custName')||'고객');
+    setText('docCustomerPhone',val('customerPhone')||val('custPhone')||'-');
+    setText('docMoveDate',val('moveDate')||'-');
+    setText('docEstimateDate',new Date().toLocaleDateString('ko-KR'));
+    setText('docFromAddress',val('fromAddress')||'-');
+    setText('docToAddress',val('toAddress')||'-');
+
+    setText('docTruck1',(num('truck1Count')||2)+'대');
+    setText('docTruck5',(num('truck5Count')||1)+'대');
+    setText('docWorkers',(num('workerCount')||5)+'명');
+    setText('docHours',(num('workHours')||7)+'시간');
+
+    var calculated=num('companyCalculatedPrice')||1050000;
+    var discount=num('ownerDiscountPrice')||0;
+    var extra=num('ownerExtraPrice')||0;
+    var finalPrice=num('ownerFinalPrice')||num('contractFinalPrice')||980000;
+    var deposit=num('contractDeposit')||0;
+    var balance=Math.max(0,finalPrice-deposit);
+
+    setText('docCalculatedPrice',money(calculated));
+    setText('docDiscountPrice',money(discount));
+    setText('docExtraPrice',money(extra));
+    setText('docFinalPrice',money(finalPrice));
+    setText('docDeposit',money(deposit));
+    setText('docBalance',money(balance));
+    setText('docAdditionalFees',getAdditionalFeeText());
+
+    var signature=getSignatureData();
+    var img=document.getElementById('docCustomerSignature');
+    var textEl=document.getElementById('docCustomerSignatureText');
+    if(img&&signature&&signature.length>100){
+      img.src=signature;
+      img.style.display='block';
+      if(textEl)textEl.style.display='none';
+    }else{
+      if(img)img.style.display='none';
+      if(textEl){textEl.style.display='block';textEl.textContent='서명 전';}
+    }
+  };
+
+  window.openEstimateDocument=function(){
+    window.updateEstimateDocument();
+    var modal=document.getElementById('estimateDocumentModal');
+    if(modal)modal.style.display='flex';
+    var status=document.getElementById('estimateDocumentStatus');
+    if(status){
+      status.className='estimate-document-status ok';
+      status.textContent='견적서 미리보기를 열었습니다.';
+    }
+  };
+
+  window.closeEstimateDocument=function(){
+    var modal=document.getElementById('estimateDocumentModal');
+    if(modal)modal.style.display='none';
+  };
+
+  window.saveEstimateDocumentPdf=function(){
+    window.updateEstimateDocument();
+    var modal=document.getElementById('estimateDocumentModal');
+    if(modal)modal.style.display='flex';
+    setTimeout(function(){
+      window.print();
+    },250);
+  };
+
+  function shareText(){
+    var customer=val('customerName')||val('custName')||'고객';
+    var moveDate=val('moveDate')||'-';
+    var from=val('fromAddress')||'-';
+    var to=val('toAddress')||'-';
+    var finalPrice=num('ownerFinalPrice')||num('contractFinalPrice')||980000;
+    var company=(window.CompanyPricing&&CompanyPricing.companyName)||'짐픽';
+    return company+' 이사 견적서\n\n고객: '+customer+
+      '\n이사일: '+moveDate+
+      '\n출발지: '+from+
+      '\n도착지: '+to+
+      '\n최종 견적: '+money(finalPrice)+
+      '\n\n상세 견적서는 PDF로 저장하여 함께 보내주세요.';
+  }
+
+  window.shareEstimateDocument=async function(){
+    var text=shareText();
+    try{
+      if(navigator.share){
+        await navigator.share({
+          title:'이사 견적서',
+          text:text
+        });
+        return;
+      }
+    }catch(e){
+      if(e?.name==='AbortError')return;
+    }
+
+    try{
+      await navigator.clipboard.writeText(text);
+      alert('견적 내용이 복사되었습니다. 카카오톡에 붙여넣어 보내세요.');
+    }catch(e){
+      prompt('아래 견적 내용을 복사해주세요.',text);
+    }
+  };
+
+  function bind(id,fn){
+    var el=document.getElementById(id);
+    if(!el)return;
+    el.addEventListener('click',function(e){
+      e.preventDefault();
+      fn();
+    });
+  }
+
+  function init(){
+    bind('previewEstimateDocumentBtn',window.openEstimateDocument);
+    bind('saveEstimatePdfBtn',window.saveEstimateDocumentPdf);
+    bind('shareEstimateDocumentBtn',window.shareEstimateDocument);
+    bind('closeEstimateDocumentBtn',window.closeEstimateDocument);
+    bind('modalSavePdfBtn',window.saveEstimateDocumentPdf);
+    bind('modalShareEstimateBtn',window.shareEstimateDocument);
+
+    var modal=document.getElementById('estimateDocumentModal');
+    if(modal){
+      modal.addEventListener('click',function(e){
+        if(e.target===modal)window.closeEstimateDocument();
+      });
+    }
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',init);
+  }else{
+    init();
+  }
 })();
 
 </script>
