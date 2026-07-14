@@ -254,3 +254,23 @@ create policy "company_settings_update_own"
 on public.company_settings for update
 using (auth.uid() = user_id)
 with check (auth.uid() = user_id);
+
+
+-- 짐픽 PRO 5.1 선택형 요금표
+alter table public.company_settings
+  add column if not exists use_worker_price boolean not null default false;
+
+alter table public.company_settings
+  add column if not exists use_extra_hour_price boolean not null default false;
+
+alter table public.company_settings
+  add column if not exists use_ladder_price boolean not null default true;
+
+alter table public.company_settings
+  add column if not exists use_special_price boolean not null default true;
+
+alter table public.company_settings
+  add column if not exists use_disassembly_price boolean not null default true;
+
+alter table public.company_settings
+  add column if not exists use_heavy_price boolean not null default true;

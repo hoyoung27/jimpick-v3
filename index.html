@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 5.0</title>
+<title>짐픽 PRO 5.1</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 5.0 최소판매형 ===== */
+/* ===== 짐픽 PRO 5.1 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -2817,6 +2817,67 @@ body.simple-mode .panel{
   .owner-price-actions{grid-template-columns:1fr}
 }
 
+
+/* ===== PRO 5.1 선택형 요금표 ===== */
+.pricing-toggle-section{
+  margin-top:16px;padding:16px;border-radius:16px;
+  background:#F7F9FC;border:1px solid #DCE5EE;
+}
+.pricing-toggle-section h3{
+  margin:0;color:#102A43;font-size:19px;
+}
+.pricing-toggle-section p{
+  margin:5px 0 13px;color:#68798A;font-size:13px;font-weight:700;
+}
+.pricing-toggle-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;
+}
+.pricing-toggle-item{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:13px;border-radius:13px;background:#fff;border:1px solid #DCE5EE;
+}
+.pricing-toggle-item strong{
+  display:block;color:#102A43;font-size:15px;
+}
+.pricing-toggle-item small{
+  display:block;margin-top:4px;color:#68798A;font-size:12px;
+}
+.pricing-toggle-item input{
+  width:27px;height:27px;flex:0 0 auto;accent-color:#16A36A;
+}
+.pricing-toggle-item.fixed{
+  background:#EEF5FF;border-color:#C9DDF2;
+}
+.company-settings-grid label.pricing-disabled{
+  opacity:.42;
+}
+.company-settings-grid label.pricing-disabled input{
+  background:#EEF1F4;pointer-events:none;
+}
+.pricing-breakdown{
+  margin-top:13px;padding:14px;border-radius:14px;
+  background:#F7F9FC;border:1px solid #DCE5EE;
+}
+.pricing-breakdown h3{
+  margin:0 0 9px;color:#102A43;font-size:16px;
+}
+.pricing-breakdown-list{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;
+}
+.pricing-breakdown-item{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:9px 11px;border-radius:11px;background:#fff;
+  color:#52667A;font-size:14px;font-weight:800;
+}
+.pricing-breakdown-item strong{color:#102A43}
+.pricing-breakdown-item.off{
+  opacity:.5;text-decoration:line-through;
+}
+@media(max-width:650px){
+  .pricing-toggle-grid{grid-template-columns:1fr}
+  .pricing-breakdown-list{grid-template-columns:1fr}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -3096,7 +3157,7 @@ body.simple-mode .panel{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-5.0</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-5.1</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">베타시험</span><button type="button" id="launchMenuBtn">출시점검</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -3448,7 +3509,7 @@ body.simple-mode .panel{
         <div><span>5톤 차량</span><strong id="engineTruck5">0대</strong></div>
         <div><span>작업 인원</span><strong id="engineWorkers">0명</strong></div>
         <div><span>예상 시간</span><strong id="engineHours">0시간</strong></div>
-        <div class="price"><span>업체 요금표 계산금액</span><strong id="enginePrice">0원</strong></div>
+        <div class="price"><span>선택한 요금표 계산금액</span><strong id="enginePrice">0원</strong></div>
       </div>
 
       <div class="estimate-engine-flags">
@@ -3522,7 +3583,7 @@ body.simple-mode .panel{
 
   <div class="owner-price-fields">
     <label>
-      <span>업체 요금표 계산금액</span>
+      <span>선택한 요금표 계산금액</span>
       <input type="number" id="companyCalculatedPrice" min="0" step="10000" readonly>
     </label>
     <label>
@@ -3544,8 +3605,14 @@ body.simple-mode .panel{
     <button type="button" id="applyOwnerFinalPriceBtn">대표님 최종금액 적용</button>
   </div>
 
-  <div id="ownerPriceStatus" class="owner-price-status">
-    업체 요금표를 기준으로 자동 계산한 뒤, 할인이나 추가금액을 직접 조정할 수 있습니다.
+  
+  <div class="pricing-breakdown">
+    <h3>이번 견적에 적용된 요금</h3>
+    <div id="pricingBreakdownList" class="pricing-breakdown-list"></div>
+  </div>
+
+<div id="ownerPriceStatus" class="owner-price-status">
+    업체가 켜둔 요금 항목만 계산합니다. 할인과 추가금액은 대표가 직접 조정합니다.
   </div>
 </div>
 
@@ -3570,7 +3637,7 @@ body.simple-mode .panel{
     <div><span>5톤 차량</span><strong id="pro40ResultTruck5">0대</strong></div>
     <div><span>작업 인원</span><strong id="pro40ResultWorkers">0명</strong></div>
     <div><span>예상 시간</span><strong id="pro40ResultHours">0시간</strong></div>
-    <div class="price"><span>업체 요금표 계산금액</span><strong id="pro40ResultPrice">0원</strong></div>
+    <div class="price"><span>선택한 요금표 계산금액</span><strong id="pro40ResultPrice">0원</strong></div>
   </div>
   <div id="pro40ResultNote" class="pro40-result-note">
     사진과 현장조건을 기준으로 계산했습니다.
@@ -3692,7 +3759,7 @@ body.simple-mode .panel{
         <div><span>5톤 차량</span><strong id="autoResultTruck5">0대</strong></div>
         <div><span>작업 인원</span><strong id="autoResultWorkers">0명</strong></div>
         <div><span>예상 시간</span><strong id="autoResultHours">0시간</strong></div>
-        <div class="price"><span>업체 요금표 계산금액</span><strong id="autoResultPrice">0원</strong></div>
+        <div class="price"><span>선택한 요금표 계산금액</span><strong id="autoResultPrice">0원</strong></div>
       </div>
       <div class="full-auto-result-actions">
         <button type="button" id="autoResultSaveBtn">☁️ 견적 저장</button>
@@ -4174,7 +4241,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-5.0';
+const BUILD_VERSION = 'JIMPICK-PRO-5.1';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -7795,7 +7862,13 @@ let CompanyPricing={
   ladderPrice:250000,
   specialPrice:40000,
   disassemblyPrice:30000,
-  heavyPrice:25000
+  heavyPrice:25000,
+  useWorkerPrice:false,
+  useExtraHourPrice:false,
+  useLadderPrice:true,
+  useSpecialPrice:true,
+  useDisassemblyPrice:true,
+  useHeavyPrice:true
 };
 
 function loadLocalCompanySettings(){
@@ -7826,6 +7899,19 @@ function applyCompanySettingsToUi(){
   setValue('settingDisassemblyPrice',CompanyPricing.disassemblyPrice);
   setValue('settingHeavyPrice',CompanyPricing.heavyPrice);
 
+  const setChecked=(id,value)=>{
+    const el=document.getElementById(id);
+    if(el)el.checked=Boolean(value);
+  };
+  setChecked('useWorkerPrice',CompanyPricing.useWorkerPrice);
+  setChecked('useExtraHourPrice',CompanyPricing.useExtraHourPrice);
+  setChecked('useLadderPrice',CompanyPricing.useLadderPrice);
+  setChecked('useSpecialPrice',CompanyPricing.useSpecialPrice);
+  setChecked('useDisassemblyPrice',CompanyPricing.useDisassemblyPrice);
+  setChecked('useHeavyPrice',CompanyPricing.useHeavyPrice);
+  updatePricingFieldVisibility();
+
+
   const name=CompanyPricing.companyName||'짐픽';
   const logged=document.getElementById('loggedCompanyName');
   const display=document.getElementById('companyNameDisplay');
@@ -7837,6 +7923,90 @@ function applyCompanySettingsToUi(){
   if(share)share.textContent=name;
   if(print)print.textContent=name;
 }
+
+
+function updatePricingFieldVisibility(){
+  const pairs=[
+    ['useWorkerPrice','workerPriceField'],
+    ['useExtraHourPrice','extraHourPriceField'],
+    ['useLadderPrice','ladderPriceField'],
+    ['useSpecialPrice','specialPriceField'],
+    ['useDisassemblyPrice','disassemblyPriceField'],
+    ['useHeavyPrice','heavyPriceField']
+  ];
+
+  pairs.forEach(([toggleId,fieldId])=>{
+    const checked=Boolean(document.getElementById(toggleId)?.checked);
+    const field=document.getElementById(fieldId);
+    if(field)field.classList.toggle('pricing-disabled',!checked);
+  });
+}
+
+function getPricingBreakdown(engine){
+  const rows=[];
+  const won=v=>`${Number(v||0).toLocaleString('ko-KR')}원`;
+
+  rows.push({
+    name:`차량 요금 (${engine?.truck1||0}×1톤, ${engine?.truck5||0}×5톤)`,
+    amount:(Number(engine?.truck1)||0)*CompanyPricing.truck1Price+
+           (Number(engine?.truck5)||0)*CompanyPricing.truck5Price,
+    enabled:true
+  });
+
+  rows.push({
+    name:`작업자 요금 (${engine?.workers||0}명)`,
+    amount:(Number(engine?.workers)||0)*CompanyPricing.workerPrice,
+    enabled:CompanyPricing.useWorkerPrice
+  });
+
+  const extraHours=Math.max(0,(Number(engine?.hours)||0)-5);
+  rows.push({
+    name:`추가시간 요금 (${extraHours}시간)`,
+    amount:extraHours*CompanyPricing.extraHourPrice,
+    enabled:CompanyPricing.useExtraHourPrice
+  });
+
+  rows.push({
+    name:'사다리차 요금',
+    amount:Number(engine?.ladderCost)||0,
+    enabled:CompanyPricing.useLadderPrice
+  });
+
+  rows.push({
+    name:'특수품목 요금',
+    amount:(Number(engine?.specialCount)||0)*CompanyPricing.specialPrice,
+    enabled:CompanyPricing.useSpecialPrice
+  });
+
+  rows.push({
+    name:'분해작업 요금',
+    amount:(Number(engine?.disassemblyCount)||0)*CompanyPricing.disassemblyPrice,
+    enabled:CompanyPricing.useDisassemblyPrice
+  });
+
+  rows.push({
+    name:'중량품목 요금',
+    amount:(Number(engine?.heavyCount)||0)*CompanyPricing.heavyPrice,
+    enabled:CompanyPricing.useHeavyPrice
+  });
+
+  return rows.map(row=>({...row,formatted:won(row.amount)}));
+}
+
+function updatePricingBreakdown(){
+  const wrap=document.getElementById('pricingBreakdownList');
+  if(!wrap)return;
+  const engine=lastEngineResult||calculateMovingEstimateEngine();
+  const rows=getPricingBreakdown(engine);
+
+  wrap.innerHTML=rows.map(row=>`
+    <div class="pricing-breakdown-item ${row.enabled?'':'off'}">
+      <span>${Utils.escapeHtml(row.name)}</span>
+      <strong>${row.enabled?row.formatted:'미사용'}</strong>
+    </div>
+  `).join('');
+}
+
 
 async function loadCompanySettingsFromServer(){
   loadLocalCompanySettings();
@@ -7867,7 +8037,13 @@ async function loadCompanySettingsFromServer(){
       ladderPrice:Number(data.ladder_price)||250000,
       specialPrice:Number(data.special_price)||40000,
       disassemblyPrice:Number(data.disassembly_price)||30000,
-      heavyPrice:Number(data.heavy_price)||25000
+      heavyPrice:Number(data.heavy_price)||25000,
+      useWorkerPrice:Boolean(data.use_worker_price),
+      useExtraHourPrice:Boolean(data.use_extra_hour_price),
+      useLadderPrice:data.use_ladder_price!==false,
+      useSpecialPrice:data.use_special_price!==false,
+      useDisassemblyPrice:data.use_disassembly_price!==false,
+      useHeavyPrice:data.use_heavy_price!==false
     };
 
     localStorage.setItem(COMPANY_SETTINGS_KEY,JSON.stringify(CompanyPricing));
@@ -7902,7 +8078,13 @@ async function saveCompanySettings(){
     ladderPrice:getNumber('settingLadderPrice',250000),
     specialPrice:getNumber('settingSpecialPrice',40000),
     disassemblyPrice:getNumber('settingDisassemblyPrice',30000),
-    heavyPrice:getNumber('settingHeavyPrice',25000)
+    heavyPrice:getNumber('settingHeavyPrice',25000),
+    useWorkerPrice:Boolean(document.getElementById('useWorkerPrice')?.checked),
+    useExtraHourPrice:Boolean(document.getElementById('useExtraHourPrice')?.checked),
+    useLadderPrice:Boolean(document.getElementById('useLadderPrice')?.checked),
+    useSpecialPrice:Boolean(document.getElementById('useSpecialPrice')?.checked),
+    useDisassemblyPrice:Boolean(document.getElementById('useDisassemblyPrice')?.checked),
+    useHeavyPrice:Boolean(document.getElementById('useHeavyPrice')?.checked)
   };
 
   CompanyPricing=next;
@@ -7938,6 +8120,12 @@ async function saveCompanySettings(){
       special_price:next.specialPrice,
       disassembly_price:next.disassemblyPrice,
       heavy_price:next.heavyPrice,
+      use_worker_price:next.useWorkerPrice,
+      use_extra_hour_price:next.useExtraHourPrice,
+      use_ladder_price:next.useLadderPrice,
+      use_special_price:next.useSpecialPrice,
+      use_disassembly_price:next.useDisassemblyPrice,
+      use_heavy_price:next.useHeavyPrice,
       updated_at:new Date().toISOString()
     });
 
@@ -7957,6 +8145,7 @@ async function saveCompanySettings(){
     if(typeof updateMovingEstimateEngine==='function')updateMovingEstimateEngine();
     if(typeof updateEstimateSharePreview==='function')updateEstimateSharePreview();
   updateOwnerPricePanel();
+  updatePricingBreakdown();
     alert('업체 설정을 저장했습니다.');
   }catch(error){
     console.error(error);
@@ -8411,19 +8600,19 @@ function calculateMovingEstimateEngine(){
   const hours=Math.max(2,Math.ceil(loadHours+drivingHours+setupHours));
 
   const truckCost=(truck1*CompanyPricing.truck1Price)+(truck5*CompanyPricing.truck5Price);
-  const workerCost=workers*CompanyPricing.workerPrice;
-  const heavyCost=heavyCount*CompanyPricing.heavyPrice;
-  const disassemblyCost=disassemblyCount*CompanyPricing.disassemblyPrice;
-  const specialCost=specialCount*CompanyPricing.specialPrice;
-  const timeCost=Math.max(0,hours-5)*CompanyPricing.extraHourPrice;
-  const confirmedDisassemblyCost=Object.values(SmartAnswerState.disassembly).filter(Boolean).length*CompanyPricing.disassemblyPrice;
-  const confirmedSpecialCost=Object.values(SmartAnswerState.special).filter(Boolean).length*CompanyPricing.specialPrice;
-  const ladderCost=SmartAnswerState.ladder?CompanyPricing.ladderPrice:0;
+  const workerCost=CompanyPricing.useWorkerPrice?workers*CompanyPricing.workerPrice:0;
+  const heavyCost=CompanyPricing.useHeavyPrice?heavyCount*CompanyPricing.heavyPrice:0;
+  const disassemblyCost=CompanyPricing.useDisassemblyPrice?disassemblyCount*CompanyPricing.disassemblyPrice:0;
+  const specialCost=CompanyPricing.useSpecialPrice?specialCount*CompanyPricing.specialPrice:0;
+  const timeCost=CompanyPricing.useExtraHourPrice?Math.max(0,hours-5)*CompanyPricing.extraHourPrice:0;
+  const confirmedDisassemblyCost=CompanyPricing.useDisassemblyPrice?Object.values(SmartAnswerState.disassembly).filter(Boolean).length*CompanyPricing.disassemblyPrice:0;
+  const confirmedSpecialCost=CompanyPricing.useSpecialPrice?Object.values(SmartAnswerState.special).filter(Boolean).length*CompanyPricing.specialPrice:0;
+  const ladderCost=(CompanyPricing.useLadderPrice&&SmartAnswerState.ladder)?CompanyPricing.ladderPrice:0;
 
   const sceneAdjust=calculateSceneAdjustments();
   const adjustedWorkers=Math.min(20,workers+sceneAdjust.workerExtra);
   const adjustedHours=Math.min(24,hours+sceneAdjust.hourExtra);
-  let price=truckCost+(adjustedWorkers*CompanyPricing.workerPrice)+heavyCost+disassemblyCost+specialCost+timeCost+confirmedDisassemblyCost+confirmedSpecialCost+ladderCost+sceneAdjust.priceExtra;
+  let price=truckCost+(CompanyPricing.useWorkerPrice?adjustedWorkers*CompanyPricing.workerPrice:0)+heavyCost+disassemblyCost+specialCost+timeCost+confirmedDisassemblyCost+confirmedSpecialCost+ladderCost+sceneAdjust.priceExtra;
   price=Math.ceil(price/10000)*10000;
 
   const learnedTruckUnits=Math.max(
@@ -10571,6 +10760,11 @@ ${msg || '-'}`;
     document.getElementById('completeSignupBtn')?.addEventListener('click',authCompleteSignup);
     document.getElementById('forgotPasswordBtn')?.addEventListener('click',authForgotPassword);
     document.getElementById('logoutBtn')?.addEventListener('click',authLogout);
+    ['useWorkerPrice','useExtraHourPrice','useLadderPrice','useSpecialPrice','useDisassemblyPrice','useHeavyPrice'].forEach(id=>{
+      document.getElementById(id)?.addEventListener('change',()=>{
+        updatePricingFieldVisibility();
+      });
+    });
     document.getElementById('ownerDiscountPrice')?.addEventListener('input',recalculateOwnerFinalPrice);
     document.getElementById('ownerExtraPrice')?.addEventListener('input',recalculateOwnerFinalPrice);
     document.getElementById('ownerFinalPrice')?.addEventListener('input',()=>{ownerApprovedFinalPrice=0;});
@@ -11297,7 +11491,71 @@ document.addEventListener('DOMContentLoaded', App.init);
       <button type="button" id="closeCompanySettingsBtn">✕</button>
     </div>
 
-    <div class="company-settings-grid">
+    
+    <div class="pricing-toggle-section">
+      <h3>견적에 포함할 요금 선택</h3>
+      <p>업체마다 계산방식이 다르므로 필요한 항목만 켜세요.</p>
+
+      <div class="pricing-toggle-grid">
+        <label class="pricing-toggle-item fixed">
+          <div>
+            <strong>차량 요금</strong>
+            <small>1톤·5톤 차량 요금은 기본 사용</small>
+          </div>
+          <input type="checkbox" checked disabled>
+        </label>
+
+        <label class="pricing-toggle-item">
+          <div>
+            <strong>작업자 요금</strong>
+            <small>작업자 인원수로 금액 계산</small>
+          </div>
+          <input type="checkbox" id="useWorkerPrice">
+        </label>
+
+        <label class="pricing-toggle-item">
+          <div>
+            <strong>추가 작업시간 요금</strong>
+            <small>기준시간 초과분만 계산</small>
+          </div>
+          <input type="checkbox" id="useExtraHourPrice">
+        </label>
+
+        <label class="pricing-toggle-item">
+          <div>
+            <strong>사다리차 요금</strong>
+            <small>사다리차 필요 시 추가</small>
+          </div>
+          <input type="checkbox" id="useLadderPrice">
+        </label>
+
+        <label class="pricing-toggle-item">
+          <div>
+            <strong>특수품목 요금</strong>
+            <small>금고·피아노·안마의자 등</small>
+          </div>
+          <input type="checkbox" id="useSpecialPrice">
+        </label>
+
+        <label class="pricing-toggle-item">
+          <div>
+            <strong>분해작업 요금</strong>
+            <small>침대·장롱 등 분해 시 추가</small>
+          </div>
+          <input type="checkbox" id="useDisassemblyPrice">
+        </label>
+
+        <label class="pricing-toggle-item">
+          <div>
+            <strong>중량품목 요금</strong>
+            <small>무거운 품목 운반 시 추가</small>
+          </div>
+          <input type="checkbox" id="useHeavyPrice">
+        </label>
+      </div>
+    </div>
+
+<div class="company-settings-grid">
       <label><span>업체명</span><input type="text" id="settingCompanyName" placeholder="예: 대구 짐픽이사"></label>
       <label><span>대표자명</span><input type="text" id="settingOwnerName" placeholder="대표자 이름"></label>
       <label><span>업체 전화번호</span><input type="tel" id="settingCompanyPhone" placeholder="01012345678"></label>
@@ -11305,13 +11563,13 @@ document.addEventListener('DOMContentLoaded', App.init);
 
       <label><span>1톤 차량 기본요금</span><input type="number" id="settingTruck1Price" min="0" step="10000" value="180000"></label>
       <label><span>5톤 차량 기본요금</span><input type="number" id="settingTruck5Price" min="0" step="10000" value="420000"></label>
-      <label><span>작업자 1명 요금</span><input type="number" id="settingWorkerPrice" min="0" step="10000" value="110000"></label>
-      <label><span>추가 1시간 요금</span><input type="number" id="settingExtraHourPrice" min="0" step="10000" value="50000"></label>
+      <label id="workerPriceField"><span>작업자 1명 요금</span><input type="number" id="settingWorkerPrice" min="0" step="10000" value="110000"></label>
+      <label id="extraHourPriceField"><span>추가 1시간 요금</span><input type="number" id="settingExtraHourPrice" min="0" step="10000" value="50000"></label>
 
-      <label><span>사다리차 추가요금</span><input type="number" id="settingLadderPrice" min="0" step="10000" value="250000"></label>
-      <label><span>특수품목 1개 요금</span><input type="number" id="settingSpecialPrice" min="0" step="10000" value="40000"></label>
-      <label><span>분해작업 1개 요금</span><input type="number" id="settingDisassemblyPrice" min="0" step="10000" value="30000"></label>
-      <label><span>중량품목 1개 요금</span><input type="number" id="settingHeavyPrice" min="0" step="10000" value="25000"></label>
+      <label id="ladderPriceField"><span>사다리차 추가요금</span><input type="number" id="settingLadderPrice" min="0" step="10000" value="250000"></label>
+      <label id="specialPriceField"><span>특수품목 1개 요금</span><input type="number" id="settingSpecialPrice" min="0" step="10000" value="40000"></label>
+      <label id="disassemblyPriceField"><span>분해작업 1개 요금</span><input type="number" id="settingDisassemblyPrice" min="0" step="10000" value="30000"></label>
+      <label id="heavyPriceField"><span>중량품목 1개 요금</span><input type="number" id="settingHeavyPrice" min="0" step="10000" value="25000"></label>
     </div>
 
     <button type="button" id="saveCompanySettingsBtn" class="save-company-settings-btn">
