@@ -1,25 +1,2 @@
-짐픽 PRO 7.1 RC - 고객 확인·승인·수정 요청
-
-추가 기능
-- 고객용 견적 확인 화면
-- 고객명·이사일·출발지·도착지
-- 1톤·5톤 차량과 작업자
-- 기본견적·옵션비·보관비·최종금액
-- 계약금·잔금
-- 고객 확인·동의
-- 고객 수정 요청과 요청내용 저장
-- 고객 안내문 복사
-- 고객별 승인 상태 기기 저장
-- 기존 7.0 AI 비서·대시보드·PDF·문자·사진·수익분석 유지
-
-안정성 검사
-- 전체 JavaScript 문법 검사
-- Netlify 함수 문법 검사
-- 중복 화면 ID 검사
-
-적용
-1. 압축 해제
-2. GitHub 전체 파일 덮어쓰기
-3. Netlify에서 Deploy project without cache
-4. Ctrl + Shift + R
-5. PRO 7.1 RC 확인
+PRO 7.2 RC
+GitHub 전체 덮어쓰기 → Netlify Deploy project without cache → Ctrl+Shift+R

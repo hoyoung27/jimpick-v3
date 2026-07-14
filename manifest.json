@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 7.1 RC",
+  "name": "짐픽 PRO 7.2 RC",
   "short_name": "짐픽 PRO",
-  "description": "고객용 견적 확인 화면, 승인·수정요청, 공유문자, 상태 저장을 제공하는 AI 이사견적 앱",
+  "description": "5개 방별 품목과 작은 캐릭터 아이콘을 적용한 상용 디자인 개선판",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

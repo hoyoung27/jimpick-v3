@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 7.1 RC</title>
+<title>짐픽 PRO 7.2 RC</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 7.1 RC 최소판매형 ===== */
+/* ===== 짐픽 PRO 7.2 RC 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -4545,6 +4545,34 @@ input:focus,select:focus,textarea:focus{
   .customer-view-buttons-v71{grid-template-columns:1fr}
 }
 
+
+html,body{max-width:100%;overflow-x:hidden}
+body.demo-click-ready #appShell,body.demo-click-ready .main,body.demo-click-ready .main-content,
+body.demo-click-ready .content,body.demo-click-ready .content-wrap,body.demo-click-ready .page,
+body.demo-click-ready .page-content,body.demo-click-ready .panel,body.demo-click-ready .panel.active{
+width:100%!important;max-width:none!important;min-width:0!important;box-sizing:border-box!important}
+.card{width:min(100%,1380px)!important;max-width:1380px!important;margin-left:auto!important;margin-right:auto!important;
+border-radius:18px!important;overflow:hidden!important;box-sizing:border-box!important}
+.card h2,.card h3,.card p,.card span,.card strong,.card label{max-width:100%;overflow-wrap:anywhere;word-break:keep-all}
+input,select,textarea,button{box-sizing:border-box!important;max-width:100%!important}
+input,select{min-height:48px!important;font-size:15px!important} textarea{min-height:100px!important;font-size:15px!important}
+button{min-height:46px;line-height:1.25;white-space:normal}
+.pro72-room-gallery{padding:18px!important}.pro72-gallery-head{display:flex;justify-content:space-between;gap:16px}
+.pro72-gallery-head h2{margin:5px 0 0;color:#102A43;font-size:24px}.pro72-gallery-head p{margin:7px 0 0;color:#66788A;font-weight:700}
+#pro72RefreshRoomsBtn{padding:0 16px;border:0;border-radius:12px;background:#0B1727;color:#fff;font-weight:900}
+.pro72-room-cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:16px}
+.pro72-room-card{padding:14px;border:1px solid #DDE5ED;border-radius:16px;background:#FAFBFC;min-width:0}
+.pro72-room-title{display:flex;justify-content:space-between;gap:8px;margin-bottom:12px}
+.pro72-room-title strong{font-size:17px;color:#102A43}.pro72-room-title span{padding:3px 8px;border-radius:999px;background:#EAF7F0;color:#16794B;font-size:12px;font-weight:900}
+.pro72-item-icons{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pro72-item-icon{padding:9px 5px;border-radius:12px;background:#fff;border:1px solid #E6ECF1;text-align:center;min-width:0}
+.pro72-item-icon .emoji{display:block;font-size:30px;line-height:1.05}.pro72-item-icon strong{display:block;margin-top:6px;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pro72-item-icon small{display:block;margin-top:3px;color:#16A36A;font-size:11px;font-weight:900}
+.pro72-room-empty{grid-column:1/-1;padding:16px;border:2px dashed #D7E0E8;border-radius:12px;text-align:center;color:#7B8A98;font-size:13px;font-weight:800}
+@media(max-width:1180px){.pro72-room-cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:820px){.pro72-room-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.pro72-gallery-head{flex-direction:column}#pro72RefreshRoomsBtn{width:100%}}
+@media(max-width:520px){.pro72-room-cards{grid-template-columns:1fr}.pro72-item-icons{grid-template-columns:repeat(4,1fr)}}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -4824,7 +4852,7 @@ input:focus,select:focus,textarea:focus{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-7.1-RC</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-7.2-RC</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">6.3 DEMO</span><span class="beta-version-badge">베타시험</span><button type="button" id="betaResultsBtn">베타결과</button><button type="button" id="betaTestMenuBtn">현장테스트</button><button type="button" id="launchMenuBtn">출시진단</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="contractHistoryBtn">계약관리</button><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -5396,6 +5424,15 @@ input:focus,select:focus,textarea:focus{
 
   <!-- ============ STEP 4. 품목 확인 (방 + 거실 + 부엌 통합) ============ -->
   <section class="panel" id="step4">
+<div class="card pro72-room-gallery">
+  <div class="pro72-gallery-head">
+    <div><span class="eyebrow">방별 품목</span><h2>5개 방 품목 한눈에 보기</h2>
+    <p>큰 사진 대신 작고 깔끔한 가구·가전 캐릭터 아이콘으로 표시합니다.</p></div>
+    <button type="button" id="pro72RefreshRoomsBtn">방별 품목 새로고침</button>
+  </div>
+  <div id="pro72RoomCards" class="pro72-room-cards"></div>
+</div>
+
 <div class="card field-safety-card-v69">
   <div class="field-safety-head-v69">
     <div>
@@ -6501,7 +6538,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-7.1-RC';
+const BUILD_VERSION = 'JIMPICK-PRO-7.2-RC';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -18741,6 +18778,30 @@ window.openJimpickDemoHotfix = function(event){
     init();
   }
 })();
+
+</script>
+
+<script>
+
+(function(){
+var R=[['living','거실','🛋️'],['kitchen','주방','🍳'],['master','안방','🛏️'],['small','작은방','🚪'],['etc','기타·베란다','📦']];
+var I=[[/냉장고/,'🧊'],[/세탁기/,'🧺'],[/TV|텔레비전/,'📺'],[/소파/,'🛋️'],[/침대/,'🛏️'],[/장롱|옷장/,'🚪'],[/책상|의자/,'🪑'],[/식탁|테이블/,'🍽️'],[/전자레인지/,'📻'],[/에어컨/,'❄️'],[/피아노/,'🎹'],[/금고/,'🔒'],[/거울/,'🪞'],[/화장대/,'💄'],[/책장/,'📚'],[/박스/,'📦']];
+function e(x){return document.getElementById(x)} function p(t,f){try{return JSON.parse(t)}catch(_){return f}}
+function ic(n){for(var i=0;i<I.length;i++)if(I[i][0].test(n))return I[i][1];return'🪑'}
+function h(v){return String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function src(){var s=p(localStorage.getItem('jimpick_room_analysis_v68')||'null',null);if(!s||!s.data)return{};
+return{living:s.data.living||{},kitchen:s.data.kitchen||{},master:s.data.master||{},small:s.data.small||{},
+etc:{items:[].concat(s.data.balcony?.items||[],s.data.storage?.items||[],s.data.office?.items||[])}}}
+function render(){var w=e('pro72RoomCards');if(!w)return;var s=src();
+w.innerHTML=R.map(r=>{var a=(s[r[0]]?.items||[]).filter(i=>Number(i.qty||0)>0).slice(0,9);
+var b=a.length?a.map(i=>'<div class="pro72-item-icon" title="'+h(i.name)+'"><span class="emoji">'+ic(String(i.name||''))+
+'</span><strong>'+h(i.name)+'</strong><small>'+Number(i.qty||0)+'개</small></div>').join(''):
+'<div class="pro72-room-empty">등록된 품목 없음</div>';
+return'<section class="pro72-room-card"><div class="pro72-room-title"><strong>'+r[2]+' '+r[1]+'</strong><span>'+
+a.reduce((x,i)=>x+(Number(i.qty)||0),0)+'</span></div><div class="pro72-item-icons">'+b+'</div></section>'}).join('')}
+function init(){render();var b=e('pro72RefreshRoomsBtn');if(b&&!b.dataset.b){b.dataset.b='1';b.onclick=render}setTimeout(render,400)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+document.addEventListener('click',()=>setTimeout(render,0),true)})();
 
 </script>
 </body>
