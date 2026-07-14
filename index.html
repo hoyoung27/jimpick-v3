@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 6.3.1 DEMO</title>
+<title>짐픽 PRO 6.3.2 DEMO</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 6.3.1 DEMO 최소판매형 ===== */
+/* ===== 짐픽 PRO 6.3.2 DEMO 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -3664,6 +3664,39 @@ body.simple-mode .panel{
   color:#6D4910;text-align:center;font-weight:900;
 }
 
+
+/* ===== PRO 6.3.2 체험화면 클릭 복구 ===== */
+body.demo-click-ready,
+body.demo-click-ready #appShell{
+  pointer-events:auto!important;
+}
+body.demo-click-ready #appShell *,
+body.demo-click-ready .panel,
+body.demo-click-ready button,
+body.demo-click-ready input,
+body.demo-click-ready select,
+body.demo-click-ready textarea,
+body.demo-click-ready canvas{
+  pointer-events:auto!important;
+}
+body.demo-click-ready .modal-backdrop,
+body.demo-click-ready .loading-overlay,
+body.demo-click-ready .global-overlay,
+body.demo-click-ready .blocking-overlay,
+body.demo-click-ready .auth-overlay,
+body.demo-click-ready .subscription-overlay,
+body.demo-click-ready [data-blocking-overlay="true"]{
+  display:none!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  opacity:0!important;
+}
+.demo-click-help{
+  position:fixed;right:14px;bottom:14px;z-index:999999;
+  padding:10px 13px;border-radius:12px;background:#102A43;color:#fff;
+  font-size:13px;font-weight:900;box-shadow:0 8px 24px rgba(0,0,0,.25);
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -3943,7 +3976,7 @@ body.simple-mode .panel{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-6.3.1-DEMO</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-6.3.2-DEMO</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">6.3 DEMO</span><span class="beta-version-badge">베타시험</span><button type="button" id="betaResultsBtn">베타결과</button><button type="button" id="betaTestMenuBtn">현장테스트</button><button type="button" id="launchMenuBtn">출시진단</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="contractHistoryBtn">계약관리</button><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -5228,7 +5261,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-6.3.1-DEMO';
+const BUILD_VERSION = 'JIMPICK-PRO-6.3.2-DEMO';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -14967,11 +15000,68 @@ document.addEventListener('DOMContentLoaded', App.init);
     el.removeAttribute('aria-hidden');
   }
 
-  window.openJimpickDemoHotfix = function(event){
+  
+  function restoreDemoClicks(){
+    document.body.classList.add('demo-click-ready');
+
+    var blockers = [
+      'authScreen','serverSetupGate','subscriptionGate','loadingOverlay',
+      'globalLoading','pageLoading','appLoading','blockingOverlay',
+      'loginModal','subscriptionModal'
+    ];
+
+    blockers.forEach(function(id){
+      var el = document.getElementById(id);
+      if(el){
+        el.style.setProperty('display','none','important');
+        el.style.setProperty('visibility','hidden','important');
+        el.style.setProperty('pointer-events','none','important');
+        el.style.setProperty('opacity','0','important');
+        el.setAttribute('aria-hidden','true');
+      }
+    });
+
+    document.querySelectorAll(
+      '.modal-backdrop,.loading-overlay,.global-overlay,.blocking-overlay,' +
+      '.auth-overlay,.subscription-overlay,[data-blocking-overlay="true"]'
+    ).forEach(function(el){
+      el.style.setProperty('display','none','important');
+      el.style.setProperty('pointer-events','none','important');
+      el.style.setProperty('opacity','0','important');
+    });
+
+    var app = document.getElementById('appShell');
+    if(app){
+      app.style.setProperty('pointer-events','auto','important');
+      app.style.setProperty('opacity','1','important');
+      app.style.setProperty('filter','none','important');
+    }
+
+    document.querySelectorAll(
+      '#appShell button,#appShell input,#appShell select,#appShell textarea,' +
+      '#appShell canvas,#appShell [data-step],#appShell .panel'
+    ).forEach(function(el){
+      el.style.setProperty('pointer-events','auto','important');
+    });
+
+    if(!document.getElementById('demoClickHelp')){
+      var help = document.createElement('div');
+      help.id = 'demoClickHelp';
+      help.className = 'demo-click-help';
+      help.textContent = '체험모드 · 버튼 클릭 가능';
+      document.body.appendChild(help);
+      setTimeout(function(){
+        restoreDemoClicks(); help.remove(); }, 3500);
+    }
+  }
+
+window.openJimpickDemoHotfix = function(event){
     if(event){
       event.preventDefault();
       event.stopPropagation();
     }
+
+    restoreDemoClicks();
 
     try{
       hide(document.getElementById('authScreen'));
@@ -14980,6 +15070,7 @@ document.addEventListener('DOMContentLoaded', App.init);
 
       var app = document.getElementById('appShell');
       show(app);
+      restoreDemoClicks();
 
       document.querySelectorAll('.panel').forEach(function(panel){
         panel.classList.remove('active');
@@ -15087,6 +15178,33 @@ document.addEventListener('DOMContentLoaded', App.init);
   }else{
     bind();
   }
+})();
+
+</script>
+
+<script>
+
+(function(){
+  function unlock(){
+    if(typeof restoreDemoClicks === 'function'){
+      try{ restoreDemoClicks(); }catch(e){}
+    }
+    document.body.classList.add('demo-click-ready');
+  }
+
+  document.addEventListener('click', function(e){
+    if(!document.body.classList.contains('demo-click-ready')) return;
+    var target = e.target.closest('button,a,input,select,textarea,[data-step]');
+    if(!target) return;
+    target.style.setProperty('pointer-events','auto','important');
+  }, true);
+
+  window.addEventListener('load', function(){
+    var app = document.getElementById('appShell');
+    if(app && app.style.display !== 'none'){
+      unlock();
+    }
+  });
 })();
 
 </script>

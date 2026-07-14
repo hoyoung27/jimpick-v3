@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 6.3.1 DEMO",
+  "name": "짐픽 PRO 6.3.2 DEMO",
   "short_name": "짐픽 PRO",
-  "description": "로그인 없는 견적 화면 버튼을 독립 실행 방식으로 고친 AI 이사견적 체험판",
+  "description": "로그인 없는 견적 체험화면의 투명 클릭차단막을 제거한 수정판",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
