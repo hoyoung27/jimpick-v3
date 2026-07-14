@@ -215,3 +215,42 @@ using (auth.uid() = user_id);
 create policy "beta_feedback_insert_own"
 on public.beta_feedback for insert
 with check (auth.uid() = user_id);
+
+
+-- 짐픽 PRO 4.3 업체별 정보·기본요금
+create table if not exists public.company_settings (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  company_name text not null default '',
+  owner_name text not null default '',
+  company_phone text not null default '',
+  business_number text not null default '',
+  truck1_price integer not null default 180000,
+  truck5_price integer not null default 420000,
+  worker_price integer not null default 110000,
+  extra_hour_price integer not null default 50000,
+  ladder_price integer not null default 250000,
+  special_price integer not null default 40000,
+  disassembly_price integer not null default 30000,
+  heavy_price integer not null default 25000,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table public.company_settings enable row level security;
+
+drop policy if exists "company_settings_select_own" on public.company_settings;
+drop policy if exists "company_settings_insert_own" on public.company_settings;
+drop policy if exists "company_settings_update_own" on public.company_settings;
+
+create policy "company_settings_select_own"
+on public.company_settings for select
+using (auth.uid() = user_id);
+
+create policy "company_settings_insert_own"
+on public.company_settings for insert
+with check (auth.uid() = user_id);
+
+create policy "company_settings_update_own"
+on public.company_settings for update
+using (auth.uid() = user_id)
+with check (auth.uid() = user_id);

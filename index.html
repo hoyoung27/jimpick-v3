@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 4.2</title>
+<title>짐픽 PRO 5.0</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 4.2 최소판매형 ===== */
+/* ===== 짐픽 PRO 5.0 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -2721,6 +2721,102 @@ body.simple-mode .panel{
   .data-safety-actions{grid-template-columns:1fr}
 }
 
+
+/* ===== PRO 4.3 업체별 기본요금 ===== */
+.company-settings-modal{
+  position:fixed;inset:0;z-index:29000;
+  align-items:center;justify-content:center;padding:18px;
+  background:rgba(8,24,40,.78);
+}
+.company-settings-card{
+  width:min(850px,100%);max-height:92vh;overflow:auto;
+  padding:22px;border-radius:24px;background:#fff;
+}
+.company-settings-head{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+}
+.company-settings-head h2{margin:0;color:#102A43;font-size:27px}
+.company-settings-head p{margin:5px 0 0;color:#68798A}
+.company-settings-head>button{
+  width:44px;height:44px;border:0;border-radius:12px;
+  background:#E8EEF5;color:#102A43;font-size:20px;cursor:pointer;
+}
+.company-settings-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:11px;margin-top:16px;
+}
+.company-settings-grid label{display:grid;gap:7px}
+.company-settings-grid span{font-size:14px;font-weight:900;color:#102A43}
+.company-settings-grid input{
+  min-height:52px;padding:0 12px;border:1px solid #CBD6E2;
+  border-radius:12px;font-size:16px;font-weight:800;
+}
+.save-company-settings-btn{
+  width:100%;min-height:62px;margin-top:14px;border:0;border-radius:15px;
+  background:#16A36A;color:#fff;font-size:18px;font-weight:900;cursor:pointer;
+}
+.company-settings-status{
+  margin-top:10px;padding:12px;border-radius:12px;
+  background:#EEF5FF;color:#174A7E;text-align:center;font-weight:900;
+}
+.company-settings-status.ok{background:#EAF7F0;color:#16794B}
+@media(max-width:900px){
+  .company-settings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:560px){
+  .company-settings-grid{grid-template-columns:1fr}
+}
+
+
+/* ===== PRO 5.0 대표 직접 가격결정 ===== */
+.owner-price-card{max-width:920px;margin:0 auto 16px}
+.owner-price-guide{
+  margin:0 0 14px;padding:13px 14px;border-radius:13px;
+  background:#EEF5FF;color:#174A7E;font-size:16px;font-weight:900;
+}
+.owner-price-summary{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:9px;
+}
+.owner-price-summary div{
+  padding:14px;border-radius:14px;background:#F3F6FA;border:1px solid #DCE5EE;text-align:center;
+}
+.owner-price-summary span{display:block;font-size:12px;color:#65798C;font-weight:900}
+.owner-price-summary strong{display:block;margin-top:5px;font-size:19px;color:#102A43}
+.owner-price-fields{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:13px;
+}
+.owner-price-fields label{display:grid;gap:7px}
+.owner-price-fields span{font-size:14px;font-weight:900;color:#102A43}
+.owner-price-fields input{
+  min-height:56px;padding:0 12px;border:1px solid #CBD6E2;border-radius:12px;
+  font-size:19px;font-weight:900;text-align:right;
+}
+.owner-price-fields input[readonly]{background:#F3F6FA;color:#52667A}
+.owner-price-fields label.final input{
+  background:#FFF1E8;border-color:#FFD0B8;color:#E6532F;font-size:22px;
+}
+.owner-price-actions{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px;
+}
+.owner-price-actions button{
+  min-height:58px;border:0;border-radius:14px;font-size:17px;font-weight:900;cursor:pointer;
+}
+#applyCalculatedPriceBtn{background:#E8EEF5;color:#102A43}
+#applyOwnerFinalPriceBtn{background:#16A36A;color:#fff}
+.owner-price-status{
+  margin-top:10px;padding:12px;border-radius:12px;background:#FFF8E8;
+  color:#6D4910;text-align:center;font-weight:900;
+}
+.owner-price-status.ok{background:#EAF7F0;color:#16794B}
+@media(max-width:850px){
+  .owner-price-fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:580px){
+  .owner-price-summary{grid-template-columns:1fr}
+  .owner-price-fields{grid-template-columns:1fr}
+  .owner-price-actions{grid-template-columns:1fr}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -3000,10 +3096,10 @@ body.simple-mode .panel{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-4.2</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-5.0</div>
     </div>
   </div>
-  <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">베타시험</span><button type="button" id="launchMenuBtn">출시점검</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
+  <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">베타시험</span><button type="button" id="launchMenuBtn">출시점검</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
     <div class="amt" id="topTotal">0원</div>
     <div class="lbl">예상 견적금액</div>
   </div>
@@ -3352,7 +3448,7 @@ body.simple-mode .panel{
         <div><span>5톤 차량</span><strong id="engineTruck5">0대</strong></div>
         <div><span>작업 인원</span><strong id="engineWorkers">0명</strong></div>
         <div><span>예상 시간</span><strong id="engineHours">0시간</strong></div>
-        <div class="price"><span>추천 견적</span><strong id="enginePrice">0원</strong></div>
+        <div class="price"><span>업체 요금표 계산금액</span><strong id="enginePrice">0원</strong></div>
       </div>
 
       <div class="estimate-engine-flags">
@@ -3412,6 +3508,47 @@ body.simple-mode .panel{
 
   <!-- ============ STEP 5. 견적 확정 ============ -->
   <section class="panel" id="step5">
+<div class="card owner-price-card">
+  <h2><span class="eyebrow">대표 결정</span> 최종 견적금액</h2>
+  <p class="owner-price-guide">
+    AI는 차량·인원·시간만 계산합니다. 최종 가격은 대표님이 직접 결정하세요.
+  </p>
+
+  <div class="owner-price-summary">
+    <div><span>AI 계산 차량</span><strong id="ownerVehicleSummary">-</strong></div>
+    <div><span>AI 계산 인원</span><strong id="ownerWorkerSummary">0명</strong></div>
+    <div><span>AI 계산 시간</span><strong id="ownerHourSummary">0시간</strong></div>
+  </div>
+
+  <div class="owner-price-fields">
+    <label>
+      <span>업체 요금표 계산금액</span>
+      <input type="number" id="companyCalculatedPrice" min="0" step="10000" readonly>
+    </label>
+    <label>
+      <span>할인금액</span>
+      <input type="number" id="ownerDiscountPrice" min="0" step="10000" value="0">
+    </label>
+    <label>
+      <span>추가 조정금액</span>
+      <input type="number" id="ownerExtraPrice" step="10000" value="0">
+    </label>
+    <label class="final">
+      <span>최종 견적금액</span>
+      <input type="number" id="ownerFinalPrice" min="0" step="10000">
+    </label>
+  </div>
+
+  <div class="owner-price-actions">
+    <button type="button" id="applyCalculatedPriceBtn">계산금액 그대로 사용</button>
+    <button type="button" id="applyOwnerFinalPriceBtn">대표님 최종금액 적용</button>
+  </div>
+
+  <div id="ownerPriceStatus" class="owner-price-status">
+    업체 요금표를 기준으로 자동 계산한 뒤, 할인이나 추가금액을 직접 조정할 수 있습니다.
+  </div>
+</div>
+
 <div class="card sync-status-card">
   <h2><span class="eyebrow">안전저장</span> 견적 저장 상태</h2>
   <div class="sync-status-grid">
@@ -3433,7 +3570,7 @@ body.simple-mode .panel{
     <div><span>5톤 차량</span><strong id="pro40ResultTruck5">0대</strong></div>
     <div><span>작업 인원</span><strong id="pro40ResultWorkers">0명</strong></div>
     <div><span>예상 시간</span><strong id="pro40ResultHours">0시간</strong></div>
-    <div class="price"><span>추천 견적</span><strong id="pro40ResultPrice">0원</strong></div>
+    <div class="price"><span>업체 요금표 계산금액</span><strong id="pro40ResultPrice">0원</strong></div>
   </div>
   <div id="pro40ResultNote" class="pro40-result-note">
     사진과 현장조건을 기준으로 계산했습니다.
@@ -3555,7 +3692,7 @@ body.simple-mode .panel{
         <div><span>5톤 차량</span><strong id="autoResultTruck5">0대</strong></div>
         <div><span>작업 인원</span><strong id="autoResultWorkers">0명</strong></div>
         <div><span>예상 시간</span><strong id="autoResultHours">0시간</strong></div>
-        <div class="price"><span>추천 견적</span><strong id="autoResultPrice">0원</strong></div>
+        <div class="price"><span>업체 요금표 계산금액</span><strong id="autoResultPrice">0원</strong></div>
       </div>
       <div class="full-auto-result-actions">
         <button type="button" id="autoResultSaveBtn">☁️ 견적 저장</button>
@@ -4037,7 +4174,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-4.2';
+const BUILD_VERSION = 'JIMPICK-PRO-5.0';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -6999,9 +7136,11 @@ function mvpGoToPhoto(){
 
 
 function getFinalEstimateText(){
+  const ownerPrice=getApprovedEstimatePrice();
+  if(ownerPrice>0)return `${ownerPrice.toLocaleString('ko-KR')}원`;
   return document.getElementById('finalTotal')?.textContent
-    || document.getElementById('quickTotal')?.textContent
-    || '0원';
+    ||document.getElementById('quickTotal')?.textContent
+    ||'0원';
 }
 
 function updateFinishSummary(){
@@ -7641,9 +7780,300 @@ async function confirmDeleteAccount(){
 }
 
 
+
+const COMPANY_SETTINGS_KEY='jimpick_company_settings_v43';
+
+let CompanyPricing={
+  companyName:'짐픽',
+  ownerName:'',
+  companyPhone:'',
+  businessNumber:'',
+  truck1Price:180000,
+  truck5Price:420000,
+  workerPrice:110000,
+  extraHourPrice:50000,
+  ladderPrice:250000,
+  specialPrice:40000,
+  disassemblyPrice:30000,
+  heavyPrice:25000
+};
+
+function loadLocalCompanySettings(){
+  try{
+    const raw=localStorage.getItem(COMPANY_SETTINGS_KEY);
+    if(raw){
+      CompanyPricing={...CompanyPricing,...JSON.parse(raw)};
+    }
+  }catch(e){}
+  applyCompanySettingsToUi();
+}
+
+function applyCompanySettingsToUi(){
+  const setValue=(id,value)=>{
+    const el=document.getElementById(id);
+    if(el)el.value=value??'';
+  };
+  setValue('settingCompanyName',CompanyPricing.companyName);
+  setValue('settingOwnerName',CompanyPricing.ownerName);
+  setValue('settingCompanyPhone',CompanyPricing.companyPhone);
+  setValue('settingBusinessNumber',CompanyPricing.businessNumber);
+  setValue('settingTruck1Price',CompanyPricing.truck1Price);
+  setValue('settingTruck5Price',CompanyPricing.truck5Price);
+  setValue('settingWorkerPrice',CompanyPricing.workerPrice);
+  setValue('settingExtraHourPrice',CompanyPricing.extraHourPrice);
+  setValue('settingLadderPrice',CompanyPricing.ladderPrice);
+  setValue('settingSpecialPrice',CompanyPricing.specialPrice);
+  setValue('settingDisassemblyPrice',CompanyPricing.disassemblyPrice);
+  setValue('settingHeavyPrice',CompanyPricing.heavyPrice);
+
+  const name=CompanyPricing.companyName||'짐픽';
+  const logged=document.getElementById('loggedCompanyName');
+  const display=document.getElementById('companyNameDisplay');
+  const share=document.getElementById('shareCompany');
+  const print=document.getElementById('printCompanyName');
+
+  if(logged)logged.textContent=name;
+  if(display)display.textContent=`${name} ✏️`;
+  if(share)share.textContent=name;
+  if(print)print.textContent=name;
+}
+
+async function loadCompanySettingsFromServer(){
+  loadLocalCompanySettings();
+
+  if(localPreviewMode||!supabaseClient)return;
+  try{
+    const user=await currentCloudUser();
+    if(!user)return;
+
+    const {data,error}=await supabaseClient
+      .from('company_settings')
+      .select('*')
+      .eq('user_id',user.id)
+      .maybeSingle();
+
+    if(error)throw error;
+    if(!data)return;
+
+    CompanyPricing={
+      companyName:data.company_name||CompanyPricing.companyName,
+      ownerName:data.owner_name||'',
+      companyPhone:data.company_phone||'',
+      businessNumber:data.business_number||'',
+      truck1Price:Number(data.truck1_price)||180000,
+      truck5Price:Number(data.truck5_price)||420000,
+      workerPrice:Number(data.worker_price)||110000,
+      extraHourPrice:Number(data.extra_hour_price)||50000,
+      ladderPrice:Number(data.ladder_price)||250000,
+      specialPrice:Number(data.special_price)||40000,
+      disassemblyPrice:Number(data.disassembly_price)||30000,
+      heavyPrice:Number(data.heavy_price)||25000
+    };
+
+    localStorage.setItem(COMPANY_SETTINGS_KEY,JSON.stringify(CompanyPricing));
+    applyCompanySettingsToUi();
+  }catch(error){
+    console.warn('업체 설정 불러오기 실패',error);
+  }
+}
+
+function openCompanySettings(){
+  applyCompanySettingsToUi();
+  document.getElementById('companySettingsModal').style.display='flex';
+}
+
+function closeCompanySettings(){
+  document.getElementById('companySettingsModal').style.display='none';
+}
+
+async function saveCompanySettings(){
+  const getText=id=>document.getElementById(id)?.value?.trim()||'';
+  const getNumber=(id,fallback)=>Math.max(0,Number(document.getElementById(id)?.value)||fallback);
+
+  const next={
+    companyName:getText('settingCompanyName')||'짐픽',
+    ownerName:getText('settingOwnerName'),
+    companyPhone:getText('settingCompanyPhone').replace(/\D/g,''),
+    businessNumber:getText('settingBusinessNumber'),
+    truck1Price:getNumber('settingTruck1Price',180000),
+    truck5Price:getNumber('settingTruck5Price',420000),
+    workerPrice:getNumber('settingWorkerPrice',110000),
+    extraHourPrice:getNumber('settingExtraHourPrice',50000),
+    ladderPrice:getNumber('settingLadderPrice',250000),
+    specialPrice:getNumber('settingSpecialPrice',40000),
+    disassemblyPrice:getNumber('settingDisassemblyPrice',30000),
+    heavyPrice:getNumber('settingHeavyPrice',25000)
+  };
+
+  CompanyPricing=next;
+  localStorage.setItem(COMPANY_SETTINGS_KEY,JSON.stringify(next));
+  applyCompanySettingsToUi();
+
+  const status=document.getElementById('companySettingsStatus');
+
+  if(localPreviewMode||!supabaseClient){
+    if(status){
+      status.className='company-settings-status ok';
+      status.textContent='이 기기에 업체정보와 요금을 저장했습니다.';
+    }
+    alert('업체 설정을 저장했습니다.');
+    return;
+  }
+
+  try{
+    const user=await currentCloudUser();
+    if(!user)throw new Error('로그인이 만료되었습니다.');
+
+    const {error}=await supabaseClient.from('company_settings').upsert({
+      user_id:user.id,
+      company_name:next.companyName,
+      owner_name:next.ownerName,
+      company_phone:next.companyPhone,
+      business_number:next.businessNumber,
+      truck1_price:next.truck1Price,
+      truck5_price:next.truck5Price,
+      worker_price:next.workerPrice,
+      extra_hour_price:next.extraHourPrice,
+      ladder_price:next.ladderPrice,
+      special_price:next.specialPrice,
+      disassembly_price:next.disassemblyPrice,
+      heavy_price:next.heavyPrice,
+      updated_at:new Date().toISOString()
+    });
+
+    if(error)throw error;
+
+    await supabaseClient.from('profiles').update({
+      company_name:next.companyName,
+      company_phone:next.companyPhone,
+      business_number:next.businessNumber
+    }).eq('id',user.id);
+
+    if(status){
+      status.className='company-settings-status ok';
+      status.textContent='업체정보와 기본요금을 서버에 저장했습니다.';
+    }
+
+    if(typeof updateMovingEstimateEngine==='function')updateMovingEstimateEngine();
+    if(typeof updateEstimateSharePreview==='function')updateEstimateSharePreview();
+  updateOwnerPricePanel();
+    alert('업체 설정을 저장했습니다.');
+  }catch(error){
+    console.error(error);
+    if(status)status.textContent=`서버 저장 실패: ${error.message||error}`;
+  }
+}
+
+
+
+let ownerApprovedFinalPrice=0;
+
+function getCompanyCalculatedPrice(){
+  const engine=lastEngineResult||calculateMovingEstimateEngine();
+  return Number(engine?.price)||0;
+}
+
+function updateOwnerPricePanel(){
+  const engine=lastEngineResult||calculateMovingEstimateEngine();
+  const truckParts=[];
+  if(Number(engine?.truck5)>0)truckParts.push(`5톤 ${engine.truck5}대`);
+  if(Number(engine?.truck1)>0)truckParts.push(`1톤 ${engine.truck1}대`);
+
+  const setText=(id,value)=>{
+    const el=document.getElementById(id);
+    if(el)el.textContent=value;
+  };
+  const setValue=(id,value)=>{
+    const el=document.getElementById(id);
+    if(el)el.value=Number(value)||0;
+  };
+
+  setText('ownerVehicleSummary',truckParts.length?truckParts.join(' + '):'차량 미정');
+  setText('ownerWorkerSummary',`${Number(engine?.workers)||0}명`);
+  setText('ownerHourSummary',`${Number(engine?.hours)||0}시간`);
+
+  const calculated=Number(engine?.price)||0;
+  setValue('companyCalculatedPrice',calculated);
+
+  const discount=Number(document.getElementById('ownerDiscountPrice')?.value)||0;
+  const extra=Number(document.getElementById('ownerExtraPrice')?.value)||0;
+  const suggested=Math.max(0,calculated-discount+extra);
+
+  if(!ownerApprovedFinalPrice){
+    setValue('ownerFinalPrice',suggested);
+  }
+}
+
+function recalculateOwnerFinalPrice(){
+  const calculated=Number(document.getElementById('companyCalculatedPrice')?.value)||0;
+  const discount=Math.max(0,Number(document.getElementById('ownerDiscountPrice')?.value)||0);
+  const extra=Number(document.getElementById('ownerExtraPrice')?.value)||0;
+  const final=Math.max(0,calculated-discount+extra);
+
+  const el=document.getElementById('ownerFinalPrice');
+  if(el)el.value=final;
+  ownerApprovedFinalPrice=0;
+}
+
+function applyCalculatedPrice(){
+  const calculated=getCompanyCalculatedPrice();
+  document.getElementById('ownerDiscountPrice').value=0;
+  document.getElementById('ownerExtraPrice').value=0;
+  document.getElementById('ownerFinalPrice').value=calculated;
+  ownerApprovedFinalPrice=calculated;
+  applyOwnerFinalPrice();
+}
+
+function applyOwnerFinalPrice(){
+  const final=Math.max(0,Number(document.getElementById('ownerFinalPrice')?.value)||0);
+  if(final<10000){
+    alert('최종 견적금액을 입력해주세요.');
+    return;
+  }
+
+  ownerApprovedFinalPrice=final;
+
+  const manual=document.getElementById('manualPrice');
+  if(manual){
+    manual.value=final;
+    manual.dispatchEvent(new Event('input',{bubbles:true}));
+    manual.dispatchEvent(new Event('change',{bubbles:true}));
+  }
+
+  const finalTotal=document.getElementById('finalTotal');
+  const quickTotal=document.getElementById('quickTotal');
+  const formatted=`${final.toLocaleString('ko-KR')}원`;
+
+  if(finalTotal)finalTotal.textContent=formatted;
+  if(quickTotal)quickTotal.textContent=formatted;
+
+  const status=document.getElementById('ownerPriceStatus');
+  if(status){
+    status.className='owner-price-status ok';
+    status.textContent=`대표님 최종 견적 ${formatted}이 적용되었습니다.`;
+  }
+
+  if(typeof updateFinishSummary==='function')updateFinishSummary();
+  updateOwnerPricePanel();
+  if(typeof updateEstimateSharePreview==='function')updateEstimateSharePreview();
+  if(typeof updateFullAutoResult==='function'&&lastEngineResult){
+    updateFullAutoResult({...lastEngineResult,price:final});
+  }
+  if(typeof updatePro40Result==='function'&&lastEngineResult){
+    updatePro40Result({...lastEngineResult,price:final});
+  }
+
+  alert(`최종 견적 ${formatted}을 적용했습니다.`);
+}
+
+function getApprovedEstimatePrice(){
+  return ownerApprovedFinalPrice||Number(document.getElementById('ownerFinalPrice')?.value)||getCompanyCalculatedPrice();
+}
+
+
 function getEstimateShareData(){
   const value=id=>document.getElementById(id)?.value?.trim()||'';
-  const company=document.getElementById('loggedCompanyName')?.textContent?.trim()||'짐픽';
+  const company=CompanyPricing.companyName||document.getElementById('loggedCompanyName')?.textContent?.trim()||'짐픽';
   const truck1=Number(document.getElementById('truck1Count')?.value)||0;
   const truck5=Number(document.getElementById('truck5Count')?.value)||0;
   const workers=Number(document.getElementById('workerCount')?.value)||0;
@@ -7759,7 +8189,7 @@ function makeCustomerSmsText(){
   const workers=Number(document.getElementById('workerCount')?.value)||0;
   const hours=Number(document.getElementById('workHours')?.value)||0;
   const price=getFinalEstimateText();
-  const company=document.getElementById('loggedCompanyName')?.textContent?.trim()||'짐픽 이사';
+  const company=CompanyPricing.companyName||document.getElementById('loggedCompanyName')?.textContent?.trim()||'짐픽 이사';
 
   return `[${company} 이사견적]
 ${name} 고객님 안녕하세요.
@@ -7980,20 +8410,20 @@ function calculateMovingEstimateEngine(){
   const setupHours=(disassemblyCount*0.12)+(specialCount*0.08);
   const hours=Math.max(2,Math.ceil(loadHours+drivingHours+setupHours));
 
-  const truckCost=(truck1*180000)+(truck5*420000);
-  const workerCost=workers*110000;
-  const heavyCost=heavyCount*25000;
-  const disassemblyCost=disassemblyCount*18000;
-  const specialCost=specialCount*30000;
-  const timeCost=Math.max(0,hours-5)*50000;
-  const confirmedDisassemblyCost=Object.values(SmartAnswerState.disassembly).filter(Boolean).length*30000;
-  const confirmedSpecialCost=Object.values(SmartAnswerState.special).filter(Boolean).length*40000;
-  const ladderCost=SmartAnswerState.ladder?250000:0;
+  const truckCost=(truck1*CompanyPricing.truck1Price)+(truck5*CompanyPricing.truck5Price);
+  const workerCost=workers*CompanyPricing.workerPrice;
+  const heavyCost=heavyCount*CompanyPricing.heavyPrice;
+  const disassemblyCost=disassemblyCount*CompanyPricing.disassemblyPrice;
+  const specialCost=specialCount*CompanyPricing.specialPrice;
+  const timeCost=Math.max(0,hours-5)*CompanyPricing.extraHourPrice;
+  const confirmedDisassemblyCost=Object.values(SmartAnswerState.disassembly).filter(Boolean).length*CompanyPricing.disassemblyPrice;
+  const confirmedSpecialCost=Object.values(SmartAnswerState.special).filter(Boolean).length*CompanyPricing.specialPrice;
+  const ladderCost=SmartAnswerState.ladder?CompanyPricing.ladderPrice:0;
 
   const sceneAdjust=calculateSceneAdjustments();
   const adjustedWorkers=Math.min(20,workers+sceneAdjust.workerExtra);
   const adjustedHours=Math.min(24,hours+sceneAdjust.hourExtra);
-  let price=truckCost+(adjustedWorkers*110000)+heavyCost+disassemblyCost+specialCost+timeCost+confirmedDisassemblyCost+confirmedSpecialCost+ladderCost+sceneAdjust.priceExtra;
+  let price=truckCost+(adjustedWorkers*CompanyPricing.workerPrice)+heavyCost+disassemblyCost+specialCost+timeCost+confirmedDisassemblyCost+confirmedSpecialCost+ladderCost+sceneAdjust.priceExtra;
   price=Math.ceil(price/10000)*10000;
 
   const learnedTruckUnits=Math.max(
@@ -8061,7 +8491,8 @@ function applyMovingEstimateEngine(){
     'ok'
   );
   updateFullAutoResult(result);
-  alert('이사업체 전용 자동견적을 적용했습니다.');
+  updateOwnerPricePanel();
+  alert('차량·인원·시간 계산을 적용했습니다. 최종 가격은 대표님이 확인해주세요.');
 }
 
 
@@ -8300,6 +8731,7 @@ async function handleBillingReturn(){
     await authLoadProfile(user);
     updateSubscriptionUi();
       await loadCompanyTrainingFactors();
+      await loadCompanySettingsFromServer();
     updateBillingInfo();
 
     showBillingResult(
@@ -10139,6 +10571,19 @@ ${msg || '-'}`;
     document.getElementById('completeSignupBtn')?.addEventListener('click',authCompleteSignup);
     document.getElementById('forgotPasswordBtn')?.addEventListener('click',authForgotPassword);
     document.getElementById('logoutBtn')?.addEventListener('click',authLogout);
+    document.getElementById('ownerDiscountPrice')?.addEventListener('input',recalculateOwnerFinalPrice);
+    document.getElementById('ownerExtraPrice')?.addEventListener('input',recalculateOwnerFinalPrice);
+    document.getElementById('ownerFinalPrice')?.addEventListener('input',()=>{ownerApprovedFinalPrice=0;});
+    document.getElementById('applyCalculatedPriceBtn')?.addEventListener('click',applyCalculatedPrice);
+    document.getElementById('applyOwnerFinalPriceBtn')?.addEventListener('click',applyOwnerFinalPrice);
+    document.querySelectorAll('[data-step="5"]').forEach(el=>{
+      el.addEventListener('click',()=>setTimeout(updateOwnerPricePanel,100));
+    });
+    document.getElementById('companySettingsBtn')?.addEventListener('click',openCompanySettings);
+    document.getElementById('closeCompanySettingsBtn')?.addEventListener('click',closeCompanySettings);
+    document.getElementById('companySettingsModal')?.addEventListener('click',(e)=>{if(e.target.id==='companySettingsModal')closeCompanySettings();});
+    document.getElementById('saveCompanySettingsBtn')?.addEventListener('click',saveCompanySettings);
+    loadLocalCompanySettings();
     document.getElementById('dataSafetyBtn')?.addEventListener('click',openDataSafety);
     document.getElementById('closeDataSafetyBtn')?.addEventListener('click',closeDataSafety);
     document.getElementById('dataSafetyModal')?.addEventListener('click',(e)=>{if(e.target.id==='dataSafetyModal')closeDataSafety();});
@@ -10837,6 +11282,44 @@ document.addEventListener('DOMContentLoaded', App.init);
     <div class="delete-account-actions">
       <button type="button" id="cancelDeleteAccountBtn">취소</button>
       <button type="button" id="confirmDeleteAccountBtn">완전히 탈퇴</button>
+    </div>
+  </div>
+</div>
+
+
+<div id="companySettingsModal" class="company-settings-modal" style="display:none;">
+  <div class="company-settings-card">
+    <div class="company-settings-head">
+      <div>
+        <h2>업체정보와 기본요금</h2>
+        <p>AI 계산 결과에 대표님 업체 요금표를 적용합니다. 최종 금액은 견적 화면에서 직접 결정합니다.</p>
+      </div>
+      <button type="button" id="closeCompanySettingsBtn">✕</button>
+    </div>
+
+    <div class="company-settings-grid">
+      <label><span>업체명</span><input type="text" id="settingCompanyName" placeholder="예: 대구 짐픽이사"></label>
+      <label><span>대표자명</span><input type="text" id="settingOwnerName" placeholder="대표자 이름"></label>
+      <label><span>업체 전화번호</span><input type="tel" id="settingCompanyPhone" placeholder="01012345678"></label>
+      <label><span>사업자등록번호</span><input type="text" id="settingBusinessNumber" placeholder="000-00-00000"></label>
+
+      <label><span>1톤 차량 기본요금</span><input type="number" id="settingTruck1Price" min="0" step="10000" value="180000"></label>
+      <label><span>5톤 차량 기본요금</span><input type="number" id="settingTruck5Price" min="0" step="10000" value="420000"></label>
+      <label><span>작업자 1명 요금</span><input type="number" id="settingWorkerPrice" min="0" step="10000" value="110000"></label>
+      <label><span>추가 1시간 요금</span><input type="number" id="settingExtraHourPrice" min="0" step="10000" value="50000"></label>
+
+      <label><span>사다리차 추가요금</span><input type="number" id="settingLadderPrice" min="0" step="10000" value="250000"></label>
+      <label><span>특수품목 1개 요금</span><input type="number" id="settingSpecialPrice" min="0" step="10000" value="40000"></label>
+      <label><span>분해작업 1개 요금</span><input type="number" id="settingDisassemblyPrice" min="0" step="10000" value="30000"></label>
+      <label><span>중량품목 1개 요금</span><input type="number" id="settingHeavyPrice" min="0" step="10000" value="25000"></label>
+    </div>
+
+    <button type="button" id="saveCompanySettingsBtn" class="save-company-settings-btn">
+      업체정보와 요금 저장
+    </button>
+
+    <div id="companySettingsStatus" class="company-settings-status">
+      저장하면 다음 견적부터 바로 적용됩니다.
     </div>
   </div>
 </div>

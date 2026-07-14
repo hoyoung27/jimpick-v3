@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 4.2",
+  "name": "짐픽 PRO 5.0",
   "short_name": "짐픽 PRO",
-  "description": "내 자료 내려받기·촬영사진 정리·회원탈퇴·서버점검 기능을 갖춘 AI 이사견적 앱",
+  "description": "AI는 차량·인원·시간만 계산하고 최종 견적금액은 각 이사업체 대표가 직접 결정하는 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
