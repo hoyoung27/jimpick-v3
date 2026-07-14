@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 6.2 BETA",
+  "name": "짐픽 PRO 6.3 DEMO",
   "short_name": "짐픽 PRO",
-  "description": "현장 베타테스트 결과를 집계해 단계별 정상률·문제목록·출시 가능 여부를 판단하는 AI 이사견적 앱",
+  "description": "로그인 없이 예시 고객·품목·차량·금액이 입력된 견적확인 화면을 바로 체험하는 AI 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

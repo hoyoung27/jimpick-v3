@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 6.2 BETA</title>
+<title>짐픽 PRO 6.3 DEMO</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 6.2 BETA 최소판매형 ===== */
+/* ===== 짐픽 PRO 6.3 DEMO 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -3466,7 +3466,7 @@ body.simple-mode .panel{
 }
 
 
-/* ===== PRO 6.0 RC 출시 자동점검 ===== */
+/* ===== PRO 6.3 DEMO 출시 자동점검 ===== */
 .rc60-card{max-width:920px;margin:0 auto 16px}
 .rc60-guide{
   margin:0 0 14px;padding:13px 14px;border-radius:13px;
@@ -3653,6 +3653,17 @@ body.simple-mode .panel{
   .beta-results-actions{grid-template-columns:1fr}
 }
 
+
+.demo-preview-note{
+  margin:7px 0 10px;text-align:center;color:#68798A;
+  font-size:13px;font-weight:800;
+}
+.demo-mode-banner{
+  margin:10px auto 14px;max-width:920px;padding:13px 14px;
+  border-radius:13px;background:#FFF8E8;border:1px solid #F3D6A1;
+  color:#6D4910;text-align:center;font-weight:900;
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -3744,8 +3755,8 @@ body.simple-mode .panel{
       <button id="loginBtn" class="auth-main-btn">로그인</button>
       
         <button type="button" class="auth-test-btn" id="demoEnterBtn">
-          🧪 로그인 없이 기능 시험하기
-        </button>
+          👀 로그인 없이 견적 화면 보기
+        </button><p class="demo-preview-note">예시 고객·품목·차량·금액이 자동으로 들어갑니다.</p>
 
 <button id="goSignupBtn" class="auth-sub-btn">처음이면 회원가입</button>
       <button id="forgotPasswordBtn" class="auth-link-btn">비밀번호를 잊으셨나요?</button>
@@ -3932,10 +3943,10 @@ body.simple-mode .panel{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-6.2-BETA</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-6.3-DEMO</div>
     </div>
   </div>
-  <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">6.0 RC</span><span class="beta-version-badge">베타시험</span><button type="button" id="betaResultsBtn">베타결과</button><button type="button" id="betaTestMenuBtn">현장테스트</button><button type="button" id="launchMenuBtn">출시진단</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="contractHistoryBtn">계약관리</button><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
+  <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">6.3 DEMO</span><span class="beta-version-badge">베타시험</span><button type="button" id="betaResultsBtn">베타결과</button><button type="button" id="betaTestMenuBtn">현장테스트</button><button type="button" id="launchMenuBtn">출시진단</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="contractHistoryBtn">계약관리</button><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
     <div class="amt" id="topTotal">0원</div>
     <div class="lbl">예상 견적금액</div>
   </div>
@@ -5217,7 +5228,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-6.2-BETA';
+const BUILD_VERSION = 'JIMPICK-PRO-6.3-DEMO';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -8071,11 +8082,14 @@ async function deleteCloudQuote(id){
 async function enterDemoMode(){
   localPreviewMode=true;
   cloudAuthReady=false;
-  document.getElementById('serverSetupGate').style.display='none';
+
+  const serverGate=document.getElementById('serverSetupGate');
+  if(serverGate)serverGate.style.display='none';
+
   await authShowApp({
     id:'demo-user',
     email:'demo@jimpick.local',
-    user_metadata:{company_name:'짐픽 현장시험'}
+    user_metadata:{company_name:'짐픽 체험업체'}
   });
 
   const app=document.getElementById('appShell');
@@ -8083,22 +8097,111 @@ async function enterDemoMode(){
     const banner=document.createElement('div');
     banner.id='demoModeBanner';
     banner.className='demo-mode-banner';
-    banner.textContent='🧪 현장시험 모드 · 서버 저장과 실제 회원가입은 되지 않습니다.';
+    banner.textContent='👀 로그인 없는 견적 화면 체험 · 서버 저장과 실제 결제는 되지 않습니다.';
     app.prepend(banner);
   }
 
   const set=(id,value)=>{
     const el=document.getElementById(id);
-    if(el && !el.value)el.value=value;
+    if(!el)return;
+    el.value=value;
+    el.dispatchEvent(new Event('input',{bubbles:true}));
+    el.dispatchEvent(new Event('change',{bubbles:true}));
   };
-  set('customerName','시험 고객');
-  set('customerPhone','01012345678');
-  set('moveDate',new Date().toISOString().slice(0,10));
-  set('fromAddress','대구 출발지');
-  set('toAddress','대구 도착지');
 
-  if(typeof UI!=='undefined')UI.goStep(1);
-  setTimeout(()=>updateFieldTestSummary('시험 고객정보가 준비되었습니다. 사진 단계로 이동하세요.',''),100);
+  set('customerName','홍길동');
+  set('customerPhone','01012345678');
+  set('moveDate',new Date(Date.now()+7*86400000).toISOString().slice(0,10));
+  set('fromAddress','대구광역시 수성구 범어동');
+  set('toAddress','대구광역시 달서구 월성동');
+
+  set('truck1Count',2);
+  set('truck5Count',1);
+  set('workerCount',5);
+  set('workHours',7);
+
+  const sampleItems={
+    '냉장고':1,
+    '세탁기':1,
+    'TV':1,
+    '침대':2,
+    '장롱':2,
+    '소파':1,
+    '식탁':1,
+    '책상':2,
+    '에어컨':2,
+    '이사박스':25
+  };
+
+  if(State?.items){
+    Object.entries(sampleItems).forEach(([name,qty])=>{
+      if(State.items[name]){
+        State.items[name].qty=qty;
+        State.items[name].confidence=0.95;
+      }
+    });
+  }
+
+  CompanyPricing={
+    ...CompanyPricing,
+    companyName:'짐픽 체험이사',
+    ownerName:'김대표',
+    companyPhone:'01098765432',
+    truck1Price:180000,
+    truck5Price:420000
+  };
+
+  ownerApprovedFinalPrice=980000;
+  set('companyCalculatedPrice',1050000);
+  set('ownerDiscountPrice',70000);
+  set('ownerExtraPrice',0);
+  set('ownerFinalPrice',980000);
+  set('manualPrice',980000);
+  set('contractDeposit',200000);
+  set('contractStatus','consulting');
+
+  if(typeof applyCompanySettingsToUi==='function')applyCompanySettingsToUi();
+  if(typeof Calc!=='undefined')Calc.run();
+  if(typeof renderItems==='function')renderItems();
+  if(typeof updateMovingEstimateEngine==='function')updateMovingEstimateEngine();
+
+  if(lastEngineResult){
+    lastEngineResult={
+      ...lastEngineResult,
+      truck1:2,
+      truck5:1,
+      workers:5,
+      hours:7,
+      price:980000,
+      totalTon:7
+    };
+  }
+
+  if(typeof updateOwnerPricePanel==='function')updateOwnerPricePanel();
+  set('companyCalculatedPrice',1050000);
+  set('ownerDiscountPrice',70000);
+  set('ownerFinalPrice',980000);
+  ownerApprovedFinalPrice=980000;
+
+  if(typeof updateFinishSummary==='function')updateFinishSummary();
+  if(typeof updateEstimateSharePreview==='function')updateEstimateSharePreview();
+  if(typeof updateContractAmounts==='function')updateContractAmounts();
+  if(typeof updatePro40Result==='function'&&lastEngineResult)updatePro40Result(lastEngineResult);
+
+  if(typeof UI!=='undefined')UI.goStep(5);
+  window.scrollTo({top:0,behavior:'smooth'});
+
+  setTimeout(()=>{
+    if(typeof updateOwnerPricePanel==='function')updateOwnerPricePanel();
+    set('companyCalculatedPrice',1050000);
+    set('ownerDiscountPrice',70000);
+    set('ownerFinalPrice',980000);
+    ownerApprovedFinalPrice=980000;
+    if(typeof updateEstimateSharePreview==='function')updateEstimateSharePreview();
+    if(typeof updateContractAmounts==='function')updateContractAmounts();
+  },150);
+
+  alert('예시 견적서를 열었습니다. 화면을 아래로 내리면 견적금액, 공유, 고객서명과 계약 화면을 확인할 수 있습니다.');
 }
 
 function setConnectionStatus(id,ok,text){
