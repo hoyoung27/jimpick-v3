@@ -1,2 +1,2 @@
-PRO 7.2 RC
-GitHub 전체 덮어쓰기 → Netlify Deploy project without cache → Ctrl+Shift+R
+PRO 7.4 RC
+압축 해제 → GitHub 전체 덮어쓰기 → Netlify Deploy project without cache → Ctrl+Shift+R

@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 7.2 RC",
+  "name": "짐픽 PRO 7.4 RC",
   "short_name": "짐픽 PRO",
-  "description": "5개 방별 품목과 작은 캐릭터 아이콘을 적용한 상용 디자인 개선판",
+  "description": "6개 방 품목 입력과 차량·작업자 추천 완성판",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
