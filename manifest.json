@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 6.7 DEMO",
+  "name": "짐픽 PRO 6.8 DEMO",
   "short_name": "짐픽 PRO",
-  "description": "이사업체 대표가 옵션 항목과 단가, 보관료를 직접 설정하고 저장하는 AI 이사견적 앱",
+  "description": "방별 사진·품목·파손위험·차량·작업자를 추천하는 AI 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
