@@ -274,3 +274,8 @@ alter table public.company_settings
 
 alter table public.company_settings
   add column if not exists use_heavy_price boolean not null default true;
+
+
+-- 짐픽 PRO 5.2 업체별 자유 추가요금 항목
+alter table public.company_settings
+  add column if not exists custom_fees jsonb not null default '[]'::jsonb;

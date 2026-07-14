@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 5.1</title>
+<title>짐픽 PRO 5.2</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 5.1 최소판매형 ===== */
+/* ===== 짐픽 PRO 5.2 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -2878,6 +2878,81 @@ body.simple-mode .panel{
   .pricing-breakdown-list{grid-template-columns:1fr}
 }
 
+
+/* ===== PRO 5.2 업체별 추가요금 직접 만들기 ===== */
+.custom-fee-settings{
+  margin-top:16px;padding:16px;border-radius:16px;
+  background:#FFF8E8;border:1px solid #F3D6A1;
+}
+.custom-fee-settings-head{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+}
+.custom-fee-settings-head h3{margin:0;color:#6D4910;font-size:19px}
+.custom-fee-settings-head p{margin:5px 0 0;color:#82621D;font-size:13px;font-weight:700}
+.custom-fee-settings-head button{
+  min-height:42px;border:0;border-radius:11px;padding:0 14px;
+  background:#6D4910;color:#fff;font-weight:900;cursor:pointer;
+}
+.custom-fee-settings-list{display:grid;gap:8px;margin-top:13px}
+.custom-fee-setting-item{
+  display:grid;grid-template-columns:1fr 150px auto;gap:8px;align-items:center;
+  padding:10px;border-radius:12px;background:#fff;border:1px solid #E7C988;
+}
+.custom-fee-setting-item input{
+  min-height:44px;padding:0 10px;border:1px solid #CBD6E2;
+  border-radius:10px;font-size:15px;font-weight:800;
+}
+.custom-fee-setting-item button{
+  min-height:44px;border:0;border-radius:10px;padding:0 13px;
+  background:#FFF0ED;color:#B42318;font-weight:900;cursor:pointer;
+}
+.custom-fee-add-row{
+  display:grid;grid-template-columns:1fr 160px auto;gap:8px;margin-top:10px;
+}
+.custom-fee-add-row input{
+  min-height:48px;padding:0 11px;border:1px solid #D2B977;
+  border-radius:11px;font-size:15px;font-weight:800;
+}
+.custom-fee-add-row button{
+  min-height:48px;border:0;border-radius:11px;padding:0 16px;
+  background:#16A36A;color:#fff;font-weight:900;cursor:pointer;
+}
+.quote-custom-fees{
+  margin-top:13px;padding:14px;border-radius:14px;
+  background:#F7F9FC;border:1px solid #DCE5EE;
+}
+.quote-custom-fees-head{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:10px;
+}
+.quote-custom-fees-head h3{margin:0;color:#102A43;font-size:17px}
+.quote-custom-fees-head p{margin:4px 0 0;color:#68798A;font-size:13px}
+.quote-custom-fees-head>strong{color:#E6532F;font-size:20px}
+.quote-custom-fee-list{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:11px;
+}
+.quote-custom-fee-item{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:11px;border-radius:12px;background:#fff;border:1px solid #DCE5EE;
+}
+.quote-custom-fee-item label{
+  display:flex;align-items:center;gap:9px;cursor:pointer;
+}
+.quote-custom-fee-item input[type="checkbox"]{
+  width:23px;height:23px;accent-color:#16A36A;
+}
+.quote-custom-fee-item span{color:#102A43;font-size:14px;font-weight:900}
+.quote-custom-fee-item strong{color:#52667A;font-size:14px}
+.quote-custom-fee-empty{
+  padding:14px;border-radius:12px;background:#fff;color:#68798A;
+  text-align:center;font-weight:800;grid-column:1/-1;
+}
+@media(max-width:700px){
+  .custom-fee-setting-item{grid-template-columns:1fr}
+  .custom-fee-add-row{grid-template-columns:1fr}
+  .quote-custom-fee-list{grid-template-columns:1fr}
+  .custom-fee-settings-head{flex-direction:column}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -3157,7 +3232,7 @@ body.simple-mode .panel{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-5.1</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-5.2</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">베타시험</span><button type="button" id="launchMenuBtn">출시점검</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -3609,6 +3684,18 @@ body.simple-mode .panel{
   <div class="pricing-breakdown">
     <h3>이번 견적에 적용된 요금</h3>
     <div id="pricingBreakdownList" class="pricing-breakdown-list"></div>
+  </div>
+
+
+  <div class="quote-custom-fees">
+    <div class="quote-custom-fees-head">
+      <div>
+        <h3>이번 견적의 추가요금</h3>
+        <p>필요한 항목만 체크하세요.</p>
+      </div>
+      <strong id="selectedCustomFeeTotal">0원</strong>
+    </div>
+    <div id="quoteCustomFeeList" class="quote-custom-fee-list"></div>
   </div>
 
 <div id="ownerPriceStatus" class="owner-price-status">
@@ -4241,7 +4328,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-5.1';
+const BUILD_VERSION = 'JIMPICK-PRO-5.2';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -7868,7 +7955,8 @@ let CompanyPricing={
   useLadderPrice:true,
   useSpecialPrice:true,
   useDisassemblyPrice:true,
-  useHeavyPrice:true
+  useHeavyPrice:true,
+  customFees:[]
 };
 
 function loadLocalCompanySettings(){
@@ -7910,6 +7998,8 @@ function applyCompanySettingsToUi(){
   setChecked('useDisassemblyPrice',CompanyPricing.useDisassemblyPrice);
   setChecked('useHeavyPrice',CompanyPricing.useHeavyPrice);
   updatePricingFieldVisibility();
+  renderCustomFeeSettings();
+  renderQuoteCustomFees();
 
 
   const name=CompanyPricing.companyName||'짐픽';
@@ -7922,6 +8012,131 @@ function applyCompanySettingsToUi(){
   if(display)display.textContent=`${name} ✏️`;
   if(share)share.textContent=name;
   if(print)print.textContent=name;
+}
+
+
+
+let selectedCustomFeeIds=new Set();
+
+function createCustomFeeId(){
+  return `fee_${Date.now()}_${Math.random().toString(36).slice(2,8)}`;
+}
+
+function normalizeCustomFees(items){
+  return (Array.isArray(items)?items:[])
+    .map(item=>({
+      id:String(item?.id||createCustomFeeId()),
+      name:String(item?.name||'').trim(),
+      amount:Math.max(0,Number(item?.amount)||0)
+    }))
+    .filter(item=>item.name);
+}
+
+function renderCustomFeeSettings(){
+  const wrap=document.getElementById('customFeeSettingsList');
+  if(!wrap)return;
+
+  const fees=normalizeCustomFees(CompanyPricing.customFees);
+  CompanyPricing.customFees=fees;
+
+  if(!fees.length){
+    wrap.innerHTML='<div class="quote-custom-fee-empty">등록된 추가요금 항목이 없습니다.</div>';
+    return;
+  }
+
+  wrap.innerHTML=fees.map((fee,index)=>`
+    <div class="custom-fee-setting-item">
+      <input type="text" value="${Utils.escapeHtml(fee.name)}" data-custom-fee-index="${index}" data-custom-fee-field="name">
+      <input type="number" min="0" step="10000" value="${fee.amount}" data-custom-fee-index="${index}" data-custom-fee-field="amount">
+      <button type="button" data-remove-custom-fee="${index}">삭제</button>
+    </div>
+  `).join('');
+
+  wrap.querySelectorAll('[data-custom-fee-field]').forEach(input=>{
+    input.addEventListener('input',()=>{
+      const index=Number(input.dataset.customFeeIndex);
+      const field=input.dataset.customFeeField;
+      if(!CompanyPricing.customFees[index])return;
+      CompanyPricing.customFees[index][field]=field==='amount'
+        ?Math.max(0,Number(input.value)||0)
+        :input.value;
+      renderQuoteCustomFees();
+    });
+  });
+
+  wrap.querySelectorAll('[data-remove-custom-fee]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const index=Number(btn.dataset.removeCustomFee);
+      const removed=CompanyPricing.customFees[index];
+      if(removed)selectedCustomFeeIds.delete(removed.id);
+      CompanyPricing.customFees.splice(index,1);
+      renderCustomFeeSettings();
+      renderQuoteCustomFees();
+      recalculateOwnerFinalPrice();
+    });
+  });
+}
+
+function addNewCustomFee(){
+  const name=document.getElementById('newCustomFeeName')?.value?.trim()||'';
+  const amount=Math.max(0,Number(document.getElementById('newCustomFeeAmount')?.value)||0);
+
+  if(!name){
+    alert('추가요금 항목명을 입력해주세요.');
+    return;
+  }
+
+  CompanyPricing.customFees=normalizeCustomFees(CompanyPricing.customFees);
+  CompanyPricing.customFees.push({
+    id:createCustomFeeId(),
+    name,
+    amount
+  });
+
+  document.getElementById('newCustomFeeName').value='';
+  document.getElementById('newCustomFeeAmount').value='';
+  renderCustomFeeSettings();
+  renderQuoteCustomFees();
+}
+
+function getSelectedCustomFeeTotal(){
+  return normalizeCustomFees(CompanyPricing.customFees)
+    .filter(fee=>selectedCustomFeeIds.has(fee.id))
+    .reduce((sum,fee)=>sum+fee.amount,0);
+}
+
+function renderQuoteCustomFees(){
+  const wrap=document.getElementById('quoteCustomFeeList');
+  const total=document.getElementById('selectedCustomFeeTotal');
+  if(!wrap)return;
+
+  const fees=normalizeCustomFees(CompanyPricing.customFees);
+
+  if(!fees.length){
+    wrap.innerHTML='<div class="quote-custom-fee-empty">업체설정에서 추가요금 항목을 만들 수 있습니다.</div>';
+  }else{
+    wrap.innerHTML=fees.map(fee=>`
+      <div class="quote-custom-fee-item">
+        <label>
+          <input type="checkbox" data-quote-custom-fee="${Utils.escapeHtml(fee.id)}" ${selectedCustomFeeIds.has(fee.id)?'checked':''}>
+          <span>${Utils.escapeHtml(fee.name)}</span>
+        </label>
+        <strong>${fee.amount.toLocaleString('ko-KR')}원</strong>
+      </div>
+    `).join('');
+
+    wrap.querySelectorAll('[data-quote-custom-fee]').forEach(input=>{
+      input.addEventListener('change',()=>{
+        const id=input.dataset.quoteCustomFee;
+        if(input.checked)selectedCustomFeeIds.add(id);
+        else selectedCustomFeeIds.delete(id);
+        renderQuoteCustomFees();
+        recalculateOwnerFinalPrice();
+      });
+    });
+  }
+
+  if(total)total.textContent=`${getSelectedCustomFeeTotal().toLocaleString('ko-KR')}원`;
 }
 
 
@@ -8043,7 +8258,8 @@ async function loadCompanySettingsFromServer(){
       useLadderPrice:data.use_ladder_price!==false,
       useSpecialPrice:data.use_special_price!==false,
       useDisassemblyPrice:data.use_disassembly_price!==false,
-      useHeavyPrice:data.use_heavy_price!==false
+      useHeavyPrice:data.use_heavy_price!==false,
+      customFees:normalizeCustomFees(data.custom_fees||[])
     };
 
     localStorage.setItem(COMPANY_SETTINGS_KEY,JSON.stringify(CompanyPricing));
@@ -8084,7 +8300,8 @@ async function saveCompanySettings(){
     useLadderPrice:Boolean(document.getElementById('useLadderPrice')?.checked),
     useSpecialPrice:Boolean(document.getElementById('useSpecialPrice')?.checked),
     useDisassemblyPrice:Boolean(document.getElementById('useDisassemblyPrice')?.checked),
-    useHeavyPrice:Boolean(document.getElementById('useHeavyPrice')?.checked)
+    useHeavyPrice:Boolean(document.getElementById('useHeavyPrice')?.checked),
+    customFees:normalizeCustomFees(CompanyPricing.customFees)
   };
 
   CompanyPricing=next;
@@ -8126,6 +8343,7 @@ async function saveCompanySettings(){
       use_special_price:next.useSpecialPrice,
       use_disassembly_price:next.useDisassemblyPrice,
       use_heavy_price:next.useHeavyPrice,
+      custom_fees:next.customFees,
       updated_at:new Date().toISOString()
     });
 
@@ -8186,7 +8404,8 @@ function updateOwnerPricePanel(){
 
   const discount=Number(document.getElementById('ownerDiscountPrice')?.value)||0;
   const extra=Number(document.getElementById('ownerExtraPrice')?.value)||0;
-  const suggested=Math.max(0,calculated-discount+extra);
+  const customFeeTotal=getSelectedCustomFeeTotal();
+  const suggested=Math.max(0,calculated-discount+extra+customFeeTotal);
 
   if(!ownerApprovedFinalPrice){
     setValue('ownerFinalPrice',suggested);
@@ -8197,7 +8416,8 @@ function recalculateOwnerFinalPrice(){
   const calculated=Number(document.getElementById('companyCalculatedPrice')?.value)||0;
   const discount=Math.max(0,Number(document.getElementById('ownerDiscountPrice')?.value)||0);
   const extra=Number(document.getElementById('ownerExtraPrice')?.value)||0;
-  const final=Math.max(0,calculated-discount+extra);
+  const customFeeTotal=getSelectedCustomFeeTotal();
+  const final=Math.max(0,calculated-discount+extra+customFeeTotal);
 
   const el=document.getElementById('ownerFinalPrice');
   if(el)el.value=final;
@@ -8239,7 +8459,7 @@ function applyOwnerFinalPrice(){
   const status=document.getElementById('ownerPriceStatus');
   if(status){
     status.className='owner-price-status ok';
-    status.textContent=`대표님 최종 견적 ${formatted}이 적용되었습니다.`;
+    status.textContent=`대표님 최종 견적 ${formatted}이 적용되었습니다. 선택한 추가요금도 포함되었습니다.`;
   }
 
   if(typeof updateFinishSummary==='function')updateFinishSummary();
@@ -8299,6 +8519,7 @@ function makeEstimateShareText(){
 작업 인원: ${d.workers}명
 예상 시간: ${d.hours}시간
 예상 견적: ${d.price}
+추가요금: ${normalizeCustomFees(CompanyPricing.customFees).filter(f=>selectedCustomFeeIds.has(f.id)).map(f=>`${f.name} ${f.amount.toLocaleString('ko-KR')}원`).join(', ')||'없음'}
 
 ※ 실제 짐량과 현장 상황에 따라 최종 금액이 달라질 수 있습니다.`;
 }
@@ -10760,6 +10981,10 @@ ${msg || '-'}`;
     document.getElementById('completeSignupBtn')?.addEventListener('click',authCompleteSignup);
     document.getElementById('forgotPasswordBtn')?.addEventListener('click',authForgotPassword);
     document.getElementById('logoutBtn')?.addEventListener('click',authLogout);
+    document.getElementById('saveNewCustomFeeBtn')?.addEventListener('click',addNewCustomFee);
+    document.getElementById('addCustomFeeSettingBtn')?.addEventListener('click',()=>{
+      document.getElementById('newCustomFeeName')?.focus();
+    });
     ['useWorkerPrice','useExtraHourPrice','useLadderPrice','useSpecialPrice','useDisassemblyPrice','useHeavyPrice'].forEach(id=>{
       document.getElementById(id)?.addEventListener('change',()=>{
         updatePricingFieldVisibility();
@@ -11572,7 +11797,26 @@ document.addEventListener('DOMContentLoaded', App.init);
       <label id="heavyPriceField"><span>중량품목 1개 요금</span><input type="number" id="settingHeavyPrice" min="0" step="10000" value="25000"></label>
     </div>
 
-    <button type="button" id="saveCompanySettingsBtn" class="save-company-settings-btn">
+    
+    <div class="custom-fee-settings">
+      <div class="custom-fee-settings-head">
+        <div>
+          <h3>업체만의 추가요금 항목</h3>
+          <p>계단, 장거리 운반, 주말 등 필요한 항목을 직접 만드세요.</p>
+        </div>
+        <button type="button" id="addCustomFeeSettingBtn">+ 항목 추가</button>
+      </div>
+
+      <div id="customFeeSettingsList" class="custom-fee-settings-list"></div>
+
+      <div class="custom-fee-add-row">
+        <input type="text" id="newCustomFeeName" placeholder="예: 계단 작업">
+        <input type="number" id="newCustomFeeAmount" min="0" step="10000" placeholder="금액">
+        <button type="button" id="saveNewCustomFeeBtn">저장</button>
+      </div>
+    </div>
+
+<button type="button" id="saveCompanySettingsBtn" class="save-company-settings-btn">
       업체정보와 요금 저장
     </button>
 
