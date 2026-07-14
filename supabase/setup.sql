@@ -332,3 +332,34 @@ create policy "contracts_update_own"
 on public.contracts for update
 using (auth.uid() = user_id)
 with check (auth.uid() = user_id);
+
+
+-- 짐픽 PRO 6.1 현장 베타테스트 기록
+create table if not exists public.beta_test_sessions (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  build_version text not null default '',
+  session_started_at timestamptz,
+  completed_count integer not null default 0,
+  total_count integer not null default 0,
+  checklist jsonb not null default '{}'::jsonb,
+  feedback_note text not null default '',
+  diagnostics jsonb not null default '{}'::jsonb,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists beta_test_sessions_user_created_idx
+  on public.beta_test_sessions(user_id, created_at desc);
+
+alter table public.beta_test_sessions enable row level security;
+
+drop policy if exists "beta_test_sessions_select_own" on public.beta_test_sessions;
+drop policy if exists "beta_test_sessions_insert_own" on public.beta_test_sessions;
+
+create policy "beta_test_sessions_select_own"
+on public.beta_test_sessions for select
+using (auth.uid() = user_id);
+
+create policy "beta_test_sessions_insert_own"
+on public.beta_test_sessions for insert
+with check (auth.uid() = user_id);

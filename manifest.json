@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 6.0 RC",
+  "name": "짐픽 PRO 6.1 BETA",
   "short_name": "짐픽 PRO",
-  "description": "로그인·AI·업체요금·결제·자동저장·업데이트 상태를 자동 점검하는 출시 후보 AI 이사견적 앱",
+  "description": "실제 이사업체 현장 테스트에서 단계별 정상 여부와 오류 진단정보를 저장하는 AI 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
