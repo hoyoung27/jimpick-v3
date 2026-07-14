@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 5.9",
+  "name": "짐픽 PRO 6.0 RC",
   "short_name": "짐픽 PRO",
-  "description": "방별 사진 촬영 누락을 점검하고 사진 부족·공간 누락을 안내하며 AI 분석 실패 시 재시도하는 이사견적 앱",
+  "description": "로그인·AI·업체요금·결제·자동저장·업데이트 상태를 자동 점검하는 출시 후보 AI 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
