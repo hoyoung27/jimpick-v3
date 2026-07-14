@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 7.0 RC</title>
+<title>짐픽 PRO 7.1 RC</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 7.0 RC 최소판매형 ===== */
+/* ===== 짐픽 PRO 7.1 RC 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -4423,6 +4423,128 @@ input:focus,select:focus,textarea:focus{
   .pro70-metrics,.pro70-secretary-grid{grid-template-columns:1fr}
 }
 
+
+/* ===== PRO 7.1 고객 확인·승인 ===== */
+.customer-approval-card-v71{max-width:1260px;margin:0 auto 16px}
+.customer-approval-head-v71{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:18px
+}
+.customer-approval-head-v71 h2{margin:5px 0 0;color:#102A43}
+.customer-approval-head-v71 p{margin:7px 0 0;color:#68798A;font-weight:700}
+.customer-approval-badge-v71{
+  min-width:125px;padding:13px;border-radius:14px;text-align:center;border:1px solid
+}
+.customer-approval-badge-v71 span{display:block;font-size:12px;font-weight:900}
+.customer-approval-badge-v71 strong{display:block;margin-top:4px;font-size:20px}
+.customer-approval-badge-v71.pending{background:#F3F6FA;border-color:#DCE5EE;color:#52667A}
+.customer-approval-badge-v71.approved{background:#EAF7F0;border-color:#9DD6BD;color:#16794B}
+.customer-approval-badge-v71.revision{background:#FFF8E8;border-color:#F3D6A1;color:#8A5A00}
+.customer-approval-actions-v71{
+  display:grid;grid-template-columns:2fr 1fr 1fr;gap:9px;margin-top:14px
+}
+.customer-approval-actions-v71 button{
+  min-height:54px;border:0;border-radius:13px;font-size:15px;font-weight:900;cursor:pointer
+}
+#openCustomerViewBtnV71{background:#102A43;color:#fff}
+#copyCustomerShareBtnV71{background:#16A36A;color:#fff}
+#resetCustomerApprovalBtnV71{background:#E8EEF5;color:#102A43}
+.customer-approval-summary-v71{
+  margin-top:10px;padding:12px;border-radius:12px;background:#F3F6FA;
+  color:#52667A;text-align:center;font-weight:900
+}
+.customer-approval-summary-v71.approved{background:#EAF7F0;color:#16794B}
+.customer-approval-summary-v71.revision{background:#FFF8E8;color:#8A5A00}
+
+.customer-view-modal-v71{
+  position:fixed;inset:0;z-index:36000;align-items:flex-start;justify-content:center;
+  padding:16px;overflow:auto;background:rgba(7,17,31,.88)
+}
+.customer-view-shell-v71{
+  width:min(720px,100%);margin:auto;border-radius:24px;background:#EFF3F6;
+  box-shadow:0 22px 60px rgba(0,0,0,.3);overflow:hidden
+}
+.customer-view-top-v71{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:14px;
+  padding:20px;background:linear-gradient(135deg,#07111F,#102A43);color:#fff
+}
+.customer-view-top-v71 span{font-size:11px;letter-spacing:1.8px;color:#8EF0B1;font-weight:900}
+.customer-view-top-v71 h2{margin:6px 0 0;font-size:25px}
+.customer-view-top-v71 button{
+  width:42px;height:42px;border:0;border-radius:12px;background:rgba(255,255,255,.12);
+  color:#fff;font-size:20px;cursor:pointer
+}
+.customer-view-paper-v71{padding:16px}
+.customer-view-company-v71{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:17px;border-radius:16px;background:#fff;border:1px solid #DCE5EE
+}
+.customer-view-company-v71>div:first-child strong{display:block;font-size:21px;color:#102A43}
+.customer-view-company-v71>div:first-child span{display:block;margin-top:5px;color:#68798A}
+.customer-view-status-v71{text-align:right}
+.customer-view-status-v71 span{display:block;font-size:11px;color:#68798A;font-weight:900}
+.customer-view-status-v71 strong{display:block;margin-top:4px;color:#16794B}
+.customer-view-customer-v71,.customer-view-plan-v71{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:10px
+}
+.customer-view-customer-v71>div,.customer-view-plan-v71>div{
+  padding:13px;border-radius:13px;background:#fff;border:1px solid #DCE5EE
+}
+.customer-view-customer-v71 span,.customer-view-plan-v71 span{
+  display:block;font-size:11px;color:#68798A;font-weight:900
+}
+.customer-view-customer-v71 strong,.customer-view-plan-v71 strong{
+  display:block;margin-top:5px;color:#102A43;font-size:15px
+}
+.customer-view-cost-v71{
+  margin-top:10px;border-radius:15px;overflow:hidden;background:#fff;border:1px solid #DCE5EE
+}
+.customer-view-cost-v71>div{
+  display:flex;justify-content:space-between;gap:15px;padding:12px 14px;
+  border-bottom:1px solid #E4EAF0
+}
+.customer-view-cost-v71>div:last-child{border-bottom:0}
+.customer-view-cost-v71 span{color:#52667A;font-weight:800}
+.customer-view-cost-v71 strong{color:#102A43}
+.customer-view-cost-v71 .total{background:#102A43}
+.customer-view-cost-v71 .total span{color:#C7D5E2}
+.customer-view-cost-v71 .total strong{color:#8EF0B1;font-size:23px}
+.customer-view-details-v71{
+  margin-top:10px;padding:14px;border-radius:15px;background:#fff;border:1px solid #DCE5EE
+}
+.customer-view-details-v71 h3{margin:0 0 9px;color:#102A43}
+.customer-view-details-v71 p{
+  margin:6px 0;padding:9px;border-radius:10px;background:#F6F8FA;color:#52667A;
+  font-size:13px;line-height:1.5
+}
+.customer-view-note-v71{
+  margin-top:10px;padding:12px;border-radius:12px;background:#FFF8E8;
+  color:#6D4910;font-size:13px;line-height:1.55;font-weight:800
+}
+.customer-view-buttons-v71{display:grid;grid-template-columns:2fr 1fr;gap:9px;margin-top:12px}
+.customer-view-buttons-v71 button{
+  min-height:56px;border:0;border-radius:13px;font-size:16px;font-weight:900;cursor:pointer
+}
+#customerApproveBtnV71{background:#16A36A;color:#fff}
+#customerRevisionBtnV71{background:#E8EEF5;color:#102A43}
+.customer-revision-note-v71{display:grid;gap:7px;margin-top:10px}
+.customer-revision-note-v71 span{font-size:13px;font-weight:900;color:#102A43}
+.customer-revision-note-v71 textarea{
+  padding:11px;border:1px solid #CBD6E2;border-radius:12px;resize:vertical;
+  font-size:15px;line-height:1.5
+}
+.customer-view-message-v71{
+  margin-top:10px;padding:12px;border-radius:12px;background:#F3F6FA;
+  color:#52667A;text-align:center;font-weight:900
+}
+.customer-view-message-v71.ok{background:#EAF7F0;color:#16794B}
+.customer-view-message-v71.warn{background:#FFF8E8;color:#8A5A00}
+@media(max-width:650px){
+  .customer-approval-head-v71{flex-direction:column}
+  .customer-approval-actions-v71{grid-template-columns:1fr}
+  .customer-view-customer-v71,.customer-view-plan-v71{grid-template-columns:1fr}
+  .customer-view-buttons-v71{grid-template-columns:1fr}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -4702,7 +4824,7 @@ input:focus,select:focus,textarea:focus{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-7.0-RC</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-7.1-RC</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">6.3 DEMO</span><span class="beta-version-badge">베타시험</span><button type="button" id="betaResultsBtn">베타결과</button><button type="button" id="betaTestMenuBtn">현장테스트</button><button type="button" id="launchMenuBtn">출시진단</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="contractHistoryBtn">계약관리</button><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -5471,6 +5593,30 @@ input:focus,select:focus,textarea:focus{
 
   <!-- ============ STEP 5. 견적 확정 ============ -->
   <section class="panel" id="step5">
+<div class="card customer-approval-card-v71">
+  <div class="customer-approval-head-v71">
+    <div>
+      <span class="eyebrow">고객 확인</span>
+      <h2>견적 승인·수정 요청</h2>
+      <p>고객에게 보여줄 화면을 열고 확인 상태를 저장할 수 있습니다.</p>
+    </div>
+    <div id="customerApprovalBadgeV71" class="customer-approval-badge-v71 pending">
+      <span>고객 상태</span>
+      <strong id="customerApprovalTextV71">확인 전</strong>
+    </div>
+  </div>
+
+  <div class="customer-approval-actions-v71">
+    <button type="button" id="openCustomerViewBtnV71">👀 고객 화면 보기</button>
+    <button type="button" id="copyCustomerShareBtnV71">📋 고객 안내 복사</button>
+    <button type="button" id="resetCustomerApprovalBtnV71">상태 초기화</button>
+  </div>
+
+  <div id="customerApprovalSummaryV71" class="customer-approval-summary-v71">
+    아직 고객 확인이 완료되지 않았습니다.
+  </div>
+</div>
+
 <div class="card profit-analysis-card-v69">
   <div class="profit-head-v69">
     <div>
@@ -6355,7 +6501,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-7.0-RC';
+const BUILD_VERSION = 'JIMPICK-PRO-7.1-RC';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -18293,6 +18439,307 @@ window.openJimpickDemoHotfix = function(event){
   document.addEventListener('click',function(){
     setTimeout(function(){updateMetrics();updateSecretary()},0);
   },true);
+})();
+
+</script>
+
+<div id="customerViewModalV71" class="customer-view-modal-v71" style="display:none;">
+  <div class="customer-view-shell-v71">
+    <div class="customer-view-top-v71">
+      <div>
+        <span>JIMPICK CUSTOMER</span>
+        <h2>이사 견적 확인</h2>
+      </div>
+      <button type="button" id="closeCustomerViewBtnV71">✕</button>
+    </div>
+
+    <div class="customer-view-paper-v71">
+      <section class="customer-view-company-v71">
+        <div>
+          <strong id="cvCompanyNameV71">짐픽</strong>
+          <span id="cvCompanyPhoneV71">-</span>
+        </div>
+        <div class="customer-view-status-v71">
+          <span>견적 상태</span>
+          <strong id="cvStatusV71">확인 대기</strong>
+        </div>
+      </section>
+
+      <section class="customer-view-customer-v71">
+        <div><span>고객명</span><strong id="cvCustomerNameV71">-</strong></div>
+        <div><span>이사일</span><strong id="cvMoveDateV71">-</strong></div>
+        <div><span>출발지</span><strong id="cvFromV71">-</strong></div>
+        <div><span>도착지</span><strong id="cvToV71">-</strong></div>
+      </section>
+
+      <section class="customer-view-plan-v71">
+        <div><span>1톤 차량</span><strong id="cvTruck1V71">0대</strong></div>
+        <div><span>5톤 차량</span><strong id="cvTruck5V71">0대</strong></div>
+        <div><span>작업자</span><strong id="cvWorkersV71">0명</strong></div>
+        <div><span>이사 시작</span><strong id="cvStartTimeV71">-</strong></div>
+      </section>
+
+      <section class="customer-view-cost-v71">
+        <div><span>기본 견적</span><strong id="cvBaseV71">0원</strong></div>
+        <div><span>옵션 비용</span><strong id="cvOptionV71">0원</strong></div>
+        <div><span>보관 비용</span><strong id="cvStorageV71">0원</strong></div>
+        <div class="total"><span>최종 견적</span><strong id="cvTotalV71">0원</strong></div>
+        <div><span>계약금</span><strong id="cvDepositV71">0원</strong></div>
+        <div><span>잔금</span><strong id="cvBalanceV71">0원</strong></div>
+      </section>
+
+      <section class="customer-view-details-v71">
+        <h3>선택 내역</h3>
+        <p id="cvOptionDetailsV71">선택된 옵션 없음</p>
+        <p id="cvStorageDetailsV71">보관 없음</p>
+        <p id="cvRequestV71">추가 요청사항 없음</p>
+      </section>
+
+      <section class="customer-view-note-v71">
+        견적 내용과 현장 상황이 다를 경우 작업 전 업체와 다시 확인해 주세요.
+      </section>
+
+      <section class="customer-view-buttons-v71">
+        <button type="button" id="customerApproveBtnV71">견적 확인·동의</button>
+        <button type="button" id="customerRevisionBtnV71">수정 요청</button>
+      </section>
+
+      <label class="customer-revision-note-v71">
+        <span>수정 요청 내용</span>
+        <textarea id="customerRevisionNoteV71" rows="3" placeholder="변경할 내용이 있을 때 입력하세요."></textarea>
+      </label>
+
+      <div id="customerViewMessageV71" class="customer-view-message-v71">
+        견적 내용을 확인해 주세요.
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+(function(){
+  'use strict';
+
+  var KEY='jimpick_customer_approval_v71';
+
+  function el(id){return document.getElementById(id)}
+  function value(id){return el(id)?.value||''}
+  function number(id){return Number(value(id))||0}
+  function money(v){return (Number(v)||0).toLocaleString('ko-KR')+'원'}
+  function setText(id,text){var node=el(id);if(node)node.textContent=text}
+  function safeParse(text,fallback){try{return JSON.parse(text)}catch(e){return fallback}}
+  function customerKey(){
+    return (value('customerPhone')||value('custPhone')||
+      value('customerName')||value('custName')||'demo').trim()
+  }
+
+  function totalPrice(){
+    return Number(window.JimpickGrandTotalV66)||
+      number('ownerFinalPrice')||
+      number('contractFinalPrice')||0
+  }
+
+  function optionCost(){
+    return Number(window.JimpickOptionCostV66)||0
+  }
+
+  function storageCost(){
+    return Number(window.JimpickStorageCostV66)||0
+  }
+
+  function approvalMap(){
+    return safeParse(localStorage.getItem(KEY)||'{}',{})
+  }
+
+  function saveApproval(status,note){
+    var map=approvalMap();
+    map[customerKey()]={
+      status:status,
+      note:note||'',
+      updatedAt:new Date().toISOString(),
+      total:totalPrice()
+    };
+    localStorage.setItem(KEY,JSON.stringify(map));
+    renderApproval();
+  }
+
+  function currentApproval(){
+    return approvalMap()[customerKey()]||{status:'pending',note:''}
+  }
+
+  function renderApproval(){
+    var current=currentApproval();
+    var badge=el('customerApprovalBadgeV71');
+    var text='확인 전',cls='pending',summary='아직 고객 확인이 완료되지 않았습니다.';
+
+    if(current.status==='approved'){
+      text='동의 완료';cls='approved';
+      summary='고객이 견적 내용을 확인하고 동의했습니다.';
+    }else if(current.status==='revision'){
+      text='수정 요청';cls='revision';
+      summary='고객 수정 요청: '+(current.note||'내용 없음');
+    }
+
+    if(badge)badge.className='customer-approval-badge-v71 '+cls;
+    setText('customerApprovalTextV71',text);
+
+    var box=el('customerApprovalSummaryV71');
+    if(box){
+      box.className='customer-approval-summary-v71'+(cls==='pending'?'':' '+cls);
+      box.textContent=summary;
+    }
+
+    setText('cvStatusV71',text);
+  }
+
+  function fillCustomerView(){
+    var company=window.CompanyPricing?.companyName||'짐픽';
+    var phone=window.CompanyPricing?.companyPhone||'-';
+    var total=totalPrice();
+    var deposit=number('contractDeposit')||0;
+    var balance=Math.max(0,total-deposit);
+    var base=Math.max(0,total-optionCost()-storageCost());
+
+    setText('cvCompanyNameV71',company);
+    setText('cvCompanyPhoneV71',phone);
+    setText('cvCustomerNameV71',value('customerName')||value('custName')||'고객');
+    setText('cvMoveDateV71',value('moveDate')||'-');
+    setText('cvFromV71',value('fromAddress')||'-');
+    setText('cvToV71',value('toAddress')||'-');
+    setText('cvTruck1V71',(number('truck1Count')||0)+'대');
+    setText('cvTruck5V71',(number('truck5Count')||0)+'대');
+    setText('cvWorkersV71',(number('workerCount')||0)+'명');
+    setText('cvStartTimeV71',value('moveStartTime')||'-');
+    setText('cvBaseV71',money(base));
+    setText('cvOptionV71',money(optionCost()));
+    setText('cvStorageV71',money(storageCost()));
+    setText('cvTotalV71',money(total));
+    setText('cvDepositV71',money(deposit));
+    setText('cvBalanceV71',money(balance));
+    setText('cvOptionDetailsV71',window.JimpickOptionDetailsV67||'선택된 옵션 없음');
+    setText('cvStorageDetailsV71',window.JimpickStorageDetailsV67||'보관 없음');
+    setText('cvRequestV71',value('customerRequest')||'추가 요청사항 없음');
+
+    var current=currentApproval();
+    if(el('customerRevisionNoteV71'))el('customerRevisionNoteV71').value=current.note||'';
+    renderApproval();
+  }
+
+  function openCustomerView(){
+    fillCustomerView();
+    var modal=el('customerViewModalV71');
+    if(modal)modal.style.display='flex';
+  }
+
+  function closeCustomerView(){
+    var modal=el('customerViewModalV71');
+    if(modal)modal.style.display='none';
+  }
+
+  function approve(){
+    saveApproval('approved','');
+    var msg=el('customerViewMessageV71');
+    if(msg){
+      msg.className='customer-view-message-v71 ok';
+      msg.textContent='견적 확인과 동의가 저장되었습니다.';
+    }
+  }
+
+  function requestRevision(){
+    var note=value('customerRevisionNoteV71').trim();
+    if(!note){
+      alert('수정 요청 내용을 입력해 주세요.');
+      return;
+    }
+    saveApproval('revision',note);
+    var msg=el('customerViewMessageV71');
+    if(msg){
+      msg.className='customer-view-message-v71 warn';
+      msg.textContent='수정 요청이 저장되었습니다.';
+    }
+  }
+
+  function resetApproval(){
+    var map=approvalMap();
+    delete map[customerKey()];
+    localStorage.setItem(KEY,JSON.stringify(map));
+    if(el('customerRevisionNoteV71'))el('customerRevisionNoteV71').value='';
+    renderApproval();
+  }
+
+  function shareText(){
+    var total=totalPrice();
+    var deposit=number('contractDeposit')||0;
+    var balance=Math.max(0,total-deposit);
+
+    return '안녕하세요, '+(value('customerName')||value('custName')||'고객')+' 고객님.\n'+
+      (window.CompanyPricing?.companyName||'짐픽')+' 이사 견적 안내입니다.\n\n'+
+      '이사일: '+(value('moveDate')||'-')+'\n'+
+      '출발지: '+(value('fromAddress')||'-')+'\n'+
+      '도착지: '+(value('toAddress')||'-')+'\n'+
+      '차량: 1톤 '+number('truck1Count')+'대, 5톤 '+number('truck5Count')+'대\n'+
+      '작업자: '+number('workerCount')+'명\n'+
+      '옵션비: '+money(optionCost())+'\n'+
+      '보관비: '+money(storageCost())+'\n'+
+      '최종 견적: '+money(total)+'\n'+
+      '계약금: '+money(deposit)+'\n'+
+      '잔금: '+money(balance)+'\n\n'+
+      '견적 내용을 확인해 주세요.';
+  }
+
+  async function copyShare(){
+    var text=shareText();
+    try{
+      await navigator.clipboard.writeText(text);
+      alert('고객 안내문을 복사했습니다. 문자나 카카오톡에 붙여넣어 보내세요.');
+    }catch(e){
+      prompt('아래 내용을 복사해 주세요.',text);
+    }
+  }
+
+  function bindOnce(id,event,handler){
+    var node=el(id);
+    if(!node||node.dataset.v71Bound)return;
+    node.dataset.v71Bound='1';
+    node.addEventListener(event,handler);
+  }
+
+  function init(){
+    renderApproval();
+
+    bindOnce('openCustomerViewBtnV71','click',openCustomerView);
+    bindOnce('copyCustomerShareBtnV71','click',copyShare);
+    bindOnce('resetCustomerApprovalBtnV71','click',resetApproval);
+    bindOnce('closeCustomerViewBtnV71','click',closeCustomerView);
+    bindOnce('customerApproveBtnV71','click',approve);
+    bindOnce('customerRevisionBtnV71','click',requestRevision);
+
+    var modal=el('customerViewModalV71');
+    if(modal&&!modal.dataset.v71Bound){
+      modal.dataset.v71Bound='1';
+      modal.addEventListener('click',function(e){
+        if(e.target===modal)closeCustomerView();
+      });
+    }
+
+    ['customerName','custName','customerPhone','custPhone','ownerFinalPrice',
+     'contractFinalPrice','contractDeposit','truck1Count','truck5Count','workerCount'
+    ].forEach(function(id){
+      var node=el(id);
+      if(!node||node.dataset.v71Watch)return;
+      node.dataset.v71Watch='1';
+      node.addEventListener('input',renderApproval);
+      node.addEventListener('change',renderApproval);
+    });
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',init);
+  }else{
+    init();
+  }
 })();
 
 </script>
