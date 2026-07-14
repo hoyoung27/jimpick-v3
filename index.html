@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 4.0</title>
+<title>짐픽 PRO 4.1</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 4.0 최소판매형 ===== */
+/* ===== 짐픽 PRO 4.1 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -2611,6 +2611,46 @@ body.simple-mode .panel{
   .pro40-review-item{grid-template-columns:1fr}
 }
 
+
+/* ===== PRO 4.1 현장 안정화 ===== */
+.network-status-badge{
+  padding:5px 9px;border-radius:999px;font-size:11px;font-weight:900;white-space:nowrap;
+}
+.network-status-badge.online{background:#EAF7F0;color:#16794B}
+.network-status-badge.offline{background:#FFF0ED;color:#B42318}
+.recovery-banner{
+  position:fixed;left:50%;top:14px;z-index:27000;transform:translateX(-50%);
+  width:min(760px,calc(100% - 24px));padding:13px 14px;border-radius:15px;
+  background:#102A43;color:#fff;display:flex;align-items:center;gap:10px;
+  box-shadow:0 12px 35px rgba(0,0,0,.25);
+}
+.recovery-banner div{flex:1}
+.recovery-banner strong,.recovery-banner span{display:block}
+.recovery-banner span{margin-top:3px;font-size:12px;opacity:.82}
+.recovery-banner button{
+  min-height:42px;border:0;border-radius:10px;padding:0 14px;font-weight:900;cursor:pointer;
+}
+#restoreDraftBtn{background:#FF6B35;color:#fff}
+#discardDraftBtn{background:#E8EEF5;color:#102A43}
+.sync-status-card{max-width:900px;margin:0 auto 16px}
+.sync-status-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:9px;
+}
+.sync-status-grid div{
+  padding:14px;border-radius:14px;background:#F3F6FA;border:1px solid #DCE5EE;text-align:center;
+}
+.sync-status-grid span{display:block;font-size:12px;color:#65798C;font-weight:900}
+.sync-status-grid strong{display:block;margin-top:5px;font-size:17px;color:#102A43}
+.retry-sync-btn{
+  width:100%;min-height:56px;margin-top:11px;border:0;border-radius:14px;
+  background:#102A43;color:#fff;font-size:16px;font-weight:900;cursor:pointer;
+}
+@media(max-width:650px){
+  .recovery-banner{align-items:stretch;flex-wrap:wrap}
+  .recovery-banner div{flex-basis:100%}
+  .sync-status-grid{grid-template-columns:1fr}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2623,6 +2663,15 @@ body.simple-mode .panel{
 <script src="https://js.tosspayments.com/v2/standard"></script>
 </head>
 <body>
+<div id="recoveryBanner" class="recovery-banner" style="display:none;">
+  <div>
+    <strong>최근 작성 중이던 견적이 있습니다.</strong>
+    <span id="recoveryTimeText"></span>
+  </div>
+  <button type="button" id="restoreDraftBtn">복원</button>
+  <button type="button" id="discardDraftBtn">삭제</button>
+</div>
+
 <div id="billingResultScreen" class="billing-result-screen" style="display:none;">
   <div class="billing-result-card">
     <div id="billingResultIcon" class="billing-result-icon">💳</div>
@@ -2881,10 +2930,10 @@ body.simple-mode .panel{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-4.0</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-4.1</div>
     </div>
   </div>
-  <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">베타시험</span><button type="button" id="launchMenuBtn">출시점검</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
+  <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">베타시험</span><button type="button" id="launchMenuBtn">출시점검</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
     <div class="amt" id="topTotal">0원</div>
     <div class="lbl">예상 견적금액</div>
   </div>
@@ -3293,6 +3342,18 @@ body.simple-mode .panel{
 
   <!-- ============ STEP 5. 견적 확정 ============ -->
   <section class="panel" id="step5">
+<div class="card sync-status-card">
+  <h2><span class="eyebrow">안전저장</span> 견적 저장 상태</h2>
+  <div class="sync-status-grid">
+    <div><span>기기 자동저장</span><strong id="localSaveStatus">저장 준비</strong></div>
+    <div><span>서버 저장</span><strong id="cloudSaveStatus">확인 전</strong></div>
+    <div><span>대기 중 자료</span><strong id="pendingSyncCount">0건</strong></div>
+  </div>
+  <button type="button" id="retryPendingSyncBtn" class="retry-sync-btn">
+    저장 대기자료 다시 보내기
+  </button>
+</div>
+
 <div class="card pro40-result-card">
   <h2><span class="eyebrow">완료</span> AI 완전자동 견적 결과</h2>
   <div class="pro40-result-grid">
@@ -3906,7 +3967,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-4.0';
+const BUILD_VERSION = 'JIMPICK-PRO-4.1';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -6543,6 +6604,23 @@ function validateQuoteForCloud(quote){
 }
 
 async function saveQuoteToCloud(){
+  const cloudStatus=document.getElementById('cloudSaveStatus');
+  if(!navigator.onLine){
+    const user=await currentCloudUser().catch(()=>null);
+    const quote=collectCurrentQuoteData();
+    addPendingSync({
+      user_id:user?.id||localStorage.getItem('jimpick_last_cloud_user')||'',
+      customer_name:quote.customer_name,
+      customer_phone:quote.customer_phone,
+      move_date:quote.move_date,
+      from_address:quote.from_address,
+      to_address:quote.to_address,
+      quote_data:quote.quote_data
+    });
+    if(cloudStatus)cloudStatus.textContent='인터넷 복구 후 저장';
+    alert('인터넷이 없어 기기에 임시 저장했습니다. 연결되면 다시 저장됩니다.');
+    return;
+  }
   if(localPreviewMode){
     alert('화면 시험 모드에서는 서버 저장이 되지 않습니다.');
     return;
@@ -6574,10 +6652,24 @@ async function saveQuoteToCloud(){
       quote_data:quote.quote_data
     });
     if(error)throw error;
+    if(cloudStatus)cloudStatus.textContent='서버 저장 완료';
+    localStorage.removeItem(FIELD_DRAFT_KEY);
     alert('견적을 서버에 저장했습니다.');
   }catch(error){
     console.error(error);
-    alert(`저장하지 못했습니다: ${error.message||error}`);
+    const user=await currentCloudUser().catch(()=>null);
+    const quote=collectCurrentQuoteData();
+    addPendingSync({
+      user_id:user?.id||localStorage.getItem('jimpick_last_cloud_user')||'',
+      customer_name:quote.customer_name,
+      customer_phone:quote.customer_phone,
+      move_date:quote.move_date,
+      from_address:quote.from_address,
+      to_address:quote.to_address,
+      quote_data:quote.quote_data
+    });
+    if(cloudStatus)cloudStatus.textContent='임시보관됨';
+    alert('서버 저장에 실패해 기기에 임시 보관했습니다.');
   }finally{
     btn.disabled=false;
     btn.textContent=original;
@@ -7110,13 +7202,194 @@ async function runPro40Engine(){
 
   }catch(error){
     console.error(error);
-    setPro40Status(`자동견적 실패: ${error.message||error}`,'fail');
+    setPro40Status(`자동견적 실패 - 인터넷과 사진을 확인한 뒤 다시 눌러주세요: ${error.message||error}`,'fail');
   }finally{
     if(btn){
       btn.disabled=false;
       btn.textContent=original;
     }
   }
+}
+
+
+
+const FIELD_DRAFT_KEY='jimpick_pro41_field_draft';
+const PENDING_SYNC_KEY='jimpick_pro41_pending_sync';
+let fieldDraftTimer=null;
+
+function safeJsonParse(value,fallback){
+  try{return JSON.parse(value);}catch(e){return fallback;}
+}
+
+function collectFieldDraft(){
+  const quote=typeof collectCurrentQuoteData==='function'
+    ?collectCurrentQuoteData()
+    :{};
+  return {
+    savedAt:new Date().toISOString(),
+    quote,
+    stateItems:State?.items||{},
+    scene:lastAiSceneAnalysis||{},
+    engine:lastEngineResult||null,
+    currentStep:document.querySelector('.panel.active')?.id||'step1'
+  };
+}
+
+function updateLocalSaveStatus(text){
+  const el=document.getElementById('localSaveStatus');
+  if(el)el.textContent=text;
+}
+
+function saveFieldDraftNow(){
+  try{
+    const draft=collectFieldDraft();
+    localStorage.setItem(FIELD_DRAFT_KEY,JSON.stringify(draft));
+    updateLocalSaveStatus(`저장됨 ${new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'})}`);
+  }catch(error){
+    console.warn('현장 자동저장 실패',error);
+    updateLocalSaveStatus('저장 실패');
+  }
+}
+
+function scheduleFieldDraftSave(){
+  clearTimeout(fieldDraftTimer);
+  updateLocalSaveStatus('저장 중…');
+  fieldDraftTimer=setTimeout(saveFieldDraftNow,500);
+}
+
+function showRecoveryIfNeeded(){
+  const raw=localStorage.getItem(FIELD_DRAFT_KEY);
+  const draft=safeJsonParse(raw,null);
+  if(!draft?.savedAt)return;
+  const saved=new Date(draft.savedAt);
+  const age=Date.now()-saved.getTime();
+  if(age>1000*60*60*24*7)return;
+  const banner=document.getElementById('recoveryBanner');
+  const text=document.getElementById('recoveryTimeText');
+  if(text)text.textContent=`저장 시각: ${saved.toLocaleString('ko-KR')}`;
+  if(banner)banner.style.display='flex';
+}
+
+function restoreFieldDraft(){
+  const draft=safeJsonParse(localStorage.getItem(FIELD_DRAFT_KEY),null);
+  if(!draft)return;
+
+  const set=(id,value)=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    el.value=value??'';
+    el.dispatchEvent(new Event('input',{bubbles:true}));
+    el.dispatchEvent(new Event('change',{bubbles:true}));
+  };
+
+  const q=draft.quote||{};
+  set('customerName',q.customer_name||'');
+  set('customerPhone',q.customer_phone||'');
+  set('moveDate',q.move_date||'');
+  set('fromAddress',q.from_address||'');
+  set('toAddress',q.to_address||'');
+
+  if(draft.stateItems && State?.items){
+    Object.keys(State.items).forEach(name=>{
+      if(State.items[name])State.items[name].qty=0;
+    });
+    Object.entries(draft.stateItems).forEach(([name,item])=>{
+      if(State.items[name])State.items[name].qty=Number(item?.qty||item?.quantity||0);
+    });
+  }
+
+  if(q.quote_data){
+    set('truck1Count',q.quote_data.truck1||0);
+    set('truck5Count',q.quote_data.truck5||0);
+    set('workerCount',q.quote_data.workers||0);
+    set('workHours',q.quote_data.hours||0);
+  }
+
+  lastAiSceneAnalysis=draft.scene||lastAiSceneAnalysis;
+  lastEngineResult=draft.engine||lastEngineResult;
+
+  if(typeof Calc!=='undefined')Calc.run();
+  if(typeof renderItems==='function')renderItems();
+  if(typeof updateMovingEstimateEngine==='function')updateMovingEstimateEngine();
+
+  const stepNumber=Number(String(draft.currentStep||'step1').replace('step',''))||1;
+  if(typeof UI!=='undefined')UI.goStep(stepNumber);
+
+  document.getElementById('recoveryBanner').style.display='none';
+  alert('최근 작성 중이던 견적을 복원했습니다.');
+}
+
+function discardFieldDraft(){
+  localStorage.removeItem(FIELD_DRAFT_KEY);
+  document.getElementById('recoveryBanner').style.display='none';
+  updateLocalSaveStatus('새 견적');
+}
+
+function getPendingSyncQueue(){
+  return safeJsonParse(localStorage.getItem(PENDING_SYNC_KEY),'[]')||[];
+}
+
+function savePendingSyncQueue(queue){
+  localStorage.setItem(PENDING_SYNC_KEY,JSON.stringify(queue));
+  updatePendingSyncCount();
+}
+
+function addPendingSync(payload){
+  const queue=getPendingSyncQueue();
+  queue.push({
+    id:`pending_${Date.now()}_${Math.random().toString(36).slice(2,8)}`,
+    createdAt:new Date().toISOString(),
+    payload
+  });
+  savePendingSyncQueue(queue);
+}
+
+function updatePendingSyncCount(){
+  const queue=getPendingSyncQueue();
+  const el=document.getElementById('pendingSyncCount');
+  if(el)el.textContent=`${queue.length}건`;
+}
+
+async function retryPendingSync(){
+  if(!navigator.onLine){
+    alert('인터넷 연결 후 다시 시도해주세요.');
+    return;
+  }
+  if(localPreviewMode||!supabaseClient){
+    alert('실제 계정 로그인 후 사용할 수 있습니다.');
+    return;
+  }
+
+  const queue=getPendingSyncQueue();
+  if(!queue.length){
+    alert('저장 대기자료가 없습니다.');
+    return;
+  }
+
+  const remain=[];
+  for(const item of queue){
+    try{
+      const {error}=await supabaseClient.from('quotes').insert(item.payload);
+      if(error)throw error;
+    }catch(error){
+      remain.push(item);
+    }
+  }
+  savePendingSyncQueue(remain);
+  const cloud=document.getElementById('cloudSaveStatus');
+  if(cloud)cloud.textContent=remain.length?'일부 대기':'모두 저장됨';
+  alert(remain.length?`${remain.length}건이 아직 대기 중입니다.`:'대기 중인 견적을 모두 서버에 저장했습니다.');
+}
+
+function updateNetworkStatus(){
+  const online=navigator.onLine;
+  const badge=document.getElementById('networkStatusBadge');
+  if(badge){
+    badge.textContent=online?'온라인':'인터넷 끊김';
+    badge.classList.toggle('online',online);
+    badge.classList.toggle('offline',!online);
+  }
+  if(online)retryPendingSync().catch(()=>{});
 }
 
 
@@ -9612,6 +9885,21 @@ ${msg || '-'}`;
     document.getElementById('completeSignupBtn')?.addEventListener('click',authCompleteSignup);
     document.getElementById('forgotPasswordBtn')?.addEventListener('click',authForgotPassword);
     document.getElementById('logoutBtn')?.addEventListener('click',authLogout);
+    document.addEventListener('input',(e)=>{
+      if(e.target.matches('input,textarea,select'))scheduleFieldDraftSave();
+    });
+    document.addEventListener('change',(e)=>{
+      if(e.target.matches('input,textarea,select'))scheduleFieldDraftSave();
+    });
+    document.getElementById('restoreDraftBtn')?.addEventListener('click',restoreFieldDraft);
+    document.getElementById('discardDraftBtn')?.addEventListener('click',discardFieldDraft);
+    document.getElementById('retryPendingSyncBtn')?.addEventListener('click',retryPendingSync);
+    window.addEventListener('online',updateNetworkStatus);
+    window.addEventListener('offline',updateNetworkStatus);
+    window.addEventListener('beforeunload',saveFieldDraftNow);
+    updateNetworkStatus();
+    updatePendingSyncCount();
+    setTimeout(showRecoveryIfNeeded,500);
     document.getElementById('pro40RunBtn')?.addEventListener('click',runPro40Engine);
     document.getElementById('pro40ApplyReviewBtn')?.addEventListener('click',applyPro40Review);
     refreshPro40Button();
