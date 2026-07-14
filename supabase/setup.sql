@@ -321,3 +321,14 @@ with check (auth.uid() = user_id);
 create policy "contracts_delete_own"
 on public.contracts for delete
 using (auth.uid() = user_id);
+
+
+-- 짐픽 PRO 5.6 계약내역·잔금관리
+alter table public.contracts
+  add column if not exists paid_at timestamptz;
+
+drop policy if exists "contracts_update_own" on public.contracts;
+create policy "contracts_update_own"
+on public.contracts for update
+using (auth.uid() = user_id)
+with check (auth.uid() = user_id);

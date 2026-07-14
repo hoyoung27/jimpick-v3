@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 5.5",
+  "name": "짐픽 PRO 5.6",
   "short_name": "짐픽 PRO",
-  "description": "최종견적 확인·계약금·잔금·고객서명·계약확정 저장 기능을 갖춘 AI 이사견적 앱",
+  "description": "계약확정 목록·계약금·잔금·완납 상태를 검색하고 관리하는 AI 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
