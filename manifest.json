@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 6.1 BETA",
+  "name": "짐픽 PRO 6.2 BETA",
   "short_name": "짐픽 PRO",
-  "description": "실제 이사업체 현장 테스트에서 단계별 정상 여부와 오류 진단정보를 저장하는 AI 이사견적 앱",
+  "description": "현장 베타테스트 결과를 집계해 단계별 정상률·문제목록·출시 가능 여부를 판단하는 AI 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

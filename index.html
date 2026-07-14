@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 6.1 BETA</title>
+<title>짐픽 PRO 6.2 BETA</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 6.1 BETA 최소판매형 ===== */
+/* ===== 짐픽 PRO 6.2 BETA 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -3574,6 +3574,85 @@ body.simple-mode .panel{
   .beta-test-actions{grid-template-columns:1fr}
 }
 
+
+/* ===== PRO 6.2 베타결과 요약·출시판정 ===== */
+.beta-results-modal{
+  position:fixed;inset:0;z-index:34000;
+  align-items:center;justify-content:center;padding:18px;
+  background:rgba(8,24,40,.84);
+}
+.beta-results-card{
+  width:min(980px,100%);max-height:92vh;overflow:auto;
+  padding:22px;border-radius:25px;background:#fff;
+}
+.beta-results-head{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+}
+.beta-results-head h2{margin:0;color:#102A43;font-size:28px}
+.beta-results-head p{margin:5px 0 0;color:#68798A}
+.beta-results-head>button{
+  width:44px;height:44px;border:0;border-radius:12px;
+  background:#E8EEF5;color:#102A43;font-size:20px;cursor:pointer;
+}
+.beta-results-summary{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:16px;
+}
+.beta-results-summary div{
+  padding:13px;border-radius:13px;background:#F3F6FA;
+  border:1px solid #DCE5EE;text-align:center;
+}
+.beta-results-summary span{display:block;font-size:12px;color:#65798C;font-weight:900}
+.beta-results-summary strong{display:block;margin-top:5px;font-size:18px;color:#102A43}
+.beta-results-actions{
+  display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px;
+}
+.beta-results-actions button{
+  min-height:54px;border:0;border-radius:13px;
+  font-size:16px;font-weight:900;cursor:pointer;
+}
+#refreshBetaResultsBtn{background:#102A43;color:#fff}
+#downloadBetaCsvBtn{background:#16A36A;color:#fff}
+.beta-results-section{
+  margin-top:14px;padding:14px;border-radius:15px;
+  background:#F7F9FC;border:1px solid #DCE5EE;
+}
+.beta-results-section h3{margin:0 0 10px;color:#102A43;font-size:18px}
+.beta-step-rates{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.beta-step-rate{
+  display:grid;grid-template-columns:130px 1fr 54px;gap:8px;align-items:center;
+  padding:10px;border-radius:11px;background:#fff;border:1px solid #E3EAF1;
+}
+.beta-step-rate span{font-size:14px;font-weight:900;color:#102A43}
+.beta-step-rate-track{height:12px;border-radius:999px;background:#DCE5EE;overflow:hidden}
+.beta-step-rate-track i{display:block;height:100%;background:#16A36A}
+.beta-step-rate strong{text-align:right;color:#52667A;font-size:13px}
+.beta-issue-list{display:grid;gap:8px}
+.beta-issue-item{
+  padding:11px;border-radius:12px;background:#fff;border:1px solid #E3EAF1;
+}
+.beta-issue-item strong{display:block;color:#102A43;font-size:15px}
+.beta-issue-item p{margin:6px 0 0;color:#52667A;line-height:1.5}
+.beta-issue-item small{display:block;margin-top:7px;color:#7B8B99}
+.beta-results-empty{
+  padding:20px;border-radius:12px;background:#fff;color:#68798A;
+  text-align:center;font-weight:900;
+}
+.beta-launch-decision{
+  margin-top:14px;padding:15px;border-radius:14px;
+  background:#F3F6FA;color:#52667A;text-align:center;font-size:16px;font-weight:900;
+}
+.beta-launch-decision.ok{background:#EAF7F0;color:#16794B}
+.beta-launch-decision.warn{background:#FFF8E8;color:#6D4910}
+.beta-launch-decision.fail{background:#FFF0ED;color:#B42318}
+@media(max-width:760px){
+  .beta-results-summary{grid-template-columns:repeat(2,1fr)}
+  .beta-step-rates{grid-template-columns:1fr}
+}
+@media(max-width:520px){
+  .beta-results-summary{grid-template-columns:1fr}
+  .beta-results-actions{grid-template-columns:1fr}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -3853,10 +3932,10 @@ body.simple-mode .panel{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-6.1-BETA</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-6.2-BETA</div>
     </div>
   </div>
-  <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">6.0 RC</span><span class="beta-version-badge">베타시험</span><button type="button" id="betaTestMenuBtn">현장테스트</button><button type="button" id="launchMenuBtn">출시진단</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="contractHistoryBtn">계약관리</button><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
+  <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">6.0 RC</span><span class="beta-version-badge">베타시험</span><button type="button" id="betaResultsBtn">베타결과</button><button type="button" id="betaTestMenuBtn">현장테스트</button><button type="button" id="launchMenuBtn">출시진단</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="contractHistoryBtn">계약관리</button><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
     <div class="amt" id="topTotal">0원</div>
     <div class="lbl">예상 견적금액</div>
   </div>
@@ -5138,7 +5217,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-6.1-BETA';
+const BUILD_VERSION = 'JIMPICK-PRO-6.2-BETA';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -11488,6 +11567,205 @@ async function simpleSendCustomer(){
 
 
 
+
+let betaResultsCache=[];
+
+const BETA_STEP_LABELS={
+  login:'로그인',
+  photo:'사진',
+  ai:'AI 인식',
+  estimate:'차량·인원 계산',
+  price:'최종가격',
+  message:'고객문자',
+  contract:'계약·서명',
+  history:'내역검색'
+};
+
+function openBetaResults(){
+  document.getElementById('betaResultsModal').style.display='flex';
+  loadBetaResults();
+}
+
+function closeBetaResults(){
+  document.getElementById('betaResultsModal').style.display='none';
+}
+
+function normalizeBetaResult(row){
+  return {
+    ...row,
+    checklist:row?.checklist||{},
+    completed_count:Number(row?.completed_count)||0,
+    total_count:Number(row?.total_count)||0,
+    feedback_note:row?.feedback_note||'',
+    created_at:row?.created_at||new Date().toISOString()
+  };
+}
+
+function calculateBetaSummary(rows){
+  const normalized=(rows||[]).map(normalizeBetaResult);
+  const average=normalized.length
+    ?Math.round(normalized.reduce((sum,row)=>{
+      const total=row.total_count||Object.keys(row.checklist).length||1;
+      return sum+(row.completed_count/total)*100;
+    },0)/normalized.length)
+    :0;
+
+  const issueRows=normalized.filter(row=>row.feedback_note.trim());
+  const stepRates={};
+
+  Object.keys(BETA_STEP_LABELS).forEach(key=>{
+    const values=normalized
+      .filter(row=>Object.prototype.hasOwnProperty.call(row.checklist,key))
+      .map(row=>Boolean(row.checklist[key]));
+    stepRates[key]=values.length
+      ?Math.round(values.filter(Boolean).length/values.length*100)
+      :0;
+  });
+
+  let decision='보완 필요';
+  let decisionClass='warn';
+  let decisionText='일부 항목을 더 테스트해야 합니다.';
+
+  if(normalized.length<3){
+    decision='테스트 부족';
+    decisionClass='warn';
+    decisionText='최소 3회 이상 실제 현장 테스트를 권장합니다.';
+  }else if(average>=95 && issueRows.length===0 && Object.values(stepRates).every(v=>v>=90)){
+    decision='출시 가능';
+    decisionClass='ok';
+    decisionText='주요 기능이 안정적으로 확인되었습니다. 실제 결제 테스트 후 출시할 수 있습니다.';
+  }else if(average<80 || Object.values(stepRates).some(v=>v<70)){
+    decision='출시 보류';
+    decisionClass='fail';
+    decisionText='정상률이 낮은 단계가 있습니다. 문제를 먼저 수정해야 합니다.';
+  }else{
+    decision='보완 후 출시';
+    decisionClass='warn';
+    decisionText='큰 문제는 없지만 기록된 불편사항을 확인한 뒤 출시하세요.';
+  }
+
+  return {normalized,average,issueRows,stepRates,decision,decisionClass,decisionText};
+}
+
+function renderBetaResults(rows){
+  const summary=calculateBetaSummary(rows);
+  betaResultsCache=summary.normalized;
+
+  document.getElementById('betaResultTestCount').textContent=`${summary.normalized.length}건`;
+  document.getElementById('betaResultAverage').textContent=`${summary.average}%`;
+  document.getElementById('betaResultIssueCount').textContent=`${summary.issueRows.length}건`;
+  document.getElementById('betaResultDecision').textContent=summary.decision;
+
+  const rates=document.getElementById('betaStepRates');
+  if(rates){
+    rates.innerHTML=Object.entries(BETA_STEP_LABELS).map(([key,label])=>`
+      <div class="beta-step-rate">
+        <span>${Utils.escapeHtml(label)}</span>
+        <div class="beta-step-rate-track"><i style="width:${summary.stepRates[key]}%"></i></div>
+        <strong>${summary.stepRates[key]}%</strong>
+      </div>
+    `).join('');
+  }
+
+  const issueList=document.getElementById('betaIssueList');
+  if(issueList){
+    if(!summary.issueRows.length){
+      issueList.innerHTML='<div class="beta-results-empty">기록된 문제점이 없습니다.</div>';
+    }else{
+      issueList.innerHTML=summary.issueRows.slice(0,20).map(row=>`
+        <div class="beta-issue-item">
+          <strong>${Utils.escapeHtml(row.build_version||'버전 미상')}</strong>
+          <p>${Utils.escapeHtml(row.feedback_note)}</p>
+          <small>${new Date(row.created_at).toLocaleString('ko-KR')} · 완료 ${row.completed_count}/${row.total_count}</small>
+        </div>
+      `).join('');
+    }
+  }
+
+  const decisionBox=document.getElementById('betaLaunchDecisionBox');
+  if(decisionBox){
+    decisionBox.className=`beta-launch-decision ${summary.decisionClass}`;
+    decisionBox.textContent=`${summary.decision}: ${summary.decisionText}`;
+  }
+}
+
+async function loadBetaResults(){
+  if(localPreviewMode){
+    const rows=safeJsonParse(localStorage.getItem('jimpick_beta_sessions')||'[]',[]);
+    renderBetaResults(rows);
+    return;
+  }
+
+  try{
+    const user=await currentCloudUser();
+    if(!user||!supabaseClient)throw new Error('실제 계정으로 로그인해주세요.');
+
+    const {data,error}=await supabaseClient
+      .from('beta_test_sessions')
+      .select('*')
+      .eq('user_id',user.id)
+      .order('created_at',{ascending:false})
+      .limit(200);
+
+    if(error)throw error;
+    renderBetaResults(data||[]);
+  }catch(error){
+    console.error(error);
+    renderBetaResults([]);
+    const decisionBox=document.getElementById('betaLaunchDecisionBox');
+    if(decisionBox){
+      decisionBox.className='beta-launch-decision fail';
+      decisionBox.textContent=`결과 불러오기 실패: ${error.message||error}`;
+    }
+  }
+}
+
+function downloadBetaResultsCsv(){
+  if(!betaResultsCache.length){
+    alert('내려받을 베타테스트 결과가 없습니다.');
+    return;
+  }
+
+  const headers=[
+    '버전','테스트 시작','저장 시각','완료수','전체수','완료율',
+    ...Object.values(BETA_STEP_LABELS),'문제 및 불편사항'
+  ];
+
+  const escapeCsv=value=>{
+    const text=String(value??'').replace(/"/g,'""');
+    return `"${text}"`;
+  };
+
+  const lines=[headers.map(escapeCsv).join(',')];
+
+  betaResultsCache.forEach(row=>{
+    const total=row.total_count||Object.keys(row.checklist||{}).length||1;
+    const rate=Math.round((row.completed_count/total)*100);
+    const values=[
+      row.build_version||'',
+      row.session_started_at||'',
+      row.created_at||'',
+      row.completed_count,
+      row.total_count,
+      `${rate}%`,
+      ...Object.keys(BETA_STEP_LABELS).map(key=>row.checklist?.[key]?'정상':'미완료'),
+      row.feedback_note||''
+    ];
+    lines.push(values.map(escapeCsv).join(','));
+  });
+
+  const blob=new Blob(['\ufeff'+lines.join('\n')],{type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=`jimpick_beta_results_${new Date().toISOString().slice(0,10)}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+
 let betaSessionStartedAt='';
 
 function openBetaTestModal(){
@@ -11595,6 +11873,7 @@ async function saveBetaTestResult(){
 
     result.className='beta-test-result ok';
     result.textContent=`테스트 결과를 저장했습니다. 완료 ${completed}/${total}개`;
+    betaResultsCache=[];
     alert('현장 베타테스트 결과를 저장했습니다.');
   }catch(error){
     console.error(error);
@@ -13411,6 +13690,11 @@ ${msg || '-'}`;
     document.getElementById('completeSignupBtn')?.addEventListener('click',authCompleteSignup);
     document.getElementById('forgotPasswordBtn')?.addEventListener('click',authForgotPassword);
     document.getElementById('logoutBtn')?.addEventListener('click',authLogout);
+    document.getElementById('betaResultsBtn')?.addEventListener('click',openBetaResults);
+    document.getElementById('closeBetaResultsBtn')?.addEventListener('click',closeBetaResults);
+    document.getElementById('betaResultsModal')?.addEventListener('click',(e)=>{if(e.target.id==='betaResultsModal')closeBetaResults();});
+    document.getElementById('refreshBetaResultsBtn')?.addEventListener('click',loadBetaResults);
+    document.getElementById('downloadBetaCsvBtn')?.addEventListener('click',downloadBetaResultsCsv);
     document.getElementById('betaTestMenuBtn')?.addEventListener('click',openBetaTestModal);
     document.getElementById('closeBetaTestBtn')?.addEventListener('click',closeBetaTestModal);
     document.getElementById('betaTestModal')?.addEventListener('click',(e)=>{if(e.target.id==='betaTestModal')closeBetaTestModal();});
@@ -14510,6 +14794,47 @@ document.addEventListener('DOMContentLoaded', App.init);
 
     <div id="betaTestResult" class="beta-test-result">
       테스트를 시작하면 자동으로 기기와 인터넷 상태를 기록합니다.
+    </div>
+  </div>
+</div>
+
+
+<div id="betaResultsModal" class="beta-results-modal" style="display:none;">
+  <div class="beta-results-card">
+    <div class="beta-results-head">
+      <div>
+        <h2>베타테스트 결과</h2>
+        <p>현장 테스트 결과를 바탕으로 출시 가능 여부를 판단합니다.</p>
+      </div>
+      <button type="button" id="closeBetaResultsBtn">✕</button>
+    </div>
+
+    <div class="beta-results-summary">
+      <div><span>테스트 수</span><strong id="betaResultTestCount">0건</strong></div>
+      <div><span>평균 완료율</span><strong id="betaResultAverage">0%</strong></div>
+      <div><span>문제 기록</span><strong id="betaResultIssueCount">0건</strong></div>
+      <div><span>출시 판정</span><strong id="betaResultDecision">확인 전</strong></div>
+    </div>
+
+    <div class="beta-results-actions">
+      <button type="button" id="refreshBetaResultsBtn">결과 새로고침</button>
+      <button type="button" id="downloadBetaCsvBtn">CSV 내려받기</button>
+    </div>
+
+    <div class="beta-results-section">
+      <h3>단계별 정상률</h3>
+      <div id="betaStepRates" class="beta-step-rates"></div>
+    </div>
+
+    <div class="beta-results-section">
+      <h3>최근 문제 기록</h3>
+      <div id="betaIssueList" class="beta-issue-list">
+        <div class="beta-results-empty">저장된 테스트 결과가 없습니다.</div>
+      </div>
+    </div>
+
+    <div id="betaLaunchDecisionBox" class="beta-launch-decision">
+      결과를 불러오면 출시 가능 여부가 표시됩니다.
     </div>
   </div>
 </div>
