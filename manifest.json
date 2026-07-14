@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 5.2",
+  "name": "짐픽 PRO 5.3",
   "short_name": "짐픽 PRO",
-  "description": "계단·장거리·주말·야간 등 업체만의 추가요금 항목을 직접 만들고 견적마다 선택하는 AI 이사견적 앱",
+  "description": "처음 가입한 이사업체 대표가 업체정보·차량요금·추가요금 사용 여부를 3단계로 쉽게 설정하는 AI 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
