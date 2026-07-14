@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 7.6.1</title>
+<title>짐픽 PRO 7.7 SIMPLE</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 7.6.1 최소판매형 ===== */
+/* ===== 짐픽 PRO 7.7 SIMPLE 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -4757,6 +4757,440 @@ button{min-height:46px;line-height:1.25;white-space:normal}
   pointer-events:auto;
 }
 
+
+/* =========================================================
+   PRO 7.7 SIMPLE - 50대 쉬운 견적 모드
+   ========================================================= */
+:root{
+  --s50-blue:#1769E0;
+  --s50-green:#16A36A;
+  --s50-orange:#FF8A34;
+  --s50-navy:#102A43;
+  --s50-bg:#F4F7FB;
+  --s50-card:#FFFFFF;
+  --s50-line:#DCE5EE;
+  --s50-text:#102A43;
+  --s50-muted:#627487;
+}
+html,body{
+  max-width:100%;
+  overflow-x:hidden;
+  background:var(--s50-bg)!important;
+}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif!important;
+  color:var(--s50-text)!important;
+}
+body.demo-click-ready #appShell,
+body.demo-click-ready .main,
+body.demo-click-ready .main-content,
+body.demo-click-ready .content,
+body.demo-click-ready .content-wrap,
+body.demo-click-ready .panel,
+body.demo-click-ready .panel.active{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+}
+
+/* 복잡하거나 중복된 기능은 기본 화면에서 숨김 */
+.pro70-dashboard,
+.room-ai-card-v68,
+.field-safety-card-v69,
+.profit-analysis-card-v69,
+.pro72-room-gallery,
+.pro74-step3,
+.pro75-ai-photo-card,
+.pro76-manager,
+.customer-approval-card-v71,
+.route-map-card-v66,
+.option-settings-status-v67,
+.ai-field-score-v69,
+.difficulty-faces-v66,
+.vehicle-images-v66,
+.room-ai-actions-v68,
+.ai-recommend-grid-v68{
+  display:none!important;
+}
+
+/* 상단의 개발/시험용 버튼과 복잡한 메뉴 축소 */
+.demo-click-ready .topbar .chip,
+.demo-click-ready .topbar .pill,
+.demo-click-ready .topbar .badge{
+  display:none!important;
+}
+.demo-click-ready .topbar{
+  min-height:58px!important;
+  padding:8px 14px!important;
+}
+.demo-click-ready .step-progress,
+.demo-click-ready .progress-steps{
+  max-width:900px!important;
+  margin:0 auto 18px!important;
+}
+.demo-click-ready .step-progress .step,
+.demo-click-ready .progress-steps .step{
+  min-width:0!important;
+}
+.demo-click-ready .step-progress span,
+.demo-click-ready .progress-steps span{
+  font-size:15px!important;
+  font-weight:900!important;
+}
+
+/* 카드와 입력창 */
+.card{
+  width:min(100%,1050px)!important;
+  max-width:1050px!important;
+  margin:0 auto 16px!important;
+  padding:22px!important;
+  border:1px solid var(--s50-line)!important;
+  border-radius:20px!important;
+  background:var(--s50-card)!important;
+  box-shadow:0 10px 28px rgba(16,42,67,.07)!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+}
+.card h2{
+  font-size:25px!important;
+  line-height:1.35!important;
+}
+.card h3{
+  font-size:20px!important;
+}
+.card p,.card label,.card span{
+  line-height:1.5;
+}
+input,select,textarea{
+  width:100%!important;
+  min-height:56px!important;
+  padding:0 15px!important;
+  border:2px solid #D5DFE8!important;
+  border-radius:14px!important;
+  background:#fff!important;
+  color:var(--s50-text)!important;
+  font-size:18px!important;
+  font-weight:800!important;
+  box-sizing:border-box!important;
+}
+textarea{
+  min-height:110px!important;
+  padding:14px!important;
+}
+input:focus,select:focus,textarea:focus{
+  outline:none!important;
+  border-color:var(--s50-blue)!important;
+  box-shadow:0 0 0 4px rgba(23,105,224,.12)!important;
+}
+button{
+  min-height:54px!important;
+  border-radius:14px!important;
+  font-size:17px!important;
+  font-weight:900!important;
+  line-height:1.25!important;
+  cursor:pointer;
+}
+
+/* 환영 안내 */
+.simple50-welcome{
+  width:min(100%,1050px);
+  margin:0 auto 16px;
+  padding:22px 24px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  border-radius:20px;
+  background:linear-gradient(135deg,#1769E0,#0E87B8);
+  color:#fff;
+  box-shadow:0 12px 30px rgba(23,105,224,.19);
+  box-sizing:border-box;
+}
+.simple50-welcome-icon{
+  width:70px;
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+  border-radius:19px;
+  background:rgba(255,255,255,.18);
+  font-size:40px;
+}
+.simple50-welcome span{
+  color:#BDE9FF;
+  font-size:14px;
+  font-weight:900;
+}
+.simple50-welcome h2{
+  margin:4px 0 0;
+  font-size:28px;
+  line-height:1.3;
+}
+.simple50-welcome p{
+  margin:7px 0 0;
+  color:#EAF7FF;
+  font-size:18px;
+  font-weight:800;
+}
+
+/* 심플 품목 선택 */
+.simple50-items-card{
+  padding:22px!important;
+}
+.simple50-card-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:18px;
+}
+.simple50-card-head>div:first-child>span{
+  display:inline-flex;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#E9F2FF;
+  color:var(--s50-blue);
+  font-size:14px;
+  font-weight:900;
+}
+.simple50-card-head h2{
+  margin:8px 0 0!important;
+  color:var(--s50-text);
+}
+.simple50-card-head p{
+  margin:7px 0 0;
+  color:var(--s50-muted);
+  font-size:17px;
+  font-weight:700;
+}
+.simple50-auto-save{
+  padding:9px 13px;
+  border-radius:999px;
+  background:#EAF7F0;
+  color:#16794B;
+  font-size:14px;
+  font-weight:900;
+  white-space:nowrap;
+}
+.simple50-room-tabs{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:10px;
+  margin-top:20px;
+}
+.simple50-room-tabs button{
+  min-height:78px!important;
+  padding:10px 8px;
+  border:2px solid var(--s50-line);
+  background:#F8FAFC;
+  color:#53677A;
+}
+.simple50-room-tabs button.active{
+  border-color:var(--s50-blue);
+  background:#EAF2FF;
+  color:#1557B0;
+  box-shadow:0 0 0 3px rgba(23,105,224,.08);
+}
+.simple50-room-tabs .icon{
+  display:block;
+  margin-bottom:5px;
+  font-size:31px;
+  line-height:1;
+}
+.simple50-room-tabs .count{
+  display:inline-flex;
+  min-width:25px;
+  height:25px;
+  margin-left:5px;
+  align-items:center;
+  justify-content:center;
+  border-radius:999px;
+  background:#EAF7F0;
+  color:#16794B;
+  font-size:13px;
+}
+.simple50-room-info{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin-top:16px;
+  padding:13px 15px;
+  border-radius:13px;
+  background:#F2F5F8;
+}
+.simple50-room-info strong{
+  font-size:21px;
+}
+.simple50-room-info span{
+  color:#53677A;
+  font-size:16px;
+  font-weight:800;
+}
+.simple50-room-info b{
+  color:var(--s50-green);
+}
+.simple50-item-grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:11px;
+  margin-top:14px;
+}
+.simple50-item{
+  padding:13px 8px;
+  border:2px solid #E2E9F0;
+  border-radius:16px;
+  background:#fff;
+  text-align:center;
+  box-shadow:0 5px 14px rgba(16,42,67,.035);
+}
+.simple50-item.on{
+  border-color:#67C192;
+  background:#F0FBF5;
+}
+.simple50-item .emoji{
+  display:block;
+  font-size:37px;
+  line-height:1.1;
+}
+.simple50-item .name{
+  display:block;
+  min-height:42px;
+  margin-top:8px;
+  color:#30485D;
+  font-size:15px;
+  line-height:1.35;
+  font-weight:900;
+}
+.simple50-qty{
+  display:grid;
+  grid-template-columns:38px 1fr 38px;
+  align-items:center;
+  gap:5px;
+  margin-top:9px;
+}
+.simple50-qty button{
+  min-height:38px!important;
+  height:38px;
+  padding:0;
+  border:1px solid #C9D4DF;
+  border-radius:10px!important;
+  background:#F4F7FA;
+  color:#102A43;
+  font-size:23px!important;
+}
+.simple50-qty strong{
+  color:#102A43;
+  font-size:19px;
+}
+.simple50-recommend{
+  display:grid;
+  grid-template-columns:1fr 1fr 190px;
+  gap:11px;
+  margin-top:18px;
+}
+.simple50-recommend>div{
+  padding:14px 16px;
+  border-radius:15px;
+  background:var(--s50-navy);
+  color:#fff;
+}
+.simple50-recommend span{
+  display:block;
+  color:#B9C9D8;
+  font-size:13px;
+  font-weight:900;
+}
+.simple50-recommend strong{
+  display:block;
+  margin-top:5px;
+  font-size:22px;
+}
+#simple50ApplyBtn{
+  border:0;
+  background:var(--s50-green);
+  color:#fff;
+}
+.simple50-status{
+  margin-top:11px;
+  padding:12px;
+  border-radius:12px;
+  background:#EAF7F0;
+  color:#16794B;
+  text-align:center;
+  font-size:15px;
+  font-weight:900;
+}
+
+/* 옵션/보관비도 너무 복잡하지 않게 한 줄씩 */
+.option-storage-card-v66{
+  display:block!important;
+}
+.option-storage-card-v66 .option-rate-toolbar-v67,
+.option-storage-card-v66 .option-rate-help-v67,
+.option-storage-card-v66 .vehicle-images-v66,
+.option-storage-card-v66 .option-settings-status-v67{
+  display:none!important;
+}
+.option-storage-card-v66 .option-storage-columns-v66{
+  grid-template-columns:1fr!important;
+}
+.option-row-v66{
+  grid-template-columns:minmax(120px,1fr) 120px 85px 100px 42px!important;
+  gap:7px!important;
+  padding:8px!important;
+}
+.option-row-v66 input{
+  min-height:44px!important;
+  font-size:15px!important;
+}
+
+/* 수익·관리 기능은 대표 설정에서만 쓰도록 숨김 */
+.profit-analysis-card-v69,
+.pro76-manager{
+  display:none!important;
+}
+
+@media(max-width:850px){
+  .simple50-room-tabs{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+  .simple50-item-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
+@media(max-width:600px){
+  .simple50-welcome{
+    align-items:flex-start;
+    padding:18px;
+  }
+  .simple50-welcome-icon{
+    width:56px;height:56px;font-size:31px;
+  }
+  .simple50-welcome h2{
+    font-size:23px;
+  }
+  .simple50-welcome p{
+    font-size:16px;
+  }
+  .simple50-card-head{
+    flex-direction:column;
+  }
+  .simple50-room-tabs{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .simple50-item-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .simple50-recommend{
+    grid-template-columns:1fr;
+  }
+  .card{
+    padding:17px!important;
+    border-radius:16px!important;
+  }
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -5036,7 +5470,7 @@ button{min-height:46px;line-height:1.25;white-space:normal}
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-7.6.1</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-7.7-SIMPLE</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">6.3 DEMO</span><span class="beta-version-badge">베타시험</span><button type="button" id="betaResultsBtn">베타결과</button><button type="button" id="betaTestMenuBtn">현장테스트</button><button type="button" id="launchMenuBtn">출시진단</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="contractHistoryBtn">계약관리</button><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -5107,6 +5541,15 @@ button{min-height:46px;line-height:1.25;white-space:normal}
 
   <!-- ============ STEP 1. 고객정보 ============ -->
   <section class="panel active" id="step1">
+<div class="simple50-welcome">
+  <div class="simple50-welcome-icon">🚚</div>
+  <div>
+    <span>짐픽 쉬운 견적</span>
+    <h2>아래 순서대로 5가지만 입력하세요</h2>
+    <p>고객정보 → 사진 → 품목 → 금액 → 문자발송</p>
+  </div>
+</div>
+
 <div class="pro70-dashboard">
   <div class="pro70-hero">
     <div>
@@ -5656,6 +6099,41 @@ button{min-height:46px;line-height:1.25;white-space:normal}
 
   <!-- ============ STEP 4. 품목 확인 (방 + 거실 + 부엌 통합) ============ -->
   <section class="panel" id="step4">
+<div class="card simple50-items-card">
+  <div class="simple50-card-head">
+    <div>
+      <span>3단계</span>
+      <h2>방을 누르고 품목 수량만 선택하세요</h2>
+      <p>복잡한 드래그 없이 `−`와 `＋` 버튼만 사용합니다.</p>
+    </div>
+    <div class="simple50-auto-save">자동저장</div>
+  </div>
+
+  <div id="simple50RoomTabs" class="simple50-room-tabs"></div>
+  <div class="simple50-room-info">
+    <strong id="simple50RoomTitle">거실</strong>
+    <span>선택한 품목 <b id="simple50RoomCount">0개</b></span>
+  </div>
+
+  <div id="simple50ItemGrid" class="simple50-item-grid"></div>
+
+  <div class="simple50-recommend">
+    <div>
+      <span>추천 차량</span>
+      <strong id="simple50Truck">1톤 1대</strong>
+    </div>
+    <div>
+      <span>추천 작업자</span>
+      <strong id="simple50Workers">2명</strong>
+    </div>
+    <button type="button" id="simple50ApplyBtn">추천값 사용</button>
+  </div>
+
+  <div id="simple50Status" class="simple50-status">
+    품목을 누르면 자동으로 저장됩니다.
+  </div>
+</div>
+
 <div class="card pro76-manager">
   <div class="pro76-head">
     <div>
@@ -6828,7 +7306,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-7.6.1';
+const BUILD_VERSION = 'JIMPICK-PRO-7.7-SIMPLE';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -19740,6 +20218,284 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
   else init()
+})();
+
+</script>
+
+<script>
+
+(function(){
+  'use strict';
+
+  var KEY='jimpick_simple50_items_v77';
+
+  var ROOMS=[
+    {id:'living',name:'거실',icon:'🛋️'},
+    {id:'kitchen',name:'주방',icon:'🍳'},
+    {id:'master',name:'안방',icon:'🛏️'},
+    {id:'small',name:'작은방',icon:'🛌'},
+    {id:'etc',name:'기타/베란다',icon:'📦'}
+  ];
+
+  var ITEMS={
+    living:[
+      ['소파','🛋️'],['TV','📺'],['TV장','🗄️'],['에어컨','❄️'],
+      ['테이블','🪑'],['의자','🪑'],['책장','📚'],['장식장','🗄️']
+    ],
+    kitchen:[
+      ['냉장고','🧊'],['김치냉장고','🧊'],['식탁','🍽️'],['식탁의자','🪑'],
+      ['전자레인지','📻'],['정수기','💧'],['식기세척기','🫧'],['주방수납장','🗄️']
+    ],
+    master:[
+      ['침대','🛏️'],['매트리스','🛏️'],['옷장','🚪'],['화장대','💄'],
+      ['서랍장','🗄️'],['에어컨','❄️'],['거울','🪞'],['안마의자','💺']
+    ],
+    small:[
+      ['싱글침대','🛌'],['책상','🪑'],['의자','🪑'],['책장','📚'],
+      ['옷장','🚪'],['서랍장','🗄️'],['컴퓨터','🖥️'],['모니터','🖥️']
+    ],
+    etc:[
+      ['세탁기','🧺'],['건조기','🧺'],['청소기','🧹'],['선반','🗄️'],
+      ['이사박스','📦'],['자전거','🚲'],['화분','🪴'],['기타 짐','📦']
+    ]
+  };
+
+  var state={room:'living',qty:{}};
+
+  function el(id){return document.getElementById(id)}
+
+  function initialize(){
+    ROOMS.forEach(function(room){
+      state.qty[room.id]=state.qty[room.id]||{};
+      ITEMS[room.id].forEach(function(item){
+        if(typeof state.qty[room.id][item[0]]!=='number'){
+          state.qty[room.id][item[0]]=0;
+        }
+      });
+    });
+  }
+
+  function load(){
+    try{
+      var saved=JSON.parse(localStorage.getItem(KEY)||'null');
+      if(saved && saved.qty){
+        state=saved;
+      }
+    }catch(e){}
+    initialize();
+  }
+
+  function save(){
+    try{
+      localStorage.setItem(KEY,JSON.stringify(state));
+      syncOldData();
+      setStatus('자동 저장되었습니다.');
+    }catch(e){
+      setStatus('저장 중 문제가 생겼습니다.');
+    }
+  }
+
+  function roomCount(roomId){
+    return Object.values(state.qty[roomId]||{}).reduce(function(sum,value){
+      return sum+(Number(value)||0);
+    },0);
+  }
+
+  function totalCount(){
+    return ROOMS.reduce(function(sum,room){
+      return sum+roomCount(room.id);
+    },0);
+  }
+
+  function renderRooms(){
+    var wrap=el('simple50RoomTabs');
+    if(!wrap)return;
+
+    wrap.innerHTML=ROOMS.map(function(room){
+      return '<button type="button" class="'+(state.room===room.id?'active':'')+
+        '" data-simple-room="'+room.id+'">'+
+        '<span class="icon">'+room.icon+'</span>'+
+        room.name+' <span class="count">'+roomCount(room.id)+'</span>'+
+      '</button>';
+    }).join('');
+
+    wrap.querySelectorAll('[data-simple-room]').forEach(function(button){
+      button.addEventListener('click',function(){
+        state.room=button.dataset.simpleRoom;
+        render();
+        save();
+      });
+    });
+  }
+
+  function renderItems(){
+    var wrap=el('simple50ItemGrid');
+    if(!wrap)return;
+
+    var items=ITEMS[state.room]||[];
+    wrap.innerHTML=items.map(function(item){
+      var qty=Number(state.qty[state.room][item[0]])||0;
+      return '<div class="simple50-item '+(qty>0?'on':'')+'">'+
+        '<span class="emoji">'+item[1]+'</span>'+
+        '<strong class="name">'+item[0]+'</strong>'+
+        '<div class="simple50-qty">'+
+          '<button type="button" data-simple-minus="'+item[0]+'">−</button>'+
+          '<strong>'+qty+'</strong>'+
+          '<button type="button" data-simple-plus="'+item[0]+'">＋</button>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+
+    wrap.querySelectorAll('[data-simple-minus]').forEach(function(button){
+      button.addEventListener('click',function(){
+        var name=button.dataset.simpleMinus;
+        state.qty[state.room][name]=Math.max(
+          0,
+          (Number(state.qty[state.room][name])||0)-1
+        );
+        render();
+        save();
+      });
+    });
+
+    wrap.querySelectorAll('[data-simple-plus]').forEach(function(button){
+      button.addEventListener('click',function(){
+        var name=button.dataset.simplePlus;
+        state.qty[state.room][name]=(Number(state.qty[state.room][name])||0)+1;
+        render();
+        save();
+      });
+    });
+
+    var current=ROOMS.find(function(room){return room.id===state.room});
+    el('simple50RoomTitle').textContent=current?current.name:'방';
+    el('simple50RoomCount').textContent=roomCount(state.room)+'개';
+  }
+
+  function recommendation(){
+    var total=totalCount();
+    var large=0;
+
+    ROOMS.forEach(function(room){
+      Object.entries(state.qty[room.id]||{}).forEach(function(entry){
+        if(/냉장고|세탁기|건조기|침대|매트리스|옷장|소파|안마의자/.test(entry[0])){
+          large+=Number(entry[1])||0;
+        }
+      });
+    });
+
+    if(total>=35 || large>=8)return {t1:1,t5:1,workers:5};
+    if(total>=23 || large>=5)return {t1:0,t5:1,workers:4};
+    if(total>=13 || large>=3)return {t1:2,t5:0,workers:3};
+    return {t1:1,t5:0,workers:2};
+  }
+
+  function updateRecommendation(){
+    var result=recommendation();
+    var vehicles=[];
+    if(result.t1)vehicles.push('1톤 '+result.t1+'대');
+    if(result.t5)vehicles.push('5톤 '+result.t5+'대');
+
+    el('simple50Truck').textContent=vehicles.join(' + ');
+    el('simple50Workers').textContent=result.workers+'명';
+  }
+
+  function applyRecommendation(){
+    var result=recommendation();
+    [
+      ['truck1Count',result.t1],
+      ['truck5Count',result.t5],
+      ['workerCount',result.workers]
+    ].forEach(function(pair){
+      var node=el(pair[0]);
+      if(node){
+        node.value=pair[1];
+        node.dispatchEvent(new Event('input',{bubbles:true}));
+        node.dispatchEvent(new Event('change',{bubbles:true}));
+      }
+    });
+    setStatus('추천 차량과 작업자를 적용했습니다.');
+  }
+
+  function syncOldData(){
+    var old={
+      room:state.room,
+      qty:{},
+      custom:{}
+    };
+
+    ROOMS.forEach(function(room){
+      old.qty[room.id]={};
+      old.custom[room.id]=[];
+      Object.entries(state.qty[room.id]||{}).forEach(function(entry){
+        old.qty[room.id][entry[0]]=Number(entry[1])||0;
+      });
+    });
+
+    /* 기존 입구방 데이터 구조와 호환 */
+    old.qty.entrance={};
+    old.custom.entrance=[];
+
+    try{
+      localStorage.setItem('jimpick_step3_v74',JSON.stringify(old));
+    }catch(e){}
+
+    var roomAnalysis={
+      living:{photos:[],items:[]},
+      kitchen:{photos:[],items:[]},
+      master:{photos:[],items:[]},
+      small:{photos:[],items:[]},
+      balcony:{photos:[],items:[]},
+      storage:{photos:[],items:[]},
+      office:{photos:[],items:[]}
+    };
+
+    ROOMS.forEach(function(room){
+      var target=room.id==='etc'?'balcony':room.id;
+      Object.entries(state.qty[room.id]||{}).forEach(function(entry){
+        if(Number(entry[1])>0){
+          roomAnalysis[target].items.push({
+            name:entry[0],
+            qty:Number(entry[1]),
+            fragile:/TV|거울|전자레인지|모니터|컴퓨터/.test(entry[0])
+          });
+        }
+      });
+    });
+
+    try{
+      localStorage.setItem(
+        'jimpick_room_analysis_v68',
+        JSON.stringify({savedAt:new Date().toISOString(),data:roomAnalysis})
+      );
+    }catch(e){}
+  }
+
+  function setStatus(text){
+    var node=el('simple50Status');
+    if(node)node.textContent=text;
+  }
+
+  function render(){
+    renderRooms();
+    renderItems();
+    updateRecommendation();
+  }
+
+  function init(){
+    load();
+    render();
+    syncOldData();
+
+    var apply=el('simple50ApplyBtn');
+    if(apply)apply.addEventListener('click',applyRecommendation);
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',init);
+  }else{
+    init();
+  }
 })();
 
 </script>

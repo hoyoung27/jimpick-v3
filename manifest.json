@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 7.6.1",
-  "short_name": "짐픽 PRO",
-  "description": "이전 저장 데이터 형식 오류를 자동 복구하는 방·품목 드래그 관리 안정판",
+  "name": "짐픽 PRO 7.7 SIMPLE",
+  "short_name": "짐픽 쉬운견적",
+  "description": "50대 이사업체 대표가 설명 없이 사용할 수 있도록 단순화한 5단계 이사견적 프로그램",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
