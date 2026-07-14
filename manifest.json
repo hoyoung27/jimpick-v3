@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 7.4 RC",
+  "name": "짐픽 PRO 7.5 RC",
   "short_name": "짐픽 PRO",
-  "description": "6개 방 품목 입력과 차량·작업자 추천 완성판",
+  "description": "사진 업로드, 방 지정, AI 품목 후보 분석과 STEP 3 자동 적용을 제공하는 AI 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
