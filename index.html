@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 6.3.3 DEMO</title>
+<title>짐픽 PRO 6.3.4 DEMO</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 6.3.3 DEMO 최소판매형 ===== */
+/* ===== 짐픽 PRO 6.3.4 DEMO 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -3718,6 +3718,21 @@ body.demo-click-ready #routeNav{
   box-shadow:0 8px 24px rgba(0,0,0,.28);
 }
 
+
+/* ===== PRO 6.3.4 완전 체험판 ===== */
+.demo-action-message{
+  position:fixed;left:50%;bottom:20px;transform:translateX(-50%);
+  z-index:1000001;min-width:260px;max-width:90vw;
+  padding:12px 16px;border-radius:13px;background:#102A43;color:#fff;
+  text-align:center;font-size:14px;font-weight:900;
+  box-shadow:0 10px 28px rgba(0,0,0,.3);
+}
+.demo-photo-placeholder{
+  display:flex;align-items:center;justify-content:center;
+  min-height:150px;border:2px dashed #9DD6BD;border-radius:14px;
+  background:#EAF7F0;color:#16794B;font-size:18px;font-weight:900;
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -3997,7 +4012,7 @@ body.demo-click-ready #routeNav{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-6.3.3-DEMO</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-6.3.4-DEMO</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">6.3 DEMO</span><span class="beta-version-badge">베타시험</span><button type="button" id="betaResultsBtn">베타결과</button><button type="button" id="betaTestMenuBtn">현장테스트</button><button type="button" id="launchMenuBtn">출시진단</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="contractHistoryBtn">계약관리</button><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -5282,7 +5297,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-6.3.3-DEMO';
+const BUILD_VERSION = 'JIMPICK-PRO-6.3.4-DEMO';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -15386,6 +15401,258 @@ window.openJimpickDemoHotfix = function(event){
   }else{
     bindNavigation();
   }
+})();
+
+</script>
+
+<script>
+
+(function(){
+  var sampleItems = [
+    {name:'냉장고',qty:1,confidence:.98},
+    {name:'세탁기',qty:1,confidence:.96},
+    {name:'TV',qty:1,confidence:.95},
+    {name:'퀸침대',qty:1,confidence:.93},
+    {name:'싱글침대',qty:1,confidence:.92},
+    {name:'장롱',qty:2,confidence:.89},
+    {name:'3인 소파',qty:1,confidence:.94},
+    {name:'식탁',qty:1,confidence:.91},
+    {name:'책상',qty:2,confidence:.88},
+    {name:'이사박스',qty:25,confidence:.82}
+  ];
+
+  function demoMode(){
+    return document.body.classList.contains('demo-click-ready');
+  }
+
+  function message(text){
+    var old=document.getElementById('demoActionMessage');
+    if(old) old.remove();
+    var el=document.createElement('div');
+    el.id='demoActionMessage';
+    el.className='demo-action-message';
+    el.textContent=text;
+    document.body.appendChild(el);
+    setTimeout(function(){ if(el.parentNode) el.remove(); },1800);
+  }
+
+  function setValue(id,value){
+    var el=document.getElementById(id);
+    if(!el)return;
+    el.value=value;
+    try{el.dispatchEvent(new Event('input',{bubbles:true}));}catch(e){}
+    try{el.dispatchEvent(new Event('change',{bubbles:true}));}catch(e){}
+  }
+
+  function text(id,value){
+    var el=document.getElementById(id);
+    if(el)el.textContent=value;
+  }
+
+  function renderDemoItems(){
+    var wrap=document.getElementById('ai58ReviewList');
+    if(wrap){
+      wrap.innerHTML=sampleItems.map(function(item,index){
+        return '<div class="ai58-review-item">'+
+          '<div><div class="name">'+item.name+'</div>'+
+          '<div class="confidence">AI 신뢰도 '+Math.round(item.confidence*100)+'%</div></div>'+
+          '<input type="number" min="0" value="'+item.qty+'" data-demo-item-qty="'+index+'">'+
+          '<div class="confidence">자동 반영</div>'+
+          '<button type="button" data-demo-item-remove="'+index+'">삭제</button>'+
+        '</div>';
+      }).join('');
+
+      wrap.querySelectorAll('[data-demo-item-qty]').forEach(function(input){
+        input.addEventListener('input',function(){
+          var index=Number(input.getAttribute('data-demo-item-qty'));
+          sampleItems[index].qty=Math.max(0,Number(input.value)||0);
+          message('수량을 수정했습니다.');
+        });
+      });
+
+      wrap.querySelectorAll('[data-demo-item-remove]').forEach(function(btn){
+        btn.addEventListener('click',function(){
+          var index=Number(btn.getAttribute('data-demo-item-remove'));
+          sampleItems.splice(index,1);
+          renderDemoItems();
+          text('ai58DetectedCount',sampleItems.length+'종');
+          message('품목을 삭제했습니다.');
+        });
+      });
+    }
+
+    text('ai58DetectedCount',sampleItems.length+'종');
+    text('ai58UncertainCount','0종');
+  }
+
+  function addDemoPhoto(){
+    var countEl=document.getElementById('bigPhotoCount');
+    var current=Number((countEl&&countEl.textContent||'0').replace(/\D/g,''))||0;
+    var count=current+1;
+
+    text('bigPhotoCount',count+'장');
+    text('ai58PhotoCount',count+'장');
+    text('ai59TotalPhotos',count+'장');
+
+    var preview=document.getElementById('mediaGrid')||
+                document.getElementById('photoPreview')||
+                document.getElementById('photoGrid');
+    if(preview && !preview.querySelector('.demo-photo-placeholder')){
+      var item=document.createElement('div');
+      item.className='demo-photo-placeholder';
+      item.textContent='📷 예시 이삿짐 사진 '+count;
+      preview.appendChild(item);
+    }
+    message('예시 사진 '+count+'장을 등록했습니다.');
+  }
+
+  function analyzeDemoPhotos(){
+    renderDemoItems();
+    text('ai58Status','완료: 품목 '+sampleItems.length+'종을 찾았습니다.');
+    text('ai58DetectedCount',sampleItems.length+'종');
+    text('ai58UncertainCount','0종');
+    text('ai58PhotoCount','5장');
+    text('bigPhotoCount','5장');
+    text('ai59TotalPhotos','5장');
+    text('ai59CoveredRooms','5곳');
+    text('ai59CoverageState','촬영 양호');
+    text('ai59Warning','촬영 상태가 좋습니다. AI 분석이 완료되었습니다.');
+    if(window.jimpickDemoGoStep) window.jimpickDemoGoStep(4);
+    message('예시 사진 AI 분석을 완료했습니다.');
+  }
+
+  function calculateDemoEstimate(){
+    setValue('truck1Count',2);
+    setValue('truck5Count',1);
+    setValue('workerCount',5);
+    setValue('workHours',7);
+    setValue('companyCalculatedPrice',1050000);
+    setValue('ownerDiscountPrice',70000);
+    setValue('ownerFinalPrice',980000);
+    setValue('contractFinalPrice',980000);
+    setValue('contractDeposit',200000);
+    setValue('contractBalance',780000);
+
+    text('ownerVehicleSummary','5톤 1대 + 1톤 2대');
+    text('ownerWorkerSummary','5명');
+    text('ownerHourSummary','7시간');
+    text('finalTotal','980,000원');
+    text('quickTotal','980,000원');
+    text('engineTruck1','2대');
+    text('engineTruck5','1대');
+    text('engineWorkers','5명');
+    text('engineHours','7시간');
+    text('enginePrice','980,000원');
+
+    if(window.jimpickDemoGoStep) window.jimpickDemoGoStep(5);
+    message('예시 차량·인원·최종견적을 계산했습니다.');
+  }
+
+  function makeDemoMessage(type){
+    var templates={
+      confirmed:'안녕하세요, 홍길동 고객님.\n짐픽 체험이사입니다.\n\n이사일: 다음 주\n최종 견적금액: 980,000원\n\n견적 내용이 확정되었습니다.',
+      deposit:'안녕하세요, 홍길동 고객님.\n계약금 200,000원 입금 안내드립니다.\n잔금은 780,000원입니다.',
+      before:'안녕하세요, 홍길동 고객님.\n내일 이사 일정 안내드립니다.\n귀중품과 중요서류는 따로 보관해 주세요.',
+      balance:'안녕하세요, 홍길동 고객님.\n이사 잔금 780,000원 확인 후 입금 부탁드립니다.',
+      paid:'안녕하세요, 홍길동 고객님.\n이사비용 완납을 확인했습니다. 감사합니다.'
+    };
+    var preview=document.getElementById('customerMessagePreview');
+    if(preview) preview.value=templates[type]||templates.confirmed;
+    message('예시 문자 내용을 만들었습니다.');
+  }
+
+  function bind(id,handler){
+    var el=document.getElementById(id);
+    if(!el||el.dataset.demo634Bound)return;
+    el.dataset.demo634Bound='1';
+    el.addEventListener('click',function(e){
+      if(!demoMode())return;
+      e.preventDefault();
+      e.stopPropagation();
+      handler(e);
+    },true);
+  }
+
+  function bindAll(){
+    ['bigCameraBtn','bigGalleryBtn','cameraBtn','galleryBtn'].forEach(function(id){
+      bind(id,addDemoPhoto);
+    });
+
+    ['ai58RunBtn','bigAnalyzeBtn','analyzeBtn'].forEach(function(id){
+      bind(id,analyzeDemoPhotos);
+    });
+
+    bind('ai58RecalculateBtn',calculateDemoEstimate);
+    bind('applyEngineResultBtn',calculateDemoEstimate);
+    bind('applyOwnerFinalPriceBtn',function(){
+      var finalValue=Number(document.getElementById('ownerFinalPrice')?.value)||980000;
+      text('finalTotal',finalValue.toLocaleString('ko-KR')+'원');
+      text('quickTotal',finalValue.toLocaleString('ko-KR')+'원');
+      setValue('contractFinalPrice',finalValue);
+      var deposit=Number(document.getElementById('contractDeposit')?.value)||0;
+      setValue('contractBalance',Math.max(0,finalValue-deposit));
+      message('대표님 최종금액을 적용했습니다.');
+    });
+
+    bind('applyCalculatedPriceBtn',function(){
+      setValue('ownerDiscountPrice',0);
+      setValue('ownerFinalPrice',1050000);
+      text('finalTotal','1,050,000원');
+      message('업체 계산금액을 적용했습니다.');
+    });
+
+    var deposit=document.getElementById('contractDeposit');
+    if(deposit&&!deposit.dataset.demo634Bound){
+      deposit.dataset.demo634Bound='1';
+      deposit.addEventListener('input',function(){
+        if(!demoMode())return;
+        var finalPrice=Number(document.getElementById('contractFinalPrice')?.value)||980000;
+        setValue('contractBalance',Math.max(0,finalPrice-(Number(deposit.value)||0)));
+      });
+    }
+
+    document.querySelectorAll('[data-message-type]').forEach(function(btn){
+      if(btn.dataset.demo634Bound)return;
+      btn.dataset.demo634Bound='1';
+      btn.addEventListener('click',function(e){
+        if(!demoMode())return;
+        e.preventDefault();
+        e.stopPropagation();
+        document.querySelectorAll('[data-message-type]').forEach(function(b){b.classList.remove('selected');});
+        btn.classList.add('selected');
+        makeDemoMessage(btn.getAttribute('data-message-type'));
+      },true);
+    });
+
+    bind('sendCustomerMessageBtn',function(){
+      message('체험모드에서는 실제 문자 앱을 열지 않습니다.');
+    });
+
+    bind('copyCustomerMessageBtn',function(){
+      var value=document.getElementById('customerMessagePreview')?.value||'';
+      if(navigator.clipboard&&value){
+        navigator.clipboard.writeText(value).catch(function(){});
+      }
+      message('문자 내용을 복사했습니다.');
+    });
+
+    bind('saveContractConfirmBtn',function(){
+      message('체험 계약내용을 확인했습니다. 실제 서버에는 저장되지 않습니다.');
+    });
+
+    renderDemoItems();
+    makeDemoMessage('confirmed');
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',bindAll);
+  }else{
+    bindAll();
+  }
+
+  document.addEventListener('click',function(){
+    if(demoMode()) setTimeout(bindAll,0);
+  },true);
 })();
 
 </script>

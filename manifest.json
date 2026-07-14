@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 6.3.3 DEMO",
+  "name": "짐픽 PRO 6.3.4 DEMO",
   "short_name": "짐픽 PRO",
-  "description": "로그인 없는 체험모드에서 고객정보·사진촬영·품목확인·자동견적·문자발송 단계 이동을 복구한 수정판",
+  "description": "로그인 없이 사진 등록·AI 분석·품목수정·견적계산·문자·계약금·서명을 체험하는 AI 이사견적 완전 체험판",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
