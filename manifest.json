@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 6.4.1 DEMO",
+  "name": "짐픽 PRO 6.6 DEMO",
   "short_name": "짐픽 PRO",
-  "description": "자동견적 화면의 오른쪽 빈 공간, 최종금액 0원, 계약금·잔금, 다음 버튼 문제를 수정한 AI 이사견적 체험판",
+  "description": "옵션비·보관비·출도착 사다리차·1톤/5톤 차량표시·지도 경로·문자/PDF 반영을 통합한 AI 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

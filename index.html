@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 6.4.1 DEMO</title>
+<title>짐픽 PRO 6.6 DEMO</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 6.4.1 DEMO 최소판매형 ===== */
+/* ===== 짐픽 PRO 6.6 DEMO 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -3969,6 +3969,163 @@ body.demo-click-ready #prevBtn{
   .demo-live-preview-grid{grid-template-columns:1fr}
 }
 
+
+/* ===== PRO 6.5 고객정보·현장조건 ===== */
+.site-condition-card{max-width:1100px;margin:0 auto 16px}
+.site-condition-guide{
+  margin:0 0 14px;padding:13px 14px;border-radius:13px;
+  background:#EEF5FF;color:#174A7E;font-size:16px;font-weight:900;
+}
+.site-condition-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
+}
+.site-condition-grid label,.site-condition-request{display:grid;gap:7px}
+.site-condition-grid span,.site-condition-request span{
+  color:#102A43;font-size:14px;font-weight:900;
+}
+.site-condition-grid input,.site-condition-grid select,
+.site-condition-request textarea{
+  width:100%;min-height:52px;padding:0 11px;border:1px solid #CBD6E2;
+  border-radius:12px;background:#fff;font-size:16px;font-weight:800;
+  box-sizing:border-box;
+}
+.site-condition-request textarea{
+  min-height:110px;padding:12px;line-height:1.5;resize:vertical;
+}
+.site-condition-options{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:12px;
+}
+.site-condition-options label{
+  display:flex;align-items:center;gap:9px;padding:12px;border-radius:12px;
+  background:#F7F9FC;border:1px solid #DCE5EE;cursor:pointer;
+}
+.site-condition-options input{width:23px;height:23px;accent-color:#16A36A}
+.site-condition-options span{font-size:14px;font-weight:900;color:#102A43}
+.site-condition-request{margin-top:12px}
+.site-condition-summary{
+  margin-top:11px;padding:13px;border-radius:12px;background:#FFF8E8;
+  border:1px solid #F3D6A1;color:#6D4910;font-weight:900;line-height:1.5;
+}
+@media(max-width:900px){
+  .site-condition-grid{grid-template-columns:repeat(2,1fr)}
+  .site-condition-options{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:520px){
+  .site-condition-grid,.site-condition-options{grid-template-columns:1fr}
+}
+
+
+/* ===== PRO 6.6 통합 수정 ===== */
+body.demo-click-ready #appShell,
+body.demo-click-ready .main,
+body.demo-click-ready .main-content,
+body.demo-click-ready .content,
+body.demo-click-ready .content-wrap,
+body.demo-click-ready .panel,
+body.demo-click-ready .panel.active{
+  width:100%!important;max-width:none!important;box-sizing:border-box!important;
+}
+body.demo-click-ready .workspace,
+body.demo-click-ready .workspace-grid,
+body.demo-click-ready .main-grid,
+body.demo-click-ready .content-grid,
+body.demo-click-ready .split-layout,
+body.demo-click-ready .two-column{
+  display:block!important;width:100%!important;grid-template-columns:1fr!important;
+}
+body.demo-click-ready .right-panel,
+body.demo-click-ready .side-panel,
+body.demo-click-ready .empty-panel,
+body.demo-click-ready .right-column,
+body.demo-click-ready .workspace-right{
+  display:none!important;
+}
+.route-map-card-v66,.option-storage-card-v66{max-width:1180px;margin:0 auto 16px}
+.route-map-actions-v66{display:grid;grid-template-columns:2fr 1fr;gap:9px}
+.route-map-actions-v66 button{
+  min-height:54px;border:0;border-radius:13px;font-size:16px;font-weight:900;cursor:pointer
+}
+#openRouteMapBtn{background:#16A36A;color:#fff}
+#swapAddressBtnV66{background:#102A43;color:#fff}
+.route-map-summary-v66{
+  display:grid;grid-template-columns:1fr 1fr 180px;gap:9px;margin-top:11px
+}
+.route-map-summary-v66 div{
+  padding:12px;border-radius:12px;background:#F5F7FA;border:1px solid #DCE5EE
+}
+.route-map-summary-v66 span{display:block;font-size:12px;color:#68798A;font-weight:900}
+.route-map-summary-v66 strong{display:block;margin-top:4px;color:#102A43}
+.route-map-card-v66 small{display:block;margin-top:9px;color:#68798A;text-align:center}
+.move-start-time-field{display:grid;gap:7px;margin-top:12px;max-width:320px}
+.move-start-time-field span{font-size:14px;font-weight:900;color:#102A43}
+.move-start-time-field input{
+  min-height:52px;padding:0 12px;border:1px solid #CBD6E2;border-radius:12px;
+  background:#fff;font-size:17px;font-weight:900
+}
+.difficulty-faces-v66{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px
+}
+.difficulty-faces-v66 button{
+  min-height:86px;border:2px solid transparent;border-radius:17px;background:#F5F7FA;
+  font-size:48px;cursor:pointer;filter:grayscale(.6);opacity:.52
+}
+.difficulty-faces-v66 button.active{
+  border-color:#16A36A;background:#EAF7F0;filter:none;opacity:1;
+  transform:translateY(-2px);box-shadow:0 8px 18px rgba(22,163,106,.18)
+}
+.option-storage-columns-v66{display:grid;grid-template-columns:1.25fr 1fr;gap:14px}
+.option-storage-columns-v66 section{
+  padding:14px;border-radius:15px;background:#F7F9FC;border:1px solid #DCE5EE
+}
+.option-storage-columns-v66 h3{margin:0 0 11px;color:#102A43}
+.option-cost-rows-v66{display:grid;gap:8px}
+.option-row-v66{
+  display:grid;grid-template-columns:1fr 130px 90px 120px;gap:8px;align-items:center;
+  padding:9px;border-radius:11px;background:#fff;border:1px solid #E3EAF1
+}
+.option-row-v66 input{
+  min-height:42px;border:1px solid #CBD6E2;border-radius:9px;padding:0 8px;
+  font-size:15px;font-weight:800;text-align:right
+}
+.option-row-v66 strong{text-align:right;color:#102A43}
+.storage-grid-v66{display:grid;gap:9px}
+.storage-grid-v66 label{display:grid;grid-template-columns:1fr 150px;align-items:center;gap:9px}
+.storage-grid-v66 span{font-size:14px;font-weight:900;color:#102A43}
+.storage-grid-v66 input{
+  min-height:44px;border:1px solid #CBD6E2;border-radius:9px;padding:0 9px;
+  font-size:16px;font-weight:900;text-align:right
+}
+.cost-total-v66{
+  display:flex;align-items:center;justify-content:space-between;margin-top:11px;
+  padding:12px;border-radius:11px;background:#fff;border:1px solid #DCE5EE
+}
+.cost-total-v66 span{font-weight:900;color:#52667A}
+.cost-total-v66 strong{font-size:20px;color:#16A36A}
+.vehicle-images-v66{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.vehicle-card-v66{
+  display:grid;grid-template-columns:90px 1fr auto;align-items:center;gap:12px;
+  padding:14px;border-radius:15px;background:#F5F7FA;border:2px solid #DCE5EE;
+  opacity:.35
+}
+.vehicle-card-v66.active{opacity:1;border-color:#16A36A;background:#EAF7F0}
+.vehicle-emoji-v66{font-size:58px;text-align:center}
+.vehicle-emoji-v66.large{font-size:66px}
+.vehicle-card-v66 strong{font-size:22px;color:#102A43}
+.vehicle-card-v66 span{font-size:21px;font-weight:900;color:#16A36A}
+.grand-total-v66{
+  display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:14px;
+  padding:16px 18px;border-radius:15px;background:#102A43;color:#fff
+}
+.grand-total-v66 span{font-size:16px;font-weight:900}
+.grand-total-v66 strong{font-size:29px;color:#8EF0B1}
+@media(max-width:800px){
+  .route-map-actions-v66,.route-map-summary-v66,.option-storage-columns-v66{grid-template-columns:1fr}
+  .option-row-v66{grid-template-columns:1fr 1fr}
+}
+@media(max-width:520px){
+  .vehicle-images-v66,.difficulty-faces-v66{grid-template-columns:1fr 1fr}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -4248,7 +4405,7 @@ body.demo-click-ready #prevBtn{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-6.4.1-DEMO</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-6.6-DEMO</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">6.3 DEMO</span><span class="beta-version-badge">베타시험</span><button type="button" id="betaResultsBtn">베타결과</button><button type="button" id="betaTestMenuBtn">현장테스트</button><button type="button" id="launchMenuBtn">출시진단</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="contractHistoryBtn">계약관리</button><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -4319,6 +4476,112 @@ body.demo-click-ready #prevBtn{
 
   <!-- ============ STEP 1. 고객정보 ============ -->
   <section class="panel active" id="step1">
+<div class="card route-map-card-v66">
+  <h2><span class="eyebrow">주소·경로</span> 이동거리 확인</h2>
+  <div class="route-map-actions-v66">
+    <button type="button" id="openRouteMapBtn">🗺 지도에서 경로 보기</button>
+    <button type="button" id="swapAddressBtnV66">⇄ 출발·도착 바꾸기</button>
+  </div>
+  <div class="route-map-summary-v66">
+    <div><span>출발지</span><strong id="routeFromText">주소 미입력</strong></div>
+    <div><span>도착지</span><strong id="routeToText">주소 미입력</strong></div>
+    <div><span>이동거리</span><strong id="routeDistanceText">지도에서 확인</strong></div>
+  </div>
+  <small>주소를 입력한 뒤 ‘지도에서 경로 보기’를 누르면 카카오맵 길찾기가 열립니다.</small>
+</div>
+
+<div class="card site-condition-card">
+  <h2><span class="eyebrow">현장조건</span> 출발지·도착지 작업환경</h2>
+  <p class="site-condition-guide">
+    층수와 엘리베이터, 주차거리 등을 입력하면 작업 난이도와 추가요금 판단에 반영됩니다.
+  </p>
+
+  <div class="site-condition-grid">
+    <label>
+      <span>이사 유형</span>
+      <select id="movingType">
+        <option value="포장이사">포장이사</option>
+        <option value="반포장이사">반포장이사</option>
+        <option value="일반이사">일반이사</option>
+        <option value="사무실이사">사무실이사</option>
+      </select>
+    </label>
+
+    <label>
+      <span>건물 형태</span>
+      <select id="buildingType">
+        <option value="아파트">아파트</option>
+        <option value="빌라">빌라</option>
+        <option value="주택">주택</option>
+        <option value="오피스텔">오피스텔</option>
+        <option value="상가">상가</option>
+        <option value="사무실">사무실</option>
+      </select>
+    </label>
+
+    <label>
+      <span>출발지 층수</span>
+      <input type="number" id="fromFloor" min="-5" max="100" value="1">
+    </label>
+
+    <label>
+      <span>도착지 층수</span>
+      <input type="number" id="toFloor" min="-5" max="100" value="1">
+    </label>
+
+    <label>
+      <span>출발지 엘리베이터</span>
+      <select id="fromElevator">
+        <option value="있음">있음</option>
+        <option value="없음">없음</option>
+      </select>
+    </label>
+
+    <label>
+      <span>도착지 엘리베이터</span>
+      <select id="toElevator">
+        <option value="있음">있음</option>
+        <option value="없음">없음</option>
+      </select>
+    </label>
+
+    
+
+    
+  </div>
+
+  <div class="site-condition-options">
+    <label><input type="checkbox" id="useStairs"><span>계단 작업 있음</span></label>
+    
+    
+    
+  
+    <label><input type="checkbox" id="fromLadderTruck"><span>출발지 사다리차 필요</span></label>
+    <label><input type="checkbox" id="toLadderTruck"><span>도착지 사다리차 필요</span></label>
+</div>
+
+  
+  <label class="move-start-time-field">
+    <span>이사 시작 시간</span>
+    <input type="time" id="moveStartTime" value="09:00">
+  </label>
+<label class="site-condition-request">
+    <span>고객 요청사항·현장 메모</span>
+    <textarea id="customerRequest" rows="4" placeholder="예: 냉장고 문 분리, 에어컨 이전, 폐기물 처리 등"></textarea>
+  </label>
+
+  
+  <div id="difficultyFacesV66" class="difficulty-faces-v66" aria-label="작업 난이도">
+    <button type="button" data-difficulty-face="easy" title="쉬움">😊</button>
+    <button type="button" data-difficulty-face="normal" title="보통">🙂</button>
+    <button type="button" data-difficulty-face="hard" title="어려움">😣</button>
+    <button type="button" data-difficulty-face="very-hard" title="매우 어려움">😡</button>
+  </div>
+<div id="siteConditionSummary" class="site-condition-summary">
+    현장조건을 입력하면 자동으로 요약됩니다.
+  </div>
+</div>
+
 <div class="card rc60-card">
   <h2><span class="eyebrow">출시 후보판</span> 판매 전 자동 점검</h2>
   <p class="rc60-guide">
@@ -4765,6 +5028,42 @@ body.demo-click-ready #prevBtn{
 
   <!-- ============ STEP 5. 견적 확정 ============ -->
   <section class="panel" id="step5">
+<div class="card option-storage-card-v66">
+  <h2><span class="eyebrow">추가 비용</span> 옵션비·보관비 자동 계산</h2>
+
+  <div class="option-storage-columns-v66">
+    <section>
+      <h3>옵션 비용</h3>
+      <div id="optionCostRowsV66" class="option-cost-rows-v66"></div>
+      <div class="cost-total-v66"><span>옵션 비용 합계</span><strong id="optionCostTotalV66">0원</strong></div>
+    </section>
+
+    <section>
+      <h3>보관 비용</h3>
+      <div class="storage-grid-v66">
+        <label><span>보관 기간(일)</span><input type="number" id="storageDaysV66" min="0" value="0"></label>
+        <label><span>보관 물량(톤)</span><input type="number" id="storageTonsV66" min="0" step="0.5" value="0"></label>
+        <label><span>톤당 1일 단가</span><input type="number" id="storageDailyRateV66" min="0" step="1000" value="10000"></label>
+      </div>
+      <div class="cost-total-v66"><span>보관 비용 합계</span><strong id="storageCostTotalV66">0원</strong></div>
+    </section>
+  </div>
+
+  <div class="vehicle-images-v66">
+    <div id="truck1VisualV66" class="vehicle-card-v66">
+      <div class="vehicle-emoji-v66">🚚</div><strong>1톤</strong><span id="truck1VisualCountV66">0대</span>
+    </div>
+    <div id="truck5VisualV66" class="vehicle-card-v66">
+      <div class="vehicle-emoji-v66 large">🚛</div><strong>5톤</strong><span id="truck5VisualCountV66">0대</span>
+    </div>
+  </div>
+
+  <div class="grand-total-v66">
+    <span>옵션·보관 포함 최종 견적</span>
+    <strong id="grandTotalV66">0원</strong>
+  </div>
+</div>
+
 <div id="demoLivePreviewCard" class="demo-live-preview-card">
   <h3>실시간 견적 요약</h3>
   <div class="demo-live-preview-grid">
@@ -5564,7 +5863,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-6.4.1-DEMO';
+const BUILD_VERSION = 'JIMPICK-PRO-6.6-DEMO';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -15965,7 +16264,20 @@ window.openJimpickDemoHotfix = function(event){
         </div>
       </section>
 
+      
       <section class="estimate-paper-section">
+        <h3>현장조건</h3>
+        <div class="estimate-paper-grid two">
+          <div><span>이사 유형</span><strong id="docMovingType">-</strong></div>
+          <div><span>건물 형태</span><strong id="docBuildingType">-</strong></div>
+          <div><span>출발지 조건</span><strong id="docFromCondition">-</strong></div>
+          <div><span>도착지 조건</span><strong id="docToCondition">-</strong></div>
+        </div>
+        <div id="docSiteOptions" class="estimate-paper-note">추가 현장조건 없음</div>
+        <div id="docCustomerRequest" class="estimate-paper-note">고객 요청사항 없음</div>
+      </section>
+
+<section class="estimate-paper-section">
         <h3>작업 계획</h3>
         <div class="estimate-paper-grid four">
           <div><span>1톤 차량</span><strong id="docTruck1">0대</strong></div>
@@ -15981,7 +16293,11 @@ window.openJimpickDemoHotfix = function(event){
           <div><span>업체 요금표 계산금액</span><strong id="docCalculatedPrice">0원</strong></div>
           <div><span>할인금액</span><strong id="docDiscountPrice">0원</strong></div>
           <div><span>추가 조정금액</span><strong id="docExtraPrice">0원</strong></div>
+          
+          <div><span>옵션 비용</span><strong id="docOptionCostV66">0원</strong></div>
+          <div><span>보관 비용</span><strong id="docStorageCostV66">0원</strong></div>
           <div class="total"><span>최종 견적금액</span><strong id="docFinalPrice">0원</strong></div>
+
           <div><span>계약금</span><strong id="docDeposit">0원</strong></div>
           <div><span>잔금</span><strong id="docBalance">0원</strong></div>
         </div>
@@ -16410,6 +16726,339 @@ window.openJimpickDemoHotfix = function(event){
     if(document.body.classList.contains('demo-click-ready')){
       setTimeout(initFix,0);
     }
+  },true);
+})();
+
+</script>
+
+<script>
+
+(function(){
+  var KEY='jimpick_site_conditions_v65';
+
+  function el(id){return document.getElementById(id);}
+  function value(id){return el(id)?.value||'';}
+  function checked(id){return Boolean(el(id)?.checked);}
+  function setText(id,text){var node=el(id);if(node)node.textContent=text||'-';}
+
+  function data(){
+    return {
+      movingType:value('movingType')||'포장이사',
+      buildingType:value('buildingType')||'아파트',
+      fromFloor:Number(value('fromFloor'))||0,
+      toFloor:Number(value('toFloor'))||0,
+      fromElevator:value('fromElevator')||'있음',
+      toElevator:value('toElevator')||'있음',
+      fromParkingDistance:value('fromParkingDistance')||'10m 이내',
+      toParkingDistance:value('toParkingDistance')||'10m 이내',
+      useStairs:checked('useStairs'),
+      needLadderTruck:checked('needLadderTruck'),
+      difficultParking:checked('difficultParking'),
+      longCarry:checked('longCarry'),
+      customerRequest:value('customerRequest').trim()
+    };
+  }
+
+  function optionsText(d){
+    var rows=[];
+    if(d.useStairs)rows.push('계단 작업');
+    if(d.needLadderTruck)rows.push('사다리차 필요');
+    if(d.difficultParking)rows.push('주차 어려움');
+    if(d.longCarry)rows.push('장거리 운반');
+    return rows.length?rows.join(', '):'추가 현장조건 없음';
+  }
+
+  function update(){
+    var d=data();
+    try{localStorage.setItem(KEY,JSON.stringify(d));}catch(e){}
+
+    var from='출발 '+d.fromFloor+'층 · 엘리베이터 '+d.fromElevator+' · 주차 '+d.fromParkingDistance;
+    var to='도착 '+d.toFloor+'층 · 엘리베이터 '+d.toElevator+' · 주차 '+d.toParkingDistance;
+    var summary=d.movingType+' / '+d.buildingType+' / '+from+' / '+to+
+      ' / '+optionsText(d)+(d.customerRequest?' / 요청: '+d.customerRequest:'');
+
+    setText('siteConditionSummary',summary);
+    setText('docMovingType',d.movingType);
+    setText('docBuildingType',d.buildingType);
+    setText('docFromCondition',from);
+    setText('docToCondition',to);
+    setText('docSiteOptions',optionsText(d));
+    setText('docCustomerRequest',d.customerRequest||'고객 요청사항 없음');
+
+    window.JimpickSiteConditionData=d;
+  }
+
+  function load(){
+    var saved={};
+    try{saved=JSON.parse(localStorage.getItem(KEY)||'{}');}catch(e){}
+    Object.entries(saved).forEach(function(pair){
+      var node=el(pair[0]);
+      if(!node)return;
+      if(node.type==='checkbox')node.checked=Boolean(pair[1]);
+      else node.value=pair[1];
+    });
+    update();
+  }
+
+  function appendConditionToMessages(){
+    if(typeof window.makeCustomerMessage!=='function'||window.makeCustomerMessage.__v65)return;
+    var original=window.makeCustomerMessage;
+    var wrapped=function(type,row){
+      var result=original(type,row);
+      var d=data();
+      var condition='\n\n현장조건: '+d.buildingType+', 출발 '+d.fromFloor+'층, 도착 '+d.toFloor+'층';
+      if(d.customerRequest)condition+='\n요청사항: '+d.customerRequest;
+      if(result&&typeof result==='object')result.text=(result.text||'')+condition;
+      return result;
+    };
+    wrapped.__v65=true;
+    window.makeCustomerMessage=wrapped;
+  }
+
+  function addDemoValues(){
+    if(!document.body.classList.contains('demo-click-ready'))return;
+    if(!value('buildingType')){
+      el('buildingType').value='아파트';
+    }
+    if(Number(value('fromFloor'))===0)el('fromFloor').value='8';
+    if(Number(value('toFloor'))===0)el('toFloor').value='12';
+    el('fromElevator').value='있음';
+    el('toElevator').value='있음';
+    el('fromParkingDistance').value='10m 이내';
+    el('toParkingDistance').value='30m 이내';
+    if(!value('customerRequest'))el('customerRequest').value='침대 2개 분해·조립, 에어컨 2대 이전 상담';
+    update();
+  }
+
+  function init(){
+    [
+      'movingType','buildingType','fromFloor','toFloor','fromElevator','toElevator',
+      'fromParkingDistance','toParkingDistance','useStairs','needLadderTruck',
+      'difficultParking','longCarry','customerRequest'
+    ].forEach(function(id){
+      var node=el(id);
+      if(!node)return;
+      node.addEventListener(node.type==='checkbox'?'change':'input',update);
+      node.addEventListener('change',update);
+    });
+
+    load();
+    setTimeout(addDemoValues,250);
+    setTimeout(appendConditionToMessages,500);
+
+    var originalUpdate=window.updateEstimateDocument;
+    if(typeof originalUpdate==='function'&&!originalUpdate.__v65){
+      var wrapped=function(){
+        originalUpdate();
+        update();
+      };
+      wrapped.__v65=true;
+      window.updateEstimateDocument=wrapped;
+    }
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',init);
+  }else{
+    init();
+  }
+
+  document.addEventListener('click',function(){
+    setTimeout(function(){
+      update();
+      appendConditionToMessages();
+    },0);
+  },true);
+})();
+
+</script>
+
+<script>
+
+(function(){
+  var OPTIONS=[
+    {name:'에어컨 이전·설치',price:100000},
+    {name:'벽걸이 TV 설치',price:50000},
+    {name:'돌침대 분해·조립',price:80000},
+    {name:'피아노 운반',price:150000},
+    {name:'사다리차 이용',price:120000},
+    {name:'금고 운반',price:150000},
+    {name:'폐기물 처리',price:50000}
+  ];
+
+  function el(id){return document.getElementById(id)}
+  function value(id){return el(id)?.value||''}
+  function number(id){return Number(value(id))||0}
+  function money(v){return (Number(v)||0).toLocaleString('ko-KR')+'원'}
+  function setText(id,v){var n=el(id);if(n)n.textContent=v}
+
+  function renderOptions(){
+    var wrap=el('optionCostRowsV66');
+    if(!wrap)return;
+    wrap.innerHTML=OPTIONS.map(function(o,i){
+      return '<div class="option-row-v66">'+
+        '<span>'+o.name+'</span>'+
+        '<input type="number" min="0" step="1000" value="'+o.price+'" data-v66-price="'+i+'" aria-label="'+o.name+' 단가">'+
+        '<input type="number" min="0" value="0" data-v66-qty="'+i+'" aria-label="'+o.name+' 수량">'+
+        '<strong data-v66-line="'+i+'">0원</strong>'+
+      '</div>'
+    }).join('');
+    wrap.querySelectorAll('input').forEach(function(input){
+      input.addEventListener('input',calculate);
+    });
+  }
+
+  function optionCost(){
+    var total=0;
+    OPTIONS.forEach(function(o,i){
+      var p=Number(document.querySelector('[data-v66-price="'+i+'"]')?.value)||0;
+      var q=Number(document.querySelector('[data-v66-qty="'+i+'"]')?.value)||0;
+      var line=p*q;
+      total+=line;
+      var lineEl=document.querySelector('[data-v66-line="'+i+'"]');
+      if(lineEl)lineEl.textContent=money(line);
+    });
+    return total;
+  }
+
+  function storageCost(){
+    return number('storageDaysV66')*number('storageTonsV66')*number('storageDailyRateV66');
+  }
+
+  function difficulty(){
+    var score=0;
+    if(el('useStairs')?.checked)score+=2;
+    if(el('fromLadderTruck')?.checked)score+=1;
+    if(el('toLadderTruck')?.checked)score+=1;
+    if(value('fromElevator')==='없음'&&number('fromFloor')>=3)score+=2;
+    if(value('toElevator')==='없음'&&number('toFloor')>=3)score+=2;
+    if(number('fromFloor')>=10||number('toFloor')>=10)score+=1;
+
+    var key='easy';
+    if(score>=6)key='very-hard';
+    else if(score>=4)key='hard';
+    else if(score>=2)key='normal';
+
+    document.querySelectorAll('[data-difficulty-face]').forEach(function(btn){
+      btn.classList.toggle('active',btn.dataset.difficultyFace===key);
+    });
+    window.JimpickDifficultyV66=key;
+  }
+
+  function vehicleVisuals(){
+    var t1=number('truck1Count');
+    var t5=number('truck5Count');
+    setText('truck1VisualCountV66',t1+'대');
+    setText('truck5VisualCountV66',t5+'대');
+    el('truck1VisualV66')?.classList.toggle('active',t1>0);
+    el('truck5VisualV66')?.classList.toggle('active',t5>0);
+  }
+
+  function calculate(){
+    var option=optionCost();
+    var storage=storageCost();
+    var base=number('ownerFinalPrice')||number('contractFinalPrice')||980000;
+    var total=base+option+storage;
+    var deposit=number('contractDeposit')||0;
+    var balance=Math.max(0,total-deposit);
+
+    setText('optionCostTotalV66',money(option));
+    setText('storageCostTotalV66',money(storage));
+    setText('grandTotalV66',money(total));
+    setText('docOptionCostV66',money(option));
+    setText('docStorageCostV66',money(storage));
+    setText('docFinalPrice',money(total));
+    setText('docBalance',money(balance));
+
+    window.JimpickOptionCostV66=option;
+    window.JimpickStorageCostV66=storage;
+    window.JimpickGrandTotalV66=total;
+    window.JimpickBalanceV66=balance;
+
+    vehicleVisuals();
+    difficulty();
+  }
+
+  function updateRouteText(){
+    var from=value('fromAddress')||'주소 미입력';
+    var to=value('toAddress')||'주소 미입력';
+    setText('routeFromText',from);
+    setText('routeToText',to);
+  }
+
+  function openRoute(){
+    var from=value('fromAddress').trim();
+    var to=value('toAddress').trim();
+    if(!from||!to){
+      alert('출발지와 도착지 주소를 모두 입력해주세요.');
+      return;
+    }
+    var url='https://map.kakao.com/?sName='+encodeURIComponent(from)+'&eName='+encodeURIComponent(to);
+    window.open(url,'_blank','noopener');
+    setText('routeDistanceText','카카오맵에서 확인');
+  }
+
+  function swapAddress(){
+    var from=el('fromAddress'),to=el('toAddress');
+    if(!from||!to)return;
+    var tmp=from.value;
+    from.value=to.value;
+    to.value=tmp;
+    from.dispatchEvent(new Event('input',{bubbles:true}));
+    to.dispatchEvent(new Event('input',{bubbles:true}));
+    updateRouteText();
+  }
+
+  function wrapMessage(){
+    if(typeof window.makeCustomerMessage!=='function'||window.makeCustomerMessage.__v66)return;
+    var original=window.makeCustomerMessage;
+    var wrapped=function(type,row){
+      var result=original(type,row);
+      calculate();
+      var start=value('moveStartTime')||'09:00';
+      var option=window.JimpickOptionCostV66||0;
+      var storage=window.JimpickStorageCostV66||0;
+      var total=window.JimpickGrandTotalV66||0;
+      var extra='\n이사 시작: '+start+
+        '\n차량: 1톤 '+number('truck1Count')+'대, 5톤 '+number('truck5Count')+'대'+
+        '\n옵션비: '+money(option)+
+        '\n보관비: '+money(storage)+
+        '\n총 견적: '+money(total);
+      if(result&&typeof result==='object')result.text=(result.text||'')+extra;
+      return result;
+    };
+    wrapped.__v66=true;
+    window.makeCustomerMessage=wrapped;
+  }
+
+  function init(){
+    renderOptions();
+    ['storageDaysV66','storageTonsV66','storageDailyRateV66','truck1Count','truck5Count',
+     'ownerFinalPrice','contractFinalPrice','contractDeposit','fromFloor','toFloor',
+     'fromElevator','toElevator','useStairs','fromLadderTruck','toLadderTruck'
+    ].forEach(function(id){
+      var n=el(id);
+      if(!n)return;
+      n.addEventListener('input',calculate);
+      n.addEventListener('change',calculate);
+    });
+    ['fromAddress','toAddress'].forEach(function(id){
+      el(id)?.addEventListener('input',updateRouteText);
+      el(id)?.addEventListener('change',updateRouteText);
+    });
+    el('openRouteMapBtn')?.addEventListener('click',openRoute);
+    el('swapAddressBtnV66')?.addEventListener('click',swapAddress);
+    calculate();
+    updateRouteText();
+    wrapMessage();
+    setTimeout(function(){calculate();wrapMessage()},300);
+  }
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
+  else init();
+
+  document.addEventListener('click',function(){
+    setTimeout(function(){calculate();wrapMessage();updateRouteText()},0);
   },true);
 })();
 
