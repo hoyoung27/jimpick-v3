@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 7.5 RC</title>
+<title>짐픽 PRO 7.6 RC</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 7.5 RC 최소판매형 ===== */
+/* ===== 짐픽 PRO 7.6 RC 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -4665,6 +4665,120 @@ button{min-height:46px;line-height:1.25;white-space:normal}
   .pro75-photo-grid{grid-template-columns:1fr}
 }
 
+
+/* ===== PRO 7.6 방·품목 드래그 관리 ===== */
+.pro76-manager{max-width:1380px;margin:0 auto 16px;padding:18px!important}
+.pro76-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}
+.pro76-head h2{margin:5px 0 0;color:#102A43;font-size:25px}
+.pro76-head p{margin:7px 0 0;color:#68798A;font-weight:700}
+.pro76-actions{display:flex;gap:8px;flex-wrap:wrap}
+.pro76-actions button{
+  min-height:46px;padding:0 15px;border:0;border-radius:11px;font-weight:900;cursor:pointer
+}
+#pro76AddRoomBtn{background:#155BB5;color:#fff}
+#pro76AddItemBtn{background:#16A36A;color:#fff}
+#pro76ResetBtn{background:#FFF0ED;color:#B42318}
+.pro76-room-help{
+  display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;padding:11px 13px;
+  border-radius:12px;background:#F5F7FA;color:#52667A;font-size:13px;font-weight:800
+}
+.pro76-room-board{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px
+}
+.pro76-room-card{
+  min-width:0;padding:12px;border:1px solid #DCE5EE;border-radius:16px;background:#FAFBFC;
+  transition:.15s ease
+}
+.pro76-room-card.drag-over{border-color:#4C86F7;background:#EEF5FF;transform:translateY(-2px)}
+.pro76-room-card.dragging{opacity:.45}
+.pro76-room-card.active{box-shadow:0 0 0 2px rgba(22,163,106,.12);border-color:#86C7A4}
+.pro76-room-top{
+  display:grid;grid-template-columns:34px 40px minmax(0,1fr) 34px 34px;
+  gap:7px;align-items:center
+}
+.pro76-drag-handle{
+  display:flex;align-items:center;justify-content:center;min-height:36px;border-radius:9px;
+  background:#EEF2F6;color:#52667A;font-size:18px;cursor:grab;user-select:none
+}
+.pro76-room-icon{font-size:26px;text-align:center}
+.pro76-room-name{
+  min-width:0;border:0;background:transparent;color:#102A43;font-size:16px;font-weight:900
+}
+.pro76-room-top button{
+  min-height:34px;height:34px;padding:0;border:0;border-radius:9px;font-weight:900;cursor:pointer
+}
+.pro76-room-edit{background:#EEF5FF;color:#155BB5}
+.pro76-room-delete{background:#FFF0ED;color:#B42318}
+.pro76-room-meta{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  margin-top:9px;padding-top:9px;border-top:1px solid #E4EAF0
+}
+.pro76-room-meta span{font-size:12px;color:#68798A;font-weight:900}
+.pro76-room-meta strong{font-size:13px;color:#16A36A}
+.pro76-item-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px;min-height:75px}
+.pro76-item{
+  position:relative;min-width:0;padding:9px;border:1px solid #E3EAF1;border-radius:12px;
+  background:#fff;cursor:grab;transition:.15s ease
+}
+.pro76-item.dragging{opacity:.4}
+.pro76-item.drag-over{border-color:#4C86F7;background:#EEF5FF}
+.pro76-item-top{display:grid;grid-template-columns:28px 1fr 26px;gap:6px;align-items:center}
+.pro76-item-icon{font-size:24px;text-align:center}
+.pro76-item-name{
+  min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  color:#30485D;font-size:12px;font-weight:900
+}
+.pro76-star{
+  min-height:26px;height:26px;padding:0;border:0;border-radius:7px;background:#FFF8E8;
+  color:#F5A623;font-size:15px;cursor:pointer
+}
+.pro76-qty-row{display:grid;grid-template-columns:28px 1fr 28px 28px;gap:4px;align-items:center;margin-top:7px}
+.pro76-qty-row button{
+  min-height:28px;height:28px;padding:0;border:1px solid #CBD6E2;border-radius:7px;
+  background:#F8FAFC;color:#102A43;font-weight:900;cursor:pointer
+}
+.pro76-qty-row strong{text-align:center;font-size:13px;color:#102A43}
+.pro76-qty-row .delete{border:0;background:#FFF0ED;color:#B42318}
+.pro76-empty{
+  grid-column:1/-1;padding:18px;border:2px dashed #D5DEE7;border-radius:12px;
+  text-align:center;color:#7B8A98;font-size:12px;font-weight:800
+}
+.pro76-add-to-room{
+  width:100%;min-height:38px;margin-top:9px;border:1px dashed #9FB2C4;border-radius:10px;
+  background:#fff;color:#52667A;font-weight:900;cursor:pointer
+}
+.pro76-bottom-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;margin-top:14px}
+.pro76-bottom-grid>section{
+  padding:14px;border:1px solid #DCE5EE;border-radius:15px;background:#F8FAFC
+}
+.pro76-section-title{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.pro76-section-title h3{margin:0;color:#102A43}
+.pro76-section-title span{font-size:12px;color:#68798A}
+.pro76-favorites{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}
+.pro76-favorite{
+  min-height:42px;padding:0 12px;border:1px solid #DCE5EE;border-radius:11px;
+  background:#fff;color:#30485D;font-weight:900;cursor:pointer
+}
+.pro76-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:11px}
+.pro76-summary div{padding:10px;border-radius:11px;background:#fff;border:1px solid #E3EAF1}
+.pro76-summary span{display:block;font-size:11px;color:#68798A;font-weight:900}
+.pro76-summary strong{display:block;margin-top:5px;color:#102A43}
+.pro76-status{
+  margin-top:10px;padding:11px;border-radius:11px;background:#F3F6FA;
+  color:#52667A;text-align:center;font-size:13px;font-weight:900
+}
+.pro76-status.ok{background:#EAF7F0;color:#16794B}
+@media(max-width:1050px){.pro76-room-board{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){
+  .pro76-head{flex-direction:column}
+  .pro76-actions{width:100%}.pro76-actions button{flex:1}
+  .pro76-room-board,.pro76-bottom-grid{grid-template-columns:1fr}
+}
+@media(max-width:430px){
+  .pro76-item-list{grid-template-columns:1fr}
+  .pro76-summary{grid-template-columns:1fr}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -4944,7 +5058,7 @@ button{min-height:46px;line-height:1.25;white-space:normal}
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-7.5-RC</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-7.6-RC</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">6.3 DEMO</span><span class="beta-version-badge">베타시험</span><button type="button" id="betaResultsBtn">베타결과</button><button type="button" id="betaTestMenuBtn">현장테스트</button><button type="button" id="launchMenuBtn">출시진단</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="contractHistoryBtn">계약관리</button><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -5564,6 +5678,54 @@ button{min-height:46px;line-height:1.25;white-space:normal}
 
   <!-- ============ STEP 4. 품목 확인 (방 + 거실 + 부엌 통합) ============ -->
   <section class="panel" id="step4">
+<div class="card pro76-manager">
+  <div class="pro76-head">
+    <div>
+      <span class="eyebrow">PRO 7.6</span>
+      <h2>방·품목 드래그 관리</h2>
+      <p>방과 품목을 끌어서 순서를 바꾸거나 다른 방으로 이동할 수 있습니다.</p>
+    </div>
+    <div class="pro76-actions">
+      <button type="button" id="pro76AddRoomBtn">＋ 방 추가</button>
+      <button type="button" id="pro76AddItemBtn">＋ 품목 추가</button>
+      <button type="button" id="pro76ResetBtn">초기화</button>
+    </div>
+  </div>
+
+  <div class="pro76-room-help">
+    <span>방 카드를 길게 누른 뒤 드래그하면 방 순서가 변경됩니다.</span>
+    <span>품목 카드를 다른 방 위로 드래그하면 이동합니다.</span>
+  </div>
+
+  <div id="pro76RoomBoard" class="pro76-room-board"></div>
+
+  <div class="pro76-bottom-grid">
+    <section>
+      <div class="pro76-section-title">
+        <h3>즐겨찾기 품목</h3>
+        <span>자주 쓰는 품목을 빠르게 추가하세요.</span>
+      </div>
+      <div id="pro76FavoriteItems" class="pro76-favorites"></div>
+    </section>
+
+    <section>
+      <div class="pro76-section-title">
+        <h3>현재 상태</h3>
+        <span>자동 저장됩니다.</span>
+      </div>
+      <div class="pro76-summary">
+        <div><span>방 개수</span><strong id="pro76RoomCount">0개</strong></div>
+        <div><span>전체 품목</span><strong id="pro76ItemCount">0개</strong></div>
+        <div><span>선택 방</span><strong id="pro76ActiveRoom">-</strong></div>
+      </div>
+    </section>
+  </div>
+
+  <div id="pro76Status" class="pro76-status">
+    방과 품목을 드래그해 보세요.
+  </div>
+</div>
+
 <div class="card pro74-step3">
   <div class="pro74-top">
     <div><span class="eyebrow">STEP 3</span><h2>방별 품목 입력</h2>
@@ -6693,7 +6855,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-7.5-RC';
+const BUILD_VERSION = 'JIMPICK-PRO-7.6-RC';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -19237,6 +19399,402 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     el('pro75AnalyzeBtn')?.addEventListener('click',analyze);
     el('pro75ApplyBtn')?.addEventListener('click',applyToStep3);
   }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
+  else init()
+})();
+
+</script>
+
+<script>
+
+(function(){
+  'use strict';
+
+  var KEY='jimpick_drag_manager_v76';
+  var STEP3_KEY='jimpick_step3_v74';
+
+  var DEFAULT_ROOMS=[
+    {id:'living',name:'거실',icon:'🛋️'},
+    {id:'kitchen',name:'주방',icon:'🍳'},
+    {id:'master',name:'안방',icon:'🛏️'},
+    {id:'small',name:'작은방',icon:'🛌'},
+    {id:'entrance',name:'입구방',icon:'🚪'},
+    {id:'etc',name:'기타/베란다',icon:'📦'}
+  ];
+
+  var FAVORITES=[
+    {name:'소파',icon:'🛋️'},{name:'TV',icon:'📺'},{name:'냉장고',icon:'🧊'},
+    {name:'세탁기',icon:'🧺'},{name:'침대',icon:'🛏️'},{name:'옷장',icon:'🚪'},
+    {name:'에어컨',icon:'❄️'},{name:'식탁',icon:'🍽️'},{name:'이사박스',icon:'📦'}
+  ];
+
+  var state={rooms:[],activeRoomId:'living'};
+  var drag={type:null,roomId:null,itemId:null};
+
+  function el(id){return document.getElementById(id)}
+  function uid(prefix){return prefix+'_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7)}
+  function escapeHtml(v){
+    return String(v||'').replace(/[&<>"']/g,function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]
+    })
+  }
+  function iconFor(name){
+    if(/TV|모니터/.test(name))return'📺';
+    if(/냉장고/.test(name))return'🧊';
+    if(/세탁기|건조기/.test(name))return'🧺';
+    if(/침대|매트리스/.test(name))return'🛏️';
+    if(/소파/.test(name))return'🛋️';
+    if(/옷장|장롱|신발장/.test(name))return'🚪';
+    if(/에어컨/.test(name))return'❄️';
+    if(/식탁|테이블/.test(name))return'🍽️';
+    if(/책장/.test(name))return'📚';
+    if(/거울/.test(name))return'🪞';
+    return'📦'
+  }
+
+  function loadFromStep3(){
+    var source=null;
+    try{source=JSON.parse(localStorage.getItem(STEP3_KEY)||'null')}catch(e){}
+    var rooms=DEFAULT_ROOMS.map(function(r){
+      var qty=(source&&source.qty&&source.qty[r.id])||{};
+      var custom=(source&&source.custom&&source.custom[r.id])||[];
+      var items=Object.entries(qty).filter(function(x){return Number(x[1])>0}).map(function(x){
+        return {
+          id:uid('item'),name:x[0],qty:Number(x[1]),icon:iconFor(x[0]),
+          favorite:false,custom:custom.some(function(c){return c.name===x[0]})
+        }
+      });
+      return {id:r.id,name:r.name,icon:r.icon,items:items,system:true}
+    });
+    return rooms
+  }
+
+  function load(){
+    try{
+      var saved=JSON.parse(localStorage.getItem(KEY)||'null');
+      if(saved&&Array.isArray(saved.rooms)){
+        state=saved;
+        return
+      }
+    }catch(e){}
+    state.rooms=loadFromStep3();
+    state.activeRoomId=state.rooms[0]?.id||'living'
+  }
+
+  function save(){
+    try{
+      localStorage.setItem(KEY,JSON.stringify(state));
+      syncStep3();
+      setStatus('변경 내용이 자동 저장되었습니다.')
+    }catch(e){
+      setStatus('저장하지 못했습니다.')
+    }
+  }
+
+  function syncStep3(){
+    var step3={room:state.activeRoomId,qty:{},custom:{}};
+    state.rooms.forEach(function(room){
+      step3.qty[room.id]={};
+      step3.custom[room.id]=[];
+      room.items.forEach(function(item){
+        step3.qty[room.id][item.name]=Number(item.qty)||0;
+        if(item.custom)step3.custom[room.id].push({name:item.name,icon:item.icon})
+      })
+    });
+    try{localStorage.setItem(STEP3_KEY,JSON.stringify(step3))}catch(e){}
+  }
+
+  function activeRoom(){
+    return state.rooms.find(function(r){return r.id===state.activeRoomId})||state.rooms[0]
+  }
+  function totalItems(){
+    return state.rooms.reduce(function(sum,r){
+      return sum+r.items.reduce(function(a,i){return a+(Number(i.qty)||0)},0)
+    },0)
+  }
+  function setStatus(text){
+    var n=el('pro76Status');
+    if(!n)return;
+    n.textContent=text;
+    n.className='pro76-status ok'
+  }
+
+  function render(){
+    var board=el('pro76RoomBoard');
+    if(!board)return;
+
+    board.innerHTML=state.rooms.map(function(room){
+      var count=room.items.reduce(function(a,i){return a+(Number(i.qty)||0)},0);
+      var itemHtml=room.items.length?room.items.map(function(item,index){
+        return '<div class="pro76-item" draggable="true" data-item-id="'+item.id+'" data-room-id="'+room.id+'" data-index="'+index+'">'+
+          '<div class="pro76-item-top">'+
+            '<span class="pro76-item-icon">'+item.icon+'</span>'+
+            '<strong class="pro76-item-name" title="'+escapeHtml(item.name)+'">'+escapeHtml(item.name)+'</strong>'+
+            '<button type="button" class="pro76-star" data-star-item="'+item.id+'">'+(item.favorite?'★':'☆')+'</button>'+
+          '</div>'+
+          '<div class="pro76-qty-row">'+
+            '<button type="button" data-minus-item="'+item.id+'">−</button>'+
+            '<strong>'+item.qty+'</strong>'+
+            '<button type="button" data-plus-item="'+item.id+'">＋</button>'+
+            '<button type="button" class="delete" data-delete-item="'+item.id+'">×</button>'+
+          '</div>'+
+        '</div>'
+      }).join(''):'<div class="pro76-empty">품목을 이 방으로 드래그하세요.</div>';
+
+      return '<section class="pro76-room-card '+(room.id===state.activeRoomId?'active':'')+'" draggable="true" data-room-card="'+room.id+'">'+
+        '<div class="pro76-room-top">'+
+          '<div class="pro76-drag-handle" title="방 드래그">⋮⋮</div>'+
+          '<div class="pro76-room-icon">'+room.icon+'</div>'+
+          '<input class="pro76-room-name" value="'+escapeHtml(room.name)+'" data-room-name="'+room.id+'" readonly>'+
+          '<button type="button" class="pro76-room-edit" data-edit-room="'+room.id+'">✎</button>'+
+          '<button type="button" class="pro76-room-delete" data-delete-room="'+room.id+'">×</button>'+
+        '</div>'+
+        '<div class="pro76-room-meta"><span>품목 '+room.items.length+'종</span><strong>수량 '+count+'개</strong></div>'+
+        '<div class="pro76-item-list" data-drop-room="'+room.id+'">'+itemHtml+'</div>'+
+        '<button type="button" class="pro76-add-to-room" data-add-to-room="'+room.id+'">＋ 이 방에 품목 추가</button>'+
+      '</section>'
+    }).join('');
+
+    bindRoomEvents();
+    bindItemEvents();
+
+    el('pro76RoomCount').textContent=state.rooms.length+'개';
+    el('pro76ItemCount').textContent=totalItems()+'개';
+    el('pro76ActiveRoom').textContent=activeRoom()?.name||'-';
+    renderFavorites();
+  }
+
+  function bindRoomEvents(){
+    document.querySelectorAll('[data-room-card]').forEach(function(card){
+      card.addEventListener('click',function(e){
+        if(e.target.closest('button')||e.target.closest('input'))return;
+        state.activeRoomId=card.dataset.roomCard;
+        render();save()
+      });
+      card.addEventListener('dragstart',function(e){
+        if(e.target.closest('.pro76-item'))return;
+        drag={type:'room',roomId:card.dataset.roomCard,itemId:null};
+        card.classList.add('dragging');
+        e.dataTransfer.effectAllowed='move'
+      });
+      card.addEventListener('dragend',function(){
+        card.classList.remove('dragging');
+        clearDragClasses();
+        drag={type:null,roomId:null,itemId:null}
+      });
+      card.addEventListener('dragover',function(e){
+        e.preventDefault();
+        card.classList.add('drag-over')
+      });
+      card.addEventListener('dragleave',function(){card.classList.remove('drag-over')});
+      card.addEventListener('drop',function(e){
+        e.preventDefault();
+        card.classList.remove('drag-over');
+        var targetId=card.dataset.roomCard;
+
+        if(drag.type==='room'&&drag.roomId!==targetId){
+          var from=state.rooms.findIndex(function(r){return r.id===drag.roomId});
+          var to=state.rooms.findIndex(function(r){return r.id===targetId});
+          var moved=state.rooms.splice(from,1)[0];
+          state.rooms.splice(to,0,moved);
+          render();save()
+        }else if(drag.type==='item'){
+          moveItem(drag.roomId,drag.itemId,targetId,null)
+        }
+      })
+    });
+
+    document.querySelectorAll('[data-edit-room]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var room=state.rooms.find(function(r){return r.id===btn.dataset.editRoom});
+        if(!room)return;
+        var name=prompt('방 이름을 입력하세요.',room.name);
+        if(!name)return;
+        room.name=name.trim()||room.name;
+        render();save()
+      })
+    });
+
+    document.querySelectorAll('[data-delete-room]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var room=state.rooms.find(function(r){return r.id===btn.dataset.deleteRoom});
+        if(!room)return;
+        if(state.rooms.length<=1){
+          alert('방은 최소 1개가 필요합니다.');
+          return
+        }
+        if(!confirm(room.name+' 방을 삭제할까요?\n방 안의 품목도 함께 삭제됩니다.'))return;
+        state.rooms=state.rooms.filter(function(r){return r.id!==room.id});
+        if(state.activeRoomId===room.id)state.activeRoomId=state.rooms[0].id;
+        render();save()
+      })
+    });
+
+    document.querySelectorAll('[data-add-to-room]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        state.activeRoomId=btn.dataset.addToRoom;
+        addItem()
+      })
+    })
+  }
+
+  function bindItemEvents(){
+    document.querySelectorAll('[data-item-id]').forEach(function(item){
+      item.addEventListener('dragstart',function(e){
+        e.stopPropagation();
+        drag={type:'item',roomId:item.dataset.roomId,itemId:item.dataset.itemId};
+        item.classList.add('dragging');
+        e.dataTransfer.effectAllowed='move'
+      });
+      item.addEventListener('dragend',function(){
+        item.classList.remove('dragging');
+        clearDragClasses();
+        drag={type:null,roomId:null,itemId:null}
+      });
+      item.addEventListener('dragover',function(e){
+        e.preventDefault();e.stopPropagation();item.classList.add('drag-over')
+      });
+      item.addEventListener('dragleave',function(){item.classList.remove('drag-over')});
+      item.addEventListener('drop',function(e){
+        e.preventDefault();e.stopPropagation();
+        item.classList.remove('drag-over');
+        if(drag.type==='item'){
+          moveItem(drag.roomId,drag.itemId,item.dataset.roomId,item.dataset.itemId)
+        }
+      })
+    });
+
+    document.querySelectorAll('[data-minus-item]').forEach(function(btn){
+      btn.addEventListener('click',function(){changeQty(btn.dataset.minusItem,-1)})
+    });
+    document.querySelectorAll('[data-plus-item]').forEach(function(btn){
+      btn.addEventListener('click',function(){changeQty(btn.dataset.plusItem,1)})
+    });
+    document.querySelectorAll('[data-delete-item]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        if(!confirm('이 품목을 삭제할까요?'))return;
+        state.rooms.forEach(function(r){r.items=r.items.filter(function(i){return i.id!==btn.dataset.deleteItem})});
+        render();save()
+      })
+    });
+    document.querySelectorAll('[data-star-item]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        state.rooms.forEach(function(r){
+          var item=r.items.find(function(i){return i.id===btn.dataset.starItem});
+          if(item)item.favorite=!item.favorite
+        });
+        render();save()
+      })
+    })
+  }
+
+  function clearDragClasses(){
+    document.querySelectorAll('.drag-over,.dragging').forEach(function(n){
+      n.classList.remove('drag-over','dragging')
+    })
+  }
+
+  function moveItem(fromRoomId,itemId,toRoomId,beforeItemId){
+    var fromRoom=state.rooms.find(function(r){return r.id===fromRoomId});
+    var toRoom=state.rooms.find(function(r){return r.id===toRoomId});
+    if(!fromRoom||!toRoom)return;
+    var index=fromRoom.items.findIndex(function(i){return i.id===itemId});
+    if(index<0)return;
+    var item=fromRoom.items.splice(index,1)[0];
+
+    if(beforeItemId){
+      var targetIndex=toRoom.items.findIndex(function(i){return i.id===beforeItemId});
+      if(targetIndex<0)toRoom.items.push(item);
+      else toRoom.items.splice(targetIndex,0,item)
+    }else{
+      toRoom.items.push(item)
+    }
+    state.activeRoomId=toRoomId;
+    render();save()
+  }
+
+  function changeQty(itemId,delta){
+    state.rooms.forEach(function(r){
+      var item=r.items.find(function(i){return i.id===itemId});
+      if(item)item.qty=Math.max(0,(Number(item.qty)||0)+delta)
+    });
+    render();save()
+  }
+
+  function addRoom(){
+    var name=prompt('추가할 방 이름을 입력하세요.\n예: 드레스룸, 창고, 서재, 아이방');
+    if(!name)return;
+    name=name.trim();
+    if(!name)return;
+    var room={id:uid('room'),name:name,icon:'🏠',items:[],system:false};
+    state.rooms.push(room);
+    state.activeRoomId=room.id;
+    render();save()
+  }
+
+  function addItem(){
+    var room=activeRoom();
+    if(!room)return;
+    var name=prompt(room.name+'에 추가할 품목명을 입력하세요.');
+    if(!name)return;
+    name=name.trim();
+    if(!name)return;
+
+    var existing=room.items.find(function(i){return i.name===name});
+    if(existing){
+      existing.qty+=1
+    }else{
+      room.items.push({
+        id:uid('item'),name:name,qty:1,icon:iconFor(name),favorite:false,custom:true
+      })
+    }
+    render();save()
+  }
+
+  function renderFavorites(){
+    var favorites=[];
+    state.rooms.forEach(function(room){
+      room.items.forEach(function(item){
+        if(item.favorite&&!favorites.some(function(f){return f.name===item.name})){
+          favorites.push({name:item.name,icon:item.icon})
+        }
+      })
+    });
+    if(!favorites.length)favorites=FAVORITES;
+
+    el('pro76FavoriteItems').innerHTML=favorites.map(function(item){
+      return '<button type="button" class="pro76-favorite" data-favorite-name="'+escapeHtml(item.name)+'">'+
+        item.icon+' '+escapeHtml(item.name)+'</button>'
+    }).join('');
+
+    document.querySelectorAll('[data-favorite-name]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var room=activeRoom();
+        if(!room)return;
+        var name=btn.dataset.favoriteName;
+        var existing=room.items.find(function(i){return i.name===name});
+        if(existing)existing.qty+=1;
+        else room.items.push({id:uid('item'),name:name,qty:1,icon:iconFor(name),favorite:true,custom:true});
+        render();save()
+      })
+    })
+  }
+
+  function reset(){
+    if(!confirm('방과 품목 드래그 설정을 초기 상태로 되돌릴까요?'))return;
+    localStorage.removeItem(KEY);
+    state.rooms=loadFromStep3();
+    state.activeRoomId=state.rooms[0]?.id||'living';
+    render();save()
+  }
+
+  function init(){
+    load();render();
+    el('pro76AddRoomBtn')?.addEventListener('click',addRoom);
+    el('pro76AddItemBtn')?.addEventListener('click',addItem);
+    el('pro76ResetBtn')?.addEventListener('click',reset);
+  }
+
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
   else init()
 })();
