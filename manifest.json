@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 6.3.2 DEMO",
+  "name": "짐픽 PRO 6.3.3 DEMO",
   "short_name": "짐픽 PRO",
-  "description": "로그인 없는 견적 체험화면의 투명 클릭차단막을 제거한 수정판",
+  "description": "로그인 없는 체험모드에서 고객정보·사진촬영·품목확인·자동견적·문자발송 단계 이동을 복구한 수정판",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
