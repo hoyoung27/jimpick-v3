@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 6.6 DEMO</title>
+<title>짐픽 PRO 6.7 DEMO</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 6.6 DEMO 최소판매형 ===== */
+/* ===== 짐픽 PRO 6.7 DEMO 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -4126,6 +4126,41 @@ body.demo-click-ready .workspace-right{
   .vehicle-images-v66,.difficulty-faces-v66{grid-template-columns:1fr 1fr}
 }
 
+
+/* ===== PRO 6.7 업체별 옵션·보관 요금 설정 ===== */
+.option-rate-toolbar-v67{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px
+}
+.option-rate-toolbar-v67 button{
+  min-height:44px;border:0;border-radius:10px;font-size:14px;font-weight:900;cursor:pointer
+}
+#addOptionRateBtnV67{background:#16A36A;color:#fff}
+#saveOptionRatesBtnV67{background:#102A43;color:#fff}
+#resetOptionRatesBtnV67{background:#E8EEF5;color:#102A43}
+.option-rate-help-v67{
+  margin:8px 0 0;color:#68798A;font-size:12px;font-weight:800;text-align:center
+}
+.option-row-v66{
+  grid-template-columns:minmax(140px,1fr) 130px 86px 110px 46px!important
+}
+.option-name-input-v67{
+  text-align:left!important;font-weight:900!important;color:#102A43!important
+}
+.option-delete-btn-v67{
+  min-height:42px;border:0;border-radius:9px;background:#FFF0ED;color:#B42318;
+  font-size:18px;font-weight:900;cursor:pointer
+}
+.option-settings-status-v67{
+  margin-top:10px;padding:11px;border-radius:10px;background:#F3F6FA;
+  color:#52667A;text-align:center;font-size:13px;font-weight:900
+}
+.option-settings-status-v67.ok{background:#EAF7F0;color:#16794B}
+@media(max-width:800px){
+  .option-rate-toolbar-v67{grid-template-columns:1fr}
+  .option-row-v66{grid-template-columns:1fr 1fr!important}
+  .option-delete-btn-v67{grid-column:1/-1}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -4405,7 +4440,7 @@ body.demo-click-ready .workspace-right{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-6.6-DEMO</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-6.7-DEMO</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">6.3 DEMO</span><span class="beta-version-badge">베타시험</span><button type="button" id="betaResultsBtn">베타결과</button><button type="button" id="betaTestMenuBtn">현장테스트</button><button type="button" id="launchMenuBtn">출시진단</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="contractHistoryBtn">계약관리</button><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -5034,7 +5069,15 @@ body.demo-click-ready .workspace-right{
   <div class="option-storage-columns-v66">
     <section>
       <h3>옵션 비용</h3>
+      
+      <div class="option-rate-toolbar-v67">
+        <button type="button" id="addOptionRateBtnV67">＋ 옵션 추가</button>
+        <button type="button" id="saveOptionRatesBtnV67">요금표 저장</button>
+        <button type="button" id="resetOptionRatesBtnV67">기본값 복원</button>
+      </div>
       <div id="optionCostRowsV66" class="option-cost-rows-v66"></div>
+      <p class="option-rate-help-v67">옵션명과 단가는 업체 대표가 직접 수정할 수 있습니다.</p>
+
       <div class="cost-total-v66"><span>옵션 비용 합계</span><strong id="optionCostTotalV66">0원</strong></div>
     </section>
 
@@ -5043,7 +5086,7 @@ body.demo-click-ready .workspace-right{
       <div class="storage-grid-v66">
         <label><span>보관 기간(일)</span><input type="number" id="storageDaysV66" min="0" value="0"></label>
         <label><span>보관 물량(톤)</span><input type="number" id="storageTonsV66" min="0" step="0.5" value="0"></label>
-        <label><span>톤당 1일 단가</span><input type="number" id="storageDailyRateV66" min="0" step="1000" value="10000"></label>
+        <label><span>1톤당 하루 보관료</span><input type="number" id="storageDailyRateV66" min="0" step="1000" value="10000"></label>
       </div>
       <div class="cost-total-v66"><span>보관 비용 합계</span><strong id="storageCostTotalV66">0원</strong></div>
     </section>
@@ -5058,7 +5101,12 @@ body.demo-click-ready .workspace-right{
     </div>
   </div>
 
-  <div class="grand-total-v66">
+  
+  <div id="optionSettingsStatusV67" class="option-settings-status-v67">
+    업체별 옵션·보관 요금표를 수정한 뒤 저장하세요.
+  </div>
+
+<div class="grand-total-v66">
     <span>옵션·보관 포함 최종 견적</span>
     <strong id="grandTotalV66">0원</strong>
   </div>
@@ -5863,7 +5911,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-6.6-DEMO';
+const BUILD_VERSION = 'JIMPICK-PRO-6.7-DEMO';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -16305,7 +16353,11 @@ window.openJimpickDemoHotfix = function(event){
 
       <section class="estimate-paper-section">
         <h3>추가요금 및 안내</h3>
+        
+        <div id="docOptionDetailsV67" class="estimate-paper-note">선택된 옵션 없음</div>
+        <div id="docStorageDetailsV67" class="estimate-paper-note">보관 없음</div>
         <div id="docAdditionalFees" class="estimate-paper-note">선택된 추가요금 없음</div>
+
         <div class="estimate-paper-note">
           실제 짐량, 주차 환경, 계단·사다리차 사용 여부와 현장 상황에 따라 최종 작업내용이 달라질 수 있습니다.
         </div>
@@ -16876,7 +16928,7 @@ window.openJimpickDemoHotfix = function(event){
 <script>
 
 (function(){
-  var OPTIONS=[
+  var OPTIONS=window.JimpickOptionsV67||[
     {name:'에어컨 이전·설치',price:100000},
     {name:'벽걸이 TV 설치',price:50000},
     {name:'돌침대 분해·조립',price:80000},
@@ -17059,6 +17111,229 @@ window.openJimpickDemoHotfix = function(event){
 
   document.addEventListener('click',function(){
     setTimeout(function(){calculate();wrapMessage();updateRouteText()},0);
+  },true);
+})();
+
+</script>
+
+<script>
+
+(function(){
+  var KEY='jimpick_company_option_rates_v67';
+  var DEFAULTS=[
+    {name:'에어컨 이전·설치',price:100000},
+    {name:'벽걸이 TV 설치',price:50000},
+    {name:'돌침대 분해·조립',price:80000},
+    {name:'피아노 운반',price:150000},
+    {name:'사다리차 이용',price:120000},
+    {name:'금고 운반',price:150000},
+    {name:'폐기물 처리',price:50000}
+  ];
+
+  function el(id){return document.getElementById(id)}
+  function money(v){return (Number(v)||0).toLocaleString('ko-KR')+'원'}
+  function escapeHtml(s){
+    return String(s||'').replace(/[&<>"']/g,function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]
+    })
+  }
+
+  function loadSettings(){
+    try{
+      var saved=JSON.parse(localStorage.getItem(KEY)||'null');
+      if(saved&&Array.isArray(saved.options)){
+        return {
+          options:saved.options.map(function(o){
+            return {name:String(o.name||'옵션'),price:Number(o.price)||0}
+          }),
+          storageRate:Number(saved.storageRate)||10000
+        }
+      }
+    }catch(e){}
+    return {options:DEFAULTS.map(function(o){return {...o}}),storageRate:10000}
+  }
+
+  var settings=loadSettings();
+  window.JimpickOptionsV67=settings.options;
+
+  function status(text,ok){
+    var n=el('optionSettingsStatusV67');
+    if(!n)return;
+    n.textContent=text;
+    n.className='option-settings-status-v67'+(ok?' ok':'');
+  }
+
+  function collect(){
+    var rows=[];
+    document.querySelectorAll('#optionCostRowsV66 .option-row-v66').forEach(function(row){
+      var name=row.querySelector('[data-v67-name]')?.value.trim()||'옵션';
+      var price=Number(row.querySelector('[data-v66-price]')?.value)||0;
+      var qty=Number(row.querySelector('[data-v66-qty]')?.value)||0;
+      rows.push({name:name,price:price,qty:qty});
+    });
+    return rows;
+  }
+
+  function optionTotal(){
+    return collect().reduce(function(sum,o){return sum+(o.price*o.qty)},0)
+  }
+
+  function storageTotal(){
+    return (Number(el('storageDaysV66')?.value)||0)*
+      (Number(el('storageTonsV66')?.value)||0)*
+      (Number(el('storageDailyRateV66')?.value)||0)
+  }
+
+  function render(){
+    var wrap=el('optionCostRowsV66');
+    if(!wrap)return;
+    var previous=collect();
+    var source=settings.options;
+
+    wrap.innerHTML=source.map(function(o,i){
+      var old=previous[i];
+      var qty=old?old.qty:0;
+      return '<div class="option-row-v66">'+
+        '<input class="option-name-input-v67" type="text" value="'+escapeHtml(o.name)+'" data-v67-name="'+i+'">'+
+        '<input type="number" min="0" step="1000" value="'+(Number(o.price)||0)+'" data-v66-price="'+i+'" aria-label="옵션 단가">'+
+        '<input type="number" min="0" value="'+qty+'" data-v66-qty="'+i+'" aria-label="옵션 수량">'+
+        '<strong data-v66-line="'+i+'">0원</strong>'+
+        '<button type="button" class="option-delete-btn-v67" data-v67-delete="'+i+'">×</button>'+
+      '</div>'
+    }).join('');
+
+    wrap.querySelectorAll('input').forEach(function(input){
+      input.addEventListener('input',recalculate);
+      input.addEventListener('change',recalculate);
+    });
+    wrap.querySelectorAll('[data-v67-delete]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var index=Number(btn.dataset.v67Delete);
+        settings.options.splice(index,1);
+        render();
+        recalculate();
+      });
+    });
+    recalculate();
+  }
+
+  function selectedOptionText(){
+    var selected=collect().filter(function(o){return o.qty>0});
+    if(!selected.length)return '선택된 옵션 없음';
+    return selected.map(function(o){
+      return o.name+' '+o.qty+'개 · '+money(o.price*o.qty)
+    }).join(' / ')
+  }
+
+  function storageText(){
+    var days=Number(el('storageDaysV66')?.value)||0;
+    var tons=Number(el('storageTonsV66')?.value)||0;
+    var rate=Number(el('storageDailyRateV66')?.value)||0;
+    if(days<=0||tons<=0)return '보관 없음';
+    return '보관 '+days+'일 · '+tons+'톤 · 1톤당 하루 '+money(rate)+' · 합계 '+money(storageTotal())
+  }
+
+  function recalculate(){
+    var rows=collect();
+    rows.forEach(function(o,i){
+      var line=document.querySelector('[data-v66-line="'+i+'"]');
+      if(line)line.textContent=money(o.price*o.qty)
+    });
+
+    var option=optionTotal();
+    var storage=storageTotal();
+    var base=Number(el('ownerFinalPrice')?.value)||
+      Number(el('contractFinalPrice')?.value)||980000;
+    var total=base+option+storage;
+    var deposit=Number(el('contractDeposit')?.value)||0;
+    var balance=Math.max(0,total-deposit);
+
+    if(el('optionCostTotalV66'))el('optionCostTotalV66').textContent=money(option);
+    if(el('storageCostTotalV66'))el('storageCostTotalV66').textContent=money(storage);
+    if(el('grandTotalV66'))el('grandTotalV66').textContent=money(total);
+    if(el('docOptionCostV66'))el('docOptionCostV66').textContent=money(option);
+    if(el('docStorageCostV66'))el('docStorageCostV66').textContent=money(storage);
+    if(el('docFinalPrice'))el('docFinalPrice').textContent=money(total);
+    if(el('docBalance'))el('docBalance').textContent=money(balance);
+    if(el('docOptionDetailsV67'))el('docOptionDetailsV67').textContent=selectedOptionText();
+    if(el('docStorageDetailsV67'))el('docStorageDetailsV67').textContent=storageText();
+
+    window.JimpickOptionCostV66=option;
+    window.JimpickStorageCostV66=storage;
+    window.JimpickGrandTotalV66=total;
+    window.JimpickBalanceV66=balance;
+    window.JimpickOptionDetailsV67=selectedOptionText();
+    window.JimpickStorageDetailsV67=storageText();
+  }
+
+  function save(){
+    settings.options=collect().map(function(o){
+      return {name:o.name,price:o.price}
+    });
+    settings.storageRate=Number(el('storageDailyRateV66')?.value)||0;
+    try{
+      localStorage.setItem(KEY,JSON.stringify(settings));
+      status('업체별 옵션·보관 요금표를 저장했습니다.',true);
+    }catch(e){
+      status('저장하지 못했습니다.');
+    }
+  }
+
+  function reset(){
+    if(!confirm('옵션과 보관 단가를 기본값으로 되돌릴까요?'))return;
+    settings={
+      options:DEFAULTS.map(function(o){return {...o}}),
+      storageRate:10000
+    };
+    if(el('storageDailyRateV66'))el('storageDailyRateV66').value=settings.storageRate;
+    render();
+    save();
+  }
+
+  function add(){
+    settings.options=collect().map(function(o){return {name:o.name,price:o.price}});
+    settings.options.push({name:'새 옵션',price:0});
+    render();
+  }
+
+  function wrapMessage(){
+    if(typeof window.makeCustomerMessage!=='function'||window.makeCustomerMessage.__v67)return;
+    var original=window.makeCustomerMessage;
+    var wrapped=function(type,row){
+      recalculate();
+      var result=original(type,row);
+      var details='\n옵션 내역: '+selectedOptionText()+
+        '\n보관 내역: '+storageText();
+      if(result&&typeof result==='object'){
+        result.text=(result.text||'')+details;
+      }
+      return result;
+    };
+    wrapped.__v67=true;
+    window.makeCustomerMessage=wrapped;
+  }
+
+  function init(){
+    if(el('storageDailyRateV66'))el('storageDailyRateV66').value=settings.storageRate;
+    render();
+    el('addOptionRateBtnV67')?.addEventListener('click',add);
+    el('saveOptionRatesBtnV67')?.addEventListener('click',save);
+    el('resetOptionRatesBtnV67')?.addEventListener('click',reset);
+    ['storageDaysV66','storageTonsV66','storageDailyRateV66',
+     'ownerFinalPrice','contractFinalPrice','contractDeposit'
+    ].forEach(function(id){
+      el(id)?.addEventListener('input',recalculate);
+      el(id)?.addEventListener('change',recalculate);
+    });
+    wrapMessage();
+    setTimeout(function(){recalculate();wrapMessage()},300);
+  }
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
+  else init();
+
+  document.addEventListener('click',function(){
+    setTimeout(function(){recalculate();wrapMessage()},0)
   },true);
 })();
 

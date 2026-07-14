@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 6.6 DEMO",
+  "name": "짐픽 PRO 6.7 DEMO",
   "short_name": "짐픽 PRO",
-  "description": "옵션비·보관비·출도착 사다리차·1톤/5톤 차량표시·지도 경로·문자/PDF 반영을 통합한 AI 이사견적 앱",
+  "description": "이사업체 대표가 옵션 항목과 단가, 보관료를 직접 설정하고 저장하는 AI 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
