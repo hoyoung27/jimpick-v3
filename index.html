@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 5.8</title>
+<title>짐픽 PRO 5.9</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 5.8 최소판매형 ===== */
+/* ===== 짐픽 PRO 5.9 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -3415,6 +3415,56 @@ body.simple-mode .panel{
   .ai58-review-actions{grid-template-columns:1fr}
 }
 
+
+/* ===== PRO 5.9 방별 촬영 누락점검 ===== */
+.ai59-coverage-card{max-width:920px;margin:0 auto 16px}
+.ai59-guide{
+  margin:0 0 14px;padding:13px 14px;border-radius:13px;
+  background:#EEF5FF;color:#174A7E;font-size:16px;font-weight:900;
+}
+.ai59-room-check-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:8px;
+}
+.ai59-room-check-grid label{
+  display:grid;grid-template-columns:auto 1fr;gap:7px;align-items:center;
+  min-height:72px;padding:12px;border-radius:13px;
+  background:#F7F9FC;border:1px solid #DCE5EE;cursor:pointer;
+}
+.ai59-room-check-grid input{
+  width:24px;height:24px;accent-color:#16A36A;
+}
+.ai59-room-check-grid span{
+  font-size:15px;font-weight:900;color:#102A43;
+}
+.ai59-room-check-grid strong{
+  grid-column:1/-1;text-align:center;color:#68798A;font-size:13px;
+}
+.ai59-room-check-grid label.checked{
+  background:#EAF7F0;border-color:#9DD6BD;
+}
+.ai59-coverage-summary{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px;
+}
+.ai59-coverage-summary div{
+  padding:13px;border-radius:13px;background:#F3F6FA;
+  border:1px solid #DCE5EE;text-align:center;
+}
+.ai59-coverage-summary span{display:block;font-size:12px;color:#65798C;font-weight:900}
+.ai59-coverage-summary strong{display:block;margin-top:5px;font-size:18px;color:#102A43}
+.ai59-warning{
+  margin-top:10px;padding:12px;border-radius:12px;background:#FFF8E8;
+  color:#6D4910;text-align:center;font-weight:900;
+}
+.ai59-warning.ok{background:#EAF7F0;color:#16794B}
+.ai59-warning.fail{background:#FFF0ED;color:#B42318}
+@media(max-width:760px){
+  .ai59-room-check-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:520px){
+  .ai59-room-check-grid{grid-template-columns:1fr}
+  .ai59-coverage-summary{grid-template-columns:1fr}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -3694,7 +3744,7 @@ body.simple-mode .panel{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-5.8</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-5.9</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">베타시험</span><button type="button" id="launchMenuBtn">출시점검</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="contractHistoryBtn">계약관리</button><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -3830,10 +3880,35 @@ body.simple-mode .panel{
 
   <!-- ============ STEP 3. AI 사진 자동분석 ============ -->
   <section class="panel" id="step3">
+<div class="card ai59-coverage-card">
+  <h2><span class="eyebrow">PRO 5.9</span> 방별 촬영 누락 점검</h2>
+  <p class="ai59-guide">
+    촬영한 공간을 체크하세요. 빠진 공간이 있으면 AI 분석 전에 알려드립니다.
+  </p>
+
+  <div class="ai59-room-check-grid">
+    <label><input type="checkbox" data-ai59-room-check="거실"><span>🛋 거실</span><strong id="ai59CountLiving">0장</strong></label>
+    <label><input type="checkbox" data-ai59-room-check="주방"><span>🍳 주방</span><strong id="ai59CountKitchen">0장</strong></label>
+    <label><input type="checkbox" data-ai59-room-check="안방"><span>🛏 안방</span><strong id="ai59CountMaster">0장</strong></label>
+    <label><input type="checkbox" data-ai59-room-check="작은방"><span>🚪 작은방</span><strong id="ai59CountSmall">0장</strong></label>
+    <label><input type="checkbox" data-ai59-room-check="베란다"><span>📦 베란다</span><strong id="ai59CountBalcony">0장</strong></label>
+  </div>
+
+  <div class="ai59-coverage-summary">
+    <div><span>촬영 완료 공간</span><strong id="ai59CoveredRooms">0곳</strong></div>
+    <div><span>전체 사진</span><strong id="ai59TotalPhotos">0장</strong></div>
+    <div><span>촬영 상태</span><strong id="ai59CoverageState">준비 전</strong></div>
+  </div>
+
+  <div id="ai59Warning" class="ai59-warning">
+    사진을 촬영하면 누락 여부를 확인합니다.
+  </div>
+</div>
+
 <div class="card ai58-card">
   <h2><span class="eyebrow">PRO 5.8</span> 방별 사진 AI 자동인식</h2>
   <p class="ai58-guide">
-    거실·주방·안방·작은방·베란다를 한 장씩 찍으면 정확도가 좋아집니다.
+    거실·주방·안방·작은방·베란다를 한 장씩 찍고, 위 촬영완료 공간을 체크하면 정확도가 좋아집니다.
   </p>
 
   <div class="ai58-room-guide">
@@ -4924,7 +4999,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-5.8';
+const BUILD_VERSION = 'JIMPICK-PRO-5.9';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -8473,7 +8548,9 @@ function clearLocalPhotos(){
   if(typeof renderMedia==='function')renderMedia();
   if(typeof refreshBigPhotoUi==='function')refreshBigPhotoUi();
   ai58RefreshPhotoCount();
+  ai59UpdateCoverage();
   if(typeof refreshPro40Button==='function')refreshPro40Button();
+  ai59UpdateCoverage();
   ai58RefreshPhotoCount();
 
   const message=document.getElementById('dataSafetyMessage');
@@ -10163,6 +10240,118 @@ function sendContractCustomerMessage(id){
 
 
 
+
+const AI59_ROOM_IDS={
+  '거실':'ai59CountLiving',
+  '주방':'ai59CountKitchen',
+  '안방':'ai59CountMaster',
+  '작은방':'ai59CountSmall',
+  '베란다':'ai59CountBalcony'
+};
+
+function ai59SelectedRooms(){
+  return [...document.querySelectorAll('[data-ai59-room-check]:checked')]
+    .map(input=>input.dataset.ai59RoomCheck);
+}
+
+function ai59UpdateCoverage(){
+  const total=State?.media?.length||State?.photos?.length||0;
+  const selected=ai59SelectedRooms();
+  const covered=document.getElementById('ai59CoveredRooms');
+  const totalEl=document.getElementById('ai59TotalPhotos');
+  const state=document.getElementById('ai59CoverageState');
+  const warning=document.getElementById('ai59Warning');
+
+  if(covered)covered.textContent=`${selected.length}곳`;
+  if(totalEl)totalEl.textContent=`${total}장`;
+
+  document.querySelectorAll('[data-ai59-room-check]').forEach(input=>{
+    input.closest('label')?.classList.toggle('checked',input.checked);
+  });
+
+  const estimatedPerRoom=selected.length?Math.max(1,Math.floor(total/selected.length)):0;
+  selected.forEach(room=>{
+    const id=AI59_ROOM_IDS[room];
+    const el=document.getElementById(id);
+    if(el)el.textContent=`약 ${estimatedPerRoom}장`;
+  });
+  Object.entries(AI59_ROOM_IDS).forEach(([room,id])=>{
+    if(!selected.includes(room)){
+      const el=document.getElementById(id);
+      if(el)el.textContent='0장';
+    }
+  });
+
+  if(!warning||!state)return;
+
+  warning.classList.remove('ok','fail');
+
+  if(total===0){
+    state.textContent='준비 전';
+    warning.textContent='사진을 촬영하면 누락 여부를 확인합니다.';
+    return;
+  }
+
+  if(total<3){
+    state.textContent='사진 부족';
+    warning.classList.add('fail');
+    warning.textContent='사진이 너무 적습니다. 최소 3장 이상 촬영하는 것을 권장합니다.';
+    return;
+  }
+
+  if(selected.length===0){
+    state.textContent='공간 미선택';
+    warning.classList.add('fail');
+    warning.textContent='촬영한 공간을 한 곳 이상 체크해주세요.';
+    return;
+  }
+
+  if(selected.length<3){
+    state.textContent='일부 누락 가능';
+    warning.textContent='촬영 공간이 적습니다. 거실·주방·방 사진을 추가하면 더 정확합니다.';
+    return;
+  }
+
+  state.textContent='촬영 양호';
+  warning.classList.add('ok');
+  warning.textContent='촬영 상태가 좋습니다. AI 분석을 시작해도 됩니다.';
+}
+
+function ai59ValidateBeforeAnalysis(){
+  const total=State?.media?.length||State?.photos?.length||0;
+  const selected=ai59SelectedRooms();
+
+  if(total===0){
+    alert('사진을 먼저 촬영해주세요.');
+    return false;
+  }
+
+  if(total<3){
+    return confirm('사진이 3장 미만입니다. 정확도가 낮을 수 있습니다.\n그래도 분석할까요?');
+  }
+
+  if(selected.length===0){
+    return confirm('촬영한 공간을 체크하지 않았습니다.\n그래도 분석할까요?');
+  }
+
+  return true;
+}
+
+async function ai59RunWithRetry(){
+  if(!ai59ValidateBeforeAnalysis())return;
+
+  try{
+    await runAi58Analysis();
+  }catch(error){
+    console.warn('첫 번째 AI 분석 실패',error);
+    const retry=confirm('AI 분석이 실패했습니다.\n한 번 더 시도할까요?');
+    if(!retry)throw error;
+    await new Promise(resolve=>setTimeout(resolve,800));
+    await runAi58Analysis();
+  }
+}
+
+
 let ai58LastItems=[];
 let ai58SelectedRooms=new Set();
 
@@ -11136,7 +11325,9 @@ async function runSimpleAutoEstimate(){
     return;
   }
 
-  if(typeof runAi58Analysis==='function'){
+  if(typeof ai59RunWithRetry==='function'){
+    await ai59RunWithRetry();
+  }else if(typeof runAi58Analysis==='function'){
     await runAi58Analysis();
   }else if(typeof runPro40Engine==='function'){
     await runPro40Engine();
@@ -12870,7 +13061,11 @@ ${msg || '-'}`;
     document.getElementById('completeSignupBtn')?.addEventListener('click',authCompleteSignup);
     document.getElementById('forgotPasswordBtn')?.addEventListener('click',authForgotPassword);
     document.getElementById('logoutBtn')?.addEventListener('click',authLogout);
-    document.getElementById('ai58RunBtn')?.addEventListener('click',runAi58Analysis);
+    document.querySelectorAll('[data-ai59-room-check]').forEach(input=>{
+      input.addEventListener('change',ai59UpdateCoverage);
+    });
+    ai59UpdateCoverage();
+    document.getElementById('ai58RunBtn')?.addEventListener('click',ai59RunWithRetry);
     document.getElementById('ai58RecalculateBtn')?.addEventListener('click',ai58Recalculate);
     document.getElementById('ai58AddMissingBtn')?.addEventListener('click',ai58AddMissingItem);
     document.querySelectorAll('[data-ai58-room]').forEach(btn=>{
