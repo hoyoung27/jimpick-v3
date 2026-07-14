@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 5.7</title>
+<title>짐픽 PRO 5.8</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 5.7 최소판매형 ===== */
+/* ===== 짐픽 PRO 5.8 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -3327,6 +3327,94 @@ body.simple-mode .panel{
   .customer-message-actions{grid-template-columns:1fr}
 }
 
+
+/* ===== PRO 5.8 사진 AI 품목 인식 강화 ===== */
+.ai58-card,.ai58-review-card{max-width:920px;margin:0 auto 16px}
+.ai58-guide,.ai58-review-guide{
+  margin:0 0 14px;padding:13px 14px;border-radius:13px;
+  background:#EEF5FF;color:#174A7E;font-size:16px;font-weight:900;
+}
+.ai58-room-guide{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:8px;
+}
+.ai58-room-guide button{
+  min-height:52px;border:1px solid #DCE5EE;border-radius:13px;
+  background:#F7F9FC;color:#102A43;font-size:15px;font-weight:900;cursor:pointer;
+}
+.ai58-room-guide button.selected{
+  background:#EAF7F0;border-color:#9DD6BD;color:#16794B;
+}
+.ai58-photo-summary{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px;
+}
+.ai58-photo-summary div{
+  padding:13px;border-radius:13px;background:#F3F6FA;
+  border:1px solid #DCE5EE;text-align:center;
+}
+.ai58-photo-summary span{display:block;font-size:12px;color:#65798C;font-weight:900}
+.ai58-photo-summary strong{display:block;margin-top:5px;font-size:19px;color:#102A43}
+.ai58-run-btn{
+  width:100%;min-height:70px;margin-top:12px;border:0;border-radius:16px;
+  background:#16A36A;color:#fff;font-size:21px;font-weight:900;cursor:pointer;
+}
+.ai58-run-btn:disabled{background:#B8C4CF;cursor:not-allowed}
+.ai58-progress{
+  margin-top:12px;padding:13px;border-radius:13px;background:#F3F6FA;
+  border:1px solid #DCE5EE;
+}
+.ai58-progress-track{
+  height:12px;border-radius:999px;background:#DCE5EE;overflow:hidden;
+}
+.ai58-progress-track span{
+  display:block;width:0;height:100%;background:#16A36A;transition:width .25s ease;
+}
+#ai58ProgressText{margin-top:7px;text-align:center;color:#52667A;font-weight:900}
+.ai58-status{
+  margin-top:10px;padding:12px;border-radius:12px;background:#F7F9FC;
+  color:#52667A;text-align:center;font-weight:900;
+}
+.ai58-status.working{background:#EEF5FF;color:#174A7E}
+.ai58-status.ok{background:#EAF7F0;color:#16794B}
+.ai58-status.fail{background:#FFF0ED;color:#B42318}
+.ai58-review-list{display:grid;gap:9px}
+.ai58-review-item{
+  display:grid;grid-template-columns:1fr 120px 110px auto;
+  gap:8px;align-items:center;padding:11px;border-radius:13px;
+  background:#F7F9FC;border:1px solid #DCE5EE;
+}
+.ai58-review-item .name{font-size:16px;font-weight:900;color:#102A43}
+.ai58-review-item .confidence{font-size:13px;font-weight:800;color:#68798A}
+.ai58-review-item input{
+  min-height:44px;padding:0 9px;border:1px solid #CBD6E2;
+  border-radius:10px;font-size:16px;font-weight:900;text-align:center;
+}
+.ai58-review-item button{
+  min-height:44px;border:0;border-radius:10px;padding:0 13px;
+  background:#FFF0ED;color:#B42318;font-weight:900;cursor:pointer;
+}
+.ai58-review-item.low{background:#FFF8E8;border-color:#F3D6A1}
+.ai58-empty{
+  padding:20px;border-radius:13px;background:#F3F6FA;
+  color:#68798A;text-align:center;font-weight:900;
+}
+.ai58-review-actions{
+  display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px;
+}
+.ai58-review-actions button{
+  min-height:56px;border:0;border-radius:13px;font-size:16px;font-weight:900;cursor:pointer;
+}
+#ai58RecalculateBtn{background:#102A43;color:#fff}
+#ai58AddMissingBtn{background:#E8EEF5;color:#102A43}
+@media(max-width:760px){
+  .ai58-room-guide{grid-template-columns:repeat(2,1fr)}
+  .ai58-review-item{grid-template-columns:1fr 90px}
+  .ai58-review-item button{grid-column:1/-1}
+}
+@media(max-width:520px){
+  .ai58-photo-summary{grid-template-columns:1fr}
+  .ai58-review-actions{grid-template-columns:1fr}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -3606,7 +3694,7 @@ body.simple-mode .panel{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-5.7</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-5.8</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">베타시험</span><button type="button" id="launchMenuBtn">출시점검</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="contractHistoryBtn">계약관리</button><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -3742,6 +3830,40 @@ body.simple-mode .panel{
 
   <!-- ============ STEP 3. AI 사진 자동분석 ============ -->
   <section class="panel" id="step3">
+<div class="card ai58-card">
+  <h2><span class="eyebrow">PRO 5.8</span> 방별 사진 AI 자동인식</h2>
+  <p class="ai58-guide">
+    거실·주방·안방·작은방·베란다를 한 장씩 찍으면 정확도가 좋아집니다.
+  </p>
+
+  <div class="ai58-room-guide">
+    <button type="button" data-ai58-room="거실">🛋 거실</button>
+    <button type="button" data-ai58-room="주방">🍳 주방</button>
+    <button type="button" data-ai58-room="안방">🛏 안방</button>
+    <button type="button" data-ai58-room="작은방">🚪 작은방</button>
+    <button type="button" data-ai58-room="베란다">📦 베란다</button>
+  </div>
+
+  <div class="ai58-photo-summary">
+    <div><span>선택 사진</span><strong id="ai58PhotoCount">0장</strong></div>
+    <div><span>인식 품목</span><strong id="ai58DetectedCount">0종</strong></div>
+    <div><span>확인 필요</span><strong id="ai58UncertainCount">0종</strong></div>
+  </div>
+
+  <button type="button" id="ai58RunBtn" class="ai58-run-btn" disabled>
+    📷 사진 AI 품목 자동인식 시작
+  </button>
+
+  <div id="ai58Progress" class="ai58-progress" style="display:none;">
+    <div class="ai58-progress-track"><span id="ai58ProgressFill"></span></div>
+    <div id="ai58ProgressText">분석 준비 중</div>
+  </div>
+
+  <div id="ai58Status" class="ai58-status">
+    사진을 먼저 촬영하거나 선택해주세요.
+  </div>
+</div>
+
 <div class="card pro40-engine-card">
   <h2><span class="eyebrow">PRO 4.0</span> 사진 한 번에 완전자동 견적</h2>
   <p class="pro40-guide">
@@ -3931,6 +4053,22 @@ body.simple-mode .panel{
 
   <!-- ============ STEP 4. 품목 확인 (방 + 거실 + 부엌 통합) ============ -->
   <section class="panel" id="step4">
+<div class="card ai58-review-card">
+  <h2><span class="eyebrow">AI 결과</span> 인식 품목 빠른 확인</h2>
+  <p class="ai58-review-guide">
+    AI가 찾은 품목을 확인하고, 틀린 품목만 삭제하거나 수량을 고치세요.
+  </p>
+
+  <div id="ai58ReviewList" class="ai58-review-list">
+    <div class="ai58-empty">사진 분석 후 품목이 표시됩니다.</div>
+  </div>
+
+  <div class="ai58-review-actions">
+    <button type="button" id="ai58RecalculateBtn">차량·인원 다시 계산</button>
+    <button type="button" id="ai58AddMissingBtn">빠진 품목 직접 추가</button>
+  </div>
+</div>
+
 <div class="card pro40-review-card" id="pro40ReviewCard" style="display:none;">
   <h2><span class="eyebrow">확인 필요</span> AI가 확신하지 못한 품목</h2>
   <p class="pro40-review-guide">아래 품목만 확인하면 됩니다. 나머지는 자동 반영되었습니다.</p>
@@ -4786,7 +4924,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-5.7';
+const BUILD_VERSION = 'JIMPICK-PRO-5.8';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -8334,7 +8472,9 @@ function clearLocalPhotos(){
   if(typeof Media!=='undefined'&&typeof Media.render==='function')Media.render();
   if(typeof renderMedia==='function')renderMedia();
   if(typeof refreshBigPhotoUi==='function')refreshBigPhotoUi();
+  ai58RefreshPhotoCount();
   if(typeof refreshPro40Button==='function')refreshPro40Button();
+  ai58RefreshPhotoCount();
 
   const message=document.getElementById('dataSafetyMessage');
   if(message)message.textContent='기기에 남아 있던 촬영사진을 정리했습니다.';
@@ -10022,6 +10162,210 @@ function sendContractCustomerMessage(id){
 }
 
 
+
+let ai58LastItems=[];
+let ai58SelectedRooms=new Set();
+
+function ai58SetStatus(message,type=''){
+  const el=document.getElementById('ai58Status');
+  if(!el)return;
+  el.textContent=message;
+  el.classList.remove('working','ok','fail');
+  if(type)el.classList.add(type);
+}
+
+function ai58SetProgress(percent,message){
+  const wrap=document.getElementById('ai58Progress');
+  const fill=document.getElementById('ai58ProgressFill');
+  const text=document.getElementById('ai58ProgressText');
+  if(wrap)wrap.style.display='block';
+  if(fill)fill.style.width=`${Math.max(0,Math.min(100,percent))}%`;
+  if(text)text.textContent=message;
+}
+
+function ai58RefreshPhotoCount(){
+  const count=State?.media?.length||State?.photos?.length||0;
+  const countEl=document.getElementById('ai58PhotoCount');
+  const btn=document.getElementById('ai58RunBtn');
+  if(countEl)countEl.textContent=`${count}장`;
+  if(btn)btn.disabled=count===0;
+  if(count>0)ai58SetStatus(`사진 ${count}장이 준비되었습니다.`);
+}
+
+function ai58NormalizeItems(){
+  const rows=Object.entries(State?.items||{})
+    .map(([name,item])=>({
+      name,
+      qty:Number(item?.qty||item?.quantity||0),
+      confidence:Number(item?.confidence||0.9)
+    }))
+    .filter(item=>item.qty>0);
+
+  const map=new Map();
+  rows.forEach(item=>{
+    const key=item.name.trim();
+    if(!key)return;
+    if(!map.has(key)){
+      map.set(key,{...item});
+    }else{
+      const current=map.get(key);
+      current.qty=Math.max(current.qty,item.qty);
+      current.confidence=Math.max(current.confidence,item.confidence);
+    }
+  });
+  return [...map.values()];
+}
+
+function ai58RenderReview(items=ai58LastItems){
+  ai58LastItems=Array.isArray(items)?items:[];
+
+  const list=document.getElementById('ai58ReviewList');
+  const detected=document.getElementById('ai58DetectedCount');
+  const uncertain=document.getElementById('ai58UncertainCount');
+
+  const uncertainCount=ai58LastItems.filter(item=>(item.confidence||0)<0.65).length;
+  if(detected)detected.textContent=`${ai58LastItems.length}종`;
+  if(uncertain)uncertain.textContent=`${uncertainCount}종`;
+
+  if(!list)return;
+  if(!ai58LastItems.length){
+    list.innerHTML='<div class="ai58-empty">인식된 품목이 없습니다.</div>';
+    return;
+  }
+
+  list.innerHTML=ai58LastItems.map((item,index)=>`
+    <div class="ai58-review-item ${(item.confidence||0)<0.65?'low':''}">
+      <div>
+        <div class="name">${Utils.escapeHtml(item.name)}</div>
+        <div class="confidence">AI 신뢰도 ${Math.round((item.confidence||0)*100)}%</div>
+      </div>
+      <input type="number" min="0" value="${item.qty}" data-ai58-qty="${index}" aria-label="${Utils.escapeHtml(item.name)} 수량">
+      <div class="confidence">${(item.confidence||0)<0.65?'확인 필요':'자동 반영'}</div>
+      <button type="button" data-ai58-remove="${index}">삭제</button>
+    </div>
+  `).join('');
+
+  list.querySelectorAll('[data-ai58-qty]').forEach(input=>{
+    input.addEventListener('input',()=>{
+      const index=Number(input.dataset.ai58Qty);
+      const item=ai58LastItems[index];
+      if(!item)return;
+      item.qty=Math.max(0,Number(input.value)||0);
+      if(State.items?.[item.name])State.items[item.name].qty=item.qty;
+      if(typeof Calc!=='undefined')Calc.run();
+      if(typeof updateMovingEstimateEngine==='function')updateMovingEstimateEngine();
+    });
+  });
+
+  list.querySelectorAll('[data-ai58-remove]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const index=Number(btn.dataset.ai58Remove);
+      const item=ai58LastItems[index];
+      if(item&&State.items?.[item.name])State.items[item.name].qty=0;
+      ai58LastItems.splice(index,1);
+      ai58RenderReview(ai58LastItems);
+      if(typeof Calc!=='undefined')Calc.run();
+      if(typeof updateMovingEstimateEngine==='function')updateMovingEstimateEngine();
+    });
+  });
+}
+
+function ai58ToggleRoom(room,button){
+  if(ai58SelectedRooms.has(room))ai58SelectedRooms.delete(room);
+  else ai58SelectedRooms.add(room);
+  button?.classList.toggle('selected',ai58SelectedRooms.has(room));
+}
+
+async function runAi58Analysis(){
+  const count=State?.media?.length||State?.photos?.length||0;
+  if(count===0){
+    alert('사진을 먼저 촬영하거나 선택해주세요.');
+    return;
+  }
+
+  const btn=document.getElementById('ai58RunBtn');
+  const original=btn?.textContent||'📷 사진 AI 품목 자동인식 시작';
+  if(btn){btn.disabled=true;btn.textContent='사진을 분석하고 있습니다…';}
+
+  try{
+    ai58SetStatus('사진에서 큰 가구와 가전을 찾고 있습니다.','working');
+    ai58SetProgress(15,'1단계: 방별 사진 분석');
+
+    if(typeof runAutoAIAnalysis!=='function'){
+      throw new Error('사진 AI 분석 기능을 찾지 못했습니다.');
+    }
+
+    await runAutoAIAnalysis();
+
+    ai58SetProgress(55,'2단계: 같은 물건 중복 정리');
+
+    const normalized=ai58NormalizeItems();
+    ai58LastItems=normalized;
+
+    ai58SetProgress(75,'3단계: 낮은 신뢰도 품목 분리');
+    ai58RenderReview(normalized);
+
+    if(typeof renderSmartQuestions==='function')renderSmartQuestions();
+    if(typeof calculateMovingEstimateEngine==='function'){
+      const result=calculateMovingEstimateEngine();
+      if(typeof applyMovingEstimateEngine==='function')applyMovingEstimateEngine();
+      if(typeof updateOwnerPricePanel==='function')updateOwnerPricePanel();
+      if(typeof updatePro40Result==='function')updatePro40Result(result);
+    }
+
+    ai58SetProgress(100,'4단계: 차량·인원·시간 계산 완료');
+    ai58SetStatus(
+      `완료: 품목 ${normalized.length}종을 찾았습니다. 확인이 필요한 품목은 ${normalized.filter(i=>(i.confidence||0)<0.65).length}종입니다.`,
+      'ok'
+    );
+
+    setTimeout(()=>{
+      const progress=document.getElementById('ai58Progress');
+      if(progress)progress.style.display='none';
+      if(typeof UI!=='undefined')UI.goStep(4);
+    },700);
+
+  }catch(error){
+    console.error(error);
+    ai58SetStatus(`분석 실패: ${error.message||error}`,'fail');
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent=original;}
+    ai58RefreshPhotoCount();
+  }
+}
+
+function ai58Recalculate(){
+  ai58LastItems=ai58NormalizeItems();
+  ai58RenderReview(ai58LastItems);
+
+  const result=calculateMovingEstimateEngine();
+  applyMovingEstimateEngine();
+  updateOwnerPricePanel();
+  updateEstimateSharePreview();
+
+  alert(`차량 ${result.truck1||0}대(1톤), ${result.truck5||0}대(5톤), 작업자 ${result.workers||0}명으로 다시 계산했습니다.`);
+}
+
+function ai58AddMissingItem(){
+  const name=prompt('빠진 품목명을 입력해주세요.\n예: 냉장고, 침대, 옷장');
+  if(!name?.trim())return;
+  const qty=Math.max(1,Number(prompt('수량을 입력해주세요.','1'))||1);
+  const clean=name.trim();
+
+  if(State.items?.[clean]){
+    State.items[clean].qty=(Number(State.items[clean].qty)||0)+qty;
+  }else{
+    if(!State.items)State.items={};
+    State.items[clean]={qty,confidence:1,manual:true};
+  }
+
+  ai58LastItems=ai58NormalizeItems();
+  ai58RenderReview(ai58LastItems);
+  if(typeof Calc!=='undefined')Calc.run();
+  if(typeof updateMovingEstimateEngine==='function')updateMovingEstimateEngine();
+}
+
+
 function getEstimateShareData(){
   const value=id=>document.getElementById(id)?.value?.trim()||'';
   const company=CompanyPricing.companyName||document.getElementById('loggedCompanyName')?.textContent?.trim()||'짐픽';
@@ -10792,7 +11136,9 @@ async function runSimpleAutoEstimate(){
     return;
   }
 
-  if(typeof runPro40Engine==='function'){
+  if(typeof runAi58Analysis==='function'){
+    await runAi58Analysis();
+  }else if(typeof runPro40Engine==='function'){
     await runPro40Engine();
   }else if(typeof runFullAutoEstimate==='function'){
     await runFullAutoEstimate();
@@ -12524,6 +12870,13 @@ ${msg || '-'}`;
     document.getElementById('completeSignupBtn')?.addEventListener('click',authCompleteSignup);
     document.getElementById('forgotPasswordBtn')?.addEventListener('click',authForgotPassword);
     document.getElementById('logoutBtn')?.addEventListener('click',authLogout);
+    document.getElementById('ai58RunBtn')?.addEventListener('click',runAi58Analysis);
+    document.getElementById('ai58RecalculateBtn')?.addEventListener('click',ai58Recalculate);
+    document.getElementById('ai58AddMissingBtn')?.addEventListener('click',ai58AddMissingItem);
+    document.querySelectorAll('[data-ai58-room]').forEach(btn=>{
+      btn.addEventListener('click',()=>ai58ToggleRoom(btn.dataset.ai58Room,btn));
+    });
+    ai58RefreshPhotoCount();
     document.querySelectorAll('[data-message-type]').forEach(btn=>{
       btn.addEventListener('click',()=>selectCustomerMessageType(btn.dataset.messageType));
     });
