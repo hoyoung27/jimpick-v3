@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 7.6 RC",
+  "name": "짐픽 PRO 7.6.1",
   "short_name": "짐픽 PRO",
-  "description": "방 추가·삭제·이름변경·드래그 정렬과 품목 이동·추가·삭제를 지원하는 AI 이사견적 앱",
+  "description": "이전 저장 데이터 형식 오류를 자동 복구하는 방·품목 드래그 관리 안정판",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

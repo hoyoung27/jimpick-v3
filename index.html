@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 7.6 RC</title>
+<title>짐픽 PRO 7.6.1</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 7.6 RC 최소판매형 ===== */
+/* ===== 짐픽 PRO 7.6.1 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -4748,6 +4748,15 @@ button{min-height:46px;line-height:1.25;white-space:normal}
   .pro76-footer{grid-template-columns:1fr}
 }
 
+
+/* PRO 7.6.1 긴급 안정화 */
+.error-banner, .runtime-error-banner{
+  pointer-events:none!important;
+}
+#loginScreen, #loginScreen *{
+  pointer-events:auto;
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -5027,7 +5036,7 @@ button{min-height:46px;line-height:1.25;white-space:normal}
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-7.6-RC</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-7.6.1</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">6.3 DEMO</span><span class="beta-version-badge">베타시험</span><button type="button" id="betaResultsBtn">베타결과</button><button type="button" id="betaTestMenuBtn">현장테스트</button><button type="button" id="launchMenuBtn">출시진단</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="contractHistoryBtn">계약관리</button><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -6819,7 +6828,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-7.6-RC';
+const BUILD_VERSION = 'JIMPICK-PRO-7.6.1';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -19427,15 +19436,75 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       }
     })
   }
+  function normalizeState(saved){
+    if(!saved || !Array.isArray(saved.rooms) || saved.rooms.length===0){
+      return false;
+    }
+
+    state.rooms=saved.rooms
+      .filter(function(room){return room && room.id})
+      .map(function(room){
+        return {
+          id:String(room.id),
+          name:String(room.name||'방'),
+          icon:String(room.icon||'🏠')
+        }
+      });
+
+    if(state.rooms.length===0)return false;
+
+    state.items=(saved.items && typeof saved.items==='object') ? saved.items : {};
+    state.rooms.forEach(function(room){
+      if(!Array.isArray(state.items[room.id])){
+        state.items[room.id]=[];
+      }
+
+      state.items[room.id]=state.items[room.id]
+        .filter(function(item){return item && item.name})
+        .map(function(item){
+          return {
+            id:String(item.id||uid('item')),
+            name:String(item.name||'품목'),
+            icon:String(item.icon||iconFor(item.name||'')),
+            qty:Math.max(0,Number(item.qty)||0)
+          }
+        });
+    });
+
+    state.activeRoom=state.rooms.some(function(room){
+      return room.id===saved.activeRoom;
+    }) ? saved.activeRoom : state.rooms[0].id;
+
+    return true;
+  }
+
   function load(){
+    var restored=false;
+
     try{
       var saved=JSON.parse(localStorage.getItem(KEY)||'null');
-      if(saved&&Array.isArray(saved.rooms)){
-        state=saved;
-        return
+      restored=normalizeState(saved);
+    }catch(e){
+      restored=false;
+    }
+
+    if(!restored){
+      initFromStep3();
+    }
+
+    if(!state.items || typeof state.items!=='object'){
+      state.items={};
+    }
+
+    state.rooms.forEach(function(room){
+      if(!Array.isArray(state.items[room.id])){
+        state.items[room.id]=[];
       }
+    });
+
+    try{
+      localStorage.setItem(KEY,JSON.stringify(state));
     }catch(e){}
-    initFromStep3()
   }
   function save(){
     try{
@@ -19461,15 +19530,22 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     }catch(e){}
   }
   function totalItems(){
-    return state.rooms.reduce(function(sum,r){
-      return sum+(state.items[r.id]||[]).reduce(function(s,i){return s+(Number(i.qty)||0)},0)
+    var rooms=Array.isArray(state.rooms)?state.rooms:[];
+    var items=(state.items&&typeof state.items==='object')?state.items:{};
+    return rooms.reduce(function(sum,r){
+      return sum+(Array.isArray(items[r.id])?items[r.id]:[]).reduce(function(s,i){
+        return s+(Number(i&&i.qty)||0)
+      },0)
     },0)
   }
   function renderRooms(){
     var wrap=el('pro76RoomList');
     if(!wrap)return;
-    wrap.innerHTML=state.rooms.map(function(room){
-      var count=(state.items[room.id]||[]).reduce(function(s,i){return s+(Number(i.qty)||0)},0);
+    var safeRooms=Array.isArray(state.rooms)?state.rooms:[];
+    var safeItems=(state.items&&typeof state.items==='object')?state.items:{};
+    wrap.innerHTML=safeRooms.map(function(room){
+      var roomItems=Array.isArray(safeItems[room.id])?safeItems[room.id]:[];
+      var count=roomItems.reduce(function(s,i){return s+(Number(i&&i.qty)||0)},0);
       return '<div class="pro76-room-card '+(state.activeRoom===room.id?'active':'')+
         '" draggable="true" data-room-id="'+room.id+'">'+
         '<span class="pro76-drag">≡</span>'+
@@ -19525,7 +19601,9 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     el('pro76ActiveRoomTitle').textContent=(room?.name||'방')+' 품목';
     var wrap=el('pro76ItemList');
     if(!wrap)return;
-    var items=state.items[state.activeRoom]||[];
+    if(!state.items || typeof state.items!=='object')state.items={};
+    if(!Array.isArray(state.items[state.activeRoom]))state.items[state.activeRoom]=[];
+    var items=state.items[state.activeRoom];
 
     wrap.innerHTML=items.map(function(item){
       return '<div class="pro76-item-card" draggable="true" data-item-id="'+item.id+'">'+
@@ -19639,10 +19717,26 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     el('pro76ItemCount').textContent=totalItems()+'개'
   }
   function init(){
-    load();render();
-    el('pro76AddRoomBtn')?.addEventListener('click',addRoom);
-    el('pro76AddItemBtn')?.addEventListener('click',addItem);
-    el('pro76ResetBtn')?.addEventListener('click',reset)
+    try{
+      load();
+      render();
+
+      el('pro76AddRoomBtn')?.addEventListener('click',addRoom);
+      el('pro76AddItemBtn')?.addEventListener('click',addItem);
+      el('pro76ResetBtn')?.addEventListener('click',reset);
+    }catch(error){
+      console.error('PRO 7.6.1 자동복구:',error);
+
+      try{
+        localStorage.removeItem(KEY);
+        initFromStep3();
+        render();
+        save();
+        setStatus('이전 저장자료 오류를 자동 복구했습니다.');
+      }catch(recoveryError){
+        console.error('자동복구 실패:',recoveryError);
+      }
+    }
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
   else init()
