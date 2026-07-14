@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 5.4</title>
+<title>짐픽 PRO 5.5</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 5.4 최소판매형 ===== */
+/* ===== 짐픽 PRO 5.5 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -3111,6 +3111,78 @@ body.simple-mode .panel{
   .quote-history-item-actions{grid-template-columns:1fr}
 }
 
+
+/* ===== PRO 5.5 견적 확정·고객 서명 ===== */
+.contract-confirm-card{max-width:920px;margin:0 auto 16px}
+.contract-confirm-guide{
+  margin:0 0 14px;padding:13px 14px;border-radius:13px;
+  background:#EEF5FF;color:#174A7E;font-size:16px;font-weight:900;
+}
+.contract-amount-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+}
+.contract-amount-grid label,.contract-status-row label{display:grid;gap:7px}
+.contract-amount-grid span,.contract-status-row span{
+  font-size:14px;font-weight:900;color:#102A43;
+}
+.contract-amount-grid input,.contract-status-row select{
+  min-height:56px;padding:0 12px;border:1px solid #CBD6E2;
+  border-radius:12px;font-size:19px;font-weight:900;text-align:right;
+}
+.contract-amount-grid input[readonly]{background:#F3F6FA;color:#52667A}
+.contract-status-row{
+  display:grid;grid-template-columns:minmax(220px,320px);margin-top:12px;
+}
+.contract-status-row select{text-align:left;background:#fff}
+.signature-box{
+  margin-top:14px;padding:14px;border-radius:15px;
+  background:#F7F9FC;border:1px solid #DCE5EE;
+}
+.signature-head{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.signature-head strong{font-size:17px;color:#102A43}
+.signature-head button{
+  min-height:40px;border:0;border-radius:10px;padding:0 13px;
+  background:#E8EEF5;color:#102A43;font-weight:900;cursor:pointer;
+}
+#customerSignatureCanvas{
+  display:block;width:100%;height:220px;margin-top:10px;
+  border:2px dashed #AAB8C5;border-radius:12px;background:#fff;
+  touch-action:none;cursor:crosshair;
+}
+.signature-box small{
+  display:block;margin-top:7px;color:#68798A;text-align:center;font-weight:700;
+}
+.contract-agree-row{
+  display:flex;align-items:flex-start;gap:10px;margin-top:13px;
+  padding:13px;border-radius:13px;background:#FFF8E8;border:1px solid #F3D6A1;
+}
+.contract-agree-row input{width:24px;height:24px;flex:0 0 auto}
+.contract-agree-row span{color:#6D4910;font-weight:900;line-height:1.5}
+.save-contract-confirm-btn{
+  width:100%;min-height:62px;margin-top:12px;border:0;border-radius:14px;
+  background:#5B3DB5;color:#fff;font-size:18px;font-weight:900;cursor:pointer;
+}
+.contract-confirm-status{
+  margin-top:10px;padding:12px;border-radius:12px;
+  background:#F3F6FA;color:#52667A;text-align:center;font-weight:900;
+}
+.contract-confirm-status.ok{background:#EAF7F0;color:#16794B}
+.contract-confirm-status.fail{background:#FFF0ED;color:#B42318}
+.print-customer-signature{
+  display:none;margin-top:24px;padding-top:12px;border-top:1px solid #999;
+}
+.print-customer-signature img{
+  display:block;width:240px;max-height:100px;object-fit:contain;margin-top:8px;
+}
+@media(max-width:650px){
+  .contract-amount-grid{grid-template-columns:1fr}
+}
+@media print{
+  .print-customer-signature{display:block!important}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -3390,7 +3462,7 @@ body.simple-mode .panel{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-5.4</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-5.5</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">베타시험</span><button type="button" id="launchMenuBtn">출시점검</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -3802,6 +3874,61 @@ body.simple-mode .panel{
 
   <!-- ============ STEP 5. 견적 확정 ============ -->
   <section class="panel" id="step5">
+<div class="card contract-confirm-card">
+  <h2><span class="eyebrow">계약확정</span> 고객 확인과 서명</h2>
+  <p class="contract-confirm-guide">
+    최종 견적을 고객에게 확인받은 뒤 계약금과 서명을 입력하세요.
+  </p>
+
+  <div class="contract-amount-grid">
+    <label>
+      <span>최종 견적금액</span>
+      <input type="number" id="contractFinalPrice" min="0" step="10000" readonly>
+    </label>
+    <label>
+      <span>계약금</span>
+      <input type="number" id="contractDeposit" min="0" step="10000" value="0">
+    </label>
+    <label>
+      <span>잔금</span>
+      <input type="number" id="contractBalance" min="0" step="10000" readonly>
+    </label>
+  </div>
+
+  <div class="contract-status-row">
+    <label>
+      <span>견적 상태</span>
+      <select id="contractStatus">
+        <option value="consulting">상담중</option>
+        <option value="confirmed">계약확정</option>
+        <option value="canceled">취소</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="signature-box">
+    <div class="signature-head">
+      <strong>고객 서명</strong>
+      <button type="button" id="clearSignatureBtn">서명 지우기</button>
+    </div>
+    <canvas id="customerSignatureCanvas" width="760" height="220"></canvas>
+    <small>손가락이나 마우스로 서명해 주세요.</small>
+  </div>
+
+  <label class="contract-agree-row">
+    <input type="checkbox" id="contractCustomerAgree">
+    <span>고객이 최종 견적금액과 계약 내용을 확인했습니다.</span>
+  </label>
+
+  <button type="button" id="saveContractConfirmBtn" class="save-contract-confirm-btn">
+    서명과 계약내용 저장
+  </button>
+
+  <div id="contractConfirmStatus" class="contract-confirm-status">
+    계약확정 전입니다.
+  </div>
+</div>
+
 <div class="card owner-price-card">
   <h2><span class="eyebrow">대표 결정</span> 최종 견적금액</h2>
   <p class="owner-price-guide">
@@ -4486,7 +4613,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-5.4';
+const BUILD_VERSION = 'JIMPICK-PRO-5.5';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -8695,7 +8822,9 @@ async function saveCompanySettings(){
 
     if(typeof updateMovingEstimateEngine==='function')updateMovingEstimateEngine();
     if(typeof updateEstimateSharePreview==='function')updateEstimateSharePreview();
+  updateContractAmounts();
   updateOwnerPricePanel();
+  updateContractAmounts();
   updatePricingBreakdown();
     alert('업체 설정을 저장했습니다.');
   }catch(error){
@@ -9091,6 +9220,190 @@ async function deleteSavedQuote(id){
 }
 
 
+
+let signatureDrawing=false;
+let signatureHasInk=false;
+
+function getContractFinalPrice(){
+  return getApprovedEstimatePrice();
+}
+
+function updateContractAmounts(){
+  const finalPrice=getContractFinalPrice();
+  const deposit=Math.max(0,Number(document.getElementById('contractDeposit')?.value)||0);
+  const balance=Math.max(0,finalPrice-deposit);
+
+  const finalEl=document.getElementById('contractFinalPrice');
+  const balanceEl=document.getElementById('contractBalance');
+  if(finalEl)finalEl.value=finalPrice;
+  if(balanceEl)balanceEl.value=balance;
+}
+
+function setupSignatureCanvas(){
+  const canvas=document.getElementById('customerSignatureCanvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  ctx.lineWidth=3;
+  ctx.lineCap='round';
+  ctx.lineJoin='round';
+  ctx.strokeStyle='#102A43';
+
+  const pointFromEvent=(event)=>{
+    const rect=canvas.getBoundingClientRect();
+    const source=event.touches?.[0]||event.changedTouches?.[0]||event;
+    return {
+      x:(source.clientX-rect.left)*(canvas.width/rect.width),
+      y:(source.clientY-rect.top)*(canvas.height/rect.height)
+    };
+  };
+
+  const start=(event)=>{
+    event.preventDefault();
+    signatureDrawing=true;
+    const p=pointFromEvent(event);
+    ctx.beginPath();
+    ctx.moveTo(p.x,p.y);
+  };
+
+  const move=(event)=>{
+    if(!signatureDrawing)return;
+    event.preventDefault();
+    const p=pointFromEvent(event);
+    ctx.lineTo(p.x,p.y);
+    ctx.stroke();
+    signatureHasInk=true;
+  };
+
+  const end=(event)=>{
+    if(!signatureDrawing)return;
+    event.preventDefault();
+    signatureDrawing=false;
+    ctx.closePath();
+  };
+
+  canvas.addEventListener('mousedown',start);
+  canvas.addEventListener('mousemove',move);
+  window.addEventListener('mouseup',end);
+
+  canvas.addEventListener('touchstart',start,{passive:false});
+  canvas.addEventListener('touchmove',move,{passive:false});
+  canvas.addEventListener('touchend',end,{passive:false});
+}
+
+function clearCustomerSignature(){
+  const canvas=document.getElementById('customerSignatureCanvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  signatureHasInk=false;
+  const img=document.getElementById('printCustomerSignature');
+  if(img)img.removeAttribute('src');
+}
+
+function getCustomerSignatureData(){
+  const canvas=document.getElementById('customerSignatureCanvas');
+  if(!canvas||!signatureHasInk)return '';
+  return canvas.toDataURL('image/png');
+}
+
+function applySignatureToPrint(signatureData){
+  const img=document.getElementById('printCustomerSignature');
+  if(!img)return;
+  if(signatureData){
+    img.src=signatureData;
+    img.style.display='block';
+  }else{
+    img.removeAttribute('src');
+    img.style.display='none';
+  }
+}
+
+async function saveContractConfirmation(){
+  const statusValue=document.getElementById('contractStatus')?.value||'consulting';
+  const agreed=document.getElementById('contractCustomerAgree')?.checked;
+  const finalPrice=getContractFinalPrice();
+  const deposit=Math.max(0,Number(document.getElementById('contractDeposit')?.value)||0);
+  const balance=Math.max(0,finalPrice-deposit);
+  const signatureData=getCustomerSignatureData();
+
+  if(statusValue==='confirmed'){
+    if(!agreed){
+      alert('고객 확인 동의에 체크해주세요.');
+      return;
+    }
+    if(!signatureData){
+      alert('고객 서명을 받아주세요.');
+      return;
+    }
+  }
+
+  const quote=collectCurrentQuoteData();
+  const user=await currentCloudUser().catch(()=>null);
+  const payload={
+    user_id:user?.id||'',
+    customer_name:quote.customer_name||'',
+    customer_phone:quote.customer_phone||'',
+    move_date:quote.move_date||null,
+    from_address:quote.from_address||'',
+    to_address:quote.to_address||'',
+    final_price:finalPrice,
+    deposit_amount:deposit,
+    balance_amount:balance,
+    contract_status:statusValue,
+    signature_data:signatureData,
+    customer_agreed:Boolean(agreed),
+    confirmed_at:statusValue==='confirmed'?new Date().toISOString():null,
+    quote_data:{
+      ...(quote.quote_data||{}),
+      final_price:finalPrice,
+      deposit_amount:deposit,
+      balance_amount:balance,
+      contract_status:statusValue,
+      customer_agreed:Boolean(agreed)
+    }
+  };
+
+  const status=document.getElementById('contractConfirmStatus');
+  const btn=document.getElementById('saveContractConfirmBtn');
+  const original=btn?.textContent||'서명과 계약내용 저장';
+  if(btn){btn.disabled=true;btn.textContent='계약내용 저장 중…';}
+
+  try{
+    if(localPreviewMode){
+      const local=safeJsonParse(localStorage.getItem('jimpick_contracts')||'[]',[]);
+      local.unshift({
+        id:`local_contract_${Date.now()}`,
+        ...payload,
+        created_at:new Date().toISOString()
+      });
+      localStorage.setItem('jimpick_contracts',JSON.stringify(local));
+    }else{
+      if(!supabaseClient||!user)throw new Error('실제 계정으로 로그인해주세요.');
+      const {error}=await supabaseClient.from('contracts').insert(payload);
+      if(error)throw error;
+    }
+
+    applySignatureToPrint(signatureData);
+    if(status){
+      status.className='contract-confirm-status ok';
+      status.textContent=statusValue==='confirmed'
+        ?`계약확정 완료 · 계약금 ${deposit.toLocaleString('ko-KR')}원 · 잔금 ${balance.toLocaleString('ko-KR')}원`
+        :'계약상태와 금액을 저장했습니다.';
+    }
+
+    alert(statusValue==='confirmed'?'고객 서명과 계약내용을 저장했습니다.':'견적 상태를 저장했습니다.');
+  }catch(error){
+    console.error(error);
+    if(status){
+      status.className='contract-confirm-status fail';
+      status.textContent=`저장 실패: ${error.message||error}`;
+    }
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent=original;}
+  }
+}
+
+
 function getEstimateShareData(){
   const value=id=>document.getElementById(id)?.value?.trim()||'';
   const company=CompanyPricing.companyName||document.getElementById('loggedCompanyName')?.textContent?.trim()||'짐픽';
@@ -9185,6 +9498,7 @@ async function shareEstimate(){
 }
 
 function printEstimate(){
+  applySignatureToPrint(getCustomerSignatureData());
   updateEstimateSharePreview();
   window.print();
 }
@@ -11592,6 +11906,11 @@ ${msg || '-'}`;
     document.getElementById('completeSignupBtn')?.addEventListener('click',authCompleteSignup);
     document.getElementById('forgotPasswordBtn')?.addEventListener('click',authForgotPassword);
     document.getElementById('logoutBtn')?.addEventListener('click',authLogout);
+    document.getElementById('contractDeposit')?.addEventListener('input',updateContractAmounts);
+    document.getElementById('clearSignatureBtn')?.addEventListener('click',clearCustomerSignature);
+    document.getElementById('saveContractConfirmBtn')?.addEventListener('click',saveContractConfirmation);
+    setupSignatureCanvas();
+    updateContractAmounts();
     document.getElementById('quoteHistoryBtn')?.addEventListener('click',openQuoteHistory);
     document.getElementById('closeQuoteHistoryBtn')?.addEventListener('click',closeQuoteHistory);
     document.getElementById('quoteHistoryModal')?.addEventListener('click',(e)=>{if(e.target.id==='quoteHistoryModal')closeQuoteHistory();});
@@ -12272,7 +12591,13 @@ document.addEventListener('DOMContentLoaded', App.init);
     본 견적은 입력정보와 사진 AI 분석을 기반으로 한 예상 견적입니다.
     실제 짐량과 현장 상황에 따라 최종 금액이 달라질 수 있습니다.
   </p>
-  <div class="print-sign">
+  
+  <div class="print-customer-signature">
+    <strong>고객 서명</strong>
+    <img id="printCustomerSignature" alt="고객 서명">
+  </div>
+
+<div class="print-sign">
     <span>견적일: <b id="printCreatedDate">-</b></span>
     <span>업체 확인: __________________</span>
   </div>

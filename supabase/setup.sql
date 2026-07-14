@@ -279,3 +279,45 @@ alter table public.company_settings
 -- 짐픽 PRO 5.2 업체별 자유 추가요금 항목
 alter table public.company_settings
   add column if not exists custom_fees jsonb not null default '[]'::jsonb;
+
+
+-- 짐픽 PRO 5.5 견적확정·고객서명
+create table if not exists public.contracts (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  customer_name text not null default '',
+  customer_phone text not null default '',
+  move_date date,
+  from_address text not null default '',
+  to_address text not null default '',
+  final_price integer not null default 0,
+  deposit_amount integer not null default 0,
+  balance_amount integer not null default 0,
+  contract_status text not null default 'consulting',
+  signature_data text not null default '',
+  customer_agreed boolean not null default false,
+  confirmed_at timestamptz,
+  quote_data jsonb not null default '{}'::jsonb,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists contracts_user_created_idx
+  on public.contracts(user_id, created_at desc);
+
+alter table public.contracts enable row level security;
+
+drop policy if exists "contracts_select_own" on public.contracts;
+drop policy if exists "contracts_insert_own" on public.contracts;
+drop policy if exists "contracts_delete_own" on public.contracts;
+
+create policy "contracts_select_own"
+on public.contracts for select
+using (auth.uid() = user_id);
+
+create policy "contracts_insert_own"
+on public.contracts for insert
+with check (auth.uid() = user_id);
+
+create policy "contracts_delete_own"
+on public.contracts for delete
+using (auth.uid() = user_id);
