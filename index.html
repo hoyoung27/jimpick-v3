@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 6.8 DEMO</title>
+<title>짐픽 PRO 6.9 DEMO</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 6.8 DEMO 최소판매형 ===== */
+/* ===== 짐픽 PRO 6.9 DEMO 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -4187,6 +4187,138 @@ body.demo-click-ready .workspace-right{
 @media(max-width:900px){.room-ai-grid-v68{grid-template-columns:1fr}.ai-recommend-grid-v68{grid-template-columns:1fr}}
 @media(max-width:560px){.room-ai-head-v68{flex-direction:column}.room-photo-grid-v68{grid-template-columns:1fr}.room-item-v68{grid-template-columns:1fr 1fr}.room-ai-actions-v68{grid-template-columns:1fr}}
 
+
+/* ===== PRO 6.9 현장안전·수익분석 안정판 ===== */
+.field-safety-card-v69,.profit-analysis-card-v69{max-width:1260px;margin:0 auto 16px}
+.field-safety-head-v69,.profit-head-v69{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:18px
+}
+.field-safety-head-v69 h2,.profit-head-v69 h2{margin:5px 0 0;color:#102A43}
+.field-safety-head-v69 p,.profit-head-v69 p{margin:7px 0 0;color:#68798A;font-weight:700}
+.risk-level-badge-v69,.profit-status-badge-v69{
+  min-width:125px;padding:13px;border-radius:14px;text-align:center;border:1px solid
+}
+.risk-level-badge-v69 span,.profit-status-badge-v69 span{
+  display:block;font-size:12px;font-weight:900
+}
+.risk-level-badge-v69 strong,.profit-status-badge-v69 strong{
+  display:block;margin-top:4px;font-size:24px
+}
+.risk-level-badge-v69.safe,.profit-status-badge-v69.good{
+  background:#EAF7F0;border-color:#9DD6BD;color:#16794B
+}
+.risk-level-badge-v69.caution,.profit-status-badge-v69.normal{
+  background:#FFF8E8;border-color:#F3D6A1;color:#8A5A00
+}
+.risk-level-badge-v69.danger,.profit-status-badge-v69.bad{
+  background:#FFF0ED;border-color:#F1B3A9;color:#B42318
+}
+.field-safety-grid-v69,.before-after-grid-v69{
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px
+}
+.risk-analysis-panel-v69,.checklist-panel-v69,.before-after-grid-v69>section{
+  padding:14px;border-radius:15px;background:#F7F9FC;border:1px solid #DCE5EE
+}
+.risk-analysis-panel-v69 h3,.checklist-panel-v69 h3,.before-after-grid-v69 h3{
+  margin:0;color:#102A43
+}
+.panel-title-row-v69{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.panel-title-row-v69 button,.risk-analysis-panel-v69>button{
+  min-height:40px;padding:0 12px;border:0;border-radius:9px;
+  background:#16A36A;color:#fff;font-weight:900;cursor:pointer
+}
+.risk-item-list-v69{display:grid;gap:8px;margin:11px 0}
+.risk-item-v69{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:10px 11px;border-radius:11px;background:#fff;border:1px solid #E3EAF1
+}
+.risk-item-v69 strong{color:#102A43}
+.risk-tag-v69{padding:5px 8px;border-radius:999px;font-size:12px;font-weight:900}
+.risk-tag-v69.caution{background:#FFF3CD;color:#8A5A00}
+.risk-tag-v69.danger{background:#FFE1DC;color:#B42318}
+.risk-empty-v69{
+  padding:20px;border:2px dashed #CBD6E2;border-radius:12px;text-align:center;
+  color:#68798A;font-weight:900
+}
+.field-checklist-v69{display:grid;gap:8px;margin-top:11px}
+.field-checklist-v69 label{
+  display:flex;align-items:center;gap:10px;padding:10px 11px;border-radius:11px;
+  background:#fff;border:1px solid #E3EAF1;cursor:pointer
+}
+.field-checklist-v69 input{width:22px;height:22px;accent-color:#16A36A}
+.field-checklist-v69 span{font-weight:900;color:#102A43}
+.before-after-photo-grid-v69{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:11px}
+.before-after-photo-v69{
+  position:relative;height:120px;border-radius:11px;overflow:hidden;
+  background:#E8EEF5;border:1px solid #DCE5EE
+}
+.before-after-photo-v69 img{width:100%;height:100%;object-fit:cover}
+.before-after-photo-v69 button{
+  position:absolute;right:6px;top:6px;width:29px;height:29px;border:0;border-radius:50%;
+  background:rgba(255,255,255,.92);color:#B42318;font-weight:900;cursor:pointer
+}
+.photo-empty-v69{
+  margin-top:11px;padding:22px;border:2px dashed #CBD6E2;border-radius:12px;
+  text-align:center;color:#68798A;font-weight:900
+}
+.owner-private-note-v69{display:grid;gap:7px;margin-top:14px}
+.owner-private-note-v69 span{font-size:14px;font-weight:900;color:#102A43}
+.owner-private-note-v69 textarea{
+  min-height:105px;padding:12px;border:1px solid #CBD6E2;border-radius:12px;
+  resize:vertical;font-size:15px;line-height:1.5
+}
+.field-safety-actions-v69{
+  display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-top:12px
+}
+.field-safety-actions-v69 button{
+  min-height:52px;border:0;border-radius:12px;font-size:16px;font-weight:900;cursor:pointer
+}
+#saveFieldSafetyBtnV69{background:#102A43;color:#fff}
+#clearFieldSafetyBtnV69{background:#E8EEF5;color:#102A43}
+.field-safety-status-v69{
+  margin-top:10px;padding:12px;border-radius:12px;background:#F3F6FA;
+  color:#52667A;text-align:center;font-weight:900
+}
+.field-safety-status-v69.ok{background:#EAF7F0;color:#16794B}
+.profit-input-grid-v69{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px
+}
+.profit-input-grid-v69 label{display:grid;gap:7px}
+.profit-input-grid-v69 span{font-size:13px;color:#52667A;font-weight:900}
+.profit-input-grid-v69 input{
+  min-height:50px;padding:0 11px;border:1px solid #CBD6E2;border-radius:11px;
+  font-size:17px;font-weight:900;text-align:right
+}
+.profit-summary-v69{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px
+}
+.profit-summary-v69>div{
+  padding:14px;border-radius:13px;background:#F5F7FA;border:1px solid #DCE5EE
+}
+.profit-summary-v69 span{display:block;font-size:12px;color:#68798A;font-weight:900}
+.profit-summary-v69 strong{display:block;margin-top:5px;font-size:20px;color:#102A43}
+.profit-summary-v69 .profit-main-v69{background:#102A43}
+.profit-summary-v69 .profit-main-v69 span{color:#B7C8D8}
+.profit-summary-v69 .profit-main-v69 strong{color:#8EF0B1;font-size:25px}
+.ai-field-score-v69{
+  margin-top:12px;padding:15px;border-radius:13px;background:#EEF5FF;
+  border:1px solid #C9DCF4;text-align:center
+}
+.ai-field-score-v69 span{display:block;font-size:13px;color:#174A7E;font-weight:900}
+.ai-field-score-v69 strong{display:block;margin-top:4px;font-size:30px;color:#174A7E}
+.ai-field-score-v69 small{display:block;margin-top:4px;color:#52667A;font-weight:700}
+@media(max-width:900px){
+  .field-safety-grid-v69,.before-after-grid-v69{grid-template-columns:1fr}
+  .profit-input-grid-v69{grid-template-columns:repeat(2,1fr)}
+  .profit-summary-v69{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:560px){
+  .field-safety-head-v69,.profit-head-v69{flex-direction:column}
+  .before-after-photo-grid-v69{grid-template-columns:repeat(2,1fr)}
+  .profit-input-grid-v69,.profit-summary-v69{grid-template-columns:1fr}
+  .field-safety-actions-v69{grid-template-columns:1fr}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -4466,7 +4598,7 @@ body.demo-click-ready .workspace-right{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-6.8-DEMO</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-6.9-DEMO</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">6.3 DEMO</span><span class="beta-version-badge">베타시험</span><button type="button" id="betaResultsBtn">베타결과</button><button type="button" id="betaTestMenuBtn">현장테스트</button><button type="button" id="launchMenuBtn">출시진단</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="contractHistoryBtn">계약관리</button><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -4986,6 +5118,70 @@ body.demo-click-ready .workspace-right{
 
   <!-- ============ STEP 4. 품목 확인 (방 + 거실 + 부엌 통합) ============ -->
   <section class="panel" id="step4">
+<div class="card field-safety-card-v69">
+  <div class="field-safety-head-v69">
+    <div>
+      <span class="eyebrow">현장 안전관리</span>
+      <h2>위험 분석·체크리스트·작업 전후 사진</h2>
+      <p>현장 위험요소와 확인사항을 고객별로 저장합니다.</p>
+    </div>
+    <div id="riskLevelBadgeV69" class="risk-level-badge-v69 safe">
+      <span>현장 위험도</span>
+      <strong id="riskLevelTextV69">안전</strong>
+    </div>
+  </div>
+
+  <div class="field-safety-grid-v69">
+    <section class="risk-analysis-panel-v69">
+      <h3>AI 위험 품목 분석</h3>
+      <div id="riskItemListV69" class="risk-item-list-v69"></div>
+      <button type="button" id="refreshRiskAnalysisBtnV69">위험 분석 새로고침</button>
+    </section>
+
+    <section class="checklist-panel-v69">
+      <div class="panel-title-row-v69">
+        <h3>작업 전 체크리스트</h3>
+        <strong id="checklistProgressV69">0/6</strong>
+      </div>
+      <div id="fieldChecklistV69" class="field-checklist-v69"></div>
+    </section>
+  </div>
+
+  <div class="before-after-grid-v69">
+    <section>
+      <div class="panel-title-row-v69">
+        <h3>작업 전 사진</h3>
+        <button type="button" id="addBeforePhotoBtnV69">＋ 사진 추가</button>
+      </div>
+      <div id="beforePhotoGridV69" class="before-after-photo-grid-v69"></div>
+      <div id="beforePhotoEmptyV69" class="photo-empty-v69">작업 전 사진이 없습니다.</div>
+    </section>
+
+    <section>
+      <div class="panel-title-row-v69">
+        <h3>작업 후 사진</h3>
+        <button type="button" id="addAfterPhotoBtnV69">＋ 사진 추가</button>
+      </div>
+      <div id="afterPhotoGridV69" class="before-after-photo-grid-v69"></div>
+      <div id="afterPhotoEmptyV69" class="photo-empty-v69">작업 후 사진이 없습니다.</div>
+    </section>
+  </div>
+
+  <label class="owner-private-note-v69">
+    <span>대표 전용 메모</span>
+    <textarea id="ownerPrivateNoteV69" rows="4" placeholder="고가가구, 반려동물, 고객 요청, 작업 주의사항 등을 기록하세요."></textarea>
+  </label>
+
+  <div class="field-safety-actions-v69">
+    <button type="button" id="saveFieldSafetyBtnV69">💾 현장관리 저장</button>
+    <button type="button" id="clearFieldSafetyBtnV69">초기화</button>
+  </div>
+
+  <div id="fieldSafetyStatusV69" class="field-safety-status-v69">
+    체크리스트와 사진을 입력한 뒤 저장하세요.
+  </div>
+</div>
+
 <div class="card room-ai-card-v68">
   <div class="room-ai-head-v68">
     <div><span class="eyebrow">AI 방·품목 분석</span><h2>방별 사진과 품목 자동 분류</h2>
@@ -5119,6 +5315,42 @@ body.demo-click-ready .workspace-right{
 
   <!-- ============ STEP 5. 견적 확정 ============ -->
   <section class="panel" id="step5">
+<div class="card profit-analysis-card-v69">
+  <div class="profit-head-v69">
+    <div>
+      <span class="eyebrow">대표 전용</span>
+      <h2>수익 분석</h2>
+      <p>고객에게는 표시되지 않으며 대표님의 견적 판단에만 사용됩니다.</p>
+    </div>
+    <div id="profitStatusBadgeV69" class="profit-status-badge-v69 good">
+      <span>수익 상태</span>
+      <strong id="profitStatusTextV69">양호</strong>
+    </div>
+  </div>
+
+  <div class="profit-input-grid-v69">
+    <label><span>작업자 인건비</span><input type="number" id="laborCostV69" min="0" step="10000" value="0"></label>
+    <label><span>차량비</span><input type="number" id="vehicleCostV69" min="0" step="10000" value="0"></label>
+    <label><span>유류비</span><input type="number" id="fuelCostV69" min="0" step="1000" value="0"></label>
+    <label><span>식대</span><input type="number" id="mealCostV69" min="0" step="1000" value="0"></label>
+    <label><span>통행료</span><input type="number" id="tollCostV69" min="0" step="1000" value="0"></label>
+    <label><span>기타비용</span><input type="number" id="otherCostV69" min="0" step="1000" value="0"></label>
+  </div>
+
+  <div class="profit-summary-v69">
+    <div><span>총 매출</span><strong id="profitRevenueV69">0원</strong></div>
+    <div><span>총 비용</span><strong id="profitTotalCostV69">0원</strong></div>
+    <div class="profit-main-v69"><span>예상 순이익</span><strong id="profitNetV69">0원</strong></div>
+    <div><span>순이익률</span><strong id="profitMarginV69">0%</strong></div>
+  </div>
+
+  <div class="ai-field-score-v69">
+    <span>짐픽 현장 점수</span>
+    <strong id="fieldScoreV69">85점</strong>
+    <small id="fieldScoreReasonV69">위험도와 체크리스트 상태를 반영합니다.</small>
+  </div>
+</div>
+
 <div class="card option-storage-card-v66">
   <h2><span class="eyebrow">추가 비용</span> 옵션비·보관비 자동 계산</h2>
 
@@ -5967,7 +6199,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-6.8-DEMO';
+const BUILD_VERSION = 'JIMPICK-PRO-6.9-DEMO';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -17429,6 +17661,301 @@ window.openJimpickDemoHotfix = function(event){
     e('applyWorkerRecommendationV68').onclick=function(){var r=rec(),w=e('workerCount');if(w){w.value=r.w;w.dispatchEvent(new Event('input',{bubbles:true}))}};
     e('showFragileItemsV68').onclick=function(){var f=fragile();alert(f.length?f.join('\n'):'파손 위험 품목이 없습니다.')}}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()
+})();
+
+</script>
+
+<script>
+
+(function(){
+  'use strict';
+  var STORAGE_KEY='jimpick_field_safety_v69';
+  var PROFIT_KEY='jimpick_profit_v69';
+
+  var CHECKS=[
+    'TV·모니터 분리 확인',
+    '세탁기·냉장고 분리 확인',
+    '에어컨 철거 여부 확인',
+    '귀중품·중요서류 고객 보관',
+    '파손 위험 물품 확인',
+    '고객과 최종 작업범위 확인'
+  ];
+
+  var state={
+    checklist:{},
+    beforePhotos:[],
+    afterPhotos:[],
+    ownerNote:''
+  };
+
+  function el(id){return document.getElementById(id)}
+  function money(v){return (Number(v)||0).toLocaleString('ko-KR')+'원'}
+  function setText(id,text){var n=el(id);if(n)n.textContent=text}
+  function safeParse(text,fallback){try{return JSON.parse(text)}catch(e){return fallback}}
+  function customerKey(){
+    return (el('customerPhone')?.value||el('custPhone')?.value||
+      el('customerName')?.value||el('custName')?.value||'demo').trim()
+  }
+
+  function riskRows(){
+    var rows=[];
+    document.querySelectorAll('[data-item-fragile-v68]:checked').forEach(function(input){
+      var row=input.closest('.room-item-v68');
+      var name=row?.querySelector('[data-item-name-v68]')?.value||'파손 위험 품목';
+      var qty=Number(row?.querySelector('[data-item-qty-v68]')?.value)||1;
+      rows.push({name:name,qty:qty,level:'danger'});
+    });
+
+    document.querySelectorAll('#roomItemListV68 [data-item-name-v68]').forEach(function(input){
+      var name=input.value||'';
+      if(/피아노|금고|돌침대|안마의자|대형 냉장고/.test(name) &&
+         !rows.some(function(r){return r.name===name})){
+        var row=input.closest('.room-item-v68');
+        rows.push({
+          name:name,
+          qty:Number(row?.querySelector('[data-item-qty-v68]')?.value)||1,
+          level:'caution'
+        });
+      }
+    });
+    return rows;
+  }
+
+  function renderRisk(){
+    var rows=riskRows();
+    var wrap=el('riskItemListV69');
+    if(!wrap)return;
+    if(!rows.length){
+      wrap.innerHTML='<div class="risk-empty-v69">현재 표시된 위험 품목이 없습니다.</div>';
+    }else{
+      wrap.innerHTML=rows.map(function(row){
+        return '<div class="risk-item-v69"><strong>'+escapeHtml(row.name)+' '+row.qty+'개</strong>'+
+          '<span class="risk-tag-v69 '+row.level+'">'+(row.level==='danger'?'파손 위험':'중량 주의')+'</span></div>'
+      }).join('');
+    }
+    updateRiskBadge(rows);
+  }
+
+  function escapeHtml(value){
+    return String(value||'').replace(/[&<>"']/g,function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]
+    });
+  }
+
+  function updateRiskBadge(rows){
+    var badge=el('riskLevelBadgeV69');
+    if(!badge)return;
+    var dangerous=rows.filter(function(r){return r.level==='danger'}).length;
+    var level='safe',text='안전';
+    if(dangerous>=3||rows.length>=5){level='danger';text='위험'}
+    else if(rows.length>0){level='caution';text='주의'}
+    badge.className='risk-level-badge-v69 '+level;
+    setText('riskLevelTextV69',text);
+    updateFieldScore();
+  }
+
+  function renderChecklist(){
+    var wrap=el('fieldChecklistV69');
+    if(!wrap)return;
+    wrap.innerHTML=CHECKS.map(function(label,index){
+      var checked=Boolean(state.checklist[index]);
+      return '<label><input type="checkbox" data-check-v69="'+index+'" '+(checked?'checked':'')+
+        '><span>'+escapeHtml(label)+'</span></label>'
+    }).join('');
+    wrap.querySelectorAll('[data-check-v69]').forEach(function(input){
+      input.addEventListener('change',function(){
+        state.checklist[input.dataset.checkV69]=input.checked;
+        updateChecklistProgress();
+      });
+    });
+    updateChecklistProgress();
+  }
+
+  function updateChecklistProgress(){
+    var done=Object.values(state.checklist).filter(Boolean).length;
+    setText('checklistProgressV69',done+'/'+CHECKS.length);
+    updateFieldScore();
+  }
+
+  function photoHtml(photo,index,type){
+    return '<div class="before-after-photo-v69"><img src="'+photo.src+'" alt="'+type+' 사진">'+
+      '<button type="button" data-remove-'+type+'-v69="'+index+'">×</button></div>'
+  }
+
+  function renderPhotos(){
+    var before=el('beforePhotoGridV69'),after=el('afterPhotoGridV69');
+    if(before)before.innerHTML=state.beforePhotos.map(function(p,i){return photoHtml(p,i,'before')}).join('');
+    if(after)after.innerHTML=state.afterPhotos.map(function(p,i){return photoHtml(p,i,'after')}).join('');
+    if(el('beforePhotoEmptyV69'))el('beforePhotoEmptyV69').style.display=state.beforePhotos.length?'none':'block';
+    if(el('afterPhotoEmptyV69'))el('afterPhotoEmptyV69').style.display=state.afterPhotos.length?'none':'block';
+
+    document.querySelectorAll('[data-remove-before-v69]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        state.beforePhotos.splice(Number(btn.dataset.removeBeforeV69),1);renderPhotos()
+      });
+    });
+    document.querySelectorAll('[data-remove-after-v69]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        state.afterPhotos.splice(Number(btn.dataset.removeAfterV69),1);renderPhotos()
+      });
+    });
+  }
+
+  function addPhotos(type){
+    var input=document.createElement('input');
+    input.type='file';input.accept='image/*';input.multiple=true;
+    input.addEventListener('change',function(){
+      Array.from(input.files||[]).slice(0,6).forEach(function(file){
+        var reader=new FileReader();
+        reader.onload=function(){
+          var target=type==='before'?state.beforePhotos:state.afterPhotos;
+          target.push({name:file.name,src:reader.result});
+          renderPhotos();
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+    input.click();
+  }
+
+  function saveField(){
+    state.ownerNote=el('ownerPrivateNoteV69')?.value||'';
+    var all=safeParse(localStorage.getItem(STORAGE_KEY)||'{}',{});
+    all[customerKey()]={
+      savedAt:new Date().toISOString(),
+      checklist:state.checklist,
+      beforePhotos:state.beforePhotos,
+      afterPhotos:state.afterPhotos,
+      ownerNote:state.ownerNote,
+      risk:riskRows()
+    };
+    try{
+      localStorage.setItem(STORAGE_KEY,JSON.stringify(all));
+      var status=el('fieldSafetyStatusV69');
+      if(status){
+        status.className='field-safety-status-v69 ok';
+        status.textContent='현장 체크리스트·사진·대표 메모를 저장했습니다.';
+      }
+    }catch(e){
+      alert('사진 용량이 너무 큽니다. 사진 수를 줄여 다시 저장해주세요.');
+    }
+  }
+
+  function loadField(){
+    var all=safeParse(localStorage.getItem(STORAGE_KEY)||'{}',{});
+    var saved=all[customerKey()];
+    if(saved){
+      state.checklist=saved.checklist||{};
+      state.beforePhotos=saved.beforePhotos||[];
+      state.afterPhotos=saved.afterPhotos||[];
+      state.ownerNote=saved.ownerNote||'';
+    }
+    if(el('ownerPrivateNoteV69'))el('ownerPrivateNoteV69').value=state.ownerNote;
+    renderChecklist();renderPhotos();renderRisk();
+  }
+
+  function clearField(){
+    if(!confirm('현재 현장관리 내용을 초기화할까요?'))return;
+    state={checklist:{},beforePhotos:[],afterPhotos:[],ownerNote:''};
+    if(el('ownerPrivateNoteV69'))el('ownerPrivateNoteV69').value='';
+    renderChecklist();renderPhotos();renderRisk();
+  }
+
+  function revenue(){
+    return Number(window.JimpickGrandTotalV66)||
+      Number(el('ownerFinalPrice')?.value)||
+      Number(el('contractFinalPrice')?.value)||0;
+  }
+
+  function profitValues(){
+    var ids=['laborCostV69','vehicleCostV69','fuelCostV69','mealCostV69','tollCostV69','otherCostV69'];
+    var costs=ids.map(function(id){return Number(el(id)?.value)||0});
+    var total=costs.reduce(function(a,b){return a+b},0);
+    var rev=revenue();
+    var net=rev-total;
+    var margin=rev>0?(net/rev)*100:0;
+    return {revenue:rev,total:total,net:net,margin:margin};
+  }
+
+  function updateProfit(){
+    var p=profitValues();
+    setText('profitRevenueV69',money(p.revenue));
+    setText('profitTotalCostV69',money(p.total));
+    setText('profitNetV69',money(p.net));
+    setText('profitMarginV69',p.margin.toFixed(1)+'%');
+
+    var badge=el('profitStatusBadgeV69'),text='양호',cls='good';
+    if(p.margin<10){text='주의';cls='bad'}
+    else if(p.margin<25){text='보통';cls='normal'}
+    if(badge)badge.className='profit-status-badge-v69 '+cls;
+    setText('profitStatusTextV69',text);
+
+    var saved={};
+    ['laborCostV69','vehicleCostV69','fuelCostV69','mealCostV69','tollCostV69','otherCostV69']
+      .forEach(function(id){saved[id]=Number(el(id)?.value)||0});
+    try{localStorage.setItem(PROFIT_KEY,JSON.stringify(saved))}catch(e){}
+  }
+
+  function loadProfit(){
+    var saved=safeParse(localStorage.getItem(PROFIT_KEY)||'{}',{});
+    Object.keys(saved).forEach(function(id){if(el(id))el(id).value=saved[id]});
+    updateProfit();
+  }
+
+  function updateFieldScore(){
+    var checks=Object.values(state.checklist).filter(Boolean).length;
+    var risk=riskRows().length;
+    var score=Math.max(40,Math.min(100,70+(checks*5)-(risk*4)));
+    setText('fieldScoreV69',score+'점');
+    var reason=checks+'개 체크 완료 · 위험 품목 '+risk+'개';
+    setText('fieldScoreReasonV69',reason);
+  }
+
+  function bindOnce(id,event,handler){
+    var node=el(id);
+    if(!node||node.dataset.v69Bound)return;
+    node.dataset.v69Bound='1';
+    node.addEventListener(event,handler);
+  }
+
+  function init(){
+    loadField();
+    loadProfit();
+
+    bindOnce('refreshRiskAnalysisBtnV69','click',renderRisk);
+    bindOnce('addBeforePhotoBtnV69','click',function(){addPhotos('before')});
+    bindOnce('addAfterPhotoBtnV69','click',function(){addPhotos('after')});
+    bindOnce('saveFieldSafetyBtnV69','click',saveField);
+    bindOnce('clearFieldSafetyBtnV69','click',clearField);
+
+    ['laborCostV69','vehicleCostV69','fuelCostV69','mealCostV69','tollCostV69','otherCostV69',
+     'ownerFinalPrice','contractFinalPrice','contractDeposit'
+    ].forEach(function(id){
+      var node=el(id);
+      if(!node||node.dataset.v69ProfitBound)return;
+      node.dataset.v69ProfitBound='1';
+      node.addEventListener('input',updateProfit);
+      node.addEventListener('change',updateProfit);
+    });
+
+    var note=el('ownerPrivateNoteV69');
+    if(note&&!note.dataset.v69Bound){
+      note.dataset.v69Bound='1';
+      note.addEventListener('input',function(){state.ownerNote=note.value});
+    }
+
+    setTimeout(function(){renderRisk();updateProfit();updateFieldScore()},250);
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',init);
+  }else{
+    init();
+  }
+
+  document.addEventListener('click',function(){
+    setTimeout(function(){renderRisk();updateProfit()},0);
+  },true);
 })();
 
 </script>

@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 6.8 DEMO",
+  "name": "짐픽 PRO 6.9 DEMO",
   "short_name": "짐픽 PRO",
-  "description": "방별 사진·품목·파손위험·차량·작업자를 추천하는 AI 이사견적 앱",
+  "description": "AI 위험분석, 현장 체크리스트, 작업 전후 사진, 대표메모, 순이익 분석을 제공하는 AI 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
