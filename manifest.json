@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 6.4 DEMO",
+  "name": "짐픽 PRO 6.4.1 DEMO",
   "short_name": "짐픽 PRO",
-  "description": "고객용 이사견적서를 미리보고 인쇄·PDF 저장하며 카카오톡·공유 앱으로 보내는 AI 이사견적 앱",
+  "description": "자동견적 화면의 오른쪽 빈 공간, 최종금액 0원, 계약금·잔금, 다음 버튼 문제를 수정한 AI 이사견적 체험판",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

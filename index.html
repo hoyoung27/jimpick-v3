@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 6.4 DEMO</title>
+<title>짐픽 PRO 6.4.1 DEMO</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 6.4 DEMO 최소판매형 ===== */
+/* ===== 짐픽 PRO 6.4.1 DEMO 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -3868,6 +3868,107 @@ body.demo-click-ready #routeNav{
   @page{size:A4;margin:0}
 }
 
+
+/* ===== PRO 6.4.1 화면폭·금액·단계이동 수정 ===== */
+body.demo-click-ready #appShell,
+body.demo-click-ready .app-shell,
+body.demo-click-ready .main,
+body.demo-click-ready .main-content,
+body.demo-click-ready .content,
+body.demo-click-ready .content-wrap,
+body.demo-click-ready .page,
+body.demo-click-ready .page-content,
+body.demo-click-ready .panel,
+body.demo-click-ready .panel.active,
+body.demo-click-ready #step5,
+body.demo-click-ready #step6{
+  width:100%!important;
+  max-width:none!important;
+  grid-column:1/-1!important;
+  flex:1 1 100%!important;
+}
+
+body.demo-click-ready .workspace,
+body.demo-click-ready .workspace-grid,
+body.demo-click-ready .main-grid,
+body.demo-click-ready .content-grid,
+body.demo-click-ready .two-column,
+body.demo-click-ready .split-layout,
+body.demo-click-ready .estimate-layout{
+  display:block!important;
+  grid-template-columns:1fr!important;
+  width:100%!important;
+  max-width:none!important;
+}
+
+body.demo-click-ready .right-panel,
+body.demo-click-ready .side-panel,
+body.demo-click-ready .preview-panel,
+body.demo-click-ready .empty-panel,
+body.demo-click-ready .workspace-right,
+body.demo-click-ready .right-column,
+body.demo-click-ready .aside-panel{
+  display:none!important;
+  width:0!important;
+  min-width:0!important;
+  max-width:0!important;
+  overflow:hidden!important;
+}
+
+body.demo-click-ready .card,
+body.demo-click-ready .owner-price-card,
+body.demo-click-ready .contract-confirm-card,
+body.demo-click-ready .customer-message-card,
+body.demo-click-ready .estimate-document-card{
+  width:min(100%,1100px)!important;
+  max-width:1100px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
+body.demo-click-ready #step5,
+body.demo-click-ready #step6{
+  padding-left:18px!important;
+  padding-right:18px!important;
+  box-sizing:border-box!important;
+}
+
+body.demo-click-ready #nextBtn,
+body.demo-click-ready #prevBtn{
+  z-index:1000!important;
+  pointer-events:auto!important;
+}
+
+.demo-live-preview-card{
+  max-width:1100px;margin:0 auto 16px;padding:16px;border-radius:16px;
+  background:#102A43;color:#fff;
+}
+.demo-live-preview-card h3{margin:0 0 12px;font-size:20px}
+.demo-live-preview-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:9px;
+}
+.demo-live-preview-grid div{
+  padding:12px;border-radius:12px;background:rgba(255,255,255,.1);
+}
+.demo-live-preview-grid span{
+  display:block;font-size:12px;opacity:.75;font-weight:900;
+}
+.demo-live-preview-grid strong{
+  display:block;margin-top:5px;font-size:18px;
+}
+.demo-live-preview-total{
+  margin-top:10px;padding:14px;border-radius:12px;background:#fff;color:#E6532F;
+  display:flex;align-items:center;justify-content:space-between;gap:15px;
+}
+.demo-live-preview-total span{font-weight:900}
+.demo-live-preview-total strong{font-size:27px}
+@media(max-width:700px){
+  .demo-live-preview-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:460px){
+  .demo-live-preview-grid{grid-template-columns:1fr}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -4147,7 +4248,7 @@ body.demo-click-ready #routeNav{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-6.4-DEMO</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-6.4.1-DEMO</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">6.3 DEMO</span><span class="beta-version-badge">베타시험</span><button type="button" id="betaResultsBtn">베타결과</button><button type="button" id="betaTestMenuBtn">현장테스트</button><button type="button" id="launchMenuBtn">출시진단</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="contractHistoryBtn">계약관리</button><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -4664,6 +4765,20 @@ body.demo-click-ready #routeNav{
 
   <!-- ============ STEP 5. 견적 확정 ============ -->
   <section class="panel" id="step5">
+<div id="demoLivePreviewCard" class="demo-live-preview-card">
+  <h3>실시간 견적 요약</h3>
+  <div class="demo-live-preview-grid">
+    <div><span>차량</span><strong id="demoPreviewVehicles">5톤 1대 + 1톤 2대</strong></div>
+    <div><span>작업자</span><strong id="demoPreviewWorkers">5명</strong></div>
+    <div><span>예상시간</span><strong id="demoPreviewHours">7시간</strong></div>
+    <div><span>계약금</span><strong id="demoPreviewDeposit">200,000원</strong></div>
+  </div>
+  <div class="demo-live-preview-total">
+    <span>최종 견적금액</span>
+    <strong id="demoPreviewFinal">980,000원</strong>
+  </div>
+</div>
+
 <div class="card estimate-document-card">
   <h2><span class="eyebrow">고객용 견적서</span> PDF 저장·공유</h2>
   <p class="estimate-document-guide">
@@ -5449,7 +5564,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-6.4-DEMO';
+const BUILD_VERSION = 'JIMPICK-PRO-6.4.1-DEMO';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -16092,6 +16207,210 @@ window.openJimpickDemoHotfix = function(event){
   }else{
     init();
   }
+})();
+
+</script>
+
+<script>
+
+(function(){
+  function val(id){
+    var el=document.getElementById(id);
+    return el ? el.value : '';
+  }
+  function number(id){
+    return Number(val(id))||0;
+  }
+  function setValue(id,value){
+    var el=document.getElementById(id);
+    if(!el)return;
+    el.value=value;
+    try{el.dispatchEvent(new Event('input',{bubbles:true}));}catch(e){}
+    try{el.dispatchEvent(new Event('change',{bubbles:true}));}catch(e){}
+  }
+  function setText(id,value){
+    var el=document.getElementById(id);
+    if(el)el.textContent=value;
+  }
+  function money(value){
+    return (Number(value)||0).toLocaleString('ko-KR')+'원';
+  }
+
+  function ensureDemoAmounts(){
+    if(!document.body.classList.contains('demo-click-ready'))return;
+
+    var calculated=number('companyCalculatedPrice');
+    var finalPrice=number('ownerFinalPrice');
+    var deposit=number('contractDeposit');
+
+    if(calculated<=0){
+      calculated=1050000;
+      setValue('companyCalculatedPrice',calculated);
+    }
+
+    if(number('ownerDiscountPrice')<=0){
+      setValue('ownerDiscountPrice',70000);
+    }
+
+    if(finalPrice<=0){
+      finalPrice=980000;
+      setValue('ownerFinalPrice',finalPrice);
+    }
+
+    if(number('manualPrice')<=0)setValue('manualPrice',finalPrice);
+    if(number('contractFinalPrice')<=0)setValue('contractFinalPrice',finalPrice);
+
+    if(deposit<=0){
+      deposit=200000;
+      setValue('contractDeposit',deposit);
+    }
+
+    var balance=Math.max(0,finalPrice-deposit);
+    setValue('contractBalance',balance);
+
+    setText('finalTotal',money(finalPrice));
+    setText('quickTotal',money(finalPrice));
+    setText('enginePrice',money(finalPrice));
+    setText('pro40ResultPrice',money(finalPrice));
+
+    setText('demoPreviewVehicles','5톤 1대 + 1톤 2대');
+    setText('demoPreviewWorkers',(number('workerCount')||5)+'명');
+    setText('demoPreviewHours',(number('workHours')||7)+'시간');
+    setText('demoPreviewDeposit',money(deposit));
+    setText('demoPreviewFinal',money(finalPrice));
+
+    setText('ownerVehicleSummary','5톤 1대 + 1톤 2대');
+    setText('ownerWorkerSummary',(number('workerCount')||5)+'명');
+    setText('ownerHourSummary',(number('workHours')||7)+'시간');
+  }
+
+  function applyFinalAmount(){
+    var calculated=number('companyCalculatedPrice')||1050000;
+    var discount=number('ownerDiscountPrice');
+    var extra=number('ownerExtraPrice');
+    var finalPrice=number('ownerFinalPrice');
+
+    if(finalPrice<=0){
+      finalPrice=Math.max(0,calculated-discount+extra);
+      if(finalPrice<=0)finalPrice=980000;
+      setValue('ownerFinalPrice',finalPrice);
+    }
+
+    var deposit=number('contractDeposit')||200000;
+    var balance=Math.max(0,finalPrice-deposit);
+
+    setValue('manualPrice',finalPrice);
+    setValue('contractFinalPrice',finalPrice);
+    setValue('contractDeposit',deposit);
+    setValue('contractBalance',balance);
+
+    setText('finalTotal',money(finalPrice));
+    setText('quickTotal',money(finalPrice));
+    setText('demoPreviewFinal',money(finalPrice));
+    setText('demoPreviewDeposit',money(deposit));
+
+    var status=document.getElementById('ownerPriceStatus');
+    if(status){
+      status.className='owner-price-status ok';
+      status.textContent='대표님 최종 견적 '+money(finalPrice)+'이 적용되었습니다.';
+    }
+  }
+
+  function recalcBalance(){
+    var finalPrice=number('contractFinalPrice')||number('ownerFinalPrice')||980000;
+    var deposit=number('contractDeposit');
+    var balance=Math.max(0,finalPrice-deposit);
+    setValue('contractBalance',balance);
+    setText('demoPreviewDeposit',money(deposit));
+    setText('demoPreviewFinal',money(finalPrice));
+  }
+
+  function goNext(){
+    if(!document.body.classList.contains('demo-click-ready'))return;
+    if(typeof window.jimpickDemoGoStep==='function'){
+      window.jimpickDemoGoStep(6);
+    }else{
+      var step5=document.getElementById('step5');
+      var step6=document.getElementById('step6');
+      if(step5)step5.style.display='none';
+      if(step6){
+        step6.style.display='block';
+        step6.classList.add('active');
+      }
+      window.scrollTo(0,0);
+    }
+  }
+
+  function goPrev(){
+    if(!document.body.classList.contains('demo-click-ready'))return;
+    if(typeof window.jimpickDemoGoStep==='function'){
+      window.jimpickDemoGoStep(4);
+    }
+  }
+
+  function bindCapture(id,handler){
+    var el=document.getElementById(id);
+    if(!el||el.dataset.fix641)return;
+    el.dataset.fix641='1';
+    el.addEventListener('click',function(e){
+      if(!document.body.classList.contains('demo-click-ready'))return;
+      e.preventDefault();
+      e.stopPropagation();
+      handler();
+    },true);
+  }
+
+  function initFix(){
+    ensureDemoAmounts();
+
+    bindCapture('applyOwnerFinalPriceBtn',applyFinalAmount);
+    bindCapture('nextBtn',goNext);
+    bindCapture('prevBtn',goPrev);
+
+    var finalInput=document.getElementById('ownerFinalPrice');
+    if(finalInput&&!finalInput.dataset.fix641){
+      finalInput.dataset.fix641='1';
+      finalInput.addEventListener('input',function(){
+        if(!document.body.classList.contains('demo-click-ready'))return;
+        applyFinalAmount();
+      });
+    }
+
+    var deposit=document.getElementById('contractDeposit');
+    if(deposit&&!deposit.dataset.fix641){
+      deposit.dataset.fix641='1';
+      deposit.addEventListener('input',function(){
+        if(!document.body.classList.contains('demo-click-ready'))return;
+        recalcBalance();
+      });
+    }
+
+    ['companyCalculatedPrice','ownerDiscountPrice','ownerExtraPrice','workerCount','workHours'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(!el||el.dataset.fix641)return;
+      el.dataset.fix641='1';
+      el.addEventListener('input',function(){
+        if(!document.body.classList.contains('demo-click-ready'))return;
+        ensureDemoAmounts();
+      });
+    });
+
+    setTimeout(ensureDemoAmounts,100);
+    setTimeout(ensureDemoAmounts,400);
+    setTimeout(ensureDemoAmounts,1000);
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',initFix);
+  }else{
+    initFix();
+  }
+
+  document.addEventListener('click',function(){
+    if(document.body.classList.contains('demo-click-ready')){
+      setTimeout(initFix,0);
+    }
+  },true);
 })();
 
 </script>
