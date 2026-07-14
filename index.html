@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 7.7 SIMPLE</title>
+<title>짐픽 PRO 7.8 FINAL</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 7.7 SIMPLE 최소판매형 ===== */
+/* ===== 짐픽 PRO 7.8 FINAL 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -5191,6 +5191,131 @@ button{
   }
 }
 
+
+/* ===== PRO 7.8 FINAL 단순 통합 화면 ===== */
+.final78-shell{
+  width:min(100%,1500px);
+  margin:0 auto 20px;
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:16px;
+}
+.final78-sidebar{
+  padding:18px;
+  border-radius:22px;
+  background:linear-gradient(180deg,#07111F,#0B2341);
+  color:#fff;
+  box-shadow:0 16px 38px rgba(7,17,31,.18);
+}
+.final78-brand{
+  display:flex;align-items:center;gap:12px;padding-bottom:18px;margin-bottom:12px;
+  border-bottom:1px solid rgba(255,255,255,.12)
+}
+.final78-brand .logo{
+  width:48px;height:48px;display:flex;align-items:center;justify-content:center;
+  border-radius:14px;background:#fff;font-size:27px
+}
+.final78-brand strong{display:block;font-size:24px}
+.final78-brand span{display:block;margin-top:2px;color:#57E19A;font-size:13px;font-weight:900}
+.final78-sidebar button{
+  width:100%;min-height:54px;margin-top:8px;padding:0 14px;border:0;border-radius:13px;
+  background:transparent;color:#DCE8F3;text-align:left;font-size:16px;font-weight:900
+}
+.final78-sidebar button:hover,.final78-sidebar button.active{background:#16A36A;color:#fff}
+.final78-main{
+  padding:24px;border-radius:22px;background:#fff;border:1px solid #DCE5EE;
+  box-shadow:0 12px 34px rgba(16,42,67,.07)
+}
+.final78-title{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:18px;
+  padding-bottom:20px;border-bottom:1px solid #E3EAF1
+}
+.final78-title>div:first-child span{color:#16A36A;font-size:14px;font-weight:900}
+.final78-title h1{margin:7px 0 0;color:#102A43;font-size:30px}
+.final78-quick{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;min-width:460px}
+.final78-quick>div{padding:12px;border-radius:13px;background:#F4F7FA;border:1px solid #E0E7EE}
+.final78-quick span{display:block;font-size:11px;color:#68798A;font-weight:900}
+.final78-quick strong{display:block;margin-top:5px;color:#102A43;font-size:18px}
+.final78-summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
+.final78-card{
+  padding:20px;border-radius:18px;border:1px solid #DCE5EE;background:#FAFBFC
+}
+.final78-card:nth-child(1){border-top:5px solid #1769E0}
+.final78-card:nth-child(2){border-top:5px solid #8B5CF6}
+.final78-card:nth-child(3){border-top:5px solid #FF8A34}
+.final78-card:nth-child(4){border-top:5px solid #16A36A}
+.final78-card h2{margin:0;color:#102A43;font-size:22px}
+.final78-card p{margin:8px 0 16px;color:#66788A;font-size:16px;font-weight:700}
+.final78-card button{
+  width:100%;border:0;background:#102A43;color:#fff
+}
+.final78-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:18px}
+.final78-actions button{border:0;color:#fff}
+#final78OpenQuoteMain{background:#1769E0}
+#final78OpenMessageMain{background:#8B5CF6}
+.final78-actions button:last-child{background:#16A36A}
+
+/* 오른쪽 고정 미리보기는 제거 */
+.customer-view-modal-v71,
+.estimate-preview-fixed,
+.message-preview-fixed,
+.right-preview-panel,
+.preview-column{
+  display:none!important;
+}
+
+/* 팝업 */
+.final78-modal{
+  position:fixed;inset:0;z-index:40000;align-items:center;justify-content:center;
+  padding:18px;background:rgba(7,17,31,.82);overflow:auto
+}
+.final78-modal-box{
+  width:min(760px,100%);max-height:92vh;overflow:auto;border-radius:22px;background:#fff;
+  box-shadow:0 24px 70px rgba(0,0,0,.28)
+}
+.final78-modal-head{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:18px 20px;background:#102A43;color:#fff
+}
+.final78-modal-head h2{margin:0}
+.final78-modal-head button{
+  width:42px;height:42px;min-height:42px;border:0;border-radius:11px;
+  background:rgba(255,255,255,.13);color:#fff;font-size:20px
+}
+.final78-modal-content{padding:20px}
+.final78-modal-content textarea{
+  width:100%;min-height:310px;padding:14px;border:2px solid #DCE5EE;border-radius:14px;
+  font-size:16px;line-height:1.6;box-sizing:border-box
+}
+#final78CopyMessage{width:100%;margin-top:10px;border:0;background:#16A36A;color:#fff}
+.final78-quote-paper{
+  padding:20px;border:1px solid #DCE5EE;border-radius:16px;background:#fff
+}
+.final78-quote-paper h3{margin:0 0 16px;color:#102A43;font-size:24px}
+.final78-quote-row{
+  display:flex;justify-content:space-between;gap:20px;padding:10px 0;
+  border-bottom:1px solid #E9EEF3
+}
+.final78-quote-row span{color:#68798A;font-weight:800}
+.final78-quote-row strong{color:#102A43;text-align:right}
+.final78-quote-total{margin-top:14px;padding:15px;border-radius:13px;background:#102A43;color:#fff}
+.final78-quote-total strong{color:#8EF0B1;font-size:24px}
+
+@media(max-width:1000px){
+  .final78-shell{grid-template-columns:1fr}
+  .final78-sidebar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .final78-brand{grid-column:1/-1}
+  .final78-sidebar button{margin-top:0;text-align:center}
+  .final78-title{flex-direction:column}
+  .final78-quick{min-width:0;width:100%}
+}
+@media(max-width:700px){
+  .final78-sidebar{grid-template-columns:repeat(2,1fr)}
+  .final78-summary-grid,.final78-actions,.final78-quick{grid-template-columns:1fr}
+  .final78-main{padding:17px}
+  .final78-title h1{font-size:25px}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -5470,7 +5595,7 @@ button{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-7.7-SIMPLE</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-7.8-FINAL</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">6.3 DEMO</span><span class="beta-version-badge">베타시험</span><button type="button" id="betaResultsBtn">베타결과</button><button type="button" id="betaTestMenuBtn">현장테스트</button><button type="button" id="launchMenuBtn">출시진단</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="contractHistoryBtn">계약관리</button><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -5541,6 +5666,65 @@ button{
 
   <!-- ============ STEP 1. 고객정보 ============ -->
   <section class="panel active" id="step1">
+<div class="final78-shell">
+  <aside class="final78-sidebar">
+    <div class="final78-brand">
+      <div class="logo">🚚</div>
+      <div><strong>짐픽</strong><span>PRO 7.8</span></div>
+    </div>
+    <button type="button" class="active" data-final-step="1">① 고객정보</button>
+    <button type="button" data-final-step="2">② 사진촬영</button>
+    <button type="button" data-final-step="4">③ 품목확인</button>
+    <button type="button" data-final-step="5">④ 자동견적</button>
+    <button type="button" data-final-step="6">⑤ 문자발송</button>
+    <button type="button" id="final78OpenQuote">📄 견적서 보기</button>
+    <button type="button" id="final78OpenMessage">💬 문자 내용 보기</button>
+  </aside>
+
+  <main class="final78-main">
+    <div class="final78-title">
+      <div>
+        <span>AI 자동 이사 견적</span>
+        <h1>필요한 것만 한눈에 입력하세요</h1>
+      </div>
+      <div class="final78-quick">
+        <div><span>추천 차량</span><strong id="final78Truck">-</strong></div>
+        <div><span>추천 작업자</span><strong id="final78Workers">-</strong></div>
+        <div><span>예상금액</span><strong id="final78Price">0원</strong></div>
+      </div>
+    </div>
+
+    <section class="final78-summary-grid">
+      <div class="final78-card">
+        <h2>1. 고객정보와 주소</h2>
+        <p>고객명, 연락처, 이사 날짜와 주소를 입력하세요.</p>
+        <button type="button" data-final-step="1">고객정보 입력</button>
+      </div>
+      <div class="final78-card">
+        <h2>2. 사진촬영</h2>
+        <p>사진을 찍거나 올리면 품목을 확인할 수 있습니다.</p>
+        <button type="button" data-final-step="2">사진촬영 열기</button>
+      </div>
+      <div class="final78-card">
+        <h2>3. 품목확인</h2>
+        <p>방을 선택하고 품목 수량만 조절하세요.</p>
+        <button type="button" data-final-step="4">품목 선택</button>
+      </div>
+      <div class="final78-card">
+        <h2>4. 자동견적</h2>
+        <p>차량, 작업자와 최종금액을 확인하세요.</p>
+        <button type="button" data-final-step="5">견적 확인</button>
+      </div>
+    </section>
+
+    <section class="final78-actions">
+      <button type="button" id="final78OpenQuoteMain">📄 견적서 보기</button>
+      <button type="button" id="final78OpenMessageMain">💬 문자 내용 보기</button>
+      <button type="button" data-final-step="6">문자발송 단계로 이동</button>
+    </section>
+  </main>
+</div>
+
 <div class="simple50-welcome">
   <div class="simple50-welcome-icon">🚚</div>
   <div>
@@ -7306,7 +7490,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-7.7-SIMPLE';
+const BUILD_VERSION = 'JIMPICK-PRO-7.8-FINAL';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -20496,6 +20680,179 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   }else{
     init();
   }
+})();
+
+</script>
+
+<div id="final78QuoteModal" class="final78-modal" style="display:none;">
+  <div class="final78-modal-box">
+    <div class="final78-modal-head"><h2>견적서 보기</h2><button type="button" data-final78-close="quote">✕</button></div>
+    <div id="final78QuoteContent" class="final78-modal-content"></div>
+  </div>
+</div>
+
+<div id="final78MessageModal" class="final78-modal" style="display:none;">
+  <div class="final78-modal-box">
+    <div class="final78-modal-head"><h2>문자 내용 보기</h2><button type="button" data-final78-close="message">✕</button></div>
+    <div class="final78-modal-content">
+      <textarea id="final78MessageText" rows="14" readonly></textarea>
+      <button type="button" id="final78CopyMessage">문자 내용 복사</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+(function(){
+  'use strict';
+
+  function el(id){return document.getElementById(id)}
+  function value(id){return el(id)?.value||''}
+  function num(id){return Number(value(id))||0}
+  function money(v){return (Number(v)||0).toLocaleString('ko-KR')+'원'}
+
+  function goStep(step){
+    if(typeof window.jimpickDemoGoStep==='function'){
+      window.jimpickDemoGoStep(step);
+      return;
+    }
+    if(window.UI && typeof window.UI.goStep==='function'){
+      window.UI.goStep(step);
+      return;
+    }
+    document.querySelectorAll('.panel').forEach(function(p){
+      p.classList.remove('active');
+      p.style.display='none';
+    });
+    var target=el('step'+step);
+    if(target){
+      target.classList.add('active');
+      target.style.display='block';
+    }
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function totalPrice(){
+    return Number(window.JimpickGrandTotalV66)||
+      num('ownerFinalPrice')||
+      num('contractFinalPrice')||0;
+  }
+
+  function updateQuick(){
+    var t1=num('truck1Count'),t5=num('truck5Count'),workers=num('workerCount');
+    var vehicles=[];
+    if(t1)vehicles.push('1톤 '+t1+'대');
+    if(t5)vehicles.push('5톤 '+t5+'대');
+    el('final78Truck').textContent=vehicles.length?vehicles.join(' + '):'-';
+    el('final78Workers').textContent=workers?workers+'명':'-';
+    el('final78Price').textContent=money(totalPrice());
+  }
+
+  function quoteHtml(){
+    var total=totalPrice();
+    var deposit=num('contractDeposit');
+    var balance=Math.max(0,total-deposit);
+    var customer=value('customerName')||value('custName')||'고객';
+    return '<div class="final78-quote-paper">'+
+      '<h3>짐픽 이사 견적서</h3>'+
+      row('고객명',customer)+
+      row('연락처',value('customerPhone')||value('custPhone')||'-')+
+      row('이사 날짜',value('moveDate')||'-')+
+      row('출발지',value('fromAddress')||'-')+
+      row('도착지',value('toAddress')||'-')+
+      row('차량',el('final78Truck').textContent||'-')+
+      row('작업자',el('final78Workers').textContent||'-')+
+      row('계약금',money(deposit))+
+      row('잔금',money(balance))+
+      '<div class="final78-quote-total">최종 견적금액 <strong>'+money(total)+'</strong></div>'+
+    '</div>';
+  }
+  function row(label,text){
+    return '<div class="final78-quote-row"><span>'+label+'</span><strong>'+text+'</strong></div>';
+  }
+
+  function messageText(){
+    var total=totalPrice();
+    var deposit=num('contractDeposit');
+    var balance=Math.max(0,total-deposit);
+    var customer=value('customerName')||value('custName')||'고객';
+    return '[짐픽 이사 견적 안내]\n\n'+
+      customer+' 고객님, 이사 견적을 안내드립니다.\n\n'+
+      '이사일: '+(value('moveDate')||'-')+'\n'+
+      '출발지: '+(value('fromAddress')||'-')+'\n'+
+      '도착지: '+(value('toAddress')||'-')+'\n'+
+      '차량: '+(el('final78Truck').textContent||'-')+'\n'+
+      '작업자: '+(el('final78Workers').textContent||'-')+'\n'+
+      '최종금액: '+money(total)+'\n'+
+      '계약금: '+money(deposit)+'\n'+
+      '잔금: '+money(balance)+'\n\n감사합니다.';
+  }
+
+  function openQuote(){
+    updateQuick();
+    el('final78QuoteContent').innerHTML=quoteHtml();
+    el('final78QuoteModal').style.display='flex';
+  }
+  function openMessage(){
+    updateQuick();
+    el('final78MessageText').value=messageText();
+    el('final78MessageModal').style.display='flex';
+  }
+  function closeModal(kind){
+    var id=kind==='quote'?'final78QuoteModal':'final78MessageModal';
+    el(id).style.display='none';
+  }
+  async function copyMessage(){
+    var text=el('final78MessageText').value;
+    try{
+      await navigator.clipboard.writeText(text);
+      alert('문자 내용을 복사했습니다.');
+    }catch(e){
+      el('final78MessageText').select();
+      document.execCommand('copy');
+      alert('문자 내용을 복사했습니다.');
+    }
+  }
+
+  function init(){
+    document.querySelectorAll('[data-final-step]').forEach(function(btn){
+      btn.addEventListener('click',function(){goStep(Number(btn.dataset.finalStep))});
+    });
+    ['final78OpenQuote','final78OpenQuoteMain'].forEach(function(id){
+      el(id)?.addEventListener('click',openQuote);
+    });
+    ['final78OpenMessage','final78OpenMessageMain'].forEach(function(id){
+      el(id)?.addEventListener('click',openMessage);
+    });
+    document.querySelectorAll('[data-final78-close]').forEach(function(btn){
+      btn.addEventListener('click',function(){closeModal(btn.dataset.final78Close)});
+    });
+    el('final78CopyMessage')?.addEventListener('click',copyMessage);
+
+    ['truck1Count','truck5Count','workerCount','ownerFinalPrice','contractFinalPrice','contractDeposit']
+      .forEach(function(id){
+        var node=el(id);
+        if(node){
+          node.addEventListener('input',updateQuick);
+          node.addEventListener('change',updateQuick);
+        }
+      });
+
+    ['final78QuoteModal','final78MessageModal'].forEach(function(id){
+      var modal=el(id);
+      if(modal){
+        modal.addEventListener('click',function(e){
+          if(e.target===modal)modal.style.display='none';
+        });
+      }
+    });
+    updateQuick();
+    setTimeout(updateQuick,300);
+  }
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
+  else init();
 })();
 
 </script>
