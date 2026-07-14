@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 5.3",
+  "name": "짐픽 PRO 5.4",
   "short_name": "짐픽 PRO",
-  "description": "처음 가입한 이사업체 대표가 업체정보·차량요금·추가요금 사용 여부를 3단계로 쉽게 설정하는 AI 이사견적 앱",
+  "description": "저장한 견적을 고객명·전화번호·날짜로 검색하고 다시 열거나 재견적에 사용하는 AI 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
