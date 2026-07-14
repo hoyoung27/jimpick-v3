@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 6.3 DEMO",
+  "name": "짐픽 PRO 6.3.1 DEMO",
   "short_name": "짐픽 PRO",
-  "description": "로그인 없이 예시 고객·품목·차량·금액이 입력된 견적확인 화면을 바로 체험하는 AI 이사견적 앱",
+  "description": "로그인 없는 견적 화면 버튼을 독립 실행 방식으로 고친 AI 이사견적 체험판",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
