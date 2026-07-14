@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>짐픽 PRO 6.9 DEMO</title>
+<title>짐픽 PRO 7.0 RC</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
 /* =========================================================
@@ -1631,7 +1631,7 @@ body{
 }
 
 
-/* ===== 짐픽 PRO 6.9 DEMO 최소판매형 ===== */
+/* ===== 짐픽 PRO 7.0 RC 최소판매형 ===== */
 .inquiry-banner,
 .install-banner,
 .account-bar,
@@ -4319,6 +4319,110 @@ body.demo-click-ready .workspace-right{
   .field-safety-actions-v69{grid-template-columns:1fr}
 }
 
+
+/* ===== JIMPICK PRO 7.0 RC Premium Dashboard ===== */
+:root{
+  --pro70-navy:#0B1727;
+  --pro70-navy2:#102A43;
+  --pro70-green:#16A36A;
+  --pro70-green-soft:#EAF7F0;
+  --pro70-line:#DCE5EE;
+  --pro70-text:#102A43;
+  --pro70-muted:#68798A;
+}
+body.demo-click-ready #appShell,
+body.demo-click-ready .main,
+body.demo-click-ready .main-content,
+body.demo-click-ready .content,
+body.demo-click-ready .content-wrap,
+body.demo-click-ready .panel,
+body.demo-click-ready .panel.active{
+  width:100%!important;max-width:none!important;box-sizing:border-box!important;
+}
+.pro70-dashboard{
+  width:min(100%,1380px);margin:0 auto 18px;padding:0 2px;
+}
+.pro70-hero{
+  display:flex;justify-content:space-between;align-items:center;gap:22px;
+  padding:28px;border-radius:24px;
+  background:linear-gradient(135deg,#07111F 0%,#102A43 62%,#174A3A 100%);
+  color:#fff;box-shadow:0 20px 50px rgba(16,42,67,.18);
+}
+.pro70-kicker{font-size:12px;font-weight:900;letter-spacing:2px;color:#8EF0B1}
+.pro70-hero h1{margin:8px 0 0;font-size:32px;letter-spacing:-1px}
+.pro70-hero p{margin:9px 0 0;color:#C7D5E2;font-weight:700}
+.pro70-hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+.pro70-hero-actions button{
+  min-height:50px;padding:0 18px;border:0;border-radius:13px;font-size:15px;font-weight:900;cursor:pointer
+}
+#pro70NewEstimateBtn{background:#16A36A;color:#fff}
+#pro70OpenHistoryBtn{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.22)}
+.pro70-metrics{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px
+}
+.pro70-metrics>div{
+  padding:17px;border-radius:17px;background:#fff;border:1px solid var(--pro70-line);
+  box-shadow:0 8px 22px rgba(16,42,67,.06)
+}
+.pro70-metrics span{display:block;font-size:12px;color:var(--pro70-muted);font-weight:900}
+.pro70-metrics strong{display:block;margin-top:7px;font-size:25px;color:var(--pro70-text)}
+.pro70-main-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.pro70-quick-card,.pro70-secretary-card{
+  padding:19px;border-radius:20px;background:#fff;border:1px solid var(--pro70-line);
+  box-shadow:0 10px 30px rgba(16,42,67,.07)
+}
+.pro70-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.pro70-section-head span{font-size:12px;color:var(--pro70-green);font-weight:900}
+.pro70-section-head h2{margin:5px 0 0;color:var(--pro70-text);font-size:22px}
+.pro70-section-head>strong{font-size:11px;letter-spacing:1.3px;color:#94A3B1}
+.pro70-quick-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.pro70-quick-actions button{
+  min-height:130px;padding:14px;border:1px solid var(--pro70-line);border-radius:16px;
+  background:#F8FAFC;text-align:left;cursor:pointer;transition:.18s ease
+}
+.pro70-quick-actions button:hover{transform:translateY(-2px);border-color:#9DD6BD;background:#F3FBF6}
+.pro70-quick-actions b{
+  display:flex;width:33px;height:33px;align-items:center;justify-content:center;
+  border-radius:10px;background:var(--pro70-navy2);color:#fff
+}
+.pro70-quick-actions span{display:block;margin-top:14px;font-size:17px;color:var(--pro70-text);font-weight:900}
+.pro70-quick-actions small{display:block;margin-top:5px;color:var(--pro70-muted);font-weight:700}
+.pro70-ai-state{
+  padding:7px 10px;border-radius:999px;background:#EEF5FF;color:#174A7E;font-size:12px;font-weight:900
+}
+.pro70-ai-state.ready{background:var(--pro70-green-soft);color:#16794B}
+.pro70-secretary-text{
+  min-height:76px;margin-top:15px;padding:14px;border-radius:14px;background:#F5F7FA;
+  color:#52667A;font-size:15px;line-height:1.65;font-weight:800
+}
+.pro70-secretary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:11px}
+.pro70-secretary-grid div{padding:12px;border-radius:12px;background:#F8FAFC;border:1px solid #E3EAF1}
+.pro70-secretary-grid span{display:block;font-size:11px;color:var(--pro70-muted);font-weight:900}
+.pro70-secretary-grid strong{display:block;margin-top:5px;color:var(--pro70-text);font-size:16px}
+#pro70RefreshSecretaryBtn{
+  width:100%;min-height:49px;margin-top:11px;border:0;border-radius:12px;
+  background:var(--pro70-navy2);color:#fff;font-size:15px;font-weight:900;cursor:pointer
+}
+.card{border-radius:18px!important;box-shadow:0 8px 24px rgba(16,42,67,.055)}
+input,select,textarea,button{transition:border-color .15s ease,box-shadow .15s ease,transform .15s ease}
+input:focus,select:focus,textarea:focus{
+  outline:none!important;border-color:#16A36A!important;box-shadow:0 0 0 3px rgba(22,163,106,.12)!important
+}
+@media(max-width:980px){
+  .pro70-main-grid{grid-template-columns:1fr}
+  .pro70-metrics{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:650px){
+  .pro70-hero{flex-direction:column;align-items:flex-start;padding:21px}
+  .pro70-hero h1{font-size:26px}
+  .pro70-hero-actions{width:100%}.pro70-hero-actions button{flex:1}
+  .pro70-quick-actions{grid-template-columns:1fr}
+  .pro70-metrics{grid-template-columns:1fr 1fr}
+}
+@media(max-width:430px){
+  .pro70-metrics,.pro70-secretary-grid{grid-template-columns:1fr}
+}
+
 </style>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -4598,7 +4702,7 @@ body.demo-click-ready .workspace-right{
     <div class="truck">🚚</div>
     <div class="brand-text">
       <div class="company" id="companyNameDisplay" onclick="App.openSettings()">짐픽 V3 ✏️</div>
-      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-6.9-DEMO</div>
+      <div class="sub" id="quoteDateDisplay">견적일 - · build JIMPICK-PRO-7.0-RC</div>
     </div>
   </div>
   <div class="user-box no-print" id="userBox"><div class="user-company" id="loggedCompanyName">업체명</div><span class="company-private-badge">내 업체 전용</span><span class="subscription-status-badge" id="subscriptionStatusBadge">체험중</span><span class="cloud-login-badge">클라우드</span><span class="beta-version-badge">6.3 DEMO</span><span class="beta-version-badge">베타시험</span><button type="button" id="betaResultsBtn">베타결과</button><button type="button" id="betaTestMenuBtn">현장테스트</button><button type="button" id="launchMenuBtn">출시진단</button><span id="networkStatusBadge" class="network-status-badge online">온라인</span><button type="button" id="contractHistoryBtn">계약관리</button><button type="button" id="quoteHistoryBtn">견적내역</button><button type="button" id="simpleHomeBtn">간편홈</button><button type="button" id="dataSafetyBtn">자료보호</button><button type="button" id="quickSetupBtn">처음설정</button><button type="button" id="companySettingsBtn">업체설정</button><button type="button" id="logoutBtn">로그아웃</button></div><div class="quick-total">
@@ -4669,6 +4773,58 @@ body.demo-click-ready .workspace-right{
 
   <!-- ============ STEP 1. 고객정보 ============ -->
   <section class="panel active" id="step1">
+<div class="pro70-dashboard">
+  <div class="pro70-hero">
+    <div>
+      <span class="pro70-kicker">JIMPICK PRO 7.0</span>
+      <h1>AI 이사견적 운영 대시보드</h1>
+      <p>사진·품목·차량·계약·수익을 한 화면에서 빠르게 관리합니다.</p>
+    </div>
+    <div class="pro70-hero-actions">
+      <button type="button" id="pro70NewEstimateBtn">＋ 새 견적 시작</button>
+      <button type="button" id="pro70OpenHistoryBtn">견적 내역</button>
+    </div>
+  </div>
+
+  <div class="pro70-metrics">
+    <div><span>오늘 견적</span><strong id="pro70TodayQuotes">0건</strong></div>
+    <div><span>계약 완료</span><strong id="pro70ConfirmedContracts">0건</strong></div>
+    <div><span>이번 달 매출</span><strong id="pro70MonthlyRevenue">0원</strong></div>
+    <div><span>예상 순이익</span><strong id="pro70ExpectedProfit">0원</strong></div>
+  </div>
+
+  <div class="pro70-main-grid">
+    <section class="pro70-quick-card">
+      <div class="pro70-section-head">
+        <div><span>빠른 실행</span><h2>현장 견적 3단계</h2></div>
+        <strong>FAST FLOW</strong>
+      </div>
+      <div class="pro70-quick-actions">
+        <button type="button" data-pro70-step="3"><b>1</b><span>사진 촬영</span><small>방별 사진 추가</small></button>
+        <button type="button" data-pro70-step="4"><b>2</b><span>AI 분석</span><small>품목·위험 확인</small></button>
+        <button type="button" data-pro70-step="5"><b>3</b><span>견적 확정</span><small>금액·PDF·문자</small></button>
+      </div>
+    </section>
+
+    <section class="pro70-secretary-card">
+      <div class="pro70-section-head">
+        <div><span>AI 이사 비서</span><h2>현재 견적 요약</h2></div>
+        <div id="pro70AiState" class="pro70-ai-state">분석 준비</div>
+      </div>
+      <div id="pro70SecretaryText" class="pro70-secretary-text">
+        고객정보와 품목을 입력하면 추천 차량, 작업자, 위험품목과 수익 상태를 요약합니다.
+      </div>
+      <div class="pro70-secretary-grid">
+        <div><span>추천 차량</span><strong id="pro70TruckSummary">-</strong></div>
+        <div><span>추천 작업자</span><strong id="pro70WorkerSummary">-</strong></div>
+        <div><span>위험 품목</span><strong id="pro70RiskSummary">0개</strong></div>
+        <div><span>현장 점수</span><strong id="pro70FieldScore">-</strong></div>
+      </div>
+      <button type="button" id="pro70RefreshSecretaryBtn">AI 요약 새로고침</button>
+    </section>
+  </div>
+</div>
+
 <div class="card route-map-card-v66">
   <h2><span class="eyebrow">주소·경로</span> 이동거리 확인</h2>
   <div class="route-map-actions-v66">
@@ -6199,7 +6355,7 @@ const SUPABASE_READY = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_
 const sb = SUPABASE_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // 화면에 표시되는 빌드 번호: 캐시 때문에 옛날 파일을 보고 있는 건 아닌지 확인하기 위함
-const BUILD_VERSION = 'JIMPICK-PRO-6.9-DEMO';
+const BUILD_VERSION = 'JIMPICK-PRO-7.0-RC';
 
 /* ---------------------- 1. CONFIG (사장님이 조정하는 값) ---------------------- */
 const CONFIG = {
@@ -17955,6 +18111,187 @@ window.openJimpickDemoHotfix = function(event){
 
   document.addEventListener('click',function(){
     setTimeout(function(){renderRisk();updateProfit()},0);
+  },true);
+})();
+
+</script>
+
+<script>
+
+(function(){
+  'use strict';
+
+  function el(id){return document.getElementById(id)}
+  function number(id){return Number(el(id)?.value)||0}
+  function money(v){return (Number(v)||0).toLocaleString('ko-KR')+'원'}
+  function setText(id,text){var node=el(id);if(node)node.textContent=text}
+  function safeParse(text,fallback){try{return JSON.parse(text)}catch(e){return fallback}}
+
+  function quoteRows(){
+    var local=safeParse(localStorage.getItem('jimpick_quotes')||'[]',[]);
+    return Array.isArray(local)?local:[];
+  }
+  function contractRows(){
+    var local=safeParse(localStorage.getItem('jimpick_contracts')||'[]',[]);
+    return Array.isArray(local)?local:[];
+  }
+  function todayKey(){return new Date().toISOString().slice(0,10)}
+  function monthKey(){return new Date().toISOString().slice(0,7)}
+
+  function updateMetrics(){
+    var quotes=quoteRows(),contracts=contractRows();
+    var today=todayKey(),month=monthKey();
+
+    var todayQuotes=quotes.filter(function(q){
+      return String(q.created_at||q.savedAt||'').slice(0,10)===today
+    }).length;
+
+    var confirmed=contracts.filter(function(c){
+      return c.contract_status==='confirmed'||c.paid_at
+    }).length;
+
+    var monthlyRevenue=contracts.filter(function(c){
+      return String(c.created_at||'').slice(0,7)===month
+    }).reduce(function(sum,c){
+      return sum+(Number(c.final_price)||Number(c.quote_data?.final_price)||0)
+    },0);
+
+    var currentProfit=Number(String(el('profitNetV69')?.textContent||'').replace(/\D/g,''))||0;
+
+    setText('pro70TodayQuotes',todayQuotes+'건');
+    setText('pro70ConfirmedContracts',confirmed+'건');
+    setText('pro70MonthlyRevenue',money(monthlyRevenue));
+    setText('pro70ExpectedProfit',money(currentProfit));
+  }
+
+  function detectedRiskCount(){
+    var text=el('fragileItemCountV68')?.textContent||'0';
+    return Number(text.replace(/\D/g,''))||0;
+  }
+
+  function truckSummary(){
+    var t1=number('truck1Count'),t5=number('truck5Count');
+    var rows=[];
+    if(t1>0)rows.push('1톤 '+t1+'대');
+    if(t5>0)rows.push('5톤 '+t5+'대');
+    return rows.length?rows.join(' + '):(el('recommendedTrucksV68')?.textContent||'분석 전');
+  }
+
+  function workerSummary(){
+    var workers=number('workerCount');
+    return workers>0?workers+'명':(el('recommendedWorkersV68')?.textContent||'분석 전');
+  }
+
+  function fieldScore(){
+    return el('fieldScoreV69')?.textContent||'분석 전';
+  }
+
+  function updateSecretary(){
+    var customer=el('customerName')?.value||el('custName')?.value||'현재 고객';
+    var trucks=truckSummary();
+    var workers=workerSummary();
+    var risk=detectedRiskCount();
+    var score=fieldScore();
+    var finalPrice=Number(window.JimpickGrandTotalV66)||
+      number('ownerFinalPrice')||number('contractFinalPrice')||0;
+
+    var messages=[];
+    messages.push(customer+' 견적 기준으로 '+trucks+', 작업자 '+workers+'을 확인했습니다.');
+    if(risk>0)messages.push('파손 위험 품목 '+risk+'개는 작업 전 사진과 체크리스트 확인이 필요합니다.');
+    else messages.push('현재 표시된 파손 위험 품목은 없습니다.');
+    if(finalPrice>0)messages.push('옵션·보관 포함 최종 견적은 '+money(finalPrice)+'입니다.');
+    messages.push('최종 차량과 금액은 대표님이 현장 상황을 보고 확정하세요.');
+
+    setText('pro70SecretaryText',messages.join(' '));
+    setText('pro70TruckSummary',trucks);
+    setText('pro70WorkerSummary',workers);
+    setText('pro70RiskSummary',risk+'개');
+    setText('pro70FieldScore',score);
+
+    var state=el('pro70AiState');
+    if(state){
+      state.textContent='요약 완료';
+      state.className='pro70-ai-state ready';
+    }
+  }
+
+  function newEstimate(){
+    if(!confirm('현재 입력을 유지하지 않고 새 견적을 시작할까요?'))return;
+    ['customerName','customerPhone','fromAddress','toAddress','customerRequest'].forEach(function(id){
+      if(el(id))el(id).value='';
+    });
+    if(typeof window.clearCustomerSignature==='function')window.clearCustomerSignature();
+    if(typeof window.jimpickDemoGoStep==='function')window.jimpickDemoGoStep(1);
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function openHistory(){
+    if(typeof window.openQuoteHistory==='function')window.openQuoteHistory();
+    else if(el('quoteHistoryBtn'))el('quoteHistoryBtn').click();
+    else alert('견적내역 버튼은 로그인 후 사용할 수 있습니다.');
+  }
+
+  function goStep(step){
+    if(typeof window.jimpickDemoGoStep==='function'){
+      window.jimpickDemoGoStep(step);
+    }else if(typeof window.UI!=='undefined'&&typeof window.UI.goStep==='function'){
+      window.UI.goStep(step);
+    }else{
+      document.querySelectorAll('.panel').forEach(function(p){
+        p.classList.remove('active');p.style.display='none';
+      });
+      var target=el('step'+step);
+      if(target){target.classList.add('active');target.style.display='block'}
+    }
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function bindOnce(id,event,handler){
+    var node=el(id);
+    if(!node||node.dataset.pro70Bound)return;
+    node.dataset.pro70Bound='1';
+    node.addEventListener(event,handler);
+  }
+
+  function init(){
+    updateMetrics();
+    updateSecretary();
+
+    bindOnce('pro70NewEstimateBtn','click',newEstimate);
+    bindOnce('pro70OpenHistoryBtn','click',openHistory);
+    bindOnce('pro70RefreshSecretaryBtn','click',function(){
+      updateMetrics();updateSecretary();
+    });
+
+    document.querySelectorAll('[data-pro70-step]').forEach(function(btn){
+      if(btn.dataset.pro70Bound)return;
+      btn.dataset.pro70Bound='1';
+      btn.addEventListener('click',function(){
+        goStep(Number(btn.dataset.pro70Step));
+      });
+    });
+
+    ['truck1Count','truck5Count','workerCount','ownerFinalPrice','contractFinalPrice',
+     'contractDeposit','customerName','custName'
+    ].forEach(function(id){
+      var node=el(id);
+      if(!node||node.dataset.pro70Watch)return;
+      node.dataset.pro70Watch='1';
+      node.addEventListener('input',updateSecretary);
+      node.addEventListener('change',updateSecretary);
+    });
+
+    setTimeout(function(){updateMetrics();updateSecretary()},350);
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',init);
+  }else{
+    init();
+  }
+
+  document.addEventListener('click',function(){
+    setTimeout(function(){updateMetrics();updateSecretary()},0);
   },true);
 })();
 

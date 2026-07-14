@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 6.9 DEMO",
+  "name": "짐픽 PRO 7.0 RC",
   "short_name": "짐픽 PRO",
-  "description": "AI 위험분석, 현장 체크리스트, 작업 전후 사진, 대표메모, 순이익 분석을 제공하는 AI 이사견적 앱",
+  "description": "AI 이사 비서, 빠른 견적 흐름, 견적·계약·매출·순이익 대시보드를 갖춘 상용화 준비 AI 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
