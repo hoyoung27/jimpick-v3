@@ -1,4 +1,4 @@
-const CACHE_NAME='jimpick-pro-4-1-field-stability';
+const CACHE_NAME='jimpick-pro-4-2-data-safety';
 const FILES=['./','./index.html','./manifest.json','./icon.svg'];
 self.addEventListener('install',e=>{
   e.waitUntil(caches.open(CACHE_NAME).then(c=>c.addAll(FILES)));

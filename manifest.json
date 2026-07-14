@@ -1,7 +1,7 @@
 {
-  "name": "짐픽 PRO 4.1",
+  "name": "짐픽 PRO 4.2",
   "short_name": "짐픽 PRO",
-  "description": "자동저장·견적복구·오프라인 임시보관·자동재전송 기능을 갖춘 AI 이사견적 앱",
+  "description": "내 자료 내려받기·촬영사진 정리·회원탈퇴·서버점검 기능을 갖춘 AI 이사견적 앱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
